@@ -1,0 +1,12 @@
+{
+  "name": "AIDE+'s Server",
+  "version": "1.0.0",
+  "description": "An app that helps people with their govern aides",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Samuel FOTSO",
+  "license": "ISC"
+}
