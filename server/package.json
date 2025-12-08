@@ -1,7 +1,7 @@
 {
   "name": "AIDE+'s Server",
   "version": "1.0.0",
-  "description": "An app that helps people with their govern aides",
+  "description": "An app that helps people with their government aides",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
