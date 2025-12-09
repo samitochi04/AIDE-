@@ -1,21 +1,19 @@
 import "./MenuDrawer.css";
+import { FiX, FiHome, FiFolder, FiActivity, FiUser } from 'react-icons/fi';
 
 export default function MenuDrawer({ open, setOpen }) {
   return (
     <div className={`drawer ${open ? "open" : ""}`}>
       <div className="drawer-header">
         <h3>Menu</h3>
-        <i
-          className="ri-close-line drawer-close"
-          onClick={() => setOpen(false)}
-        ></i>
+        <FiX className="drawer-close" onClick={() => setOpen(false)} aria-label="Close menu" />
       </div>
 
       <ul className="drawer-links">
-        <li>Home</li>
-        <li>My Aids</li>
-        <li>Simulations</li>
-        <li>Profile</li>
+        <li><FiHome /> Home</li>
+        <li><FiFolder /> My Aids</li>
+        <li><FiActivity /> Simulations</li>
+        <li><FiUser /> Profile</li>
       </ul>
     </div>
   );

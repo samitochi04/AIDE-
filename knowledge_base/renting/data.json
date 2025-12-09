@@ -1,0 +1,1590 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-12-09",
+    "description": "Comprehensive database of rental platforms and housing resources in France",
+    "purpose": "Help anyone in France find housing - students, workers, families, all nationalities"
+  },
+  "platforms": {
+    "majorPortals": [
+      {
+        "id": "seloger",
+        "name": "SeLoger",
+        "url": "https://www.seloger.com/",
+        "type": "portal",
+        "description": "France's largest real estate portal, owned by Axel Springer",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "appLinks": {
+          "ios": "https://apps.apple.com/app/seloger/id308888615",
+          "android": "https://play.google.com/store/apps/details?id=com.seloger.android"
+        },
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Advanced search filters",
+          "Price alerts",
+          "Interactive maps",
+          "Neighborhood info",
+          "Agency listings",
+          "New construction"
+        ],
+        "pros": [
+          "Largest database of listings",
+          "Professional photos",
+          "Detailed property info",
+          "Market price estimates"
+        ],
+        "cons": [
+          "Mostly agency listings (fees apply)",
+          "Some outdated listings",
+          "Premium features require account"
+        ],
+        "listingTypes": ["rental", "sale", "new-construction"],
+        "tips": [
+          "Create account for alerts",
+          "Check 'Nouveautés' for fresh listings",
+          "Use map view to explore areas",
+          "Filter by 'Particulier' for no-fee listings (rare)"
+        ]
+      },
+      {
+        "id": "leboncoin",
+        "name": "Leboncoin",
+        "url": "https://www.leboncoin.fr/",
+        "type": "portal",
+        "description": "France's biggest classifieds site - mix of private and agency listings",
+        "languages": ["FR"],
+        "hasApp": true,
+        "appLinks": {
+          "ios": "https://apps.apple.com/app/leboncoin/id484799498",
+          "android": "https://play.google.com/store/apps/details?id=fr.leboncoin"
+        },
+        "agencyFees": "mixed",
+        "priceRange": "€-€€€",
+        "coverage": "national",
+        "features": [
+          "Direct owner listings",
+          "Agency listings",
+          "Chat messaging",
+          "Saved searches",
+          "Price negotiation common"
+        ],
+        "pros": [
+          "Many direct-from-owner listings (no fees)",
+          "Good deals possible",
+          "Fast responses",
+          "Huge volume"
+        ],
+        "cons": [
+          "Many scams - be careful!",
+          "Interface in French only",
+          "Quality varies widely",
+          "Some fake listings"
+        ],
+        "listingTypes": ["rental", "sale", "colocation", "short-term"],
+        "scamWarning": "NEVER pay before visiting. NEVER wire money. Meet in person.",
+        "tips": [
+          "Filter by 'Particulier' for no agency fees",
+          "New listings go fast - check daily",
+          "Video call if can't visit in person",
+          "Ask for proof of ownership",
+          "Trust your instincts"
+        ]
+      },
+      {
+        "id": "bienici",
+        "name": "Bien'ici",
+        "url": "https://www.bienici.com/",
+        "type": "portal",
+        "description": "Modern aggregator with 3D views and good UX",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "appLinks": {
+          "ios": "https://apps.apple.com/app/bienici/id1044628584",
+          "android": "https://play.google.com/store/apps/details?id=com.bienici"
+        },
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "3D virtual tours",
+          "Drawing on map search",
+          "Neighborhood data",
+          "Commute time calculator",
+          "DPE (energy rating) filter"
+        ],
+        "pros": [
+          "Modern interface",
+          "Good mobile app",
+          "Aggregates from multiple sources",
+          "Virtual tours available"
+        ],
+        "cons": [
+          "Mostly agency listings",
+          "Some duplicates"
+        ],
+        "tips": [
+          "Use 'dessiner sur la carte' feature",
+          "Check DPE rating (energy costs)",
+          "3D tours helpful for initial screening"
+        ]
+      },
+      {
+        "id": "logic-immo",
+        "name": "Logic-Immo",
+        "url": "https://www.logic-immo.com/",
+        "type": "portal",
+        "description": "Established real estate portal with good coverage",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Price estimates",
+          "Alert system",
+          "Agency contact"
+        ],
+        "pros": [
+          "Long-established platform",
+          "Good agency coverage",
+          "Price guides"
+        ],
+        "cons": [
+          "Less modern than competitors",
+          "French only"
+        ],
+        "tips": [
+          "Good for comparing with other portals",
+          "Set up alerts for new listings"
+        ]
+      },
+      {
+        "id": "paru-vendu",
+        "name": "ParuVendu",
+        "url": "https://www.paruvendu.fr/",
+        "type": "portal",
+        "description": "Classic classifieds site with real estate section",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": "mixed",
+        "priceRange": "€-€€€",
+        "coverage": "national",
+        "features": [
+          "Mix of private and agency",
+          "Various categories"
+        ],
+        "pros": [
+          "Some private listings",
+          "Less competitive than Leboncoin"
+        ],
+        "cons": [
+          "Smaller database",
+          "Dated interface"
+        ],
+        "tips": [
+          "Check for listings not on major sites"
+        ]
+      },
+      {
+        "id": "figaro-immo",
+        "name": "Figaro Immobilier",
+        "url": "https://immobilier.lefigaro.fr/",
+        "type": "portal",
+        "description": "Real estate section of major newspaper Le Figaro",
+        "languages": ["FR"],
+        "hasApp": false,
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Market analysis",
+          "Price trends",
+          "News and guides"
+        ],
+        "pros": [
+          "Market insights",
+          "Quality content"
+        ],
+        "cons": [
+          "Aggregated listings",
+          "Less user-friendly"
+        ]
+      },
+      {
+        "id": "avendrealouer",
+        "name": "AVendreALouer",
+        "url": "https://www.avendrealouer.fr/",
+        "type": "portal",
+        "description": "Portal specializing in rentals and sales",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Search alerts",
+          "Map search"
+        ]
+      },
+      {
+        "id": "explorimmo",
+        "name": "Explorimmo",
+        "url": "https://www.explorimmo.com/",
+        "type": "portal",
+        "description": "Real estate portal with good Île-de-France coverage",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Strong Paris region coverage"
+        ]
+      }
+    ],
+    "directOwner": [
+      {
+        "id": "pap",
+        "name": "PAP (Particulier à Particulier)",
+        "url": "https://www.pap.fr/",
+        "type": "direct",
+        "description": "Leading platform for direct owner-to-renter listings - NO agency fees",
+        "languages": ["FR"],
+        "hasApp": true,
+        "appLinks": {
+          "ios": "https://apps.apple.com/app/pap-immobilier/id398034498",
+          "android": "https://play.google.com/store/apps/details?id=fr.pap"
+        },
+        "agencyFees": false,
+        "priceRange": "€-€€€",
+        "coverage": "national",
+        "features": [
+          "100% private listings",
+          "No agency fees",
+          "Verified sellers",
+          "Legal document templates"
+        ],
+        "pros": [
+          "No agency fees - significant savings",
+          "Direct contact with owners",
+          "Serious landlords",
+          "Good for negotiation"
+        ],
+        "cons": [
+          "Smaller selection",
+          "Some features paid",
+          "French only"
+        ],
+        "listingTypes": ["rental", "sale"],
+        "savings": "Agency fees typically 1 month rent - PAP saves this!",
+        "tips": [
+          "Worth checking even if fewer listings",
+          "Contact quickly - good deals go fast",
+          "Can negotiate more easily with owners",
+          "Templates available for contracts"
+        ]
+      },
+      {
+        "id": "leboncoin-particulier",
+        "name": "Leboncoin (Particulier filter)",
+        "url": "https://www.leboncoin.fr/",
+        "type": "direct",
+        "description": "Filter Leboncoin by 'Particulier' for direct owner listings",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": false,
+        "priceRange": "€-€€€",
+        "coverage": "national",
+        "howToFilter": "Search > Type d'annonceur > Particulier",
+        "pros": [
+          "Huge volume of private listings",
+          "No fees",
+          "Fast-moving market"
+        ],
+        "cons": [
+          "More scam risk",
+          "Variable quality"
+        ],
+        "tips": [
+          "Always filter by 'Particulier'",
+          "Be extra vigilant about scams",
+          "Meet landlord in person"
+        ]
+      },
+      {
+        "id": "entreparticuliers",
+        "name": "EntreParticuliers",
+        "url": "https://www.entreparticuliers.com/",
+        "type": "direct",
+        "description": "Another direct owner platform",
+        "languages": ["FR"],
+        "hasApp": false,
+        "agencyFees": false,
+        "priceRange": "€-€€€",
+        "coverage": "national",
+        "features": [
+          "No agency fees",
+          "Direct contact"
+        ],
+        "pros": [
+          "No middleman fees"
+        ],
+        "cons": [
+          "Smaller database"
+        ]
+      },
+      {
+        "id": "paruvendu-particulier",
+        "name": "ParuVendu (Particulier)",
+        "url": "https://www.paruvendu.fr/",
+        "type": "direct",
+        "description": "Filter ParuVendu for private listings",
+        "languages": ["FR"],
+        "agencyFees": false,
+        "tips": [
+          "Less competition than Leboncoin"
+        ]
+      }
+    ],
+    "studentHousing": [
+      {
+        "id": "crous",
+        "name": "CROUS - Trouver un logement",
+        "url": "https://trouverunlogement.lescrous.fr/",
+        "type": "student",
+        "description": "Official government student housing - subsidized prices",
+        "languages": ["FR"],
+        "hasApp": false,
+        "agencyFees": false,
+        "priceRange": "€",
+        "coverage": "national",
+        "eligibility": "Students only",
+        "features": [
+          "Subsidized rent (150-500€/month)",
+          "CAF eligible",
+          "Near campuses",
+          "All utilities included"
+        ],
+        "pros": [
+          "Cheapest option",
+          "No guarantor issues",
+          "Among other students",
+          "Simple lease"
+        ],
+        "cons": [
+          "Very competitive",
+          "Basic facilities",
+          "Strict rules",
+          "Apply early"
+        ],
+        "applicationProcess": [
+          "Create account on messervices.etudiant.gouv.fr",
+          "Submit DSE (Dossier Social Étudiant)",
+          "Apply for specific residences",
+          "Wait for allocation"
+        ],
+        "deadline": "January-May for September",
+        "dseUrl": "https://www.messervices.etudiant.gouv.fr/",
+        "tips": [
+          "Apply in January for best chances",
+          "Île-de-France most competitive",
+          "Scholarship students prioritized",
+          "Keep looking elsewhere as backup"
+        ]
+      },
+      {
+        "id": "studapart",
+        "name": "Studapart",
+        "url": "https://www.studapart.com/",
+        "type": "student",
+        "description": "Student-focused rental platform with verified listings",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "agencyFees": "service fee",
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Student-focused",
+          "Verified landlords",
+          "Online booking",
+          "Document upload",
+          "Multi-language support"
+        ],
+        "pros": [
+          "Designed for students/young workers",
+          "Landlords expect international tenants",
+          "Secure booking process",
+          "English available"
+        ],
+        "cons": [
+          "Service fee applies",
+          "Prices higher than direct"
+        ],
+        "partnerUniversities": "Many French universities partner with Studapart",
+        "tips": [
+          "Check if your university has partnership",
+          "Good for booking from abroad",
+          "Verified listings safer"
+        ]
+      },
+      {
+        "id": "lokaviz",
+        "name": "Lokaviz",
+        "url": "https://www.lokaviz.fr/",
+        "type": "student",
+        "description": "CROUS platform for private landlord listings to students",
+        "languages": ["FR"],
+        "hasApp": false,
+        "agencyFees": false,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "CROUS-verified landlords",
+          "Student-friendly",
+          "Private rentals",
+          "No agency fees"
+        ],
+        "pros": [
+          "Landlords want to rent to students",
+          "CROUS backing",
+          "No fees"
+        ],
+        "cons": [
+          "French only",
+          "Variable availability"
+        ],
+        "tips": [
+          "Official CROUS resource",
+          "Landlords used to student tenants"
+        ]
+      },
+      {
+        "id": "immojeune",
+        "name": "ImmoJeune",
+        "url": "https://www.immojeune.com/",
+        "type": "student",
+        "description": "Housing platform for students and young professionals",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": "mixed",
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Student residences",
+          "Private rentals",
+          "Colocations"
+        ],
+        "pros": [
+          "Curated for young people",
+          "Various housing types"
+        ]
+      },
+      {
+        "id": "adele",
+        "name": "Adele",
+        "url": "https://www.adele.org/",
+        "type": "student",
+        "description": "Database of student residences across France",
+        "languages": ["FR", "EN"],
+        "hasApp": false,
+        "agencyFees": false,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Comprehensive residence database",
+          "Filter by city/university",
+          "Contact info"
+        ],
+        "pros": [
+          "Good overview of options",
+          "English available"
+        ],
+        "listingTypes": ["student-residences"]
+      },
+      {
+        "id": "studefi",
+        "name": "Studefi",
+        "url": "https://www.studefi.fr/",
+        "type": "student",
+        "description": "Student housing search engine",
+        "languages": ["FR"],
+        "hasApp": false,
+        "priceRange": "€-€€",
+        "coverage": "national"
+      },
+      {
+        "id": "fac-habitat",
+        "name": "Fac-Habitat",
+        "url": "https://www.fac-habitat.com/",
+        "type": "student",
+        "description": "Student residence operator",
+        "languages": ["FR"],
+        "hasApp": false,
+        "priceRange": "€€",
+        "coverage": "national",
+        "features": [
+          "Modern residences",
+          "Services included"
+        ]
+      }
+    ],
+    "privateStudentResidences": [
+      {
+        "id": "studea",
+        "name": "Studéa",
+        "url": "https://www.studea.fr/",
+        "type": "student-residence",
+        "description": "Large student residence operator",
+        "languages": ["FR"],
+        "hasApp": false,
+        "priceRange": "€€",
+        "coverage": "national",
+        "features": [
+          "Furnished studios",
+          "All-inclusive rent",
+          "Laundry facilities",
+          "Study rooms"
+        ],
+        "priceExample": "400-800€/month"
+      },
+      {
+        "id": "estudines",
+        "name": "Les Estudines",
+        "url": "https://www.estudines.com/",
+        "type": "student-residence",
+        "description": "Major student residence chain",
+        "languages": ["FR", "EN"],
+        "hasApp": false,
+        "priceRange": "€€",
+        "coverage": "national",
+        "features": [
+          "Furnished",
+          "Internet included",
+          "Near universities"
+        ],
+        "priceExample": "450-900€/month"
+      },
+      {
+        "id": "nexity-studea",
+        "name": "Nexity Studéa",
+        "url": "https://www.nexity-studea.com/",
+        "type": "student-residence",
+        "description": "Student residences by major developer Nexity",
+        "languages": ["FR"],
+        "priceRange": "€€",
+        "coverage": "national"
+      },
+      {
+        "id": "uxco",
+        "name": "UXCO",
+        "url": "https://www.uxco.fr/",
+        "type": "student-residence",
+        "description": "Student residence operator",
+        "languages": ["FR"],
+        "priceRange": "€€",
+        "coverage": "national"
+      },
+      {
+        "id": "cardinal-campus",
+        "name": "Cardinal Campus",
+        "url": "https://www.cardinalcampus.fr/",
+        "type": "student-residence",
+        "description": "Premium student residences",
+        "languages": ["FR"],
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities"
+      },
+      {
+        "id": "campusea",
+        "name": "Campuséa",
+        "url": "https://www.campusea.fr/",
+        "type": "student-residence",
+        "description": "BNP Paribas student residences",
+        "languages": ["FR"],
+        "priceRange": "€€",
+        "coverage": "major-cities"
+      },
+      {
+        "id": "kley",
+        "name": "Kley",
+        "url": "https://kfrankfrance.com/",
+        "type": "student-residence",
+        "description": "Modern student living concept",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€",
+        "coverage": "expanding"
+      }
+    ],
+    "colocation": [
+      {
+        "id": "lacartedescolocs",
+        "name": "La Carte des Colocs",
+        "url": "https://www.lacartedescolocs.fr/",
+        "type": "colocation",
+        "description": "France's most popular flatshare platform",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": false,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Room search",
+          "Roommate profiles",
+          "Messaging",
+          "No fees for basic use"
+        ],
+        "pros": [
+          "Biggest colocation database",
+          "Free to use",
+          "Active community",
+          "Good filters"
+        ],
+        "cons": [
+          "French only",
+          "Popular = competitive"
+        ],
+        "tips": [
+          "Complete profile thoroughly",
+          "Respond quickly to listings",
+          "Be personable in messages",
+          "Offer to video call"
+        ]
+      },
+      {
+        "id": "appartager",
+        "name": "Appartager",
+        "url": "https://www.appartager.com/",
+        "type": "colocation",
+        "description": "Roommate matching platform (part of SpareRoom global)",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "agencyFees": false,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Roommate matching",
+          "Room search",
+          "Post your own ad"
+        ],
+        "pros": [
+          "English interface available",
+          "Part of global network"
+        ],
+        "cons": [
+          "Some premium features paid"
+        ]
+      },
+      {
+        "id": "roomlala",
+        "name": "Roomlala",
+        "url": "https://www.roomlala.com/",
+        "type": "colocation",
+        "description": "Rooms, homestays, and flatshares",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "agencyFees": "service fee",
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "features": [
+          "Rooms in shared flats",
+          "Homestay options",
+          "Host families"
+        ],
+        "pros": [
+          "Homestay option good for immersion",
+          "English available"
+        ]
+      },
+      {
+        "id": "whoomies",
+        "name": "Whoomies",
+        "url": "https://www.whoomies.com/",
+        "type": "colocation",
+        "description": "Modern colocation platform",
+        "languages": ["FR"],
+        "hasApp": false,
+        "priceRange": "€-€€",
+        "coverage": "major-cities"
+      },
+      {
+        "id": "colocatere",
+        "name": "Colocatère",
+        "url": "https://www.colocatere.com/",
+        "type": "colocation",
+        "description": "Colocation specialist",
+        "languages": ["FR"],
+        "hasApp": false,
+        "priceRange": "€€",
+        "coverage": "major-cities"
+      },
+      {
+        "id": "chez-nestor",
+        "name": "Chez Nestor",
+        "url": "https://www.cheznestor.com/",
+        "type": "colocation",
+        "description": "All-inclusive colocation with services",
+        "languages": ["FR", "EN"],
+        "hasApp": false,
+        "agencyFees": "service fee",
+        "priceRange": "€€",
+        "coverage": "major-cities",
+        "features": [
+          "Fully furnished",
+          "All bills included",
+          "Online booking",
+          "Flexible lease"
+        ],
+        "pros": [
+          "Move-in ready",
+          "Simple process",
+          "Good for internationals"
+        ],
+        "cons": [
+          "Higher price for convenience"
+        ]
+      },
+      {
+        "id": "colonies",
+        "name": "Colonies",
+        "url": "https://www.livecolonies.com/",
+        "type": "colocation",
+        "description": "Premium coliving spaces",
+        "languages": ["FR", "EN"],
+        "hasApp": false,
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities",
+        "features": [
+          "Designed coliving",
+          "Common spaces",
+          "Events",
+          "All inclusive"
+        ],
+        "pros": [
+          "High quality",
+          "Community focus",
+          "Modern spaces"
+        ],
+        "cons": [
+          "Premium pricing"
+        ]
+      }
+    ],
+    "furnished": [
+      {
+        "id": "lodgis",
+        "name": "Lodgis",
+        "url": "https://www.lodgis.com/",
+        "type": "furnished",
+        "description": "Paris furnished rental specialist",
+        "languages": ["FR", "EN"],
+        "hasApp": false,
+        "agencyFees": true,
+        "priceRange": "€€-€€€",
+        "coverage": "paris",
+        "features": [
+          "Furnished apartments",
+          "Medium to long term",
+          "Professional photos",
+          "Detailed listings"
+        ],
+        "pros": [
+          "High quality listings",
+          "English service",
+          "Verified properties"
+        ],
+        "cons": [
+          "Paris only",
+          "Agency fees"
+        ],
+        "minStay": "1 month usually"
+      },
+      {
+        "id": "spotahome",
+        "name": "Spotahome",
+        "url": "https://www.spotahome.com/",
+        "type": "furnished",
+        "description": "Mid-term furnished rentals with virtual tours",
+        "languages": ["EN", "FR", "ES", "IT"],
+        "hasApp": true,
+        "agencyFees": "service fee",
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities",
+        "features": [
+          "100% online booking",
+          "HD videos of apartments",
+          "Verified listings",
+          "No physical visits needed"
+        ],
+        "pros": [
+          "Book from abroad safely",
+          "Full video tours",
+          "Multi-language",
+          "Good for expats"
+        ],
+        "cons": [
+          "Higher prices",
+          "Service fee applies"
+        ],
+        "minStay": "1 month",
+        "tips": [
+          "Great for booking before arrival",
+          "Videos show real condition"
+        ]
+      },
+      {
+        "id": "homelike",
+        "name": "Homelike",
+        "url": "https://www.thehomelike.com/",
+        "type": "furnished",
+        "description": "Business-focused furnished apartments",
+        "languages": ["EN", "FR", "DE"],
+        "hasApp": false,
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities",
+        "features": [
+          "Business travelers",
+          "Invoicing for companies",
+          "Quality apartments"
+        ]
+      },
+      {
+        "id": "nestpick",
+        "name": "Nestpick",
+        "url": "https://www.nestpick.com/",
+        "type": "furnished",
+        "description": "Medium-term furnished rentals aggregator",
+        "languages": ["EN", "FR"],
+        "hasApp": false,
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities",
+        "features": [
+          "Aggregates listings",
+          "Comparison tool"
+        ]
+      },
+      {
+        "id": "uniplaces",
+        "name": "Uniplaces",
+        "url": "https://www.uniplaces.com/",
+        "type": "furnished",
+        "description": "Student-focused furnished rentals",
+        "languages": ["EN", "FR"],
+        "hasApp": false,
+        "agencyFees": "service fee",
+        "priceRange": "€€",
+        "coverage": "major-cities",
+        "features": [
+          "Student-friendly",
+          "Online booking",
+          "Verified landlords"
+        ]
+      },
+      {
+        "id": "paris-attitude",
+        "name": "Paris Attitude",
+        "url": "https://www.parisattitude.com/",
+        "type": "furnished",
+        "description": "Premium Paris furnished rentals",
+        "languages": ["FR", "EN"],
+        "agencyFees": true,
+        "priceRange": "€€€",
+        "coverage": "paris",
+        "features": [
+          "High-end apartments",
+          "Professional service"
+        ]
+      },
+      {
+        "id": "morning-croissant",
+        "name": "Morning Croissant",
+        "url": "https://www.morningcroissant.fr/",
+        "type": "furnished",
+        "description": "French furnished rental platform",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€",
+        "coverage": "national"
+      }
+    ],
+    "socialHousing": [
+      {
+        "id": "demande-logement-social",
+        "name": "Demande de Logement Social",
+        "url": "https://www.demande-logement-social.gouv.fr/",
+        "type": "social",
+        "description": "Official government portal for social housing (HLM) applications",
+        "languages": ["FR"],
+        "hasApp": false,
+        "agencyFees": false,
+        "priceRange": "€",
+        "coverage": "national",
+        "eligibility": {
+          "income": "Based on household income (plafonds HLM)",
+          "residence": "Legal resident of France",
+          "nationality": "French, EU, or legal foreign resident"
+        },
+        "features": [
+          "Single national application",
+          "Choose up to 5 preferences",
+          "Track application status"
+        ],
+        "waitingTime": "Months to years depending on area",
+        "priority": [
+          "Homeless",
+          "Very low income",
+          "Disability",
+          "Large families",
+          "Domestic violence victims"
+        ],
+        "tips": [
+          "Apply even if long wait - get in queue",
+          "Paris wait can be 5-10 years",
+          "Smaller cities much faster",
+          "Renew application annually"
+        ]
+      },
+      {
+        "id": "action-logement",
+        "name": "Action Logement",
+        "url": "https://www.actionlogement.fr/",
+        "type": "social",
+        "description": "Housing assistance for employees of private companies",
+        "languages": ["FR"],
+        "hasApp": true,
+        "agencyFees": false,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "eligibility": "Employees of private companies with 10+ staff",
+        "services": [
+          "Visale guarantee",
+          "Loca-Pass (deposit loan)",
+          "Mobili-Pass (mobility assistance)",
+          "Social housing priority"
+        ],
+        "features": [
+          "Employer-funded housing help",
+          "Various financial aids"
+        ],
+        "tips": [
+          "Check with HR if employer participates",
+          "Visale is managed by Action Logement"
+        ]
+      },
+      {
+        "id": "al-in",
+        "name": "AL'in",
+        "url": "https://www.alin.fr/",
+        "type": "social",
+        "description": "Action Logement rental platform",
+        "languages": ["FR"],
+        "hasApp": true,
+        "priceRange": "€-€€",
+        "coverage": "national",
+        "eligibility": "Employees eligible for Action Logement",
+        "features": [
+          "Affordable rentals",
+          "For eligible employees"
+        ]
+      },
+      {
+        "id": "bienveo",
+        "name": "Bienvéo",
+        "url": "https://www.bienveo.fr/",
+        "type": "social",
+        "description": "Social housing landlord portal",
+        "languages": ["FR"],
+        "priceRange": "€",
+        "coverage": "national",
+        "features": [
+          "Available HLM listings",
+          "Application tracking"
+        ]
+      }
+    ],
+    "temporary": [
+      {
+        "id": "airbnb-longterm",
+        "name": "Airbnb (Long-term stays)",
+        "url": "https://www.airbnb.fr/",
+        "type": "temporary",
+        "description": "Short to medium-term rentals, monthly discounts available",
+        "languages": ["FR", "EN", "multi"],
+        "hasApp": true,
+        "agencyFees": "service fee",
+        "priceRange": "€€-€€€",
+        "coverage": "national",
+        "features": [
+          "Flexible dates",
+          "Monthly discounts (often 20-50%)",
+          "Furnished",
+          "Reviews system"
+        ],
+        "pros": [
+          "Flexible lease",
+          "No dossier required",
+          "Book from abroad"
+        ],
+        "cons": [
+          "Expensive long-term",
+          "Not for permanent housing",
+          "Service fees add up"
+        ],
+        "tips": [
+          "Filter for monthly stays",
+          "Negotiate for longer stays",
+          "Good for first month while searching"
+        ]
+      },
+      {
+        "id": "furnished-finder",
+        "name": "Furnished Finder",
+        "url": "https://www.furnishedfinder.com/",
+        "type": "temporary",
+        "description": "Medium-term furnished rentals for professionals",
+        "languages": ["EN"],
+        "priceRange": "€€-€€€",
+        "coverage": "limited-france"
+      },
+      {
+        "id": "appartcity",
+        "name": "Appart'City",
+        "url": "https://www.appartcity.com/",
+        "type": "temporary",
+        "description": "Apart-hotel chain, good for initial weeks",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "priceRange": "€€",
+        "coverage": "national",
+        "features": [
+          "Hotel-apartment hybrid",
+          "Weekly/monthly rates",
+          "Kitchenette included"
+        ],
+        "tips": [
+          "Good for first weeks in France",
+          "Negotiate monthly rates"
+        ]
+      },
+      {
+        "id": "adagio",
+        "name": "Adagio Aparthotels",
+        "url": "https://www.adagio-city.com/",
+        "type": "temporary",
+        "description": "Accor group apart-hotel brand",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "priceRange": "€€-€€€",
+        "coverage": "major-cities",
+        "features": [
+          "Quality accommodation",
+          "Services included",
+          "Monthly rates"
+        ]
+      },
+      {
+        "id": "residhome",
+        "name": "Residhome",
+        "url": "https://www.residhome.com/",
+        "type": "temporary",
+        "description": "Apart-hotel residences",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€",
+        "coverage": "national"
+      },
+      {
+        "id": "sejours-affaires",
+        "name": "Séjours & Affaires",
+        "url": "https://www.sejours-affaires.com/",
+        "type": "temporary",
+        "description": "Business residences for extended stays",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€",
+        "coverage": "major-cities"
+      }
+    ],
+    "relocation": [
+      {
+        "id": "relocations-france",
+        "name": "Various Relocation Services",
+        "type": "relocation",
+        "description": "Professional relocation companies help find housing",
+        "companies": [
+          {
+            "name": "Paris Relocation",
+            "url": "https://www.parisrelocation.com/",
+            "coverage": "Paris"
+          },
+          {
+            "name": "AGS Relocation",
+            "url": "https://www.agsrelocation.com/",
+            "coverage": "national"
+          },
+          {
+            "name": "Altair Global",
+            "url": "https://www.altairglobal.com/",
+            "coverage": "global"
+          }
+        ],
+        "services": [
+          "Property search",
+          "Viewing accompaniment",
+          "Lease negotiation",
+          "Admin assistance"
+        ],
+        "pros": [
+          "Handle everything",
+          "Local expertise",
+          "Save time"
+        ],
+        "cons": [
+          "Expensive (often €2,000+)",
+          "Usually employer-paid"
+        ],
+        "tips": [
+          "Check if employer offers relocation package",
+          "Useful for executives/high-value hires"
+        ]
+      }
+    ],
+    "luxury": [
+      {
+        "id": "barnes",
+        "name": "Barnes International",
+        "url": "https://www.barnes-international.com/",
+        "type": "luxury",
+        "description": "Luxury real estate - sales and rentals",
+        "languages": ["FR", "EN"],
+        "hasApp": true,
+        "agencyFees": true,
+        "priceRange": "€€€€",
+        "coverage": "major-cities",
+        "features": [
+          "Premium properties",
+          "International service",
+          "Prestige locations"
+        ]
+      },
+      {
+        "id": "daniel-feau",
+        "name": "Daniel Féau",
+        "url": "https://www.danielfeau.com/",
+        "type": "luxury",
+        "description": "Prestigious Paris real estate",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€€€",
+        "coverage": "paris"
+      },
+      {
+        "id": "junot",
+        "name": "Junot",
+        "url": "https://www.junot.fr/",
+        "type": "luxury",
+        "description": "Paris luxury apartments",
+        "languages": ["FR", "EN"],
+        "priceRange": "€€€€",
+        "coverage": "paris"
+      },
+      {
+        "id": "sothebys-realty",
+        "name": "Sotheby's International Realty",
+        "url": "https://www.sothebysrealty.com/",
+        "type": "luxury",
+        "description": "Global luxury real estate brand",
+        "languages": ["EN", "FR"],
+        "priceRange": "€€€€",
+        "coverage": "premium-locations"
+      },
+      {
+        "id": "christies-realestate",
+        "name": "Christie's Real Estate",
+        "url": "https://www.christiesrealestate.com/",
+        "type": "luxury",
+        "description": "Luxury properties",
+        "languages": ["EN", "FR"],
+        "priceRange": "€€€€",
+        "coverage": "premium-locations"
+      }
+    ],
+    "apps": [
+      {
+        "id": "app-seloger",
+        "name": "SeLoger",
+        "platforms": ["iOS", "Android"],
+        "description": "Official SeLoger app",
+        "features": ["Push notifications", "Saved searches", "Maps"],
+        "rating": "4.5+",
+        "essential": true
+      },
+      {
+        "id": "app-leboncoin",
+        "name": "Leboncoin",
+        "platforms": ["iOS", "Android"],
+        "description": "Leboncoin classifieds app",
+        "features": ["Chat", "Notifications", "Saved searches"],
+        "rating": "4.5+",
+        "essential": true
+      },
+      {
+        "id": "app-bienici",
+        "name": "Bien'ici",
+        "platforms": ["iOS", "Android"],
+        "description": "Bien'ici with 3D tours",
+        "features": ["3D views", "Map drawing", "Alerts"],
+        "rating": "4.5+",
+        "essential": true
+      },
+      {
+        "id": "app-pap",
+        "name": "PAP Immobilier",
+        "platforms": ["iOS", "Android"],
+        "description": "Direct owner listings",
+        "features": ["No fees listings", "Direct contact"],
+        "essential": true
+      },
+      {
+        "id": "app-jinka",
+        "name": "Jinka",
+        "platforms": ["iOS", "Android"],
+        "description": "Rental search aggregator with smart alerts",
+        "features": [
+          "Aggregates all major sites",
+          "Instant alerts",
+          "One-click apply"
+        ],
+        "pros": [
+          "See all listings in one place",
+          "Very fast alerts"
+        ],
+        "essential": true,
+        "tips": "Best app for not missing new listings"
+      },
+      {
+        "id": "app-flatlooker",
+        "name": "Flatlooker",
+        "platforms": ["iOS", "Android"],
+        "url": "https://www.flatlooker.com/",
+        "description": "Paris rental platform with virtual visits",
+        "features": [
+          "Virtual visits",
+          "Online application",
+          "Paris focus"
+        ]
+      }
+    ],
+    "guarantorServices": [
+      {
+        "id": "visale",
+        "name": "Visale",
+        "url": "https://www.visale.fr/",
+        "type": "guarantor",
+        "description": "FREE government guarantee service - covers unpaid rent",
+        "languages": ["FR"],
+        "cost": "Free",
+        "provider": "Action Logement",
+        "eligibility": [
+          "Under 30 years old (any situation)",
+          "Over 30: employees in first 6 months of new job",
+          "Students",
+          "Alternance contracts",
+          "Any nationality"
+        ],
+        "coverage": {
+          "rent": "Up to 1,500€/month (Paris) or 1,300€ (elsewhere)",
+          "duration": "Up to 36 months unpaid rent"
+        },
+        "howToApply": [
+          "Go to visale.fr",
+          "Create account",
+          "Submit documents (ID, proof of situation)",
+          "Receive Visale visa within 48h",
+          "Give to landlord"
+        ],
+        "requiredDocuments": [
+          "ID document",
+          "Proof of status (student card, employment contract, etc.)",
+          "Income proof (if working)"
+        ],
+        "pros": [
+          "100% free",
+          "Government-backed",
+          "Most landlords accept",
+          "No French guarantor needed"
+        ],
+        "cons": [
+          "Some landlords don't know it",
+          "Rent ceiling limits"
+        ],
+        "tips": [
+          "Apply BEFORE signing lease",
+          "If landlord doesn't know Visale, explain it's from Action Logement (government)",
+          "Print the PDF to show landlords"
+        ]
+      },
+      {
+        "id": "garantme",
+        "name": "GarantMe",
+        "url": "https://www.garantme.fr/",
+        "type": "guarantor",
+        "description": "Paid guarantor service - for those who don't qualify for Visale",
+        "languages": ["FR", "EN"],
+        "cost": "3.5% of annual rent",
+        "eligibility": "Anyone - students, workers, foreigners",
+        "features": [
+          "No income requirements",
+          "Accept international profiles",
+          "Fast approval"
+        ],
+        "pros": [
+          "Anyone can apply",
+          "Very foreigner-friendly",
+          "Fast process"
+        ],
+        "cons": [
+          "Costs money",
+          "Some landlords prefer Visale"
+        ],
+        "tips": [
+          "Good backup if Visale doesn't work",
+          "Can be worth the cost for hard-to-rent situations"
+        ]
+      },
+      {
+        "id": "smartgarant",
+        "name": "SmartGarant",
+        "url": "https://www.smartgarant.com/",
+        "type": "guarantor",
+        "description": "Alternative paid guarantor service",
+        "languages": ["FR"],
+        "cost": "Around 3.5% of annual rent",
+        "eligibility": "Wide eligibility"
+      },
+      {
+        "id": "unkle",
+        "name": "Unkle",
+        "url": "https://www.unkle.fr/",
+        "type": "guarantor",
+        "description": "Guarantor and rent insurance",
+        "languages": ["FR"],
+        "cost": "Varies",
+        "features": [
+          "Guarantee service",
+          "Rent insurance options"
+        ]
+      },
+      {
+        "id": "cautioneo",
+        "name": "Cautioneo",
+        "url": "https://www.cautioneo.com/",
+        "type": "guarantor",
+        "description": "Deposit and guarantee solutions",
+        "languages": ["FR"],
+        "cost": "Varies"
+      }
+    ],
+    "depositHelp": [
+      {
+        "id": "locapass",
+        "name": "Loca-Pass (Action Logement)",
+        "url": "https://www.actionlogement.fr/",
+        "type": "deposit-loan",
+        "description": "Interest-free loan for security deposit",
+        "cost": "Free (interest-free)",
+        "amount": "Up to 1,200€",
+        "repayment": "25 months maximum",
+        "eligibility": [
+          "Under 30 (any status)",
+          "Employees of private companies",
+          "Students in alternance"
+        ],
+        "tips": [
+          "Apply through Action Logement",
+          "Great if you lack deposit funds"
+        ]
+      }
+    ]
+  },
+  "rentalDossier": {
+    "description": "Documents typically required to rent in France",
+    "requiredDocuments": [
+      {
+        "document": "ID Document",
+        "details": "Passport or national ID",
+        "required": true
+      },
+      {
+        "document": "Proof of Income",
+        "details": "3 last pay slips or employment contract",
+        "required": true,
+        "alternative": "Tax notice, scholarship letter, bank statements"
+      },
+      {
+        "document": "Tax Notice (Avis d'imposition)",
+        "details": "Last year's tax return",
+        "required": true,
+        "forForeigners": "Can provide equivalent from home country"
+      },
+      {
+        "document": "Proof of Current Address",
+        "details": "Last 3 rent receipts or utility bill",
+        "required": true,
+        "forNewcomers": "Hotel booking, temporary address OK"
+      },
+      {
+        "document": "Employment Contract",
+        "details": "CDI preferred, CDD accepted",
+        "required": "Usually required"
+      },
+      {
+        "document": "Guarantor Documents",
+        "details": "Same documents for guarantor",
+        "required": "If using personal guarantor",
+        "alternative": "Visale, GarantMe"
+      }
+    ],
+    "tips": [
+      "Have dossier ready before visiting",
+      "Digital copies (PDF) useful for quick applications",
+      "Landlords want rent ≤ 33% of income",
+      "CDI (permanent contract) is gold standard",
+      "Foreigners: use Visale to replace guarantor"
+    ]
+  },
+  "scamPrevention": {
+    "description": "Protect yourself from rental scams",
+    "redFlags": [
+      "Asked to pay before visiting",
+      "Price significantly below market",
+      "Landlord abroad, cannot meet",
+      "Wire transfer to foreign account",
+      "Keys sent by mail",
+      "Urgency/pressure tactics",
+      "Poor French in communications",
+      "Photos from stock websites",
+      "No video call offered",
+      "Refuses to provide ID"
+    ],
+    "safetyRules": [
+      "NEVER pay before physical visit",
+      "NEVER wire money internationally",
+      "ALWAYS meet landlord in person",
+      "Verify property ownership if possible",
+      "Use platform messaging (traceable)",
+      "Trust your instincts",
+      "If too good to be true, it is"
+    ],
+    "whatToDo": {
+      "ifScammed": [
+        "Report to police (plainte)",
+        "Report on platform",
+        "Contact bank immediately",
+        "Report to SignalArnaques.com"
+      ],
+      "reportingUrls": {
+        "signalArnaques": "https://www.signal-arnaques.com/",
+        "servicepublic": "https://www.service-public.fr/"
+      }
+    }
+  },
+  "rentalTips": {
+    "general": [
+      "Start searching 1-2 months before needed",
+      "Good places go within 24-48 hours",
+      "Visit in person whenever possible",
+      "Check DPE (energy rating) - affects bills",
+      "Ask about charges (utilities included or not)",
+      "Understand notice period (préavis)"
+    ],
+    "forForeigners": [
+      "Visale is your best friend - use it",
+      "Build complete dossier before searching",
+      "Student/private residences easier for foreigners",
+      "Consider furnished for first year",
+      "Large agencies more used to foreigners",
+      "Don't get discouraged by rejections"
+    ],
+    "negotiation": [
+      "Negotiation possible with private landlords",
+      "Less possible with agencies",
+      "Longer lease can mean lower rent",
+      "Ask about included utilities",
+      "End of month = landlords more flexible"
+    ],
+    "byCity": {
+      "paris": {
+        "difficulty": "Very competitive",
+        "avgRent1bed": "1,200-1,800€",
+        "tips": [
+          "Be ready to visit same day",
+          "Complete dossier essential",
+          "Consider suburbs (banlieue)"
+        ]
+      },
+      "lyon": {
+        "difficulty": "Competitive",
+        "avgRent1bed": "700-1,100€",
+        "tips": ["More manageable than Paris"]
+      },
+      "marseille": {
+        "difficulty": "Moderate",
+        "avgRent1bed": "600-900€",
+        "tips": ["Research neighborhoods carefully"]
+      },
+      "toulouse": {
+        "difficulty": "Moderate",
+        "avgRent1bed": "600-900€"
+      },
+      "bordeaux": {
+        "difficulty": "Competitive",
+        "avgRent1bed": "700-1,100€",
+        "tips": ["Becoming more expensive"]
+      },
+      "smallerCities": {
+        "difficulty": "Easier",
+        "avgRent1bed": "400-700€",
+        "tips": ["Much more affordable outside big cities"]
+      }
+    }
+  },
+  "legalInfo": {
+    "tenantRights": {
+      "description": "French law protects tenants strongly",
+      "keyRights": [
+        "Landlord cannot evict during winter trêve (Nov-March)",
+        "Minimum 3-year lease for unfurnished (1 year furnished)",
+        "Rent increases capped (IRL index)",
+        "Deposit max 1 month (unfurnished) or 2 months (furnished)",
+        "Landlord must provide habitable housing",
+        "Tenant can leave with 1-3 months notice"
+      ]
+    },
+    "notice": {
+      "tenant": {
+        "furnished": "1 month",
+        "unfurnished": "3 months (1 month in certain cases)"
+      },
+      "landlord": {
+        "furnished": "3 months before end",
+        "unfurnished": "6 months before end"
+      }
+    },
+    "deposit": {
+      "unfurnished": "1 month rent max",
+      "furnished": "2 months rent max",
+      "return": "Within 1 month if no issues, 2 months if deductions"
+    },
+    "resources": [
+      {
+        "name": "ANIL",
+        "url": "https://www.anil.org/",
+        "description": "Free housing advice and legal info"
+      },
+      {
+        "name": "ADIL",
+        "url": "https://www.anil.org/lanil-et-les-adil/",
+        "description": "Local housing info centers"
+      }
+    ]
+  }
+}

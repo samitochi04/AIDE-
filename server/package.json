@@ -1,12 +1,48 @@
 {
-  "name": "AIDE+'s Server",
+  "name": "aide-plus-server",
   "version": "1.0.0",
-  "description": "An app that helps people with their government aides",
+  "description": "AIDE+ Backend API - Helps people with French government aides",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
   },
-  "keywords": [],
+  "keywords": [
+    "aide",
+    "france",
+    "government",
+    "supabase",
+    "ai"
+  ],
   "author": "Samuel FOTSO",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "openai": "^4.24.0",
+    "resend": "^2.1.0",
+    "stripe": "^14.10.0",
+    "zod": "^3.22.4",
+    "winston": "^3.11.0",
+    "compression": "^1.7.4",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
