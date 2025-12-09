@@ -6,10 +6,10 @@ function App() {
   return (
     <>
       <Navbar/>
-      <div style={{ paddingTop: "80px" }}>
+      <main className="main">
         {/* Main content */}
         <h1>Welcome to AIDE+</h1>
-      </div>
+      </main>
     </>
   )
 }

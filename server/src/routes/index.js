@@ -1,0 +1,37 @@
+import { Router } from 'express';
+
+// Import all route modules
+import healthRoutes from './health.routes.js';
+import authRoutes from './auth.routes.js';
+import stripeRoutes from './stripe.routes.js';
+import aiRoutes from './ai.routes.js';
+import adminRoutes from './admin.routes.js';
+import analyticsRoutes from './analytics.routes.js';
+import affiliateRoutes from './affiliate.routes.js';
+import contactRoutes from './contact.routes.js';
+
+const router = Router();
+
+// API version prefix
+const API_VERSION = '/api/v1';
+
+/**
+ * Mount all routes
+ */
+export const mountRoutes = (app) => {
+  // Health check (no version prefix)
+  app.use('/health', healthRoutes);
+
+  // API routes
+  app.use(`${API_VERSION}/auth`, authRoutes);
+  app.use(`${API_VERSION}/stripe`, stripeRoutes);
+  app.use(`${API_VERSION}/ai`, aiRoutes);
+  app.use(`${API_VERSION}/admin`, adminRoutes);
+  app.use(`${API_VERSION}/analytics`, analyticsRoutes);
+  app.use(`${API_VERSION}/affiliate`, affiliateRoutes);
+  app.use(`${API_VERSION}/contact`, contactRoutes);
+
+  return app;
+};
+
+export default router;
