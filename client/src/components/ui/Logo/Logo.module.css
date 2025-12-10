@@ -1,0 +1,68 @@
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.text {
+  display: flex;
+  align-items: baseline;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.aide {
+  color: var(--color-primary);
+}
+
+.plus {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.tagline {
+  font-size: 0.7em;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+
+/* Sizes */
+.sm .text {
+  font-size: 1.25rem;
+}
+
+.md .text {
+  font-size: 1.75rem;
+}
+
+.lg .text {
+  font-size: 2.5rem;
+}
+
+.xl .text {
+  font-size: 3.5rem;
+}
+
+/* Hide tagline on smaller logos */
+.sm .tagline {
+  display: none;
+}
+
+/* Hover effect when it's a link */
+a.logo:hover .aide {
+  color: var(--color-primary-dark);
+}
+
+a.logo:hover .plus {
+  color: var(--color-accent-dark);
+}
+
+a.logo:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}

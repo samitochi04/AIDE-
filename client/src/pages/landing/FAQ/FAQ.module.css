@@ -1,0 +1,125 @@
+.section {
+  padding: var(--spacing-20) var(--spacing-6);
+  background: var(--surface-secondary);
+}
+
+.container {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-12);
+}
+
+.label {
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-3);
+  background: var(--color-primary-alpha);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--spacing-4);
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-4);
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.faqItem {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.faqItem.open {
+  border-color: var(--color-primary);
+}
+
+.faqQuestion {
+  width: 100%;
+  padding: var(--spacing-5) var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.faqQuestion:hover {
+  background: var(--surface-secondary);
+}
+
+.faqQuestion i {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.faqItem.open .faqQuestion i {
+  background: var(--color-primary-alpha);
+}
+
+.faqAnswer {
+  overflow: hidden;
+}
+
+.faqAnswer p {
+  padding: 0 var(--spacing-6) var(--spacing-5);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .section {
+    padding: var(--spacing-16) var(--spacing-4);
+  }
+  
+  .faqQuestion {
+    padding: var(--spacing-4);
+    font-size: var(--font-size-base);
+  }
+  
+  .faqAnswer p {
+    padding: 0 var(--spacing-4) var(--spacing-4);
+  }
+}

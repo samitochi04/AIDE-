@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: var(--spacing-1);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 1.5px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-colors);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--color-primary-light);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha);
+}
+
+.hasLeftIcon {
+  padding-left: calc(var(--spacing-4) + 24px);
+}
+
+.hasRightIcon {
+  padding-right: calc(var(--spacing-4) + 24px);
+}
+
+.icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.leftIcon {
+  left: var(--spacing-3);
+}
+
+.rightIcon {
+  right: var(--spacing-3);
+}
+
+.togglePassword {
+  background: none;
+  border: none;
+  cursor: pointer;
+  pointer-events: all;
+  padding: var(--spacing-1);
+  margin: calc(-1 * var(--spacing-1));
+  color: var(--text-secondary);
+  transition: var(--transition-colors);
+}
+
+.togglePassword:hover {
+  color: var(--text-primary);
+}
+
+/* Error State */
+.hasError .input {
+  border-color: var(--color-error);
+}
+
+.hasError .input:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.error {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.error::before {
+  content: '⚠';
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+/* Disabled State */
+.disabled .input {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--surface-secondary);
+}

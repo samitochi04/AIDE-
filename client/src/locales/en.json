@@ -1,0 +1,186 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "back": "Back",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "getStarted": "Get Started",
+    "seeMore": "See more",
+    "showLess": "Show less",
+    "or": "or",
+    "and": "and",
+    "yes": "Yes",
+    "no": "No"
+  },
+  
+  "nav": {
+    "home": "Home",
+    "aides": "Benefits",
+    "features": "Features",
+    "housing": "Housing",
+    "procedures": "Procedures",
+    "chat": "AI Assistant",
+    "blog": "Blog",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "premium": "Premium",
+    "settings": "Settings",
+    "profile": "Profile",
+    "login": "Log in",
+    "signup": "Sign up",
+    "logout": "Log out",
+    "dashboard": "Dashboard"
+  },
+  
+  "accessibility": {
+    "switchLanguage": "Switch language",
+    "toggleTheme": "Toggle theme"
+  },
+  
+  "theme": {
+    "light": "Light theme",
+    "dark": "Dark theme"
+  },
+  
+  "seo": {
+    "home": {
+      "title": "AIDE+ | Discover all the benefits you're entitled to in France",
+      "description": "AIDE+ guides you through administrative procedures in France. Free simulation, personalized AI assistant and step-by-step guides.",
+      "keywords": "France benefits, CAF, APL, RSA, administrative procedures, foreigners France, benefits simulation"
+    }
+  },
+  
+  "landing": {
+    "hero": {
+      "badge": "For foreigners in France",
+      "title": "Discover all the benefits",
+      "titleHighlight": "you're entitled to",
+      "subtitle": "AIDE+ supports you in your administrative procedures in France with personalized simulation and an AI assistant available 24/7.",
+      "cta": "Start simulation",
+      "secondaryCta": "See pricing",
+      "stats": {
+        "aides": "Available benefits",
+        "users": "Users",
+        "satisfaction": "Satisfaction"
+      }
+    },
+    "features": {
+      "label": "Features",
+      "title": "Everything you need",
+      "subtitle": "A complete platform to support you in all your administrative procedures in France.",
+      "discover": {
+        "title": "Discover your benefits",
+        "description": "Personalized simulation to identify all financial aid you're eligible for."
+      },
+      "ai": {
+        "title": "24/7 AI Assistant",
+        "description": "Ask your questions and get personalized answers anytime with our intelligent assistant."
+      },
+      "procedures": {
+        "title": "Step-by-step guides",
+        "description": "Detailed guides for every administrative procedure, from residence permits to CAF applications."
+      },
+      "housing": {
+        "title": "Housing assistance",
+        "description": "Find housing and discover housing benefits like APL that you're entitled to."
+      },
+      "bilingual": {
+        "title": "French & English",
+        "description": "The entire platform is available in French and English to best support you."
+      },
+      "secure": {
+        "title": "Secure data",
+        "description": "Your data is encrypted and protected. We never share it with third parties."
+      }
+    },
+    "simulation": {
+      "label": "Free simulation",
+      "title": "Discover your benefits in 5 minutes",
+      "description": "Our simulation analyzes your situation and automatically identifies all financial aid you're eligible for.",
+      "benefit1": "100% free simulation",
+      "benefit2": "Personalized results",
+      "benefit3": "No registration required",
+      "cardTitle": "Start now",
+      "cardDescription": "Select your region to start the free simulation.",
+      "regionLabel": "Your region",
+      "regionPlaceholder": "Select a region",
+      "startButton": "Start simulation",
+      "note": "Your data is anonymous and secure"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Frequently asked questions",
+      "subtitle": "Find answers to the most common questions about AIDE+.",
+      "q1": "Is AIDE+ free?",
+      "a1": "Basic simulation is completely free. To access unlimited AI assistant and advanced features, check out our Premium plans.",
+      "q2": "Is my data secure?",
+      "a2": "Absolutely. All your data is encrypted and securely stored. We never share your information with third parties.",
+      "q3": "How does the simulation work?",
+      "a3": "Answer a few questions about your situation (age, status, income...) and our algorithm automatically calculates the benefits you're eligible for.",
+      "q4": "Can I use AIDE+ if I don't speak French?",
+      "a4": "Yes! AIDE+ is available in French and English. You can change the language at any time.",
+      "q5": "How can I contact support?",
+      "a5": "You can contact us via the Contact page or directly by email. Premium users get priority support.",
+      "q6": "Can I cancel my subscription at any time?",
+      "a6": "Yes, you can cancel your Premium subscription at any time. You'll keep access until the end of your billing period."
+    }
+  },
+  
+  "pricing": {
+    "label": "Pricing",
+    "title": "Choose your plan",
+    "subtitle": "Start for free and upgrade to Premium whenever you want.",
+    "popular": "Most popular",
+    "month": "month",
+    "free": {
+      "name": "Free",
+      "description": "To discover AIDE+",
+      "feature1": "Basic simulation",
+      "feature2": "3 AI messages per day",
+      "feature3": "Access to guides",
+      "feature4": "Community support",
+      "cta": "Start for free"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "For complete support",
+      "feature1": "Complete simulation",
+      "feature2": "Unlimited AI assistant",
+      "feature3": "All detailed guides",
+      "feature4": "Personalized alerts",
+      "feature5": "Priority support",
+      "feature6": "Data export",
+      "cta": "Go Premium"
+    }
+  },
+  
+  "footer": {
+    "description": "AIDE+ supports you in your administrative procedures in France.",
+    "product": "Product",
+    "resources": "Resources",
+    "legal": "Legal",
+    "simulation": "Simulation",
+    "aides": "Benefits",
+    "procedures": "Procedures",
+    "housing": "Housing",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "allRightsReserved": "All rights reserved.",
+    "madeWith": "Made with",
+    "inFrance": "in France"
+  }
+}

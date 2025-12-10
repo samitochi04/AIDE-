@@ -1,0 +1,186 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "back": "Retour",
+    "submit": "Envoyer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "viewAll": "Voir tout",
+    "learnMore": "En savoir plus",
+    "getStarted": "Commencer",
+    "seeMore": "Voir plus",
+    "showLess": "Voir moins",
+    "or": "ou",
+    "and": "et",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  
+  "nav": {
+    "home": "Accueil",
+    "aides": "Aides",
+    "features": "Fonctionnalités",
+    "housing": "Logement",
+    "procedures": "Démarches",
+    "chat": "Assistant IA",
+    "blog": "Blog",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "premium": "Premium",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "logout": "Se déconnecter",
+    "dashboard": "Tableau de bord"
+  },
+  
+  "accessibility": {
+    "switchLanguage": "Changer de langue",
+    "toggleTheme": "Changer le thème"
+  },
+  
+  "theme": {
+    "light": "Thème clair",
+    "dark": "Thème sombre"
+  },
+  
+  "seo": {
+    "home": {
+      "title": "AIDE+ | Découvrez toutes les aides auxquelles vous avez droit en France",
+      "description": "AIDE+ vous guide dans vos démarches administratives en France. Simulation gratuite, assistant IA personnalisé et guides étape par étape.",
+      "keywords": "aides France, CAF, APL, RSA, démarches administratives, étrangers France, simulation aides"
+    }
+  },
+  
+  "landing": {
+    "hero": {
+      "badge": "Pour les étrangers en France",
+      "title": "Découvrez toutes les aides",
+      "titleHighlight": "auxquelles vous avez droit",
+      "subtitle": "AIDE+ vous accompagne dans vos démarches administratives en France avec une simulation personnalisée et un assistant IA disponible 24/7.",
+      "cta": "Commencer la simulation",
+      "secondaryCta": "Voir les tarifs",
+      "stats": {
+        "aides": "Aides disponibles",
+        "users": "Utilisateurs",
+        "satisfaction": "Satisfaction"
+      }
+    },
+    "features": {
+      "label": "Fonctionnalités",
+      "title": "Tout ce dont vous avez besoin",
+      "subtitle": "Une plateforme complète pour vous accompagner dans toutes vos démarches administratives en France.",
+      "discover": {
+        "title": "Découvrez vos aides",
+        "description": "Simulation personnalisée pour identifier toutes les aides financières auxquelles vous êtes éligible."
+      },
+      "ai": {
+        "title": "Assistant IA 24/7",
+        "description": "Posez vos questions et obtenez des réponses personnalisées à tout moment grâce à notre assistant intelligent."
+      },
+      "procedures": {
+        "title": "Guides pas à pas",
+        "description": "Des guides détaillés pour chaque démarche administrative, de la demande de titre de séjour à la CAF."
+      },
+      "housing": {
+        "title": "Aide au logement",
+        "description": "Trouvez un logement et découvrez les aides au logement comme l'APL auxquelles vous avez droit."
+      },
+      "bilingual": {
+        "title": "Français & Anglais",
+        "description": "Toute la plateforme est disponible en français et en anglais pour vous accompagner au mieux."
+      },
+      "secure": {
+        "title": "Données sécurisées",
+        "description": "Vos données sont chiffrées et protégées. Nous ne les partageons jamais avec des tiers."
+      }
+    },
+    "simulation": {
+      "label": "Simulation gratuite",
+      "title": "Découvrez vos aides en 5 minutes",
+      "description": "Notre simulation analyse votre situation et identifie automatiquement toutes les aides financières auxquelles vous êtes éligible.",
+      "benefit1": "Simulation 100% gratuite",
+      "benefit2": "Résultats personnalisés",
+      "benefit3": "Aucune inscription requise",
+      "cardTitle": "Commencez maintenant",
+      "cardDescription": "Sélectionnez votre région pour commencer la simulation gratuite.",
+      "regionLabel": "Votre région",
+      "regionPlaceholder": "Sélectionnez une région",
+      "startButton": "Démarrer la simulation",
+      "note": "Vos données sont anonymes et sécurisées"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Questions fréquentes",
+      "subtitle": "Trouvez les réponses aux questions les plus courantes sur AIDE+.",
+      "q1": "AIDE+ est-il gratuit ?",
+      "a1": "La simulation de base est entièrement gratuite. Pour accéder à l'assistant IA illimité et aux fonctionnalités avancées, découvrez nos offres Premium.",
+      "q2": "Mes données sont-elles sécurisées ?",
+      "a2": "Absolument. Toutes vos données sont chiffrées et stockées de manière sécurisée. Nous ne partageons jamais vos informations avec des tiers.",
+      "q3": "Comment fonctionne la simulation ?",
+      "a3": "Répondez à quelques questions sur votre situation (âge, statut, revenus...) et notre algorithme calcule automatiquement les aides auxquelles vous êtes éligible.",
+      "q4": "Puis-je utiliser AIDE+ si je ne parle pas français ?",
+      "a4": "Oui ! AIDE+ est disponible en français et en anglais. Vous pouvez changer la langue à tout moment.",
+      "q5": "Comment contacter le support ?",
+      "a5": "Vous pouvez nous contacter via la page Contact ou directement par email. Les utilisateurs Premium bénéficient d'un support prioritaire.",
+      "q6": "Puis-je annuler mon abonnement à tout moment ?",
+      "a6": "Oui, vous pouvez annuler votre abonnement Premium à tout moment. Vous conserverez l'accès jusqu'à la fin de votre période de facturation."
+    }
+  },
+  
+  "pricing": {
+    "label": "Tarifs",
+    "title": "Choisissez votre plan",
+    "subtitle": "Commencez gratuitement et passez à Premium quand vous le souhaitez.",
+    "popular": "Plus populaire",
+    "month": "mois",
+    "free": {
+      "name": "Gratuit",
+      "description": "Pour découvrir AIDE+",
+      "feature1": "Simulation de base",
+      "feature2": "3 messages IA par jour",
+      "feature3": "Accès aux guides",
+      "feature4": "Support communautaire",
+      "cta": "Commencer gratuitement"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "Pour un accompagnement complet",
+      "feature1": "Simulation complète",
+      "feature2": "Assistant IA illimité",
+      "feature3": "Tous les guides détaillés",
+      "feature4": "Alertes personnalisées",
+      "feature5": "Support prioritaire",
+      "feature6": "Export des données",
+      "cta": "Passer à Premium"
+    }
+  },
+  
+  "footer": {
+    "description": "AIDE+ vous accompagne dans vos démarches administratives en France.",
+    "product": "Produit",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "simulation": "Simulation",
+    "aides": "Aides",
+    "procedures": "Démarches",
+    "housing": "Logement",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "allRightsReserved": "Tous droits réservés.",
+    "madeWith": "Fait avec",
+    "inFrance": "en France"
+  }
+}
