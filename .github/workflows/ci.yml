@@ -27,7 +27,4 @@ jobs:
           cd client
           npm install
 
-      - name: Build client
-        run: |
-          cd client
-          npm run build
+      
