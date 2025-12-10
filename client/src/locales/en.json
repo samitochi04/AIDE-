@@ -23,7 +23,16 @@
     "or": "or",
     "and": "and",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "upgrade": "Upgrade",
+    "logout": "Log out",
+    "upload": "Upload"
+  },
+  
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   },
   
   "nav": {
@@ -50,9 +59,53 @@
     "toggleTheme": "Toggle theme"
   },
   
-  "theme": {
-    "light": "Light theme",
-    "dark": "Dark theme"
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to continue to your dashboard"
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Start discovering your benefits today"
+    },
+    "email": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "John Doe",
+    "passwordHint": "At least 8 characters",
+    "forgotPassword": "Forgot password?",
+    "loginBtn": "Sign in",
+    "registerBtn": "Create account",
+    "continueWithGoogle": "Continue with Google",
+    "magicLink": "Magic Link",
+    "sendMagicLink": "Send magic link",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Sign up",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Sign in",
+    "termsNotice": "By continuing, you agree to our",
+    "checkEmail": "Check your email",
+    "magicLinkSent": "We've sent a magic link to {{email}}. Click the link to sign in.",
+    "verifyEmail": "Verify your email",
+    "verificationSent": "We've sent a verification email to {{email}}. Please verify your email to continue.",
+    "goToLogin": "Go to login",
+    "signOut": "Sign out",
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "nameRequired": "Full name is required",
+      "registrationFailed": "Registration failed. Please try again.",
+      "magicLinkFailed": "Failed to send magic link. Please try again.",
+      "googleFailed": "Google sign in failed. Please try again."
+    }
   },
   
   "seo": {
@@ -182,5 +235,343 @@
     "allRightsReserved": "All rights reserved.",
     "madeWith": "Made with",
     "inFrance": "in France"
+  },
+  
+  "dashboard": {
+    "search": "Search...",
+    "user": "User",
+    "sidebar": {
+      "main": "Main",
+      "account": "Account",
+      "overview": "Overview",
+      "aides": "My Benefits",
+      "housing": "Housing",
+      "procedures": "Procedures",
+      "chat": "AI Assistant",
+      "simulation": "Simulation",
+      "profile": "Profile",
+      "settings": "Settings",
+      "upgrade": "Go Premium",
+      "upgradeText": "Access all features"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "welcome": "Welcome, {{name}}!",
+      "subtitle": "Here's an overview of your benefits and tasks.",
+      "newSimulation": "New Simulation",
+      "eligibleAides": "Eligible Benefits",
+      "potentialSavings": "Potential Savings",
+      "completedProcedures": "Completed Procedures",
+      "savedHousing": "Saved Housing",
+      "recentAides": "Recent Benefits",
+      "upcomingTasks": "Upcoming Tasks",
+      "quickActions": "Quick Actions",
+      "askAI": "Ask AI",
+      "findHousing": "Find Housing",
+      "startProcedure": "Start Procedure",
+      "updateProfile": "Update Profile"
+    },
+    "status": {
+      "eligible": "Eligible",
+      "pending": "Pending",
+      "ineligible": "Ineligible"
+    },
+    "aides": {
+      "title": "My Benefits",
+      "subtitle": "View and manage all benefits you're eligible for",
+      "runNewSimulation": "New Simulation",
+      "searchPlaceholder": "Search benefits...",
+      "stats": {
+        "total": "Total Benefits",
+        "eligible": "Eligible",
+        "potential": "Monthly Potential",
+        "saved": "Saved"
+      },
+      "filters": {
+        "allStatuses": "All statuses",
+        "eligible": "Eligible",
+        "pending": "Pending",
+        "notEligible": "Not eligible"
+      },
+      "sort": {
+        "byAmount": "By amount",
+        "byName": "By name",
+        "byStatus": "By status"
+      },
+      "categories": {
+        "all": "All",
+        "housing": "Housing",
+        "family": "Family",
+        "employment": "Employment",
+        "social": "Social",
+        "health": "Health",
+        "education": "Education"
+      },
+      "status": {
+        "eligible": "Eligible",
+        "not-eligible": "Not Eligible",
+        "pending": "Pending",
+        "applied": "Applied"
+      },
+      "requirements": "Requirements",
+      "processingTime": "Processing Time",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "save": "Save",
+      "unsave": "Remove from saved",
+      "startApplication": "Start Application",
+      "free": "Free",
+      "noResults": "No benefits match your filters",
+      "clearFilters": "Clear filters"
+    },
+    "housing": {
+      "title": "Housing",
+      "subtitle": "Manage your housing situation and related benefits",
+      "currentSituation": "Current Situation",
+      "renter": "Renter",
+      "owner": "Home Owner",
+      "monthlyRent": "Monthly Rent",
+      "region": "Region",
+      "surface": "Surface",
+      "leaseContract": "Lease Contract",
+      "monthlyAides": "Monthly Housing Benefits",
+      "effectiveRent": "Effective Rent",
+      "yourAides": "Your Housing Benefits",
+      "addAide": "Add Benefit",
+      "nextPayment": "Next payment",
+      "estimatedDecision": "Est. decision",
+      "rentCalculator": "Rent Calculator",
+      "calculatorDescription": "See how much you'll actually pay after benefits",
+      "yourRent": "Your Rent",
+      "grossRent": "Gross Rent",
+      "housingAides": "Housing Benefits",
+      "youPay": "You Pay",
+      "helpfulResources": "Helpful Resources",
+      "needHelp": "Need Help?",
+      "needHelpDescription": "Ask our AI assistant about housing benefits and finding accommodation in France.",
+      "askAssistant": "Ask AI Assistant"
+    },
+    "procedures": {
+      "title": "My Procedures",
+      "subtitle": "Track and manage your benefit applications",
+      "startNew": "Start New",
+      "stats": {
+        "total": "Total",
+        "inProgress": "In Progress",
+        "pending": "Awaiting Review",
+        "completed": "Completed"
+      },
+      "filters": {
+        "all": "All",
+        "in-progress": "In Progress",
+        "pending": "Pending",
+        "not-started": "Not Started",
+        "completed": "Completed"
+      },
+      "deadline": "Deadline",
+      "expectedDecision": "Expected decision",
+      "step": "Step",
+      "stepsOverview": "Steps Overview",
+      "requiredDocuments": "Required Documents",
+      "showMore": "Show details",
+      "showLess": "Hide details",
+      "continue": "Continue",
+      "start": "Start",
+      "trackStatus": "Track Status",
+      "viewDetails": "View Details",
+      "noResults": "No procedures match your filters"
+    },
+    "chat": {
+      "title": "AI Assistant",
+      "history": "History",
+      "newChat": "New Chat",
+      "online": "Online",
+      "placeholder": "Ask me anything about French benefits...",
+      "disclaimer": "AI can make mistakes. Verify important information.",
+      "suggestionsLabel": "Try asking about:",
+      "suggestions": {
+        "housing": "What housing benefits am I eligible for?",
+        "eligibility": "Check my eligibility for CAF benefits",
+        "documents": "What documents do I need for APL?",
+        "timeline": "How long does APL application take?"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Manage your personal information",
+      "noName": "Add your name",
+      "uploadPhoto": "Upload Photo",
+      "stats": {
+        "aidesFound": "Benefits Found",
+        "applications": "Applications",
+        "savings": "Monthly Savings"
+      },
+      "subscription": {
+        "title": "Subscription",
+        "upgradeText": "Upgrade to Premium for unlimited AI assistant and priority support.",
+        "upgrade": "Upgrade to Premium"
+      },
+      "personalInfo": "Personal Information",
+      "addressInfo": "Address",
+      "residenceInfo": "Residence Status",
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone",
+        "birthDate": "Date of Birth",
+        "nationality": "Nationality",
+        "residenceStatus": "Residence Status",
+        "address": "Address",
+        "city": "City",
+        "postalCode": "Postal Code",
+        "region": "Region"
+      },
+      "placeholders": {
+        "firstName": "Enter first name",
+        "lastName": "Enter last name",
+        "phone": "+33 6 12 34 56 78",
+        "nationality": "Your nationality",
+        "residenceStatus": "e.g., Student Visa, Work Permit",
+        "address": "Street address",
+        "city": "City",
+        "postalCode": "75001",
+        "region": "Île-de-France"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your preferences and account",
+      "appearance": {
+        "title": "Appearance",
+        "theme": "Theme",
+        "themeDesc": "Choose your preferred color scheme",
+        "language": "Language",
+        "languageDesc": "Select your preferred language"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "email": "Email notifications",
+        "emailDesc": "Receive updates via email",
+        "newAides": "New benefits alerts",
+        "newAidesDesc": "Get notified when new benefits match your profile",
+        "deadlines": "Deadline reminders",
+        "deadlinesDesc": "Reminders for application deadlines",
+        "marketing": "Product updates",
+        "marketingDesc": "News and feature announcements"
+      },
+      "privacy": {
+        "title": "Privacy & Security",
+        "analytics": "Usage analytics",
+        "analyticsDesc": "Help us improve AIDE+ with anonymous usage data",
+        "changePassword": "Change Password",
+        "twoFactor": "Two-Factor Auth"
+      },
+      "data": {
+        "title": "Data & Account",
+        "export": "Export your data",
+        "exportDesc": "Download all your data in JSON format",
+        "download": "Download",
+        "signOut": "Sign out",
+        "signOutDesc": "Sign out of your account on this device",
+        "dangerZone": "Danger Zone",
+        "dangerDesc": "Permanently delete your account and all associated data. This action cannot be undone.",
+        "deleteAccount": "Delete Account"
+      },
+      "deleteModal": {
+        "title": "Delete Account?",
+        "description": "This will permanently delete your account and all your data. This action cannot be undone.",
+        "confirm": "Yes, Delete My Account"
+      }
+    }
+  },
+  
+  "simulation": {
+    "title": "Benefits Simulation",
+    "step": "Step {{current}} of {{total}}",
+    "calculating": "Calculating your benefits...",
+    "seeResults": "See my results",
+    "errors": {
+      "required": "This field is required"
+    },
+    "steps": {
+      "personal": {
+        "title": "Personal Information",
+        "description": "Tell us a bit about yourself"
+      },
+      "residence": {
+        "title": "Residence Status",
+        "description": "Your residence situation in France"
+      },
+      "family": {
+        "title": "Family Situation",
+        "description": "Your household composition"
+      },
+      "income": {
+        "title": "Income",
+        "description": "Your financial situation"
+      },
+      "housing": {
+        "title": "Housing",
+        "description": "Your housing situation"
+      }
+    },
+    "fields": {
+      "age": "Age",
+      "agePlaceholder": "Your age",
+      "nationality": "Nationality",
+      "nationalityPlaceholder": "Select your nationality",
+      "region": "Region",
+      "regionPlaceholder": "Select your region",
+      "residenceStatus": "Residence Status",
+      "residenceStatusPlaceholder": "Select your status",
+      "yearsInFrance": "Years in France",
+      "yearsInFrancePlaceholder": "Number of years",
+      "childrenCount": "Number of children",
+      "childrenCountPlaceholder": "How many children?",
+      "monthlyIncome": "Monthly income",
+      "monthlyIncomePlaceholder": "Net monthly income",
+      "employmentStatus": "Employment status",
+      "employmentStatusPlaceholder": "Select your status",
+      "rent": "Monthly rent",
+      "rentPlaceholder": "Your monthly rent"
+    },
+    "options": {
+      "eu": "EU Citizen",
+      "nonEu": "Non-EU Citizen",
+      "french": "French Citizen",
+      "student": "Student",
+      "worker": "Worker",
+      "refugee": "Refugee",
+      "familyVisa": "Family Visa",
+      "other": "Other",
+      "hasChildren": "I have children",
+      "noChildren": "No children",
+      "employed": "Employed",
+      "unemployed": "Unemployed",
+      "selfEmployed": "Self-employed",
+      "retired": "Retired",
+      "renter": "Renter",
+      "owner": "Home owner",
+      "hosted": "Hosted (by family/friends)",
+      "homeless": "No fixed address"
+    },
+    "results": {
+      "title": "Your Results",
+      "youCouldReceive": "You could receive",
+      "annually": "{{amount}} per year",
+      "eligibleFor": "You are eligible for {{count}} benefits",
+      "eligibleAides": "Eligible Benefits",
+      "learnMore": "Learn more",
+      "startProcedure": "Start procedure",
+      "createAccountToSee": "Create an account to see details",
+      "saveResults": "Save my results",
+      "ctaTitle": "Save your results",
+      "ctaDescription": "Create a free account to save your simulation results and track your benefits.",
+      "createFreeAccount": "Create free account",
+      "goToDashboard": "Go to your dashboard",
+      "dashboardDescription": "Track your benefits and start your procedures from your dashboard.",
+      "newSimulation": "Start a new simulation"
+    }
   }
 }

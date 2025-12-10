@@ -23,7 +23,16 @@
     "or": "ou",
     "and": "et",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "upgrade": "Passer Premium",
+    "logout": "Se déconnecter",
+    "upload": "Télécharger"
+  },
+  
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
   },
   
   "nav": {
@@ -50,9 +59,53 @@
     "toggleTheme": "Changer le thème"
   },
   
-  "theme": {
-    "light": "Thème clair",
-    "dark": "Thème sombre"
+  "auth": {
+    "login": {
+      "title": "Content de vous revoir",
+      "subtitle": "Connectez-vous pour accéder à votre tableau de bord"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Commencez à découvrir vos aides dès aujourd'hui"
+    },
+    "email": "Adresse email",
+    "emailPlaceholder": "vous@exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Jean Dupont",
+    "passwordHint": "Au moins 8 caractères",
+    "forgotPassword": "Mot de passe oublié ?",
+    "loginBtn": "Se connecter",
+    "registerBtn": "Créer un compte",
+    "continueWithGoogle": "Continuer avec Google",
+    "magicLink": "Lien magique",
+    "sendMagicLink": "Envoyer le lien magique",
+    "noAccount": "Pas encore de compte ?",
+    "registerLink": "S'inscrire",
+    "hasAccount": "Déjà un compte ?",
+    "loginLink": "Se connecter",
+    "termsNotice": "En continuant, vous acceptez nos",
+    "checkEmail": "Vérifiez votre email",
+    "magicLinkSent": "Nous avons envoyé un lien magique à {{email}}. Cliquez sur le lien pour vous connecter.",
+    "verifyEmail": "Vérifiez votre email",
+    "verificationSent": "Nous avons envoyé un email de vérification à {{email}}. Veuillez vérifier votre email pour continuer.",
+    "goToLogin": "Aller à la connexion",
+    "signOut": "Se déconnecter",
+    "errors": {
+      "invalidCredentials": "Email ou mot de passe invalide",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer un email valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "nameRequired": "Le nom complet est requis",
+      "registrationFailed": "L'inscription a échoué. Veuillez réessayer.",
+      "magicLinkFailed": "Échec de l'envoi du lien magique. Veuillez réessayer.",
+      "googleFailed": "Échec de la connexion Google. Veuillez réessayer."
+    }
   },
   
   "seo": {
@@ -182,5 +235,343 @@
     "allRightsReserved": "Tous droits réservés.",
     "madeWith": "Fait avec",
     "inFrance": "en France"
+  },
+  
+  "dashboard": {
+    "search": "Rechercher...",
+    "user": "Utilisateur",
+    "sidebar": {
+      "main": "Principal",
+      "account": "Compte",
+      "overview": "Aperçu",
+      "aides": "Mes Aides",
+      "housing": "Logement",
+      "procedures": "Démarches",
+      "chat": "Assistant IA",
+      "simulation": "Simulation",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "upgrade": "Passer Premium",
+      "upgradeText": "Accès à toutes les fonctionnalités"
+    },
+    "overview": {
+      "title": "Tableau de bord",
+      "welcome": "Bienvenue, {{name}} !",
+      "subtitle": "Voici un aperçu de vos aides et tâches.",
+      "newSimulation": "Nouvelle Simulation",
+      "eligibleAides": "Aides Éligibles",
+      "potentialSavings": "Économies Potentielles",
+      "completedProcedures": "Démarches Complétées",
+      "savedHousing": "Logements Enregistrés",
+      "recentAides": "Aides Récentes",
+      "upcomingTasks": "Tâches à Venir",
+      "quickActions": "Actions Rapides",
+      "askAI": "Demander à l'IA",
+      "findHousing": "Trouver un Logement",
+      "startProcedure": "Démarrer une Démarche",
+      "updateProfile": "Mettre à Jour le Profil"
+    },
+    "status": {
+      "eligible": "Éligible",
+      "pending": "En attente",
+      "ineligible": "Non éligible"
+    },
+    "aides": {
+      "title": "Mes Aides",
+      "subtitle": "Consultez et gérez toutes les aides auxquelles vous êtes éligible",
+      "runNewSimulation": "Nouvelle Simulation",
+      "searchPlaceholder": "Rechercher des aides...",
+      "stats": {
+        "total": "Total des Aides",
+        "eligible": "Éligible",
+        "potential": "Potentiel Mensuel",
+        "saved": "Enregistrées"
+      },
+      "filters": {
+        "allStatuses": "Tous les statuts",
+        "eligible": "Éligible",
+        "pending": "En attente",
+        "notEligible": "Non éligible"
+      },
+      "sort": {
+        "byAmount": "Par montant",
+        "byName": "Par nom",
+        "byStatus": "Par statut"
+      },
+      "categories": {
+        "all": "Toutes",
+        "housing": "Logement",
+        "family": "Famille",
+        "employment": "Emploi",
+        "social": "Social",
+        "health": "Santé",
+        "education": "Éducation"
+      },
+      "status": {
+        "eligible": "Éligible",
+        "not-eligible": "Non Éligible",
+        "pending": "En attente",
+        "applied": "Demande faite"
+      },
+      "requirements": "Conditions requises",
+      "processingTime": "Délai de traitement",
+      "showMore": "Voir plus",
+      "showLess": "Voir moins",
+      "save": "Enregistrer",
+      "unsave": "Retirer des favoris",
+      "startApplication": "Faire la demande",
+      "free": "Gratuit",
+      "noResults": "Aucune aide ne correspond à vos filtres",
+      "clearFilters": "Effacer les filtres"
+    },
+    "housing": {
+      "title": "Logement",
+      "subtitle": "Gérez votre situation de logement et les aides associées",
+      "currentSituation": "Situation Actuelle",
+      "renter": "Locataire",
+      "owner": "Propriétaire",
+      "monthlyRent": "Loyer Mensuel",
+      "region": "Région",
+      "surface": "Surface",
+      "leaseContract": "Contrat de bail",
+      "monthlyAides": "Aides au Logement Mensuelles",
+      "effectiveRent": "Loyer Effectif",
+      "yourAides": "Vos Aides au Logement",
+      "addAide": "Ajouter une Aide",
+      "nextPayment": "Prochain versement",
+      "estimatedDecision": "Décision estimée",
+      "rentCalculator": "Calculateur de Loyer",
+      "calculatorDescription": "Voyez combien vous paierez réellement après les aides",
+      "yourRent": "Votre Loyer",
+      "grossRent": "Loyer Brut",
+      "housingAides": "Aides au Logement",
+      "youPay": "Vous Payez",
+      "helpfulResources": "Ressources Utiles",
+      "needHelp": "Besoin d'aide ?",
+      "needHelpDescription": "Posez des questions à notre assistant IA sur les aides au logement et la recherche d'un logement en France.",
+      "askAssistant": "Demander à l'Assistant IA"
+    },
+    "procedures": {
+      "title": "Mes Démarches",
+      "subtitle": "Suivez et gérez vos demandes d'aides",
+      "startNew": "Nouvelle Démarche",
+      "stats": {
+        "total": "Total",
+        "inProgress": "En Cours",
+        "pending": "En Attente",
+        "completed": "Terminées"
+      },
+      "filters": {
+        "all": "Toutes",
+        "in-progress": "En Cours",
+        "pending": "En Attente",
+        "not-started": "Non Commencées",
+        "completed": "Terminées"
+      },
+      "deadline": "Date limite",
+      "expectedDecision": "Décision prévue",
+      "step": "Étape",
+      "stepsOverview": "Aperçu des Étapes",
+      "requiredDocuments": "Documents Requis",
+      "showMore": "Voir les détails",
+      "showLess": "Masquer les détails",
+      "continue": "Continuer",
+      "start": "Commencer",
+      "trackStatus": "Suivre le Statut",
+      "viewDetails": "Voir les Détails",
+      "noResults": "Aucune démarche ne correspond à vos filtres"
+    },
+    "chat": {
+      "title": "Assistant IA",
+      "history": "Historique",
+      "newChat": "Nouvelle Discussion",
+      "online": "En ligne",
+      "placeholder": "Posez-moi une question sur les aides en France...",
+      "disclaimer": "L'IA peut faire des erreurs. Vérifiez les informations importantes.",
+      "suggestionsLabel": "Essayez de demander :",
+      "suggestions": {
+        "housing": "À quelles aides au logement suis-je éligible ?",
+        "eligibility": "Vérifier mon éligibilité aux aides de la CAF",
+        "documents": "Quels documents faut-il pour l'APL ?",
+        "timeline": "Combien de temps prend une demande d'APL ?"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Gérez vos informations personnelles",
+      "noName": "Ajoutez votre nom",
+      "uploadPhoto": "Télécharger une Photo",
+      "stats": {
+        "aidesFound": "Aides Trouvées",
+        "applications": "Demandes",
+        "savings": "Économies Mensuelles"
+      },
+      "subscription": {
+        "title": "Abonnement",
+        "upgradeText": "Passez à Premium pour un assistant IA illimité et un support prioritaire.",
+        "upgrade": "Passer à Premium"
+      },
+      "personalInfo": "Informations Personnelles",
+      "addressInfo": "Adresse",
+      "residenceInfo": "Statut de Résidence",
+      "fields": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "birthDate": "Date de Naissance",
+        "nationality": "Nationalité",
+        "residenceStatus": "Statut de Résidence",
+        "address": "Adresse",
+        "city": "Ville",
+        "postalCode": "Code Postal",
+        "region": "Région"
+      },
+      "placeholders": {
+        "firstName": "Entrez votre prénom",
+        "lastName": "Entrez votre nom",
+        "phone": "+33 6 12 34 56 78",
+        "nationality": "Votre nationalité",
+        "residenceStatus": "ex: Visa étudiant, Titre de séjour",
+        "address": "Adresse",
+        "city": "Ville",
+        "postalCode": "75001",
+        "region": "Île-de-France"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez vos préférences et votre compte",
+      "appearance": {
+        "title": "Apparence",
+        "theme": "Thème",
+        "themeDesc": "Choisissez votre thème de couleur préféré",
+        "language": "Langue",
+        "languageDesc": "Sélectionnez votre langue préférée"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "email": "Notifications par e-mail",
+        "emailDesc": "Recevoir des mises à jour par e-mail",
+        "newAides": "Alertes nouvelles aides",
+        "newAidesDesc": "Être notifié quand de nouvelles aides correspondent à votre profil",
+        "deadlines": "Rappels de dates limites",
+        "deadlinesDesc": "Rappels pour les dates limites de demandes",
+        "marketing": "Mises à jour du produit",
+        "marketingDesc": "Actualités et annonces de fonctionnalités"
+      },
+      "privacy": {
+        "title": "Confidentialité & Sécurité",
+        "analytics": "Analyses d'utilisation",
+        "analyticsDesc": "Aidez-nous à améliorer AIDE+ avec des données d'utilisation anonymes",
+        "changePassword": "Changer le Mot de Passe",
+        "twoFactor": "Authentification à Deux Facteurs"
+      },
+      "data": {
+        "title": "Données & Compte",
+        "export": "Exporter vos données",
+        "exportDesc": "Téléchargez toutes vos données au format JSON",
+        "download": "Télécharger",
+        "signOut": "Déconnexion",
+        "signOutDesc": "Se déconnecter de votre compte sur cet appareil",
+        "dangerZone": "Zone Dangereuse",
+        "dangerDesc": "Supprimez définitivement votre compte et toutes les données associées. Cette action est irréversible.",
+        "deleteAccount": "Supprimer le Compte"
+      },
+      "deleteModal": {
+        "title": "Supprimer le Compte ?",
+        "description": "Cela supprimera définitivement votre compte et toutes vos données. Cette action est irréversible.",
+        "confirm": "Oui, Supprimer Mon Compte"
+      }
+    }
+  },
+  
+  "simulation": {
+    "title": "Simulation des Aides",
+    "step": "Étape {{current}} sur {{total}}",
+    "calculating": "Calcul de vos aides en cours...",
+    "seeResults": "Voir mes résultats",
+    "errors": {
+      "required": "Ce champ est obligatoire"
+    },
+    "steps": {
+      "personal": {
+        "title": "Informations Personnelles",
+        "description": "Parlez-nous un peu de vous"
+      },
+      "residence": {
+        "title": "Statut de Résidence",
+        "description": "Votre situation de résidence en France"
+      },
+      "family": {
+        "title": "Situation Familiale",
+        "description": "La composition de votre foyer"
+      },
+      "income": {
+        "title": "Revenus",
+        "description": "Votre situation financière"
+      },
+      "housing": {
+        "title": "Logement",
+        "description": "Votre situation de logement"
+      }
+    },
+    "fields": {
+      "age": "Âge",
+      "agePlaceholder": "Votre âge",
+      "nationality": "Nationalité",
+      "nationalityPlaceholder": "Sélectionnez votre nationalité",
+      "region": "Région",
+      "regionPlaceholder": "Sélectionnez votre région",
+      "residenceStatus": "Statut de résidence",
+      "residenceStatusPlaceholder": "Sélectionnez votre statut",
+      "yearsInFrance": "Années en France",
+      "yearsInFrancePlaceholder": "Nombre d'années",
+      "childrenCount": "Nombre d'enfants",
+      "childrenCountPlaceholder": "Combien d'enfants ?",
+      "monthlyIncome": "Revenus mensuels",
+      "monthlyIncomePlaceholder": "Revenus mensuels nets",
+      "employmentStatus": "Statut d'emploi",
+      "employmentStatusPlaceholder": "Sélectionnez votre statut",
+      "rent": "Loyer mensuel",
+      "rentPlaceholder": "Votre loyer mensuel"
+    },
+    "options": {
+      "eu": "Citoyen UE",
+      "nonEu": "Citoyen hors UE",
+      "french": "Citoyen français",
+      "student": "Étudiant",
+      "worker": "Travailleur",
+      "refugee": "Réfugié",
+      "familyVisa": "Visa familial",
+      "other": "Autre",
+      "hasChildren": "J'ai des enfants",
+      "noChildren": "Pas d'enfants",
+      "employed": "Employé",
+      "unemployed": "Sans emploi",
+      "selfEmployed": "Indépendant",
+      "retired": "Retraité",
+      "renter": "Locataire",
+      "owner": "Propriétaire",
+      "hosted": "Hébergé (famille/amis)",
+      "homeless": "Sans domicile fixe"
+    },
+    "results": {
+      "title": "Vos Résultats",
+      "youCouldReceive": "Vous pourriez recevoir",
+      "annually": "{{amount}} par an",
+      "eligibleFor": "Vous êtes éligible à {{count}} aides",
+      "eligibleAides": "Aides Éligibles",
+      "learnMore": "En savoir plus",
+      "startProcedure": "Démarrer la démarche",
+      "createAccountToSee": "Créez un compte pour voir les détails",
+      "saveResults": "Sauvegarder mes résultats",
+      "ctaTitle": "Sauvegardez vos résultats",
+      "ctaDescription": "Créez un compte gratuit pour sauvegarder les résultats de votre simulation et suivre vos aides.",
+      "createFreeAccount": "Créer un compte gratuit",
+      "goToDashboard": "Aller au tableau de bord",
+      "dashboardDescription": "Suivez vos aides et démarrez vos démarches depuis votre tableau de bord.",
+      "newSimulation": "Faire une nouvelle simulation"
+    }
   }
 }

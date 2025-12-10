@@ -1,0 +1,547 @@
+.container {
+  padding: 0;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.headerContent {
+  flex: 1;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color);
+  font-size: 1.5rem;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: 0.813rem;
+  color: var(--text-secondary);
+}
+
+/* Filter Tabs */
+.filterTabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.filterTab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filterTab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filterTab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.filterTab.active .filterCount {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Procedures List */
+.proceduresList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.emptyState i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Procedure Card */
+.procedureCard {
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.procedureCard:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.procedureCard.expanded {
+  border-color: var(--primary);
+}
+
+.procedureHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.procedureInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.procedureTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.375rem;
+}
+
+.procedureName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.procedureAide {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem 0;
+}
+
+.procedureMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.procedureMeta span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.procedureMeta i {
+  font-size: 0.875rem;
+}
+
+/* Progress Circle */
+.progressCircle {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+}
+
+.progressCircle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progressBg {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 3;
+}
+
+.progressFill {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Steps Progress */
+.stepsProgress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stepsTrack {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.stepDot {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  z-index: 1;
+}
+
+.stepDot::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(100% - 4px);
+  height: 2px;
+  background: var(--border-color);
+  z-index: 0;
+}
+
+.stepDot:last-child::after {
+  display: none;
+}
+
+.stepDot.completed {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.stepDot.completed::after {
+  background: var(--success);
+}
+
+.stepDot.current {
+  border-color: var(--primary);
+  color: var(--primary);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(26, 115, 232, 0); }
+}
+
+.stepsText {
+  font-size: 0.813rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Procedure Details */
+.procedureDetails {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.25rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.detailSection {
+  margin-bottom: 1.25rem;
+}
+
+.detailSection:last-child {
+  margin-bottom: 0;
+}
+
+.detailSection h4 {
+  font-size: 0.813rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Steps List */
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.stepItem.completed {
+  opacity: 0.7;
+}
+
+.stepIndicator {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.stepItem.completed .stepIndicator {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.stepContent {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stepName {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.stepItem.completed .stepName {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.stepDate {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Documents List */
+.documentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.documentItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.documentItem i {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.documentItem.uploaded i {
+  color: var(--success);
+}
+
+.documentItem span {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.documentItem button {
+  margin-left: auto;
+}
+
+/* Procedure Actions */
+.procedureActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.expandBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.813rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.expandBtn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.expandBtn i {
+  font-size: 1.25rem;
+}
+
+.actionBtns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .procedureHeader {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .progressCircle {
+    align-self: flex-start;
+  }
+  
+  .stepsProgress {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .stepsTrack {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .procedureActions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .actionBtns {
+    width: 100%;
+  }
+  
+  .actionBtns button {
+    flex: 1;
+  }
+}

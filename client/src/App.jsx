@@ -13,10 +13,21 @@ import { SimulationProvider } from './context/SimulationContext'
 import './i18n'
 
 // Layouts
-import { PublicLayout } from './components/layout'
+import { PublicLayout, DashboardLayout } from './components/layout'
 
 // Pages
 import LandingPage from './pages/landing'
+import { 
+  Overview as DashboardOverview,
+  Aides as DashboardAides,
+  Housing as DashboardHousing,
+  Procedures as DashboardProcedures,
+  Chat as DashboardChat,
+  Profile as DashboardProfile,
+  Settings as DashboardSettings
+} from './pages/dashboard'
+import { Login, Register } from './pages/auth'
+import { Simulation, Results as SimulationResults } from './pages/simulation'
 
 // Styles
 import './styles/index.css'
@@ -47,7 +58,26 @@ function App() {
                       {/* Public Routes */}
                       <Route element={<PublicLayout />}>
                         <Route path="/" element={<LandingPage />} />
-                        {/* Add more routes as pages are built */}
+                        {/* Add more public routes as pages are built */}
+                      </Route>
+                      
+                      {/* Auth Routes */}
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      
+                      {/* Simulation Routes */}
+                      <Route path="/simulation" element={<Simulation />} />
+                      <Route path="/simulation/results" element={<SimulationResults />} />
+                      
+                      {/* Dashboard Routes (Protected) */}
+                      <Route path="/dashboard" element={<DashboardLayout />}>
+                        <Route index element={<DashboardOverview />} />
+                        <Route path="aides" element={<DashboardAides />} />
+                        <Route path="housing" element={<DashboardHousing />} />
+                        <Route path="procedures" element={<DashboardProcedures />} />
+                        <Route path="chat" element={<DashboardChat />} />
+                        <Route path="profile" element={<DashboardProfile />} />
+                        <Route path="settings" element={<DashboardSettings />} />
                       </Route>
                     </Routes>
                   </SimulationProvider>
