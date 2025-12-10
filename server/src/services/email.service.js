@@ -1,9 +1,6 @@
-import { Resend } from 'resend';
-import { emailConfig } from '../config/email.js';
+import { transporter, emailConfig } from '../config/email.js';
 import logger from '../utils/logger.js';
 import { APP_CONFIG } from '../config/index.js';
-
-const resend = new Resend(emailConfig.apiKey);
 
 /**
  * Email templates
@@ -289,17 +286,17 @@ class EmailService {
    */
   async send({ to, subject, html, text }) {
     try {
-      const result = await resend.emails.send({
+      const result = await transporter.sendMail({
         from: this.from,
         to,
         subject,
         html,
         text,
-        reply_to: this.replyTo,
+        replyTo: this.replyTo,
       });
 
-      logger.info('Email sent successfully', { to, subject, id: result.id });
-      return result;
+      logger.info('Email sent successfully', { to, subject, messageId: result.messageId });
+      return { id: result.messageId, ...result };
     } catch (error) {
       logger.error('Failed to send email', { to, subject, error: error.message });
       throw error;

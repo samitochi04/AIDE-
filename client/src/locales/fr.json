@@ -94,6 +94,11 @@
     "verificationSent": "Nous avons envoyé un email de vérification à {{email}}. Veuillez vérifier votre email pour continuer.",
     "goToLogin": "Aller à la connexion",
     "signOut": "Se déconnecter",
+    "verifying": "Vérification...",
+    "pleaseWait": "Veuillez patienter pendant que nous vérifions vos identifiants",
+    "verified": "Vérifié !",
+    "redirecting": "Redirection vers votre tableau de bord...",
+    "backToLogin": "Retour à la connexion",
     "errors": {
       "invalidCredentials": "Email ou mot de passe invalide",
       "emailRequired": "L'email est requis",
@@ -104,7 +109,10 @@
       "nameRequired": "Le nom complet est requis",
       "registrationFailed": "L'inscription a échoué. Veuillez réessayer.",
       "magicLinkFailed": "Échec de l'envoi du lien magique. Veuillez réessayer.",
-      "googleFailed": "Échec de la connexion Google. Veuillez réessayer."
+      "googleFailed": "Échec de la connexion Google. Veuillez réessayer.",
+      "callbackTimeout": "La vérification a expiré. Veuillez réessayer.",
+      "callbackFailed": "La vérification a échoué. Veuillez vous reconnecter.",
+      "verificationFailed": "Échec de la vérification"
     }
   },
   
@@ -572,6 +580,166 @@
       "goToDashboard": "Aller au tableau de bord",
       "dashboardDescription": "Suivez vos aides et démarrez vos démarches depuis votre tableau de bord.",
       "newSimulation": "Faire une nouvelle simulation"
+    }
+  },
+  
+  "pricingPage": {
+    "seo": {
+      "title": "Tarifs",
+      "description": "Choisissez le plan qui vous convient. Commencez gratuitement et passez à Premium pour un accès complet."
+    },
+    "badge": "Tarification simple",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "save": "-17%",
+    "billedYearly": "Facturé {{amount}}€ par an",
+    "comparison": {
+      "title": "Comparer les plans",
+      "feature": "Fonctionnalité",
+      "simulation": "Simulation des aides",
+      "basic": "Basique",
+      "complete": "Complète",
+      "aiMessages": "Messages IA",
+      "unlimited": "Illimité",
+      "guides": "Guides pas-à-pas",
+      "alerts": "Alertes personnalisées",
+      "support": "Support",
+      "community": "Communauté",
+      "priority": "Prioritaire",
+      "export": "Export des données"
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": "Puis-je annuler mon abonnement à tout moment ?",
+      "a1": "Oui, vous pouvez annuler votre abonnement Premium à tout moment. Vous conserverez l'accès jusqu'à la fin de votre période de facturation.",
+      "q2": "Mon paiement est-il sécurisé ?",
+      "a2": "Absolument. Nous utilisons Stripe pour le traitement des paiements, ce qui garantit le plus haut niveau de sécurité pour vos transactions.",
+      "q3": "Puis-je passer du mensuel à l'annuel ?",
+      "a3": "Oui, vous pouvez changer de période de facturation à tout moment. Le changement prendra effet au début de votre prochain cycle.",
+      "q4": "Qu'advient-il de mes données si j'annule ?",
+      "a4": "Vos données vous appartiennent. Si vous annulez, vous pouvez exporter toutes vos données avant la fin de votre abonnement."
+    },
+    "cta": {
+      "title": "Prêt à commencer ?",
+      "description": "Démarrez votre simulation gratuite maintenant et découvrez toutes les aides auxquelles vous avez droit.",
+      "button": "Commencer la simulation gratuite"
+    }
+  },
+  
+  "contact": {
+    "seo": {
+      "title": "Nous contacter",
+      "description": "Contactez l'équipe AIDE+. Nous sommes là pour répondre à vos questions sur les aides en France."
+    },
+    "badge": "Nous contacter",
+    "title": "Contactez-nous",
+    "subtitle": "Une question ou besoin d'aide ? Nous sommes là pour vous.",
+    "methods": {
+      "email": {
+        "title": "Par email",
+        "description": "Envoyez-nous un email, nous répondons sous 24h."
+      },
+      "chat": {
+        "title": "Assistant IA",
+        "description": "Obtenez des réponses instantanées de notre assistant IA.",
+        "value": "Disponible 24/7"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Trouvez des réponses aux questions courantes.",
+        "value": "Consulter la FAQ"
+      }
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "description": "Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.",
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "Email",
+      "emailPlaceholder": "vous@exemple.com",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Comment pouvons-nous vous aider ?",
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre question ou problème...",
+      "submit": "Envoyer le message"
+    },
+    "info": {
+      "response": {
+        "title": "Temps de réponse",
+        "value": "Sous 24 heures"
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "value": "Vos données sont protégées"
+      },
+      "languages": {
+        "title": "Langues",
+        "value": "Français et Anglais"
+      }
+    },
+    "success": {
+      "title": "Message envoyé !",
+      "message": "Merci de nous avoir contactés. Nous vous répondrons sous 24 heures.",
+      "sendAnother": "Envoyer un autre message"
+    },
+    "error": "Échec de l'envoi du message. Veuillez réessayer."
+  },
+  
+  "blog": {
+    "seo": {
+      "title": "Blog",
+      "description": "Guides, actualités et conseils sur les aides et démarches administratives en France."
+    },
+    "badge": "Ressources",
+    "title": "Blog AIDE+",
+    "subtitle": "Guides, actualités et conseils pour naviguer dans les aides en France.",
+    "locale": "fr-FR",
+    "featured": "À la une",
+    "readTime": "{{minutes}} min de lecture",
+    "readMore": "Lire la suite",
+    "searchPlaceholder": "Rechercher des articles...",
+    "categories": {
+      "all": "Tous",
+      "guides": "Guides",
+      "news": "Actualités",
+      "tutorials": "Tutoriels"
+    },
+    "noResults": {
+      "title": "Aucun article trouvé",
+      "description": "Essayez d'ajuster votre recherche ou vos filtres.",
+      "reset": "Réinitialiser les filtres"
+    },
+    "newsletter": {
+      "title": "Restez informé",
+      "description": "Abonnez-vous à notre newsletter pour recevoir les derniers guides et actualités.",
+      "placeholder": "Entrez votre email",
+      "subscribe": "S'abonner"
+    },
+    "posts": {
+      "apl": {
+        "title": "Guide complet APL 2024 : Éligibilité et demande",
+        "excerpt": "Tout ce que vous devez savoir sur l'aide au logement (APL) : critères d'éligibilité, comment faire une demande et conseils pour maximiser vos aides."
+      },
+      "caf": {
+        "title": "Nouveautés CAF 2024 : Ce qui change pour les bénéficiaires",
+        "excerpt": "Découvrez les derniers changements des prestations CAF et comment ils peuvent affecter votre situation."
+      },
+      "prime": {
+        "title": "Prime d'activité : Conditions et calcul",
+        "excerpt": "Un guide complet sur la Prime d'activité : qui est éligible, comment elle est calculée et comment en faire la demande."
+      },
+      "rsa": {
+        "title": "Demande de RSA : Guide étape par étape",
+        "excerpt": "Suivez notre guide détaillé pour faire une demande de RSA (Revenu de Solidarité Active) et comprendre vos droits."
+      },
+      "student": {
+        "title": "Aides au logement étudiant : Guide complet",
+        "excerpt": "Tout ce que les étudiants doivent savoir sur les aides au logement : APL, ALS et comment maximiser vos aides."
+      },
+      "aspa": {
+        "title": "ASPA : Les allocations minimum vieillesse expliquées",
+        "excerpt": "Comprendre l'Allocation de Solidarité aux Personnes Âgées et comment en faire la demande si vous êtes éligible."
+      }
     }
   }
 }

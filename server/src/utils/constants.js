@@ -18,6 +18,30 @@ export const AI_MESSAGE_LIMITS = {
   [SUBSCRIPTION_TIERS.ENTERPRISE]: Infinity,
 };
 
+// AI limits configuration (used by ai.service.js)
+export const AI_LIMITS = {
+  free: {
+    messagesPerMonth: 30,
+    messagesPerDay: 10,
+    maxTokens: 1000,
+  },
+  basic: {
+    messagesPerMonth: 150,
+    messagesPerDay: 50,
+    maxTokens: 2000,
+  },
+  premium: {
+    messagesPerMonth: 500,
+    messagesPerDay: 200,
+    maxTokens: 4000,
+  },
+  enterprise: {
+    messagesPerMonth: Infinity,
+    messagesPerDay: Infinity,
+    maxTokens: 8000,
+  },
+};
+
 // User statuses
 export const USER_STATUS = {
   STUDENT: 'student',

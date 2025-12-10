@@ -442,7 +442,7 @@ const { tier, canAccess, showUpgrade } = useSubscription()
 │  - Translation files in public/locales/                     │
 │  - Auto-detect from browser (navigator.language)            │
 │  - User can override in settings                            │
-│  - Store preference: localStorage + user_profiles           │
+│  - Store preference: localStorage + profiles           │
 │                                                             │
 │  DYNAMIC CONTENT (Database):                                │
 │  ──────────────────────────                                 │
@@ -571,7 +571,7 @@ const { data } = await supabase
 
 // Read own profile (RLS enforced)
 const { data } = await supabase
-  .from('user_profiles')
+  .from('profiles')
   .select('*')
   .single()
 

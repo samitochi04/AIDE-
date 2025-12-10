@@ -1,0 +1,13 @@
+# AIDE+ robots.txt
+# https://aideplus.fr
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://aideplus.fr/sitemap.xml
+
+# Disallow admin/auth routes from indexing
+Disallow: /dashboard/
+Disallow: /auth/callback
+Disallow: /api/

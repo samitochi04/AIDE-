@@ -26,8 +26,9 @@ import {
   Profile as DashboardProfile,
   Settings as DashboardSettings
 } from './pages/dashboard'
-import { Login, Register } from './pages/auth'
+import { Login, Register, AuthCallback } from './pages/auth'
 import { Simulation, Results as SimulationResults } from './pages/simulation'
+import { Pricing, Contact, Blog } from './pages/public'
 
 // Styles
 import './styles/index.css'
@@ -58,12 +59,15 @@ function App() {
                       {/* Public Routes */}
                       <Route element={<PublicLayout />}>
                         <Route path="/" element={<LandingPage />} />
-                        {/* Add more public routes as pages are built */}
+                        <Route path="/pricing" element={<Pricing />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/blog" element={<Blog />} />
                       </Route>
                       
                       {/* Auth Routes */}
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Register />} />
+                      <Route path="/auth/callback" element={<AuthCallback />} />
                       
                       {/* Simulation Routes */}
                       <Route path="/simulation" element={<Simulation />} />

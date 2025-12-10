@@ -111,9 +111,7 @@ export function Login() {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className={styles.header}>
-          <Link to={ROUTES.HOME}>
-            <Logo size="md" />
-          </Link>
+          <Logo size="md" linkTo={ROUTES.HOME} />
         </div>
 
         <Card className={styles.card}>
@@ -173,7 +171,7 @@ export function Login() {
                   placeholder={t('auth.emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  leftIcon={<i className="ri-mail-line" />}
+                  icon="ri-mail-line"
                   required
                 />
               </div>
@@ -186,8 +184,7 @@ export function Login() {
                     placeholder={t('auth.passwordPlaceholder')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    leftIcon={<i className="ri-lock-line" />}
-                    showPasswordToggle
+                    icon="ri-lock-line"
                     required
                   />
                   <div className={styles.forgotPassword}>

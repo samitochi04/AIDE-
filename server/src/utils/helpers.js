@@ -82,6 +82,13 @@ export const generateCode = (length = 8) => {
 };
 
 /**
+ * Generate random token (alias for generateCode)
+ */
+export const generateToken = (length = 8) => {
+  return generateCode(length);
+};
+
+/**
  * Check if string is valid UUID
  */
 export const isValidUUID = (str) => {

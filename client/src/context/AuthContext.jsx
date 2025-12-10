@@ -19,13 +19,14 @@ export function AuthProvider({ children }) {
     
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .select('*')
         .eq('id', userId)
-        .single()
+        .maybeSingle()  // Use maybeSingle to not throw if no row found
 
       if (error) {
         console.error('Error fetching profile:', error)
+        // Don't block on profile errors - user can still use the app
         setProfile(null)
         return null
       }
@@ -42,6 +43,7 @@ export function AuthProvider({ children }) {
   // Initialize auth state
   useEffect(() => {
     let mounted = true
+    let timeoutId = null
 
     async function initAuth() {
       try {
@@ -54,7 +56,8 @@ export function AuthProvider({ children }) {
         setUser(currentSession?.user ?? null)
         
         if (currentSession?.user) {
-          await fetchProfile(currentSession.user.id)
+          // Don't await profile fetch - let it happen in background
+          fetchProfile(currentSession.user.id).catch(console.error)
         }
       } catch (err) {
         console.error('Auth initialization error:', err)
@@ -65,6 +68,15 @@ export function AuthProvider({ children }) {
         }
       }
     }
+
+    // Timeout safety - ensure loading stops after 5 seconds max
+    timeoutId = setTimeout(() => {
+      if (mounted && loading) {
+        console.warn('Auth initialization timeout - forcing load complete')
+        setLoading(false)
+        setInitialized(true)
+      }
+    }, 5000)
 
     initAuth()
 
@@ -77,7 +89,8 @@ export function AuthProvider({ children }) {
         setUser(newSession?.user ?? null)
         
         if (newSession?.user) {
-          await fetchProfile(newSession.user.id)
+          // Don't await - fetch in background
+          fetchProfile(newSession.user.id).catch(console.error)
         } else {
           setProfile(null)
         }
@@ -88,9 +101,10 @@ export function AuthProvider({ children }) {
 
     return () => {
       mounted = false
+      if (timeoutId) clearTimeout(timeoutId)
       subscription.unsubscribe()
     }
-  }, [fetchProfile])
+  }, [fetchProfile, loading])
 
   // Sign in with magic link
   const signInWithMagicLink = async (email) => {
@@ -174,7 +188,7 @@ export function AuthProvider({ children }) {
     if (!user) return { error: new Error('Not authenticated') }
     
     const { data, error } = await supabase
-      .from('user_profiles')
+      .from('profiles')
       .update({
         ...updates,
         updated_at: new Date().toISOString(),

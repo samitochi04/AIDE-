@@ -13,6 +13,15 @@ export const AI_CONFIG = {
   temperature: 0.7,
 };
 
+// Alias for ai.service.js compatibility
+export const openaiConfig = {
+  apiKey: process.env.OPENAI_API_KEY,
+  chatModel: AI_CONFIG.chatModel,
+  embeddingModel: AI_CONFIG.embeddingModel,
+  maxTokens: AI_CONFIG.maxTokens,
+  temperature: AI_CONFIG.temperature,
+};
+
 // System prompt for AIDE+ assistant
 export const SYSTEM_PROMPT = `Tu es AIDE+, un assistant intelligent spécialisé dans l'aide aux personnes en France, particulièrement les étrangers, pour naviguer les aides gouvernementales et les procédures administratives.
 

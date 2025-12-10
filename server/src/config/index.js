@@ -5,7 +5,7 @@
 export { supabaseAdmin, createSupabaseClient } from './supabase.js';
 export { stripe, STRIPE_PRICES, getPriceToTier } from './stripe.js';
 export { openai, AI_CONFIG, SYSTEM_PROMPT } from './openai.js';
-export { resend, EMAIL_CONFIG } from './email.js';
+export { transporter, EMAIL_CONFIG } from './email.js';
 
 // General app configuration
 export const APP_CONFIG = {

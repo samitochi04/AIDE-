@@ -94,6 +94,11 @@
     "verificationSent": "We've sent a verification email to {{email}}. Please verify your email to continue.",
     "goToLogin": "Go to login",
     "signOut": "Sign out",
+    "verifying": "Verifying...",
+    "pleaseWait": "Please wait while we verify your credentials",
+    "verified": "Verified!",
+    "redirecting": "Redirecting you to your dashboard...",
+    "backToLogin": "Back to login",
     "errors": {
       "invalidCredentials": "Invalid email or password",
       "emailRequired": "Email is required",
@@ -104,7 +109,10 @@
       "nameRequired": "Full name is required",
       "registrationFailed": "Registration failed. Please try again.",
       "magicLinkFailed": "Failed to send magic link. Please try again.",
-      "googleFailed": "Google sign in failed. Please try again."
+      "googleFailed": "Google sign in failed. Please try again.",
+      "callbackTimeout": "Verification timed out. Please try again.",
+      "callbackFailed": "Verification failed. Please try signing in again.",
+      "verificationFailed": "Verification Failed"
     }
   },
   
@@ -572,6 +580,166 @@
       "goToDashboard": "Go to your dashboard",
       "dashboardDescription": "Track your benefits and start your procedures from your dashboard.",
       "newSimulation": "Start a new simulation"
+    }
+  },
+  
+  "pricingPage": {
+    "seo": {
+      "title": "Pricing",
+      "description": "Choose the plan that fits your needs. Start free and upgrade to Premium for full access to all features."
+    },
+    "badge": "Simple pricing",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "-17%",
+    "billedYearly": "Billed €{{amount}} yearly",
+    "comparison": {
+      "title": "Compare plans",
+      "feature": "Feature",
+      "simulation": "Benefits simulation",
+      "basic": "Basic",
+      "complete": "Complete",
+      "aiMessages": "AI messages",
+      "unlimited": "Unlimited",
+      "guides": "Step-by-step guides",
+      "alerts": "Personalized alerts",
+      "support": "Support",
+      "community": "Community",
+      "priority": "Priority",
+      "export": "Data export"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "Can I cancel my subscription at any time?",
+      "a1": "Yes, you can cancel your Premium subscription at any time. You will keep access until the end of your billing period.",
+      "q2": "Is my payment secure?",
+      "a2": "Absolutely. We use Stripe for payment processing, which ensures the highest level of security for your transactions.",
+      "q3": "Can I switch from monthly to yearly?",
+      "a3": "Yes, you can switch between billing periods at any time. The change will take effect at the start of your next billing cycle.",
+      "q4": "What happens to my data if I cancel?",
+      "a4": "Your data is always yours. If you cancel, you can export all your data before your subscription ends."
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "description": "Start your free simulation now and discover all the benefits you're eligible for.",
+      "button": "Start free simulation"
+    }
+  },
+  
+  "contact": {
+    "seo": {
+      "title": "Contact Us",
+      "description": "Get in touch with the AIDE+ team. We're here to help with any questions about benefits in France."
+    },
+    "badge": "Get in touch",
+    "title": "Contact us",
+    "subtitle": "Have a question or need help? We're here for you.",
+    "methods": {
+      "email": {
+        "title": "Email us",
+        "description": "Send us an email and we'll respond within 24 hours."
+      },
+      "chat": {
+        "title": "AI Assistant",
+        "description": "Get instant answers from our AI assistant.",
+        "value": "Available 24/7"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Find answers to common questions.",
+        "value": "Browse FAQ"
+      }
+    },
+    "form": {
+      "title": "Send us a message",
+      "description": "Fill out the form below and we'll get back to you as soon as possible.",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "How can we help?",
+      "message": "Message",
+      "messagePlaceholder": "Tell us more about your question or issue...",
+      "submit": "Send message"
+    },
+    "info": {
+      "response": {
+        "title": "Response time",
+        "value": "Within 24 hours"
+      },
+      "privacy": {
+        "title": "Privacy",
+        "value": "Your data is protected"
+      },
+      "languages": {
+        "title": "Languages",
+        "value": "French & English"
+      }
+    },
+    "success": {
+      "title": "Message sent!",
+      "message": "Thank you for contacting us. We'll get back to you within 24 hours.",
+      "sendAnother": "Send another message"
+    },
+    "error": "Failed to send message. Please try again."
+  },
+  
+  "blog": {
+    "seo": {
+      "title": "Blog",
+      "description": "Guides, news, and tips about benefits and administrative procedures in France."
+    },
+    "badge": "Resources",
+    "title": "AIDE+ Blog",
+    "subtitle": "Guides, news, and tips to help you navigate benefits in France.",
+    "locale": "en-US",
+    "featured": "Featured",
+    "readTime": "{{minutes}} min read",
+    "readMore": "Read more",
+    "searchPlaceholder": "Search articles...",
+    "categories": {
+      "all": "All",
+      "guides": "Guides",
+      "news": "News",
+      "tutorials": "Tutorials"
+    },
+    "noResults": {
+      "title": "No articles found",
+      "description": "Try adjusting your search or filter criteria.",
+      "reset": "Reset filters"
+    },
+    "newsletter": {
+      "title": "Stay updated",
+      "description": "Subscribe to our newsletter to receive the latest guides and news.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "posts": {
+      "apl": {
+        "title": "Complete Guide to APL 2024: Eligibility and Application",
+        "excerpt": "Everything you need to know about housing assistance (APL): eligibility criteria, how to apply, and tips to maximize your benefits."
+      },
+      "caf": {
+        "title": "CAF Updates 2024: What's New for Beneficiaries",
+        "excerpt": "Discover the latest changes to CAF benefits and how they might affect your situation."
+      },
+      "prime": {
+        "title": "Activity Bonus: Conditions and Calculation",
+        "excerpt": "A comprehensive guide to the Prime d'activité: who is eligible, how it's calculated, and how to apply."
+      },
+      "rsa": {
+        "title": "RSA Application: Step-by-Step Guide",
+        "excerpt": "Follow our detailed guide to apply for RSA (Revenu de Solidarité Active) and understand your rights."
+      },
+      "student": {
+        "title": "Student Housing Aid: Complete Guide",
+        "excerpt": "Everything students need to know about housing benefits: APL, ALS, and how to maximize your aid."
+      },
+      "aspa": {
+        "title": "ASPA: Minimum Retirement Benefits Explained",
+        "excerpt": "Understanding the Allocation de Solidarité aux Personnes Âgées and how to apply if you're eligible."
+      }
     }
   }
 }
