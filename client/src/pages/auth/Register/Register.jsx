@@ -137,9 +137,7 @@ export function Register() {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className={styles.header}>
-          <Link to={ROUTES.HOME}>
-            <Logo size="md" />
-          </Link>
+          <Logo size="md" linkTo={ROUTES.HOME} />
         </div>
 
         <Card className={styles.card}>
@@ -184,7 +182,7 @@ export function Register() {
                   placeholder={t('auth.fullNamePlaceholder')}
                   value={formData.fullName}
                   onChange={handleChange}
-                  leftIcon={<i className="ri-user-line" />}
+                  icon="ri-user-line"
                   error={errors.fullName}
                   required
                 />
@@ -198,7 +196,7 @@ export function Register() {
                   placeholder={t('auth.emailPlaceholder')}
                   value={formData.email}
                   onChange={handleChange}
-                  leftIcon={<i className="ri-mail-line" />}
+                  icon="ri-mail-line"
                   error={errors.email}
                   required
                 />
@@ -212,8 +210,7 @@ export function Register() {
                   placeholder={t('auth.passwordPlaceholder')}
                   value={formData.password}
                   onChange={handleChange}
-                  leftIcon={<i className="ri-lock-line" />}
-                  showPasswordToggle
+                  icon="ri-lock-line"
                   hint={t('auth.passwordHint')}
                   error={errors.password}
                   required
@@ -228,8 +225,7 @@ export function Register() {
                   placeholder={t('auth.confirmPasswordPlaceholder')}
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  leftIcon={<i className="ri-lock-line" />}
-                  showPasswordToggle
+                  icon="ri-lock-line"
                   error={errors.confirmPassword}
                   required
                 />

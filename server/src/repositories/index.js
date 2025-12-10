@@ -4,8 +4,7 @@ export { userRepository, UserRepository } from './user.repository.js';
 export {
   chatConversationRepository,
   chatMessageRepository,
-  ChatConversationRepository,
-  ChatMessageRepository,
+  chatFeedbackRepository,
 } from './chat.repository.js';
 export {
   subscriptionRepository,
@@ -17,11 +16,6 @@ export {
   aideRepository,
   procedureRepository,
   rentingRepository,
-  blogRepository,
-  AideRepository,
-  ProcedureRepository,
-  RentingRepository,
-  BlogRepository,
 } from './content.repository.js';
 export {
   affiliateRepository,
@@ -48,8 +42,7 @@ export {
   SearchAnalyticsRepository,
 } from './analytics.repository.js';
 export {
-  knowledgeBaseRepository,
-  KnowledgeBaseRepository,
+  knowledgeBaseRepository
 } from './knowledgeBase.repository.js';
 export {
   adminRepository,

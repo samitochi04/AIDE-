@@ -7,7 +7,7 @@ import { supabaseAdmin } from '../config/supabase.js';
  */
 class UserRepository extends BaseRepository {
   constructor() {
-    super('user_profiles');
+    super('profiles');
   }
 
   /**

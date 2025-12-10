@@ -63,6 +63,7 @@ export function ThemeProvider({ children }) {
     isLight: theme === 'light',
     setTheme,
     toggle,
+    toggleTheme: toggle, // Alias for convenience
     setLightTheme,
     setDarkTheme,
   }

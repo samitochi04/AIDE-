@@ -306,7 +306,6 @@ class AffiliateService {
       throw new AppError('Failed to update settings', 500);
     }
   }
-  }
 
   // ============================================
   // Admin methods

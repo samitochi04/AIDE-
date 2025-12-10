@@ -91,4 +91,9 @@ export const requirePermission = (permission) => {
   };
 };
 
+/**
+ * Convenience middleware: require super admin role
+ */
+export const requireSuperAdmin = requireRole(ADMIN_ROLES.SUPER_ADMIN);
+
 export default requireAdmin;

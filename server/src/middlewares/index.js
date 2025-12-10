@@ -1,6 +1,6 @@
 // Authentication & Authorization
 export { authenticate, optionalAuth, requireSubscription } from './auth.js';
-export { requireAdmin, requireSuperAdmin } from './admin.js';
+export { requireAdmin, requireRole, requirePermission, requireSuperAdmin } from './admin.js';
 
 // Rate Limiting
 export {
