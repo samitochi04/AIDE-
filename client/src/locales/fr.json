@@ -384,6 +384,8 @@
       "title": "Mes Démarches",
       "subtitle": "Suivez et gérez vos demandes d'aides",
       "startNew": "Nouvelle Démarche",
+      "startFirst": "Créer ma première démarche",
+      "noProcedures": "Vous n'avez pas encore de démarches",
       "stats": {
         "total": "Total",
         "inProgress": "En Cours",
@@ -392,15 +394,37 @@
       },
       "filters": {
         "all": "Toutes",
-        "in-progress": "En Cours",
+        "inprogress": "En Cours",
         "pending": "En Attente",
-        "not-started": "Non Commencées",
+        "notstarted": "Non Commencées",
         "completed": "Terminées"
       },
+      "status": {
+        "notStarted": "Non Commencée",
+        "inProgress": "En Cours",
+        "pending": "En Attente",
+        "completed": "Terminée",
+        "rejected": "Refusée",
+        "unknown": "Inconnu"
+      },
+      "types": {
+        "aide_application": "Demande d'aide",
+        "document_request": "Demande de document",
+        "account_creation": "Création de compte",
+        "renewal": "Renouvellement",
+        "appeal": "Recours",
+        "other": "Autre"
+      },
       "deadline": "Date limite",
+      "created": "Créé le",
       "expectedDecision": "Décision prévue",
       "step": "Étape",
       "stepsOverview": "Aperçu des Étapes",
+      "notes": "Notes",
+      "changeStatus": "Changer le statut",
+      "markCompleted": "Marquer comme terminée",
+      "markPending": "Marquer en attente",
+      "markRejected": "Marquer comme refusée",
       "requiredDocuments": "Documents Requis",
       "showMore": "Voir les détails",
       "showLess": "Masquer les détails",
@@ -408,7 +432,34 @@
       "start": "Commencer",
       "trackStatus": "Suivre le Statut",
       "viewDetails": "Voir les Détails",
-      "noResults": "Aucune démarche ne correspond à vos filtres"
+      "noResults": "Aucune démarche ne correspond à vos filtres",
+      "newProcedure": "Nouvelle Démarche",
+      "create": "Créer",
+      "form": {
+        "name": "Nom de la démarche",
+        "namePlaceholder": "Ex: Demande APL, Renouvellement CSS...",
+        "type": "Type de démarche",
+        "relatedAide": "Aide associée (optionnel)",
+        "noAide": "Aucune aide associée",
+        "provider": "Organisme",
+        "providerPlaceholder": "Ex: CAF, CPAM, Pôle Emploi...",
+        "deadline": "Date limite (optionnel)",
+        "notes": "Notes",
+        "notesPlaceholder": "Notes ou informations supplémentaires..."
+      },
+      "deleteConfirm": {
+        "title": "Supprimer la démarche",
+        "message": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible."
+      },
+      "errorFetching": "Erreur lors du chargement des démarches",
+      "errorCreating": "Erreur lors de la création de la démarche",
+      "errorUpdating": "Erreur lors de la mise à jour",
+      "errorDeleting": "Erreur lors de la suppression",
+      "created": "Démarche créée avec succès",
+      "statusUpdated": "Statut mis à jour",
+      "stepUpdated": "Étape mise à jour",
+      "deleted": "Démarche supprimée",
+      "nameRequired": "Le nom de la démarche est requis"
     },
     "chat": {
       "title": "Assistant IA",

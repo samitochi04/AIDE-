@@ -86,11 +86,12 @@ SELECT create_first_super_admin('your-email@example.com');
 │                             SIMULATIONS                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│  profiles ──▶ simulations ──▶ saved_aides                                  │
-│                    │               │                                        │
-│                    │               ▼                                        │
-│                    │         status tracking                                │
-│                    │         (saved/applied/received/rejected)              │
+│  profiles ──▶ simulations ──▶ saved_aides ──▶ user_procedures              │
+│                    │               │                  │                     │
+│                    │               ▼                  ▼                     │
+│                    │         status tracking    steps tracking              │
+│                    │         (saved/applied/   (JSONB array)                │
+│                    │         received/rejected) progress %                  │
 │                    ▼                                                        │
 │              results (JSONB) ── eligible aides list                         │
 │                                                                              │
@@ -650,6 +651,71 @@ Bookmarked/saved aides from simulations with status tracking.
 - `applied` → User submitted application
 - `received` → Application approved
 - `rejected` → Application denied
+
+---
+
+#### `user_procedures`
+Track user's administrative procedures with step-by-step progress.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary key |
+| `user_id` | UUID | References `profiles(id)` |
+| `procedure_type` | TEXT | `aide_application`, `document_request`, `account_creation`, `renewal`, `appeal`, `other` |
+| `procedure_name` | TEXT | User-defined name |
+| `related_aide_id` | TEXT | Linked aide identifier (optional) |
+| `status` | TEXT | `not_started`, `in_progress`, `pending`, `completed`, `rejected` |
+| `current_step` | INTEGER | Current step index (0-based) |
+| `total_steps` | INTEGER | Total number of steps |
+| `steps` | JSONB | Array of step objects |
+| `documents` | JSONB | Array of document objects |
+| `provider` | TEXT | Organization name (CAF, CPAM, etc.) |
+| `deadline` | DATE | Optional deadline |
+| `notes` | TEXT | User notes |
+| `created_at` | TIMESTAMPTZ | When created |
+| `updated_at` | TIMESTAMPTZ | Last update |
+
+**Steps JSONB Structure:**
+```json
+[
+  {
+    "name": "Create CAF account",
+    "completed": true,
+    "date": "2024-01-10T10:00:00Z"
+  },
+  {
+    "name": "Fill application form",
+    "completed": false,
+    "date": null
+  }
+]
+```
+
+**Documents JSONB Structure:**
+```json
+[
+  {
+    "name": "ID Document",
+    "required": true,
+    "uploaded": true,
+    "uploaded_at": "2024-01-10T10:00:00Z"
+  },
+  {
+    "name": "Proof of residence",
+    "required": true,
+    "uploaded": false
+  }
+]
+```
+
+**Status Workflow:**
+- `not_started` → No steps completed
+- `in_progress` → Some steps completed
+- `pending` → All steps done, waiting for response
+- `completed` → Application approved
+- `rejected` → Application denied
+
+**Index:** `user_id, status` for efficient filtering
 
 ---
 

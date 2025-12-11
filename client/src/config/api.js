@@ -23,6 +23,19 @@ export const API_ENDPOINTS = {
     UNSAVE_AIDE: (aideId) => `/api/v1/simulation/saved-aides/${aideId}`,
     UPDATE_AIDE_STATUS: (aideId) => `/api/v1/simulation/saved-aides/${aideId}/status`,
   },
+
+  // Procedures
+  PROCEDURES: {
+    LIST: '/api/v1/procedures',
+    RECOMMENDED: '/api/v1/procedures/recommended',
+    KNOWLEDGE: (category) => `/api/v1/procedures/knowledge/${category}`,
+    GET: (id) => `/api/v1/procedures/${id}`,
+    CREATE: '/api/v1/procedures',
+    UPDATE: (id) => `/api/v1/procedures/${id}`,
+    COMPLETE_STEP: (id) => `/api/v1/procedures/${id}/step`,
+    UPLOAD_DOCUMENT: (id) => `/api/v1/procedures/${id}/document`,
+    DELETE: (id) => `/api/v1/procedures/${id}`,
+  },
   
   // Chat
   CHAT: {

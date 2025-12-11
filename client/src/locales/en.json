@@ -384,6 +384,8 @@
       "title": "My Procedures",
       "subtitle": "Track and manage your benefit applications",
       "startNew": "Start New",
+      "startFirst": "Create my first procedure",
+      "noProcedures": "You don't have any procedures yet",
       "stats": {
         "total": "Total",
         "inProgress": "In Progress",
@@ -392,15 +394,37 @@
       },
       "filters": {
         "all": "All",
-        "in-progress": "In Progress",
+        "inprogress": "In Progress",
         "pending": "Pending",
-        "not-started": "Not Started",
+        "notstarted": "Not Started",
         "completed": "Completed"
       },
+      "status": {
+        "notStarted": "Not Started",
+        "inProgress": "In Progress",
+        "pending": "Pending",
+        "completed": "Completed",
+        "rejected": "Rejected",
+        "unknown": "Unknown"
+      },
+      "types": {
+        "aide_application": "Benefit Application",
+        "document_request": "Document Request",
+        "account_creation": "Account Creation",
+        "renewal": "Renewal",
+        "appeal": "Appeal",
+        "other": "Other"
+      },
       "deadline": "Deadline",
+      "created": "Created",
       "expectedDecision": "Expected decision",
       "step": "Step",
       "stepsOverview": "Steps Overview",
+      "notes": "Notes",
+      "changeStatus": "Change Status",
+      "markCompleted": "Mark as Completed",
+      "markPending": "Mark as Pending",
+      "markRejected": "Mark as Rejected",
       "requiredDocuments": "Required Documents",
       "showMore": "Show details",
       "showLess": "Hide details",
@@ -408,7 +432,34 @@
       "start": "Start",
       "trackStatus": "Track Status",
       "viewDetails": "View Details",
-      "noResults": "No procedures match your filters"
+      "noResults": "No procedures match your filters",
+      "newProcedure": "New Procedure",
+      "create": "Create",
+      "form": {
+        "name": "Procedure Name",
+        "namePlaceholder": "e.g., APL Application, CSS Renewal...",
+        "type": "Procedure Type",
+        "relatedAide": "Related Benefit (optional)",
+        "noAide": "No related benefit",
+        "provider": "Provider",
+        "providerPlaceholder": "e.g., CAF, CPAM, Pôle Emploi...",
+        "deadline": "Deadline (optional)",
+        "notes": "Notes",
+        "notesPlaceholder": "Additional notes or information..."
+      },
+      "deleteConfirm": {
+        "title": "Delete Procedure",
+        "message": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
+      },
+      "errorFetching": "Error loading procedures",
+      "errorCreating": "Error creating procedure",
+      "errorUpdating": "Error updating procedure",
+      "errorDeleting": "Error deleting procedure",
+      "created": "Procedure created successfully",
+      "statusUpdated": "Status updated",
+      "stepUpdated": "Step updated",
+      "deleted": "Procedure deleted",
+      "nameRequired": "Procedure name is required"
     },
     "chat": {
       "title": "AI Assistant",
