@@ -199,6 +199,21 @@
   gap: var(--spacing-3);
 }
 
+.aideActions a {
+  text-decoration: none;
+}
+
+.aideActions button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.aideActions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Premium Overlay */
 .premiumOverlay {
   display: flex;

@@ -79,7 +79,7 @@ export function Results() {
       </Helmet>
 
       <div className={styles.header}>
-        <Logo size="md" onClick={() => navigate(ROUTES.HOME)} />
+        <Logo size="md" linkTo={ROUTES.HOME} />
         <div className={styles.headerActions}>
           {!user && (
             <Link to={ROUTES.REGISTER}>
@@ -161,12 +161,30 @@ export function Results() {
                     </div>
                   ) : (
                     <div className={styles.aideActions}>
-                      <Button variant="outline" size="sm">
-                        {t('simulation.results.learnMore')}
-                      </Button>
-                      <Button variant="primary" size="sm">
-                        {t('simulation.results.startProcedure')}
-                      </Button>
+                      {aide.sourceUrl ? (
+                        <a href={aide.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm">
+                            <i className="ri-external-link-line" />
+                            {t('simulation.results.learnMore')}
+                          </Button>
+                        </a>
+                      ) : (
+                        <Button variant="outline" size="sm" disabled>
+                          {t('simulation.results.learnMore')}
+                        </Button>
+                      )}
+                      {aide.applicationUrl ? (
+                        <a href={aide.applicationUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="primary" size="sm">
+                            <i className="ri-arrow-right-line" />
+                            {t('simulation.results.startProcedure')}
+                          </Button>
+                        </a>
+                      ) : (
+                        <Button variant="primary" size="sm" disabled>
+                          {t('simulation.results.startProcedure')}
+                        </Button>
+                      )}
                     </div>
                   )}
                 </Card>

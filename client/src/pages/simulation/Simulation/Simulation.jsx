@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { useSimulation } from '../../../context/SimulationContext';
+import { useToast } from '../../../context/ToastContext';
 import { Button, Card, Input, Select, Logo } from '../../../components/ui';
 import { ROUTES } from '../../../config/routes';
 import { REGIONS } from '../../../config/constants';
+import { api, API_ENDPOINTS } from '../../../config/api';
 import styles from './Simulation.module.css';
 
 const STEPS = [
@@ -32,22 +34,11 @@ const slideVariants = {
   })
 };
 
-// Mock results generator - replace with real API call
-const generateMockResults = (answers) => ({
-  eligibleAides: [
-    { id: 1, name: 'APL', category: 'housing', monthlyAmount: 350, description: 'Aide personnalisée au logement - Housing assistance to help pay your rent.' },
-    { id: 2, name: 'CAF Allocation', category: 'family', monthlyAmount: 180, description: 'Family allowance for households with children.' },
-    { id: 3, name: 'Prime d\'activité', category: 'employment', monthlyAmount: 150, description: 'Activity bonus for low-income workers.' },
-    { id: 4, name: 'RSA', category: 'social', monthlyAmount: 565, description: 'Active solidarity income for people with low or no income.' },
-  ],
-  totalMonthly: 1245,
-  totalAnnual: 14940
-});
-
 export function Simulation() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { answers, setAnswers, complete } = useSimulation();
+  const { error: showError } = useToast();
   
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -115,13 +106,18 @@ export function Simulation() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const results = generateMockResults(answers);
+      // Call the real API
+      const response = await api.post(API_ENDPOINTS.SIMULATION.RUN, {
+        answers,
+        language: i18n.language || 'fr',
+      });
+      
+      const results = response.data || response;
       complete(results, true);
       navigate(ROUTES.SIMULATION_RESULTS);
     } catch (err) {
       console.error('Simulation error:', err);
+      showError(t('common.error') || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -270,7 +266,7 @@ export function Simulation() {
                 value={answers.incomeBracket || ''}
                 onChange={(e) => handleChange('incomeBracket', parseFloat(e.target.value) || '')}
                 error={errors.incomeBracket}
-                leftIcon={<span>€</span>}
+                icon="ri-money-euro-circle-line"
                 min={0}
               />
               
@@ -343,7 +339,7 @@ export function Simulation() {
                   placeholder={t('simulation.fields.rentPlaceholder')}
                   value={answers.rent || ''}
                   onChange={(e) => handleChange('rent', parseFloat(e.target.value) || '')}
-                  leftIcon={<span>€</span>}
+                  icon="ri-money-euro-circle-line"
                   min={0}
                 />
               </motion.div>
@@ -367,7 +363,7 @@ export function Simulation() {
       </Helmet>
 
       <div className={styles.header}>
-        <Logo size="md" onClick={() => navigate(ROUTES.HOME)} />
+        <Logo size="md" linkTo={ROUTES.HOME} />
         <button
           className={styles.closeBtn}
           onClick={() => navigate(ROUTES.HOME)}

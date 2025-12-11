@@ -6,36 +6,43 @@ import { API_URL } from './constants'
 export const API_ENDPOINTS = {
   // Auth
   AUTH: {
-    SEND_MAGIC_LINK: '/api/auth/send-magic-link',
-    SEND_WELCOME_EMAIL: '/api/auth/send-welcome-email',
-    SEND_PASSWORD_RESET: '/api/auth/send-password-reset',
-    RESEND_VERIFICATION: '/api/auth/resend-verification',
+    SEND_MAGIC_LINK: '/api/v1/auth/send-magic-link',
+    SEND_WELCOME_EMAIL: '/api/v1/auth/send-welcome-email',
+    SEND_PASSWORD_RESET: '/api/v1/auth/send-password-reset',
+    RESEND_VERIFICATION: '/api/v1/auth/resend-verification',
+  },
+  
+  // Simulation
+  SIMULATION: {
+    RUN: '/api/v1/simulation/run',
+    HISTORY: '/api/v1/simulation/history',
+    GET: (id) => `/api/v1/simulation/${id}`,
   },
   
   // Chat
   CHAT: {
-    SEND_MESSAGE: '/api/chat/message',
-    GET_CONVERSATIONS: '/api/chat/conversations',
-    GET_CONVERSATION: (id) => `/api/chat/conversations/${id}`,
-    DELETE_CONVERSATION: (id) => `/api/chat/conversations/${id}`,
+    SEND_MESSAGE: '/api/v1/ai/chat',
+    GET_CONVERSATIONS: '/api/v1/ai/conversations',
+    GET_CONVERSATION: (id) => `/api/v1/ai/conversations/${id}`,
+    DELETE_CONVERSATION: (id) => `/api/v1/ai/conversations/${id}`,
   },
   
   // Stripe
   STRIPE: {
-    CREATE_CHECKOUT: '/api/stripe/checkout',
-    CREATE_PORTAL: '/api/stripe/portal',
-    GET_SUBSCRIPTION: '/api/stripe/subscription',
+    CREATE_CHECKOUT: '/api/v1/stripe/checkout',
+    CREATE_PORTAL: '/api/v1/stripe/portal',
+    GET_SUBSCRIPTION: '/api/v1/stripe/subscription',
   },
   
   // Analytics
   ANALYTICS: {
-    TRACK_EVENT: '/api/analytics/event',
-    TRACK_VIEW: '/api/analytics/aide-view',
+    TRACK_EVENT: '/api/v1/analytics/event',
+    TRACK_VIEW: '/api/v1/analytics/aide-view',
   },
   
   // Contact
   CONTACT: {
-    SEND: '/api/contact',
+    SEND: '/api/v1/contact',
   },
 }
 
