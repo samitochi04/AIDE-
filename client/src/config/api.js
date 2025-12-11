@@ -16,7 +16,12 @@ export const API_ENDPOINTS = {
   SIMULATION: {
     RUN: '/api/v1/simulation/run',
     HISTORY: '/api/v1/simulation/history',
+    LATEST: '/api/v1/simulation/latest',
     GET: (id) => `/api/v1/simulation/${id}`,
+    SAVED_AIDES: '/api/v1/simulation/saved-aides',
+    SAVE_AIDE: '/api/v1/simulation/save-aide',
+    UNSAVE_AIDE: (aideId) => `/api/v1/simulation/saved-aides/${aideId}`,
+    UPDATE_AIDE_STATUS: (aideId) => `/api/v1/simulation/saved-aides/${aideId}/status`,
   },
   
   // Chat

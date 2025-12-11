@@ -83,6 +83,20 @@ SELECT create_first_super_admin('your-email@example.com');
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
+│                             SIMULATIONS                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  profiles ──▶ simulations ──▶ saved_aides                                  │
+│                    │               │                                        │
+│                    │               ▼                                        │
+│                    │         status tracking                                │
+│                    │         (saved/applied/received/rejected)              │
+│                    ▼                                                        │
+│              results (JSONB) ── eligible aides list                         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
 │                               ANALYTICS                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
@@ -550,7 +564,96 @@ Rate limiting per user.
 
 ---
 
-### 7. Analytics
+### 7. Simulations
+
+#### `simulations`
+Stores user eligibility simulations and their results.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary key |
+| `user_id` | UUID | References `profiles(id)` |
+| `user_type` | TEXT | `student` or `worker` |
+| `situation` | JSONB | User situation data (location, income, etc.) |
+| `results` | JSONB | Simulation results (eligible aides) |
+| `total_monthly` | DECIMAL(10,2) | Total monthly amount eligible |
+| `total_annual` | DECIMAL(10,2) | Total annual amount eligible |
+| `eligible_aides_count` | INTEGER | Number of eligible aides |
+| `created_at` | TIMESTAMPTZ | When simulation was run |
+| `updated_at` | TIMESTAMPTZ | Last update |
+
+**situation Example:**
+```json
+{
+  "region": "ile-de-france",
+  "city": "Paris",
+  "housing": "location",
+  "rent": 800,
+  "income": 15000,
+  "age": 22,
+  "hasDisability": false,
+  "studyLevel": "licence"
+}
+```
+
+**results Example:**
+```json
+{
+  "eligible": [
+    {
+      "id": "aide-uuid",
+      "name": "APL",
+      "description": "Aide personnalisée au logement",
+      "category": "logement",
+      "monthlyAmount": 200,
+      "annualAmount": 2400,
+      "sourceUrl": "https://...",
+      "applicationUrl": "https://..."
+    }
+  ],
+  "ineligible": [],
+  "summary": {
+    "totalMonthly": 350,
+    "totalAnnual": 4200,
+    "count": 3
+  }
+}
+```
+
+---
+
+#### `saved_aides`
+Bookmarked/saved aides from simulations with status tracking.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary key |
+| `user_id` | UUID | References `profiles(id)` |
+| `aide_id` | TEXT | Aide identifier (from simulation results) |
+| `aide_name` | TEXT | Aide name |
+| `aide_description` | TEXT | Aide description |
+| `aide_category` | TEXT | `logement`, `mobilite`, `sante`, `education`, `emploi`, `transport`, `other` |
+| `monthly_amount` | DECIMAL(10,2) | Monthly amount |
+| `source_url` | TEXT | Information URL |
+| `application_url` | TEXT | Application URL |
+| `status` | TEXT | `saved`, `applied`, `received`, `rejected` |
+| `applied_at` | TIMESTAMPTZ | When user applied |
+| `notes` | TEXT | User notes |
+| `simulation_id` | UUID | References `simulations(id)` |
+| `created_at` | TIMESTAMPTZ | When saved |
+| `updated_at` | TIMESTAMPTZ | Last update |
+
+**Unique Constraint:** `(user_id, aide_id)` - User can only save each aide once
+
+**Status Workflow:**
+- `saved` → User bookmarked the aide
+- `applied` → User submitted application
+- `received` → Application approved
+- `rejected` → Application denied
+
+---
+
+### 8. Analytics
 
 #### `anonymous_visitors`
 Track visitors before signup.
@@ -631,7 +734,7 @@ Search analytics.
 
 ---
 
-### 8. Other Tables
+### 9. Other Tables
 
 #### `user_favorites`
 Saved items.
@@ -1027,6 +1130,8 @@ All tables have RLS enabled. Key policies:
 - `chat_conversations` - SELECT/INSERT own
 - `chat_messages` - SELECT/INSERT in own conversations
 - `chat_usage` - SELECT own
+- `simulations` - SELECT/INSERT/DELETE own
+- `saved_aides` - ALL own
 - `notifications` - SELECT/UPDATE own
 - `user_favorites` - ALL own
 - `content_likes` - INSERT/DELETE own

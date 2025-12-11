@@ -19,6 +19,41 @@ router.post('/run', optionalAuth, simulationController.runSimulation);
 router.get('/history', authenticate, simulationController.getSimulationHistory);
 
 /**
+ * @route   GET /simulation/latest
+ * @desc    Get user's latest simulation
+ * @access  Private
+ */
+router.get('/latest', authenticate, simulationController.getLatestSimulation);
+
+/**
+ * @route   GET /simulation/saved-aides
+ * @desc    Get user's saved/bookmarked aides
+ * @access  Private
+ */
+router.get('/saved-aides', authenticate, simulationController.getSavedAides);
+
+/**
+ * @route   POST /simulation/save-aide
+ * @desc    Save/bookmark an aide
+ * @access  Private
+ */
+router.post('/save-aide', authenticate, simulationController.saveAide);
+
+/**
+ * @route   DELETE /simulation/saved-aides/:aideId
+ * @desc    Remove a saved aide
+ * @access  Private
+ */
+router.delete('/saved-aides/:aideId', authenticate, simulationController.unsaveAide);
+
+/**
+ * @route   PATCH /simulation/saved-aides/:aideId/status
+ * @desc    Update saved aide status (applied, received, rejected)
+ * @access  Private
+ */
+router.patch('/saved-aides/:aideId/status', authenticate, simulationController.updateSavedAideStatus);
+
+/**
  * @route   GET /simulation/:id
  * @desc    Get a specific simulation by ID
  * @access  Private

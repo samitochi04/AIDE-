@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { useSimulation } from '../../../context/SimulationContext';
 import { useToast } from '../../../context/ToastContext';
+import { useAuth } from '../../../context/AuthContext';
 import { Button, Card, Input, Select, Logo } from '../../../components/ui';
 import { ROUTES } from '../../../config/routes';
 import { REGIONS } from '../../../config/constants';
@@ -39,11 +40,17 @@ export function Simulation() {
   const navigate = useNavigate();
   const { answers, setAnswers, complete } = useSimulation();
   const { error: showError } = useToast();
+  const { isAuthenticated } = useAuth();
   
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Redirect to dashboard for logged-in users, home for visitors
+  const handleClose = () => {
+    navigate(isAuthenticated ? ROUTES.DASHBOARD : ROUTES.HOME);
+  };
 
   const progress = useMemo(() => 
     ((currentStep + 1) / STEPS.length) * 100, 
@@ -363,10 +370,10 @@ export function Simulation() {
       </Helmet>
 
       <div className={styles.header}>
-        <Logo size="md" linkTo={ROUTES.HOME} />
+        <Logo size="md" linkTo={isAuthenticated ? ROUTES.DASHBOARD : ROUTES.HOME} />
         <button
           className={styles.closeBtn}
-          onClick={() => navigate(ROUTES.HOME)}
+          onClick={handleClose}
         >
           <i className="ri-close-line" />
         </button>

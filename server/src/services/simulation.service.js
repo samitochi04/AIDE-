@@ -682,12 +682,16 @@ Retourne les IDs des aides réellement pertinentes pour ce profil.`,
    */
   async saveSimulation(userId, answers, results) {
     try {
+      const eligibleAides = results.eligibleAides || [];
       const { data, error } = await supabaseAdmin
         .from('simulations')
         .insert({
           user_id: userId,
           answers,
           results,
+          total_monthly: results.totalMonthly || 0,
+          total_annual: results.totalAnnual || 0,
+          eligible_aides_count: eligibleAides.length,
           created_at: new Date().toISOString(),
         })
         .select()
@@ -719,6 +723,144 @@ Retourne les IDs des aides réellement pertinentes pour ce profil.`,
     } catch (error) {
       logger.error('Failed to get simulation history', { userId, error: error.message });
       return [];
+    }
+  }
+
+  /**
+   * Get user's latest simulation
+   */
+  async getLatestSimulation(userId) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('simulations')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
+      return data || null;
+    } catch (error) {
+      logger.error('Failed to get latest simulation', { userId, error: error.message });
+      return null;
+    }
+  }
+
+  /**
+   * Get a specific simulation by ID
+   */
+  async getSimulationById(userId, simulationId) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('simulations')
+        .select('*')
+        .eq('id', simulationId)
+        .eq('user_id', userId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error;
+      return data || null;
+    } catch (error) {
+      logger.error('Failed to get simulation by ID', { userId, simulationId, error: error.message });
+      return null;
+    }
+  }
+
+  /**
+   * Get user's saved aides
+   */
+  async getSavedAides(userId) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('saved_aides')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      logger.error('Failed to get saved aides', { userId, error: error.message });
+      return [];
+    }
+  }
+
+  /**
+   * Save/bookmark an aide
+   */
+  async saveAide(userId, aide, simulationId = null) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('saved_aides')
+        .insert({
+          user_id: userId,
+          aide_id: aide.id,
+          aide_name: aide.name,
+          aide_description: aide.description,
+          aide_category: aide.category || aide.categoryKey,
+          monthly_amount: aide.monthlyAmount || 0,
+          source_url: aide.sourceUrl,
+          application_url: aide.applicationUrl,
+          simulation_id: simulationId,
+          status: 'saved',
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      logger.error('Failed to save aide', { userId, aideId: aide.id, error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Remove a saved aide
+   */
+  async unsaveAide(userId, aideId) {
+    try {
+      const { error } = await supabaseAdmin
+        .from('saved_aides')
+        .delete()
+        .eq('user_id', userId)
+        .eq('aide_id', aideId);
+
+      if (error) throw error;
+      return true;
+    } catch (error) {
+      logger.error('Failed to unsave aide', { userId, aideId, error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Update saved aide status
+   */
+  async updateSavedAideStatus(userId, aideId, status, notes = null) {
+    try {
+      const updateData = { status };
+      if (notes !== null) {
+        updateData.notes = notes;
+      }
+      if (status === 'applied') {
+        updateData.applied_at = new Date().toISOString();
+      }
+
+      const { data, error } = await supabaseAdmin
+        .from('saved_aides')
+        .update(updateData)
+        .eq('user_id', userId)
+        .eq('aide_id', aideId)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      logger.error('Failed to update saved aide status', { userId, aideId, error: error.message });
+      throw error;
     }
   }
 }

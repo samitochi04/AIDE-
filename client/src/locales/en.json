@@ -289,11 +289,25 @@
       "subtitle": "View and manage all benefits you're eligible for",
       "runNewSimulation": "New Simulation",
       "searchPlaceholder": "Search benefits...",
+      "lastSimulation": "Last simulation",
+      "noSimulation": "No simulation yet",
+      "noSimulationDesc": "Run a simulation to discover benefits you're eligible for.",
+      "runFirstSimulation": "Run simulation",
+      "viewEligible": "Eligible",
+      "viewSaved": "Saved",
+      "noSavedAides": "No saved benefits",
+      "browseEligible": "Browse eligible benefits",
+      "learnMore": "Learn more",
+      "updateStatus": "Update status",
+      "dates": "Dates",
+      "savedOn": "Saved on",
+      "appliedOn": "Applied on",
       "stats": {
         "total": "Total Benefits",
         "eligible": "Eligible",
         "potential": "Monthly Potential",
-        "saved": "Saved"
+        "saved": "Saved",
+        "applied": "Applied"
       },
       "filters": {
         "allStatuses": "All statuses",
@@ -313,13 +327,20 @@
         "employment": "Employment",
         "social": "Social",
         "health": "Health",
-        "education": "Education"
+        "education": "Education",
+        "transport": "Transport"
       },
       "status": {
         "eligible": "Eligible",
         "not-eligible": "Not Eligible",
         "pending": "Pending",
         "applied": "Applied"
+      },
+      "savedStatus": {
+        "saved": "Saved",
+        "applied": "Applied",
+        "received": "Received",
+        "rejected": "Rejected"
       },
       "requirements": "Requirements",
       "processingTime": "Processing Time",

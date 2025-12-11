@@ -289,11 +289,25 @@
       "subtitle": "Consultez et gérez toutes les aides auxquelles vous êtes éligible",
       "runNewSimulation": "Nouvelle Simulation",
       "searchPlaceholder": "Rechercher des aides...",
+      "lastSimulation": "Dernière simulation",
+      "noSimulation": "Aucune simulation",
+      "noSimulationDesc": "Faites une simulation pour découvrir les aides auxquelles vous êtes éligible.",
+      "runFirstSimulation": "Lancer une simulation",
+      "viewEligible": "Éligibles",
+      "viewSaved": "Enregistrées",
+      "noSavedAides": "Aucune aide enregistrée",
+      "browseEligible": "Voir les aides éligibles",
+      "learnMore": "En savoir plus",
+      "updateStatus": "Mettre à jour le statut",
+      "dates": "Dates",
+      "savedOn": "Enregistrée le",
+      "appliedOn": "Demande faite le",
       "stats": {
         "total": "Total des Aides",
-        "eligible": "Éligible",
+        "eligible": "Éligibles",
         "potential": "Potentiel Mensuel",
-        "saved": "Enregistrées"
+        "saved": "Enregistrées",
+        "applied": "Demandes faites"
       },
       "filters": {
         "allStatuses": "Tous les statuts",
@@ -313,13 +327,20 @@
         "employment": "Emploi",
         "social": "Social",
         "health": "Santé",
-        "education": "Éducation"
+        "education": "Éducation",
+        "transport": "Transport"
       },
       "status": {
         "eligible": "Éligible",
         "not-eligible": "Non Éligible",
         "pending": "En attente",
         "applied": "Demande faite"
+      },
+      "savedStatus": {
+        "saved": "Enregistrée",
+        "applied": "Demande faite",
+        "received": "Reçue",
+        "rejected": "Refusée"
       },
       "requirements": "Conditions requises",
       "processingTime": "Délai de traitement",
