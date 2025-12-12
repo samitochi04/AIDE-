@@ -137,9 +137,14 @@ export const FRENCH_REGIONS = [
   'Mayotte',
 ]
 
-// Regions with id for Select component
-export const REGIONS = FRENCH_REGIONS.map((region, index) => ({
-  id: `region-${index}`,
-  nameFr: region,
-  nameEn: region, // Keep French names for regions
+// Regions with value/label for Select component
+export const REGIONS = FRENCH_REGIONS.map((region) => ({
+  // Normalize accented characters first, then convert to slug format
+  value: region
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')    // Replace non-alphanumeric sequences with single dash
+    .replace(/^-|-$/g, ''),          // Remove leading/trailing dashes
+  label: region,
 }))

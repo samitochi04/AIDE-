@@ -26,7 +26,8 @@
     "no": "No",
     "upgrade": "Upgrade",
     "logout": "Log out",
-    "upload": "Upload"
+    "upload": "Upload",
+    "all": "All"
   },
   
   "theme": {
@@ -247,6 +248,11 @@
   
   "dashboard": {
     "search": "Search...",
+    "searchPlaceholder": "Search pages, features...",
+    "noSearchResults": "No results found",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "markAllRead": "Mark all as read",
     "user": "User",
     "sidebar": {
       "main": "Main",
@@ -277,7 +283,11 @@
       "askAI": "Ask AI",
       "findHousing": "Find Housing",
       "startProcedure": "Start Procedure",
-      "updateProfile": "Update Profile"
+      "updateProfile": "Update Profile",
+      "noAidesYet": "No benefits discovered yet",
+      "runFirstSimulation": "Run your first simulation",
+      "noProceduresYet": "No procedures started yet",
+      "exploreProcedures": "Explore procedures"
     },
     "status": {
       "eligible": "Eligible",
@@ -289,11 +299,25 @@
       "subtitle": "View and manage all benefits you're eligible for",
       "runNewSimulation": "New Simulation",
       "searchPlaceholder": "Search benefits...",
+      "lastSimulation": "Last simulation",
+      "noSimulation": "No simulation yet",
+      "noSimulationDesc": "Run a simulation to discover benefits you're eligible for.",
+      "runFirstSimulation": "Run simulation",
+      "viewEligible": "Eligible",
+      "viewSaved": "Saved",
+      "noSavedAides": "No saved benefits",
+      "browseEligible": "Browse eligible benefits",
+      "learnMore": "Learn more",
+      "updateStatus": "Update status",
+      "dates": "Dates",
+      "savedOn": "Saved on",
+      "appliedOn": "Applied on",
       "stats": {
         "total": "Total Benefits",
         "eligible": "Eligible",
         "potential": "Monthly Potential",
-        "saved": "Saved"
+        "saved": "Saved",
+        "applied": "Applied"
       },
       "filters": {
         "allStatuses": "All statuses",
@@ -313,13 +337,20 @@
         "employment": "Employment",
         "social": "Social",
         "health": "Health",
-        "education": "Education"
+        "education": "Education",
+        "transport": "Transport"
       },
       "status": {
         "eligible": "Eligible",
         "not-eligible": "Not Eligible",
         "pending": "Pending",
         "applied": "Applied"
+      },
+      "savedStatus": {
+        "saved": "Saved",
+        "applied": "Applied",
+        "received": "Received",
+        "rejected": "Rejected"
       },
       "requirements": "Requirements",
       "processingTime": "Processing Time",
@@ -334,7 +365,7 @@
     },
     "housing": {
       "title": "Housing",
-      "subtitle": "Manage your housing situation and related benefits",
+      "subtitle": "Find accommodation and discover all available platforms in France",
       "currentSituation": "Current Situation",
       "renter": "Renter",
       "owner": "Home Owner",
@@ -357,12 +388,35 @@
       "helpfulResources": "Helpful Resources",
       "needHelp": "Need Help?",
       "needHelpDescription": "Ask our AI assistant about housing benefits and finding accommodation in France.",
-      "askAssistant": "Ask AI Assistant"
+      "askAssistant": "Ask AI Assistant",
+      "platformsAvailable": "Platforms Available",
+      "savedPlatforms": "Saved Platforms",
+      "guarantorServices": "Guarantor Services",
+      "guarantorDescription": "Get a guarantor for your rental application without a personal guarantor.",
+      "searchPlatforms": "Search platforms...",
+      "noPlatformsFound": "No platforms found",
+      "visitSite": "Visit Site",
+      "noFees": "No Fees",
+      "noAgencyFees": "No Agency Fees",
+      "mobileApp": "Mobile App",
+      "platformSaved": "Platform saved to favorites",
+      "platformUnsaved": "Platform removed from favorites",
+      "save": "Save",
+      "unsave": "Remove",
+      "tipsTitle": "Tips & Advice",
+      "forForeigners": "For Foreigners",
+      "features": "Features",
+      "pros": "Pros",
+      "cons": "Cons",
+      "tips": "Tips",
+      "eligibility": "Eligibility"
     },
     "procedures": {
       "title": "My Procedures",
       "subtitle": "Track and manage your benefit applications",
       "startNew": "Start New",
+      "startFirst": "Create my first procedure",
+      "noProcedures": "You don't have any procedures yet",
       "stats": {
         "total": "Total",
         "inProgress": "In Progress",
@@ -371,15 +425,37 @@
       },
       "filters": {
         "all": "All",
-        "in-progress": "In Progress",
+        "inprogress": "In Progress",
         "pending": "Pending",
-        "not-started": "Not Started",
+        "notstarted": "Not Started",
         "completed": "Completed"
       },
+      "status": {
+        "notStarted": "Not Started",
+        "inProgress": "In Progress",
+        "pending": "Pending",
+        "completed": "Completed",
+        "rejected": "Rejected",
+        "unknown": "Unknown"
+      },
+      "types": {
+        "aide_application": "Benefit Application",
+        "document_request": "Document Request",
+        "account_creation": "Account Creation",
+        "renewal": "Renewal",
+        "appeal": "Appeal",
+        "other": "Other"
+      },
       "deadline": "Deadline",
+      "created": "Created",
       "expectedDecision": "Expected decision",
       "step": "Step",
       "stepsOverview": "Steps Overview",
+      "notes": "Notes",
+      "changeStatus": "Change Status",
+      "markCompleted": "Mark as Completed",
+      "markPending": "Mark as Pending",
+      "markRejected": "Mark as Rejected",
       "requiredDocuments": "Required Documents",
       "showMore": "Show details",
       "showLess": "Hide details",
@@ -387,16 +463,55 @@
       "start": "Start",
       "trackStatus": "Track Status",
       "viewDetails": "View Details",
-      "noResults": "No procedures match your filters"
+      "noResults": "No procedures match your filters",
+      "newProcedure": "New Procedure",
+      "create": "Create",
+      "form": {
+        "name": "Procedure Name",
+        "namePlaceholder": "e.g., APL Application, CSS Renewal...",
+        "type": "Procedure Type",
+        "relatedAide": "Related Benefit (optional)",
+        "noAide": "No related benefit",
+        "provider": "Provider",
+        "providerPlaceholder": "e.g., CAF, CPAM, Pôle Emploi...",
+        "deadline": "Deadline (optional)",
+        "notes": "Notes",
+        "notesPlaceholder": "Additional notes or information..."
+      },
+      "deleteConfirm": {
+        "title": "Delete Procedure",
+        "message": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
+      },
+      "errorFetching": "Error loading procedures",
+      "errorCreating": "Error creating procedure",
+      "errorUpdating": "Error updating procedure",
+      "errorDeleting": "Error deleting procedure",
+      "created": "Procedure created successfully",
+      "statusUpdated": "Status updated",
+      "stepUpdated": "Step updated",
+      "deleted": "Procedure deleted",
+      "nameRequired": "Procedure name is required"
     },
     "chat": {
       "title": "AI Assistant",
+      "pageTitle": "AI Assistant",
       "history": "History",
       "newChat": "New Chat",
       "online": "Online",
       "placeholder": "Ask me anything about French benefits...",
       "disclaimer": "AI can make mistakes. Verify important information.",
       "suggestionsLabel": "Try asking about:",
+      "welcomeMessage": "Hello! I'm AIDE+, your personal assistant for navigating French administrative systems. I can help you with:\n\n• **Government benefits** - CAF, APL, RSA, Prime d'activité, etc.\n• **Administrative procedures** - Visas, residence permits, CPAM, etc.\n• **Housing assistance** - Finding accommodation, guarantors, tenant rights\n\nHow can I assist you today?",
+      "loadError": "Failed to load conversation",
+      "deleted": "Conversation deleted",
+      "deleteError": "Failed to delete conversation",
+      "sendError": "Failed to send message",
+      "errorResponse": "Sorry, I encountered an error. Please try again.",
+      "noHistory": "No conversations yet",
+      "untitled": "New conversation",
+      "messages": "messages",
+      "loadingMessages": "Loading messages...",
+      "sources": "Sources",
       "suggestions": {
         "housing": "What housing benefits am I eligible for?",
         "eligibility": "Check my eligibility for CAF benefits",
@@ -409,42 +524,71 @@
       "subtitle": "Manage your personal information",
       "noName": "Add your name",
       "uploadPhoto": "Upload Photo",
+      "removePhoto": "Remove Photo",
+      "saved": "Profile saved successfully",
+      "saveError": "Failed to save profile",
+      "avatarUploaded": "Photo uploaded successfully",
+      "avatarUploadError": "Failed to upload photo",
+      "avatarDeleted": "Photo removed successfully",
+      "avatarDeleteError": "Failed to remove photo",
+      "invalidFileType": "Please upload a valid image (JPEG, PNG, GIF, or WebP)",
+      "fileTooLarge": "File size must be less than 5MB",
       "stats": {
         "aidesFound": "Benefits Found",
-        "applications": "Applications",
-        "savings": "Monthly Savings"
+        "procedures": "Procedures",
+        "savings": "Potential Savings"
       },
       "subscription": {
         "title": "Subscription",
         "upgradeText": "Upgrade to Premium for unlimited AI assistant and priority support.",
-        "upgrade": "Upgrade to Premium"
+        "upgrade": "Upgrade to Premium",
+        "activeText": "Thank you for your subscription! You have access to all premium features."
+      },
+      "subscriptionTiers": {
+        "free": "Free",
+        "basic": "Basic",
+        "plus": "Plus",
+        "premium": "Premium",
+        "enterprise": "Enterprise"
       },
       "personalInfo": "Personal Information",
       "addressInfo": "Address",
-      "residenceInfo": "Residence Status",
+      "preferences": "Preferences",
+      "statusOptions": {
+        "student": "Student",
+        "employed": "Employed",
+        "unemployed": "Unemployed",
+        "retired": "Retired",
+        "other": "Other"
+      },
+      "nationalityOptions": {
+        "french": "French",
+        "eu": "EU Citizen",
+        "nonEu": "Non-EU",
+        "other": "Other"
+      },
       "fields": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
+        "fullName": "Full Name",
         "email": "Email",
         "phone": "Phone",
         "birthDate": "Date of Birth",
+        "status": "Status",
         "nationality": "Nationality",
-        "residenceStatus": "Residence Status",
-        "address": "Address",
+        "countryOfOrigin": "Country of Origin",
+        "region": "Region",
+        "department": "Department",
         "city": "City",
         "postalCode": "Postal Code",
-        "region": "Region"
+        "language": "Language"
       },
       "placeholders": {
-        "firstName": "Enter first name",
-        "lastName": "Enter last name",
+        "fullName": "Enter your full name",
         "phone": "+33 6 12 34 56 78",
-        "nationality": "Your nationality",
-        "residenceStatus": "e.g., Student Visa, Work Permit",
-        "address": "Street address",
+        "countryOfOrigin": "Enter country",
+        "selectRegion": "Select a region",
+        "department": "e.g., Paris",
         "city": "City",
-        "postalCode": "75001",
-        "region": "Île-de-France"
+        "postalCode": "75001"
       }
     },
     "settings": {

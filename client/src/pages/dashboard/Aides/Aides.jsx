@@ -1,7 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button, Card, Input, Badge, Loading } from '../../../components/ui';
+import { api, API_ENDPOINTS } from '../../../config/api';
+import { ROUTES } from '../../../config/routes';
 import styles from './Aides.module.css';
 
 const containerVariants = {
@@ -17,146 +20,139 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-// Mock aides data - replace with real API data
-const MOCK_AIDES = [
-  {
-    id: 1,
-    name: 'APL - Aide Personnalisée au Logement',
-    category: 'housing',
-    status: 'eligible',
-    monthlyAmount: 350,
-    description: 'Housing assistance to help pay your rent. Available for tenants with limited income.',
-    requirements: ['Valid residence permit', 'Rental agreement', 'Income below threshold'],
-    processingTime: '2-4 weeks',
-    savedAt: '2024-01-15'
-  },
-  {
-    id: 2,
-    name: 'CAF - Allocations Familiales',
-    category: 'family',
-    status: 'eligible',
-    monthlyAmount: 180,
-    description: 'Family allowances for households with 2 or more children.',
-    requirements: ['At least 2 dependent children', 'Residence in France'],
-    processingTime: '3-6 weeks',
-    savedAt: '2024-01-14'
-  },
-  {
-    id: 3,
-    name: 'Prime d\'Activité',
-    category: 'employment',
-    status: 'pending',
-    monthlyAmount: 150,
-    description: 'Activity bonus for workers with modest income.',
-    requirements: ['Working status', 'Income between €1,000-€1,800/month', 'French residence'],
-    processingTime: '1-2 weeks',
-    savedAt: '2024-01-12'
-  },
-  {
-    id: 4,
-    name: 'RSA - Revenu de Solidarité Active',
-    category: 'social',
-    status: 'not-eligible',
-    monthlyAmount: 565,
-    description: 'Minimum income support for people with little or no resources.',
-    requirements: ['Over 25 years old', 'No or very low income', '5 years residence in France'],
-    processingTime: '4-8 weeks',
-    savedAt: null
-  },
-  {
-    id: 5,
-    name: 'ALS - Allocation de Logement Social',
-    category: 'housing',
-    status: 'eligible',
-    monthlyAmount: 200,
-    description: 'Social housing allowance for those who do not qualify for APL.',
-    requirements: ['Tenant status', 'Meet income criteria', 'Not eligible for APL'],
-    processingTime: '2-4 weeks',
-    savedAt: '2024-01-10'
-  },
-  {
-    id: 6,
-    name: 'CSS - Complémentaire Santé Solidaire',
-    category: 'health',
-    status: 'eligible',
-    monthlyAmount: 0,
-    description: 'Complementary health coverage for low-income individuals.',
-    requirements: ['Resident in France', 'Income below threshold', 'Enrolled in social security'],
-    processingTime: '2-3 weeks',
-    savedAt: null
-  },
-  {
-    id: 7,
-    name: 'Bourse CROUS',
-    category: 'education',
-    status: 'not-eligible',
-    monthlyAmount: 450,
-    description: 'Student scholarship based on social criteria.',
-    requirements: ['Student status', 'Under 28 years old', 'Parents\' income below threshold'],
-    processingTime: '1-3 months',
-    savedAt: null
-  },
-  {
-    id: 8,
-    name: 'Aide au Retour à l\'Emploi',
-    category: 'employment',
-    status: 'pending',
-    monthlyAmount: 900,
-    description: 'Unemployment benefits for job seekers.',
-    requirements: ['Recently lost job', 'Registered with Pôle Emploi', 'Actively seeking work'],
-    processingTime: '1-2 weeks',
-    savedAt: null
-  }
-];
-
 const CATEGORIES = [
   { value: 'all', icon: 'ri-apps-line' },
   { value: 'housing', icon: 'ri-home-line' },
+  { value: 'logement', icon: 'ri-home-line' },
   { value: 'family', icon: 'ri-parent-line' },
+  { value: 'famille', icon: 'ri-parent-line' },
   { value: 'employment', icon: 'ri-briefcase-line' },
+  { value: 'emploi', icon: 'ri-briefcase-line' },
   { value: 'social', icon: 'ri-hand-heart-line' },
   { value: 'health', icon: 'ri-heart-pulse-line' },
-  { value: 'education', icon: 'ri-graduation-cap-line' }
+  { value: 'santé', icon: 'ri-heart-pulse-line' },
+  { value: 'education', icon: 'ri-graduation-cap-line' },
+  { value: 'éducation', icon: 'ri-graduation-cap-line' },
+  { value: 'transport', icon: 'ri-bus-line' },
 ];
 
+// Normalize category for display
+const normalizeCategory = (category) => {
+  if (!category) return 'social';
+  const cat = category.toLowerCase();
+  const mapping = {
+    'logement': 'housing',
+    'famille': 'family',
+    'emploi': 'employment',
+    'santé': 'health',
+    'éducation': 'education',
+  };
+  return mapping[cat] || cat;
+};
+
 const STATUS_CONFIG = {
-  eligible: { color: 'success', icon: 'ri-check-line' },
-  'not-eligible': { color: 'danger', icon: 'ri-close-line' },
-  pending: { color: 'warning', icon: 'ri-time-line' },
-  applied: { color: 'primary', icon: 'ri-file-list-line' }
+  saved: { color: 'primary', icon: 'ri-bookmark-fill' },
+  applied: { color: 'warning', icon: 'ri-file-list-line' },
+  received: { color: 'success', icon: 'ri-check-double-line' },
+  rejected: { color: 'danger', icon: 'ri-close-line' },
 };
 
 export function Aides() {
   const { t } = useTranslation();
-  const [loading] = useState(false);
+  const navigate = useNavigate();
+  
+  // State
+  const [loading, setLoading] = useState(true);
+  const [latestSimulation, setLatestSimulation] = useState(null);
+  const [savedAidesData, setSavedAidesData] = useState([]);
+  const [savingAide, setSavingAide] = useState(null);
+  
+  // Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [viewMode, setViewMode] = useState('eligible');
   const [sortBy, setSortBy] = useState('amount');
   const [expandedAide, setExpandedAide] = useState(null);
-  const [savedAides, setSavedAides] = useState(
-    MOCK_AIDES.filter(a => a.savedAt).map(a => a.id)
-  );
 
+  // Handle view mode change - reset all filters
+  const handleViewChange = useCallback((newMode) => {
+    setViewMode(newMode);
+    setSelectedCategory('all');
+    setSearchQuery('');
+    setExpandedAide(null);
+  }, []);
+
+  // Fetch data on mount
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    
+    try {
+      const [simulationRes, savedRes] = await Promise.all([
+        api.get(API_ENDPOINTS.SIMULATION.LATEST).catch(() => null),
+        api.get(API_ENDPOINTS.SIMULATION.SAVED_AIDES).catch(() => ({ data: [] })),
+      ]);
+      
+      if (simulationRes?.data) {
+        setLatestSimulation(simulationRes.data);
+      }
+      
+      setSavedAidesData(savedRes?.data || []);
+    } catch (err) {
+      console.error('Failed to fetch aides data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get eligible aides from latest simulation
+  const eligibleAides = useMemo(() => {
+    if (!latestSimulation?.results?.eligibleAides) return [];
+    return latestSimulation.results.eligibleAides;
+  }, [latestSimulation]);
+
+  // Get saved aide IDs for quick lookup
+  const savedAideIds = useMemo(() => {
+    return new Set(savedAidesData.map(a => a.aide_id));
+  }, [savedAidesData]);
+
+  // Current list based on view mode
+  const currentAides = useMemo(() => {
+    if (viewMode === 'saved') {
+      return savedAidesData.map(sa => ({
+        id: sa.aide_id,
+        name: sa.aide_name,
+        description: sa.aide_description,
+        category: sa.aide_category,
+        monthlyAmount: sa.monthly_amount,
+        sourceUrl: sa.source_url,
+        applicationUrl: sa.application_url,
+        savedStatus: sa.status,
+        savedAt: sa.created_at,
+        appliedAt: sa.applied_at,
+        notes: sa.notes,
+      }));
+    }
+    return eligibleAides;
+  }, [viewMode, eligibleAides, savedAidesData]);
+
+  // Filtered and sorted aides
   const filteredAides = useMemo(() => {
-    return MOCK_AIDES
+    return currentAides
       .filter(aide => {
-        // Search filter
         if (searchQuery) {
           const query = searchQuery.toLowerCase();
-          const matchesName = aide.name.toLowerCase().includes(query);
-          const matchesDesc = aide.description.toLowerCase().includes(query);
+          const matchesName = (aide.name || '').toLowerCase().includes(query);
+          const matchesDesc = (aide.description || '').toLowerCase().includes(query);
           if (!matchesName && !matchesDesc) return false;
         }
         
-        // Category filter
-        if (selectedCategory !== 'all' && aide.category !== selectedCategory) {
-          return false;
-        }
-        
-        // Status filter
-        if (statusFilter !== 'all' && aide.status !== statusFilter) {
-          return false;
+        if (selectedCategory !== 'all') {
+          const aideCategory = normalizeCategory(aide.category || aide.categoryKey);
+          if (aideCategory !== selectedCategory) return false;
         }
         
         return true;
@@ -164,47 +160,118 @@ export function Aides() {
       .sort((a, b) => {
         switch (sortBy) {
           case 'amount':
-            return b.monthlyAmount - a.monthlyAmount;
+            return (b.monthlyAmount || 0) - (a.monthlyAmount || 0);
           case 'name':
-            return a.name.localeCompare(b.name);
-          case 'status':
-            const statusOrder = { eligible: 0, pending: 1, 'not-eligible': 2 };
-            return statusOrder[a.status] - statusOrder[b.status];
+            return (a.name || '').localeCompare(b.name || '');
           default:
             return 0;
         }
       });
-  }, [searchQuery, selectedCategory, statusFilter, sortBy]);
+  }, [currentAides, searchQuery, selectedCategory, sortBy]);
 
-  const toggleSaveAide = (aideId) => {
-    setSavedAides(prev => 
-      prev.includes(aideId)
-        ? prev.filter(id => id !== aideId)
-        : [...prev, aideId]
-    );
-  };
+  // Toggle save aide
+  const toggleSaveAide = useCallback(async (aide) => {
+    const aideId = aide.id;
+    const isSaved = savedAideIds.has(aideId);
+    
+    setSavingAide(aideId);
+    
+    try {
+      if (isSaved) {
+        await api.delete(API_ENDPOINTS.SIMULATION.UNSAVE_AIDE(aideId));
+        setSavedAidesData(prev => prev.filter(a => a.aide_id !== aideId));
+      } else {
+        const response = await api.post(API_ENDPOINTS.SIMULATION.SAVE_AIDE, {
+          aide,
+          simulationId: latestSimulation?.id,
+        });
+        if (response?.data) {
+          setSavedAidesData(prev => [response.data, ...prev]);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to toggle save aide:', err);
+    } finally {
+      setSavingAide(null);
+    }
+  }, [savedAideIds, latestSimulation?.id]);
+
+  // Update aide status
+  const updateAideStatus = useCallback(async (aideId, newStatus) => {
+    try {
+      const response = await api.patch(API_ENDPOINTS.SIMULATION.UPDATE_AIDE_STATUS(aideId), {
+        status: newStatus,
+      });
+      
+      if (response?.data) {
+        setSavedAidesData(prev => 
+          prev.map(a => a.aide_id === aideId ? response.data : a)
+        );
+      }
+    } catch (err) {
+      console.error('Failed to update aide status:', err);
+    }
+  }, []);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 0
-    }).format(amount);
+    }).format(amount || 0);
   };
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    return new Date(dateStr).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
+  // Stats
   const stats = useMemo(() => ({
-    total: MOCK_AIDES.length,
-    eligible: MOCK_AIDES.filter(a => a.status === 'eligible').length,
-    totalPotential: MOCK_AIDES
-      .filter(a => a.status === 'eligible')
-      .reduce((sum, a) => sum + a.monthlyAmount, 0),
-    saved: savedAides.length
-  }), [savedAides]);
+    total: eligibleAides.length,
+    totalPotential: eligibleAides.reduce((sum, a) => sum + (a.monthlyAmount || 0), 0),
+    saved: savedAidesData.length,
+    applied: savedAidesData.filter(a => a.status === 'applied').length,
+  }), [eligibleAides, savedAidesData]);
+
+  // Get unique categories from aides
+  const availableCategories = useMemo(() => {
+    const cats = new Set(['all']);
+    currentAides.forEach(aide => {
+      const cat = normalizeCategory(aide.category || aide.categoryKey);
+      if (cat) cats.add(cat);
+    });
+    return CATEGORIES.filter(c => cats.has(c.value) || c.value === 'all');
+  }, [currentAides]);
 
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
         <Loading.Spinner size="lg" />
+        <p>{t('common.loading')}</p>
+      </div>
+    );
+  }
+
+  // No simulation yet
+  if (!latestSimulation && viewMode === 'eligible') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.emptyStateContainer}>
+          <Card className={styles.emptyStateCard}>
+            <i className="ri-search-eye-line" />
+            <h2>{t('dashboard.aides.noSimulation')}</h2>
+            <p>{t('dashboard.aides.noSimulationDesc')}</p>
+            <Button variant="primary" onClick={() => navigate(ROUTES.SIMULATION)}>
+              <i className="ri-play-circle-line" />
+              {t('dashboard.aides.runFirstSimulation')}
+            </Button>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -215,9 +282,15 @@ export function Aides() {
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <h1 className={styles.title}>{t('dashboard.aides.title')}</h1>
-          <p className={styles.subtitle}>{t('dashboard.aides.subtitle')}</p>
+          <p className={styles.subtitle}>
+            {latestSimulation && (
+              <>
+                {t('dashboard.aides.lastSimulation')}: {formatDate(latestSimulation.created_at)}
+              </>
+            )}
+          </p>
         </div>
-        <Button variant="primary">
+        <Button variant="primary" onClick={() => navigate(ROUTES.SIMULATION)}>
           <i className="ri-refresh-line" />
           {t('dashboard.aides.runNewSimulation')}
         </Button>
@@ -231,22 +304,12 @@ export function Aides() {
           </div>
           <div className={styles.statContent}>
             <span className={styles.statValue}>{stats.total}</span>
-            <span className={styles.statLabel}>{t('dashboard.aides.stats.total')}</span>
-          </div>
-        </Card>
-        
-        <Card className={styles.statCard}>
-          <div className={styles.statIcon} style={{ '--color': 'var(--success)' }}>
-            <i className="ri-check-double-line" />
-          </div>
-          <div className={styles.statContent}>
-            <span className={styles.statValue}>{stats.eligible}</span>
             <span className={styles.statLabel}>{t('dashboard.aides.stats.eligible')}</span>
           </div>
         </Card>
         
         <Card className={styles.statCard}>
-          <div className={styles.statIcon} style={{ '--color': 'var(--warning)' }}>
+          <div className={styles.statIcon} style={{ '--color': 'var(--success)' }}>
             <i className="ri-money-euro-circle-line" />
           </div>
           <div className={styles.statContent}>
@@ -264,6 +327,34 @@ export function Aides() {
             <span className={styles.statLabel}>{t('dashboard.aides.stats.saved')}</span>
           </div>
         </Card>
+        
+        <Card className={styles.statCard}>
+          <div className={styles.statIcon} style={{ '--color': 'var(--warning)' }}>
+            <i className="ri-file-edit-line" />
+          </div>
+          <div className={styles.statContent}>
+            <span className={styles.statValue}>{stats.applied}</span>
+            <span className={styles.statLabel}>{t('dashboard.aides.stats.applied')}</span>
+          </div>
+        </Card>
+      </div>
+
+      {/* View Mode Toggle */}
+      <div className={styles.viewToggle}>
+        <button
+          className={`${styles.viewToggleBtn} ${viewMode === 'eligible' ? styles.active : ''}`}
+          onClick={() => handleViewChange('eligible')}
+        >
+          <i className="ri-list-check-2" />
+          {t('dashboard.aides.viewEligible')} ({eligibleAides.length})
+        </button>
+        <button
+          className={`${styles.viewToggleBtn} ${viewMode === 'saved' ? styles.active : ''}`}
+          onClick={() => handleViewChange('saved')}
+        >
+          <i className="ri-bookmark-line" />
+          {t('dashboard.aides.viewSaved')} ({savedAidesData.length})
+        </button>
       </div>
 
       {/* Filters */}
@@ -282,31 +373,19 @@ export function Aides() {
           
           <div className={styles.filterGroup}>
             <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className={styles.filterSelect}
-            >
-              <option value="all">{t('dashboard.aides.filters.allStatuses')}</option>
-              <option value="eligible">{t('dashboard.aides.filters.eligible')}</option>
-              <option value="pending">{t('dashboard.aides.filters.pending')}</option>
-              <option value="not-eligible">{t('dashboard.aides.filters.notEligible')}</option>
-            </select>
-            
-            <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className={styles.filterSelect}
             >
               <option value="amount">{t('dashboard.aides.sort.byAmount')}</option>
               <option value="name">{t('dashboard.aides.sort.byName')}</option>
-              <option value="status">{t('dashboard.aides.sort.byStatus')}</option>
             </select>
           </div>
         </div>
         
         {/* Category Pills */}
         <div className={styles.categoryPills}>
-          {CATEGORIES.map(cat => (
+          {availableCategories.map(cat => (
             <button
               key={cat.value}
               className={`${styles.categoryPill} ${selectedCategory === cat.value ? styles.active : ''}`}
@@ -321,12 +400,13 @@ export function Aides() {
 
       {/* Aides List */}
       <motion.div
+        key={viewMode}
         className={styles.aidesList}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="sync">
           {filteredAides.length === 0 ? (
             <motion.div
               className={styles.emptyState}
@@ -334,118 +414,169 @@ export function Aides() {
               animate={{ opacity: 1 }}
             >
               <i className="ri-search-line" />
-              <p>{t('dashboard.aides.noResults')}</p>
-              <Button variant="outline" onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('all');
-                setStatusFilter('all');
-              }}>
-                {t('dashboard.aides.clearFilters')}
-              </Button>
+              <p>
+                {viewMode === 'saved' 
+                  ? t('dashboard.aides.noSavedAides')
+                  : t('dashboard.aides.noResults')
+                }
+              </p>
+              {searchQuery || selectedCategory !== 'all' ? (
+                <Button variant="outline" onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                }}>
+                  {t('dashboard.aides.clearFilters')}
+                </Button>
+              ) : viewMode === 'saved' ? (
+                <Button variant="outline" onClick={() => setViewMode('eligible')}>
+                  {t('dashboard.aides.browseEligible')}
+                </Button>
+              ) : null}
             </motion.div>
           ) : (
-            filteredAides.map((aide) => (
-              <motion.div
-                key={aide.id}
-                variants={itemVariants}
-                layout
-              >
-                <Card 
-                  className={`${styles.aideCard} ${expandedAide === aide.id ? styles.expanded : ''}`}
+            filteredAides.map((aide) => {
+              const isSaved = savedAideIds.has(aide.id);
+              const categoryKey = normalizeCategory(aide.category || aide.categoryKey);
+              const categoryIcon = CATEGORIES.find(c => c.value === categoryKey)?.icon || 'ri-hand-heart-line';
+              
+              return (
+                <motion.div
+                  key={aide.id}
+                  variants={itemVariants}
+                  layout
                 >
-                  <div className={styles.aideHeader}>
-                    <div className={styles.aideInfo}>
-                      <div className={styles.aideTitleRow}>
-                        <h3 className={styles.aideName}>{aide.name}</h3>
-                        <Badge variant={STATUS_CONFIG[aide.status]?.color || 'default'}>
-                          <i className={STATUS_CONFIG[aide.status]?.icon} />
-                          {t(`dashboard.aides.status.${aide.status}`)}
-                        </Badge>
+                  <Card 
+                    className={`${styles.aideCard} ${expandedAide === aide.id ? styles.expanded : ''}`}
+                  >
+                    <div className={styles.aideHeader}>
+                      <div className={styles.aideInfo}>
+                        <div className={styles.aideTitleRow}>
+                          <h3 className={styles.aideName}>{aide.name}</h3>
+                          {viewMode === 'saved' && aide.savedStatus && (
+                            <Badge variant={STATUS_CONFIG[aide.savedStatus]?.color || 'default'}>
+                              <i className={STATUS_CONFIG[aide.savedStatus]?.icon} />
+                              {t(`dashboard.aides.savedStatus.${aide.savedStatus}`)}
+                            </Badge>
+                          )}
+                        </div>
+                        <span className={styles.aideCategory}>
+                          <i className={categoryIcon} />
+                          {t(`dashboard.aides.categories.${categoryKey}`)}
+                        </span>
                       </div>
-                      <span className={styles.aideCategory}>
-                        <i className={CATEGORIES.find(c => c.value === aide.category)?.icon} />
-                        {t(`dashboard.aides.categories.${aide.category}`)}
-                      </span>
+                      
+                      <div className={styles.aideAmount}>
+                        {(aide.monthlyAmount || 0) > 0 ? (
+                          <>
+                            <span className={styles.amountValue}>
+                              {formatCurrency(aide.monthlyAmount)}
+                            </span>
+                            <span className={styles.amountPeriod}>/{t('pricing.month')}</span>
+                          </>
+                        ) : (
+                          <span className={styles.freeTag}>{t('dashboard.aides.free')}</span>
+                        )}
+                      </div>
                     </div>
                     
-                    <div className={styles.aideAmount}>
-                      {aide.monthlyAmount > 0 ? (
-                        <>
-                          <span className={styles.amountValue}>
-                            {formatCurrency(aide.monthlyAmount)}
-                          </span>
-                          <span className={styles.amountPeriod}>/{t('pricing.month')}</span>
-                        </>
-                      ) : (
-                        <span className={styles.freeTag}>{t('dashboard.aides.free')}</span>
+                    <p className={styles.aideDescription}>{aide.description}</p>
+                    
+                    <AnimatePresence>
+                      {expandedAide === aide.id && (
+                        <motion.div
+                          className={styles.aideDetails}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                        >
+                          {/* Status Update for saved aides */}
+                          {viewMode === 'saved' && (
+                            <div className={styles.detailSection}>
+                              <h4>{t('dashboard.aides.updateStatus')}</h4>
+                              <div className={styles.statusButtons}>
+                                {['saved', 'applied', 'received', 'rejected'].map(status => (
+                                  <button
+                                    key={status}
+                                    className={`${styles.statusBtn} ${aide.savedStatus === status ? styles.active : ''}`}
+                                    onClick={() => updateAideStatus(aide.id, status)}
+                                  >
+                                    <i className={STATUS_CONFIG[status].icon} />
+                                    {t(`dashboard.aides.savedStatus.${status}`)}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Dates */}
+                          {viewMode === 'saved' && (
+                            <div className={styles.detailSection}>
+                              <h4>{t('dashboard.aides.dates')}</h4>
+                              <p>
+                                <i className="ri-bookmark-line" />
+                                {t('dashboard.aides.savedOn')}: {formatDate(aide.savedAt)}
+                              </p>
+                              {aide.appliedAt && (
+                                <p>
+                                  <i className="ri-file-edit-line" />
+                                  {t('dashboard.aides.appliedOn')}: {formatDate(aide.appliedAt)}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </motion.div>
                       )}
-                    </div>
-                  </div>
-                  
-                  <p className={styles.aideDescription}>{aide.description}</p>
-                  
-                  <AnimatePresence>
-                    {expandedAide === aide.id && (
-                      <motion.div
-                        className={styles.aideDetails}
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                      >
-                        <div className={styles.detailSection}>
-                          <h4>{t('dashboard.aides.requirements')}</h4>
-                          <ul className={styles.requirementsList}>
-                            {aide.requirements.map((req, idx) => (
-                              <li key={idx}>
-                                <i className="ri-checkbox-circle-line" />
-                                {req}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        <div className={styles.detailSection}>
-                          <h4>{t('dashboard.aides.processingTime')}</h4>
-                          <p>
-                            <i className="ri-time-line" />
-                            {aide.processingTime}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                  
-                  <div className={styles.aideActions}>
-                    <button
-                      className={`${styles.actionBtn} ${styles.expandBtn}`}
-                      onClick={() => setExpandedAide(expandedAide === aide.id ? null : aide.id)}
-                    >
-                      <i className={expandedAide === aide.id ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'} />
-                      {expandedAide === aide.id 
-                        ? t('dashboard.aides.showLess') 
-                        : t('dashboard.aides.showMore')
-                      }
-                    </button>
+                    </AnimatePresence>
                     
-                    <div className={styles.actionBtnGroup}>
+                    <div className={styles.aideActions}>
                       <button
-                        className={`${styles.actionBtn} ${styles.saveBtn} ${savedAides.includes(aide.id) ? styles.saved : ''}`}
-                        onClick={() => toggleSaveAide(aide.id)}
-                        title={savedAides.includes(aide.id) ? t('dashboard.aides.unsave') : t('dashboard.aides.save')}
+                        className={`${styles.actionBtn} ${styles.expandBtn}`}
+                        onClick={() => setExpandedAide(expandedAide === aide.id ? null : aide.id)}
                       >
-                        <i className={savedAides.includes(aide.id) ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
+                        <i className={expandedAide === aide.id ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'} />
+                        {expandedAide === aide.id 
+                          ? t('dashboard.aides.showLess') 
+                          : t('dashboard.aides.showMore')
+                        }
                       </button>
                       
-                      {aide.status === 'eligible' && (
-                        <Button variant="primary" size="sm">
-                          {t('dashboard.aides.startApplication')}
-                        </Button>
-                      )}
+                      <div className={styles.actionBtnGroup}>
+                        <button
+                          className={`${styles.actionBtn} ${styles.saveBtn} ${isSaved ? styles.saved : ''}`}
+                          onClick={() => toggleSaveAide(aide)}
+                          disabled={savingAide === aide.id}
+                          title={isSaved ? t('dashboard.aides.unsave') : t('dashboard.aides.save')}
+                        >
+                          {savingAide === aide.id ? (
+                            <Loading.Spinner size="sm" />
+                          ) : (
+                            <i className={isSaved ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
+                          )}
+                        </button>
+                        
+                        {aide.sourceUrl && (
+                          <a href={aide.sourceUrl} target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="sm">
+                              <i className="ri-external-link-line" />
+                              {t('dashboard.aides.learnMore')}
+                            </Button>
+                          </a>
+                        )}
+                        
+                        {aide.applicationUrl && (
+                          <a href={aide.applicationUrl} target="_blank" rel="noopener noreferrer">
+                            <Button variant="primary" size="sm">
+                              <i className="ri-arrow-right-line" />
+                              {t('dashboard.aides.startApplication')}
+                            </Button>
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))
+                  </Card>
+                </motion.div>
+              );
+            })
           )}
         </AnimatePresence>
       </motion.div>

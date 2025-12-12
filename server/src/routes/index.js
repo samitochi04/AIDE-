@@ -9,6 +9,10 @@ import adminRoutes from './admin.routes.js';
 import analyticsRoutes from './analytics.routes.js';
 import affiliateRoutes from './affiliate.routes.js';
 import contactRoutes from './contact.routes.js';
+import simulationRoutes from './simulation.routes.js';
+import proceduresRoutes from './procedures.routes.js';
+import housingRoutes from './housing.routes.js';
+import profileRoutes from './profile.routes.js';
 
 const router = Router();
 
@@ -30,6 +34,10 @@ export const mountRoutes = (app) => {
   app.use(`${API_VERSION}/analytics`, analyticsRoutes);
   app.use(`${API_VERSION}/affiliate`, affiliateRoutes);
   app.use(`${API_VERSION}/contact`, contactRoutes);
+  app.use(`${API_VERSION}/simulation`, simulationRoutes);
+  app.use(`${API_VERSION}/procedures`, proceduresRoutes);
+  app.use(`${API_VERSION}/housing`, housingRoutes);
+  app.use(`${API_VERSION}/profile`, profileRoutes);
 
   return app;
 };

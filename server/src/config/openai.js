@@ -6,7 +6,8 @@ export const openai = new OpenAI({
 
 // Model configuration
 export const AI_CONFIG = {
-  chatModel: process.env.OPENAI_MODEL || 'gpt-4-turbo-preview',
+  // Using gpt-4o-mini for faster responses (upgrade to gpt-4o for complex queries)
+  chatModel: process.env.OPENAI_MODEL || 'gpt-4o-mini',
   embeddingModel: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
   embeddingDimensions: 1536,
   maxTokens: 4096,

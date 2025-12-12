@@ -33,7 +33,7 @@ router.post(
   '/chat/stream',
   authenticate,
   chatLimiter,
-  requireSubscription(['basic', 'plus', 'premium']),
+  requireSubscription(['free', 'basic', 'plus', 'premium']),
   validateBody(schemas.chatMessage),
   aiController.chatStream
 );

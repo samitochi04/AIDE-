@@ -26,7 +26,8 @@
     "no": "Non",
     "upgrade": "Passer Premium",
     "logout": "Se déconnecter",
-    "upload": "Télécharger"
+    "upload": "Télécharger",
+    "all": "Tous"
   },
   
   "theme": {
@@ -247,6 +248,11 @@
   
   "dashboard": {
     "search": "Rechercher...",
+    "searchPlaceholder": "Rechercher des pages, fonctionnalités...",
+    "noSearchResults": "Aucun résultat trouvé",
+    "notifications": "Notifications",
+    "noNotifications": "Aucune notification",
+    "markAllRead": "Tout marquer comme lu",
     "user": "Utilisateur",
     "sidebar": {
       "main": "Principal",
@@ -277,7 +283,11 @@
       "askAI": "Demander à l'IA",
       "findHousing": "Trouver un Logement",
       "startProcedure": "Démarrer une Démarche",
-      "updateProfile": "Mettre à Jour le Profil"
+      "updateProfile": "Mettre à Jour le Profil",
+      "noAidesYet": "Aucune aide découverte",
+      "runFirstSimulation": "Lancer votre première simulation",
+      "noProceduresYet": "Aucune démarche en cours",
+      "exploreProcedures": "Explorer les démarches"
     },
     "status": {
       "eligible": "Éligible",
@@ -289,11 +299,25 @@
       "subtitle": "Consultez et gérez toutes les aides auxquelles vous êtes éligible",
       "runNewSimulation": "Nouvelle Simulation",
       "searchPlaceholder": "Rechercher des aides...",
+      "lastSimulation": "Dernière simulation",
+      "noSimulation": "Aucune simulation",
+      "noSimulationDesc": "Faites une simulation pour découvrir les aides auxquelles vous êtes éligible.",
+      "runFirstSimulation": "Lancer une simulation",
+      "viewEligible": "Éligibles",
+      "viewSaved": "Enregistrées",
+      "noSavedAides": "Aucune aide enregistrée",
+      "browseEligible": "Voir les aides éligibles",
+      "learnMore": "En savoir plus",
+      "updateStatus": "Mettre à jour le statut",
+      "dates": "Dates",
+      "savedOn": "Enregistrée le",
+      "appliedOn": "Demande faite le",
       "stats": {
         "total": "Total des Aides",
-        "eligible": "Éligible",
+        "eligible": "Éligibles",
         "potential": "Potentiel Mensuel",
-        "saved": "Enregistrées"
+        "saved": "Enregistrées",
+        "applied": "Demandes faites"
       },
       "filters": {
         "allStatuses": "Tous les statuts",
@@ -313,13 +337,20 @@
         "employment": "Emploi",
         "social": "Social",
         "health": "Santé",
-        "education": "Éducation"
+        "education": "Éducation",
+        "transport": "Transport"
       },
       "status": {
         "eligible": "Éligible",
         "not-eligible": "Non Éligible",
         "pending": "En attente",
         "applied": "Demande faite"
+      },
+      "savedStatus": {
+        "saved": "Enregistrée",
+        "applied": "Demande faite",
+        "received": "Reçue",
+        "rejected": "Refusée"
       },
       "requirements": "Conditions requises",
       "processingTime": "Délai de traitement",
@@ -334,7 +365,7 @@
     },
     "housing": {
       "title": "Logement",
-      "subtitle": "Gérez votre situation de logement et les aides associées",
+      "subtitle": "Trouvez un logement et découvrez toutes les plateformes disponibles en France",
       "currentSituation": "Situation Actuelle",
       "renter": "Locataire",
       "owner": "Propriétaire",
@@ -357,12 +388,35 @@
       "helpfulResources": "Ressources Utiles",
       "needHelp": "Besoin d'aide ?",
       "needHelpDescription": "Posez des questions à notre assistant IA sur les aides au logement et la recherche d'un logement en France.",
-      "askAssistant": "Demander à l'Assistant IA"
+      "askAssistant": "Demander à l'Assistant IA",
+      "platformsAvailable": "Plateformes Disponibles",
+      "savedPlatforms": "Plateformes Sauvegardées",
+      "guarantorServices": "Services de Garantie",
+      "guarantorDescription": "Obtenez un garant pour votre dossier de location sans garant personnel.",
+      "searchPlatforms": "Rechercher des plateformes...",
+      "noPlatformsFound": "Aucune plateforme trouvée",
+      "visitSite": "Visiter le site",
+      "noFees": "Sans frais",
+      "noAgencyFees": "Sans frais d'agence",
+      "mobileApp": "Application Mobile",
+      "platformSaved": "Plateforme ajoutée aux favoris",
+      "platformUnsaved": "Plateforme retirée des favoris",
+      "save": "Sauvegarder",
+      "unsave": "Retirer",
+      "tipsTitle": "Conseils & Astuces",
+      "forForeigners": "Pour les Étrangers",
+      "features": "Fonctionnalités",
+      "pros": "Avantages",
+      "cons": "Inconvénients",
+      "tips": "Conseils",
+      "eligibility": "Éligibilité"
     },
     "procedures": {
       "title": "Mes Démarches",
       "subtitle": "Suivez et gérez vos demandes d'aides",
       "startNew": "Nouvelle Démarche",
+      "startFirst": "Créer ma première démarche",
+      "noProcedures": "Vous n'avez pas encore de démarches",
       "stats": {
         "total": "Total",
         "inProgress": "En Cours",
@@ -371,15 +425,37 @@
       },
       "filters": {
         "all": "Toutes",
-        "in-progress": "En Cours",
+        "inprogress": "En Cours",
         "pending": "En Attente",
-        "not-started": "Non Commencées",
+        "notstarted": "Non Commencées",
         "completed": "Terminées"
       },
+      "status": {
+        "notStarted": "Non Commencée",
+        "inProgress": "En Cours",
+        "pending": "En Attente",
+        "completed": "Terminée",
+        "rejected": "Refusée",
+        "unknown": "Inconnu"
+      },
+      "types": {
+        "aide_application": "Demande d'aide",
+        "document_request": "Demande de document",
+        "account_creation": "Création de compte",
+        "renewal": "Renouvellement",
+        "appeal": "Recours",
+        "other": "Autre"
+      },
       "deadline": "Date limite",
+      "created": "Créé le",
       "expectedDecision": "Décision prévue",
       "step": "Étape",
       "stepsOverview": "Aperçu des Étapes",
+      "notes": "Notes",
+      "changeStatus": "Changer le statut",
+      "markCompleted": "Marquer comme terminée",
+      "markPending": "Marquer en attente",
+      "markRejected": "Marquer comme refusée",
       "requiredDocuments": "Documents Requis",
       "showMore": "Voir les détails",
       "showLess": "Masquer les détails",
@@ -387,16 +463,55 @@
       "start": "Commencer",
       "trackStatus": "Suivre le Statut",
       "viewDetails": "Voir les Détails",
-      "noResults": "Aucune démarche ne correspond à vos filtres"
+      "noResults": "Aucune démarche ne correspond à vos filtres",
+      "newProcedure": "Nouvelle Démarche",
+      "create": "Créer",
+      "form": {
+        "name": "Nom de la démarche",
+        "namePlaceholder": "Ex: Demande APL, Renouvellement CSS...",
+        "type": "Type de démarche",
+        "relatedAide": "Aide associée (optionnel)",
+        "noAide": "Aucune aide associée",
+        "provider": "Organisme",
+        "providerPlaceholder": "Ex: CAF, CPAM, Pôle Emploi...",
+        "deadline": "Date limite (optionnel)",
+        "notes": "Notes",
+        "notesPlaceholder": "Notes ou informations supplémentaires..."
+      },
+      "deleteConfirm": {
+        "title": "Supprimer la démarche",
+        "message": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible."
+      },
+      "errorFetching": "Erreur lors du chargement des démarches",
+      "errorCreating": "Erreur lors de la création de la démarche",
+      "errorUpdating": "Erreur lors de la mise à jour",
+      "errorDeleting": "Erreur lors de la suppression",
+      "created": "Démarche créée avec succès",
+      "statusUpdated": "Statut mis à jour",
+      "stepUpdated": "Étape mise à jour",
+      "deleted": "Démarche supprimée",
+      "nameRequired": "Le nom de la démarche est requis"
     },
     "chat": {
       "title": "Assistant IA",
+      "pageTitle": "Assistant IA",
       "history": "Historique",
       "newChat": "Nouvelle Discussion",
       "online": "En ligne",
       "placeholder": "Posez-moi une question sur les aides en France...",
       "disclaimer": "L'IA peut faire des erreurs. Vérifiez les informations importantes.",
       "suggestionsLabel": "Essayez de demander :",
+      "welcomeMessage": "Bonjour ! Je suis AIDE+, votre assistant personnel pour naviguer dans les systèmes administratifs français. Je peux vous aider avec :\n\n• **Les aides gouvernementales** - CAF, APL, RSA, Prime d'activité, etc.\n• **Les démarches administratives** - Visas, titres de séjour, CPAM, etc.\n• **L'aide au logement** - Trouver un logement, garants, droits des locataires\n\nComment puis-je vous aider aujourd'hui ?",
+      "loadError": "Échec du chargement de la conversation",
+      "deleted": "Conversation supprimée",
+      "deleteError": "Échec de la suppression de la conversation",
+      "sendError": "Échec de l'envoi du message",
+      "errorResponse": "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
+      "noHistory": "Aucune conversation",
+      "untitled": "Nouvelle conversation",
+      "messages": "messages",
+      "loadingMessages": "Chargement des messages...",
+      "sources": "Sources",
       "suggestions": {
         "housing": "À quelles aides au logement suis-je éligible ?",
         "eligibility": "Vérifier mon éligibilité aux aides de la CAF",
@@ -409,42 +524,71 @@
       "subtitle": "Gérez vos informations personnelles",
       "noName": "Ajoutez votre nom",
       "uploadPhoto": "Télécharger une Photo",
+      "removePhoto": "Supprimer la Photo",
+      "saved": "Profil enregistré avec succès",
+      "saveError": "Échec de l'enregistrement du profil",
+      "avatarUploaded": "Photo téléchargée avec succès",
+      "avatarUploadError": "Échec du téléchargement de la photo",
+      "avatarDeleted": "Photo supprimée avec succès",
+      "avatarDeleteError": "Échec de la suppression de la photo",
+      "invalidFileType": "Veuillez télécharger une image valide (JPEG, PNG, GIF ou WebP)",
+      "fileTooLarge": "La taille du fichier doit être inférieure à 5 Mo",
       "stats": {
         "aidesFound": "Aides Trouvées",
-        "applications": "Demandes",
-        "savings": "Économies Mensuelles"
+        "procedures": "Démarches",
+        "savings": "Économies Potentielles"
       },
       "subscription": {
         "title": "Abonnement",
         "upgradeText": "Passez à Premium pour un assistant IA illimité et un support prioritaire.",
-        "upgrade": "Passer à Premium"
+        "upgrade": "Passer à Premium",
+        "activeText": "Merci pour votre abonnement ! Vous avez accès à toutes les fonctionnalités premium."
+      },
+      "subscriptionTiers": {
+        "free": "Gratuit",
+        "basic": "Basic",
+        "plus": "Plus",
+        "premium": "Premium",
+        "enterprise": "Enterprise"
       },
       "personalInfo": "Informations Personnelles",
       "addressInfo": "Adresse",
-      "residenceInfo": "Statut de Résidence",
+      "preferences": "Préférences",
+      "statusOptions": {
+        "student": "Étudiant",
+        "employed": "Employé",
+        "unemployed": "Sans emploi",
+        "retired": "Retraité",
+        "other": "Autre"
+      },
+      "nationalityOptions": {
+        "french": "Français",
+        "eu": "Citoyen UE",
+        "nonEu": "Hors UE",
+        "other": "Autre"
+      },
       "fields": {
-        "firstName": "Prénom",
-        "lastName": "Nom",
+        "fullName": "Nom Complet",
         "email": "E-mail",
         "phone": "Téléphone",
         "birthDate": "Date de Naissance",
+        "status": "Statut",
         "nationality": "Nationalité",
-        "residenceStatus": "Statut de Résidence",
-        "address": "Adresse",
+        "countryOfOrigin": "Pays d'Origine",
+        "region": "Région",
+        "department": "Département",
         "city": "Ville",
         "postalCode": "Code Postal",
-        "region": "Région"
+        "language": "Langue"
       },
       "placeholders": {
-        "firstName": "Entrez votre prénom",
-        "lastName": "Entrez votre nom",
+        "fullName": "Entrez votre nom complet",
         "phone": "+33 6 12 34 56 78",
-        "nationality": "Votre nationalité",
-        "residenceStatus": "ex: Visa étudiant, Titre de séjour",
-        "address": "Adresse",
+        "countryOfOrigin": "Entrez le pays",
+        "selectRegion": "Sélectionnez une région",
+        "department": "ex: Paris",
         "city": "Ville",
-        "postalCode": "75001",
-        "region": "Île-de-France"
+        "postalCode": "75001"
       }
     },
     "settings": {

@@ -795,6 +795,35 @@ CREATE INDEX idx_chat_usage_user ON chat_usage(user_id);
 CREATE INDEX idx_chat_usage_period ON chat_usage(period_start, period_end);
 
 -- ============================================
+-- TABLE: simulations
+-- User's aide eligibility simulation results
+-- ============================================
+CREATE TABLE simulations (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+    
+    -- Simulation input (user's answers)
+    answers JSONB NOT NULL,
+    
+    -- Simulation results
+    results JSONB NOT NULL,
+    
+    -- Summary
+    total_monthly DECIMAL(10,2) DEFAULT 0,
+    total_annual DECIMAL(10,2) DEFAULT 0,
+    eligible_aides_count INTEGER DEFAULT 0,
+    
+    -- Language used for results
+    language TEXT DEFAULT 'fr',
+    
+    -- Timestamps
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_simulations_user ON simulations(user_id);
+CREATE INDEX idx_simulations_created ON simulations(created_at);
+
+-- ============================================
 -- ANALYTICS & TRACKING TABLES
 -- ============================================
 
@@ -1031,6 +1060,7 @@ ALTER TABLE affiliate_transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chat_conversations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chat_usage ENABLE ROW LEVEL SECURITY;
+ALTER TABLE simulations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE anonymous_visitors ENABLE ROW LEVEL SECURITY;
 ALTER TABLE view_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_searches ENABLE ROW LEVEL SECURITY;
@@ -1228,6 +1258,21 @@ CREATE POLICY "Users can insert messages"
 CREATE POLICY "Users can view own chat usage"
     ON chat_usage FOR SELECT
     USING (user_id = auth.uid());
+
+-- ============================================
+-- SIMULATIONS POLICIES
+-- ============================================
+CREATE POLICY "Users can view own simulations"
+    ON simulations FOR SELECT
+    USING (user_id = auth.uid());
+
+CREATE POLICY "Users can create simulations"
+    ON simulations FOR INSERT
+    WITH CHECK (user_id = auth.uid());
+
+CREATE POLICY "Service role full access to simulations"
+    ON simulations FOR ALL
+    USING (auth.jwt() ->> 'role' = 'service_role');
 
 -- ============================================
 -- NOTIFICATIONS POLICIES
