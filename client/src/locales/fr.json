@@ -512,42 +512,71 @@
       "subtitle": "Gérez vos informations personnelles",
       "noName": "Ajoutez votre nom",
       "uploadPhoto": "Télécharger une Photo",
+      "removePhoto": "Supprimer la Photo",
+      "saved": "Profil enregistré avec succès",
+      "saveError": "Échec de l'enregistrement du profil",
+      "avatarUploaded": "Photo téléchargée avec succès",
+      "avatarUploadError": "Échec du téléchargement de la photo",
+      "avatarDeleted": "Photo supprimée avec succès",
+      "avatarDeleteError": "Échec de la suppression de la photo",
+      "invalidFileType": "Veuillez télécharger une image valide (JPEG, PNG, GIF ou WebP)",
+      "fileTooLarge": "La taille du fichier doit être inférieure à 5 Mo",
       "stats": {
         "aidesFound": "Aides Trouvées",
-        "applications": "Demandes",
-        "savings": "Économies Mensuelles"
+        "procedures": "Démarches",
+        "savings": "Économies Potentielles"
       },
       "subscription": {
         "title": "Abonnement",
         "upgradeText": "Passez à Premium pour un assistant IA illimité et un support prioritaire.",
-        "upgrade": "Passer à Premium"
+        "upgrade": "Passer à Premium",
+        "activeText": "Merci pour votre abonnement ! Vous avez accès à toutes les fonctionnalités premium."
+      },
+      "subscriptionTiers": {
+        "free": "Gratuit",
+        "basic": "Basic",
+        "plus": "Plus",
+        "premium": "Premium",
+        "enterprise": "Enterprise"
       },
       "personalInfo": "Informations Personnelles",
       "addressInfo": "Adresse",
-      "residenceInfo": "Statut de Résidence",
+      "preferences": "Préférences",
+      "statusOptions": {
+        "student": "Étudiant",
+        "employed": "Employé",
+        "unemployed": "Sans emploi",
+        "retired": "Retraité",
+        "other": "Autre"
+      },
+      "nationalityOptions": {
+        "french": "Français",
+        "eu": "Citoyen UE",
+        "nonEu": "Hors UE",
+        "other": "Autre"
+      },
       "fields": {
-        "firstName": "Prénom",
-        "lastName": "Nom",
+        "fullName": "Nom Complet",
         "email": "E-mail",
         "phone": "Téléphone",
         "birthDate": "Date de Naissance",
+        "status": "Statut",
         "nationality": "Nationalité",
-        "residenceStatus": "Statut de Résidence",
-        "address": "Adresse",
+        "countryOfOrigin": "Pays d'Origine",
+        "region": "Région",
+        "department": "Département",
         "city": "Ville",
         "postalCode": "Code Postal",
-        "region": "Région"
+        "language": "Langue"
       },
       "placeholders": {
-        "firstName": "Entrez votre prénom",
-        "lastName": "Entrez votre nom",
+        "fullName": "Entrez votre nom complet",
         "phone": "+33 6 12 34 56 78",
-        "nationality": "Votre nationalité",
-        "residenceStatus": "ex: Visa étudiant, Titre de séjour",
-        "address": "Adresse",
+        "countryOfOrigin": "Entrez le pays",
+        "selectRegion": "Sélectionnez une région",
+        "department": "ex: Paris",
         "city": "Ville",
-        "postalCode": "75001",
-        "region": "Île-de-France"
+        "postalCode": "75001"
       }
     },
     "settings": {

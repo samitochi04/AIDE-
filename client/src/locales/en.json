@@ -512,42 +512,71 @@
       "subtitle": "Manage your personal information",
       "noName": "Add your name",
       "uploadPhoto": "Upload Photo",
+      "removePhoto": "Remove Photo",
+      "saved": "Profile saved successfully",
+      "saveError": "Failed to save profile",
+      "avatarUploaded": "Photo uploaded successfully",
+      "avatarUploadError": "Failed to upload photo",
+      "avatarDeleted": "Photo removed successfully",
+      "avatarDeleteError": "Failed to remove photo",
+      "invalidFileType": "Please upload a valid image (JPEG, PNG, GIF, or WebP)",
+      "fileTooLarge": "File size must be less than 5MB",
       "stats": {
         "aidesFound": "Benefits Found",
-        "applications": "Applications",
-        "savings": "Monthly Savings"
+        "procedures": "Procedures",
+        "savings": "Potential Savings"
       },
       "subscription": {
         "title": "Subscription",
         "upgradeText": "Upgrade to Premium for unlimited AI assistant and priority support.",
-        "upgrade": "Upgrade to Premium"
+        "upgrade": "Upgrade to Premium",
+        "activeText": "Thank you for your subscription! You have access to all premium features."
+      },
+      "subscriptionTiers": {
+        "free": "Free",
+        "basic": "Basic",
+        "plus": "Plus",
+        "premium": "Premium",
+        "enterprise": "Enterprise"
       },
       "personalInfo": "Personal Information",
       "addressInfo": "Address",
-      "residenceInfo": "Residence Status",
+      "preferences": "Preferences",
+      "statusOptions": {
+        "student": "Student",
+        "employed": "Employed",
+        "unemployed": "Unemployed",
+        "retired": "Retired",
+        "other": "Other"
+      },
+      "nationalityOptions": {
+        "french": "French",
+        "eu": "EU Citizen",
+        "nonEu": "Non-EU",
+        "other": "Other"
+      },
       "fields": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
+        "fullName": "Full Name",
         "email": "Email",
         "phone": "Phone",
         "birthDate": "Date of Birth",
+        "status": "Status",
         "nationality": "Nationality",
-        "residenceStatus": "Residence Status",
-        "address": "Address",
+        "countryOfOrigin": "Country of Origin",
+        "region": "Region",
+        "department": "Department",
         "city": "City",
         "postalCode": "Postal Code",
-        "region": "Region"
+        "language": "Language"
       },
       "placeholders": {
-        "firstName": "Enter first name",
-        "lastName": "Enter last name",
+        "fullName": "Enter your full name",
         "phone": "+33 6 12 34 56 78",
-        "nationality": "Your nationality",
-        "residenceStatus": "e.g., Student Visa, Work Permit",
-        "address": "Street address",
+        "countryOfOrigin": "Enter country",
+        "selectRegion": "Select a region",
+        "department": "e.g., Paris",
         "city": "City",
-        "postalCode": "75001",
-        "region": "Île-de-France"
+        "postalCode": "75001"
       }
     },
     "settings": {

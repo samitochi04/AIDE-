@@ -78,6 +78,15 @@ export const API_ENDPOINTS = {
   CONTACT: {
     SEND: '/api/v1/contact',
   },
+
+  // Profile
+  PROFILE: {
+    GET: '/api/v1/profile',
+    UPDATE: '/api/v1/profile',
+    STATS: '/api/v1/profile/stats',
+    UPLOAD_AVATAR: '/api/v1/profile/avatar',
+    DELETE_AVATAR: '/api/v1/profile/avatar',
+  },
 }
 
 // Fetch wrapper with auth token
@@ -140,6 +149,38 @@ export const api = {
   
   delete: (endpoint, options = {}) => 
     apiFetch(endpoint, { ...options, method: 'DELETE' }),
+
+  // Upload method for FormData (doesn't set Content-Type header, browser handles it)
+  upload: async (endpoint, formData, options = {}) => {
+    const url = `${API_URL}${endpoint}`
+    
+    const { supabase } = await import('../lib/supabaseClient')
+    const { data: { session } } = await supabase.auth.getSession()
+    
+    const headers = { ...options.headers }
+    
+    if (session?.access_token) {
+      headers['Authorization'] = `Bearer ${session.access_token}`
+    }
+    
+    const response = await fetch(url, {
+      ...options,
+      method: 'POST',
+      headers,
+      body: formData,
+    })
+    
+    const data = await response.json()
+    
+    if (!response.ok) {
+      const error = new Error(data.message || 'Upload failed')
+      error.status = response.status
+      error.data = data
+      throw error
+    }
+    
+    return data
+  },
 }
 
 export default api
