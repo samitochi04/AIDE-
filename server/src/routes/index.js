@@ -11,6 +11,7 @@ import affiliateRoutes from './affiliate.routes.js';
 import contactRoutes from './contact.routes.js';
 import simulationRoutes from './simulation.routes.js';
 import proceduresRoutes from './procedures.routes.js';
+import housingRoutes from './housing.routes.js';
 
 const router = Router();
 
@@ -34,6 +35,7 @@ export const mountRoutes = (app) => {
   app.use(`${API_VERSION}/contact`, contactRoutes);
   app.use(`${API_VERSION}/simulation`, simulationRoutes);
   app.use(`${API_VERSION}/procedures`, proceduresRoutes);
+  app.use(`${API_VERSION}/housing`, housingRoutes);
 
   return app;
 };

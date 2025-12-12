@@ -26,7 +26,8 @@
     "no": "No",
     "upgrade": "Upgrade",
     "logout": "Log out",
-    "upload": "Upload"
+    "upload": "Upload",
+    "all": "All"
   },
   
   "theme": {
@@ -355,7 +356,7 @@
     },
     "housing": {
       "title": "Housing",
-      "subtitle": "Manage your housing situation and related benefits",
+      "subtitle": "Find accommodation and discover all available platforms in France",
       "currentSituation": "Current Situation",
       "renter": "Renter",
       "owner": "Home Owner",
@@ -378,7 +379,28 @@
       "helpfulResources": "Helpful Resources",
       "needHelp": "Need Help?",
       "needHelpDescription": "Ask our AI assistant about housing benefits and finding accommodation in France.",
-      "askAssistant": "Ask AI Assistant"
+      "askAssistant": "Ask AI Assistant",
+      "platformsAvailable": "Platforms Available",
+      "savedPlatforms": "Saved Platforms",
+      "guarantorServices": "Guarantor Services",
+      "guarantorDescription": "Get a guarantor for your rental application without a personal guarantor.",
+      "searchPlatforms": "Search platforms...",
+      "noPlatformsFound": "No platforms found",
+      "visitSite": "Visit Site",
+      "noFees": "No Fees",
+      "noAgencyFees": "No Agency Fees",
+      "mobileApp": "Mobile App",
+      "platformSaved": "Platform saved to favorites",
+      "platformUnsaved": "Platform removed from favorites",
+      "save": "Save",
+      "unsave": "Remove",
+      "tipsTitle": "Tips & Advice",
+      "forForeigners": "For Foreigners",
+      "features": "Features",
+      "pros": "Pros",
+      "cons": "Cons",
+      "tips": "Tips",
+      "eligibility": "Eligibility"
     },
     "procedures": {
       "title": "My Procedures",

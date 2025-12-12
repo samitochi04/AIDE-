@@ -26,7 +26,8 @@
     "no": "Non",
     "upgrade": "Passer Premium",
     "logout": "Se déconnecter",
-    "upload": "Télécharger"
+    "upload": "Télécharger",
+    "all": "Tous"
   },
   
   "theme": {
@@ -355,7 +356,7 @@
     },
     "housing": {
       "title": "Logement",
-      "subtitle": "Gérez votre situation de logement et les aides associées",
+      "subtitle": "Trouvez un logement et découvrez toutes les plateformes disponibles en France",
       "currentSituation": "Situation Actuelle",
       "renter": "Locataire",
       "owner": "Propriétaire",
@@ -378,7 +379,28 @@
       "helpfulResources": "Ressources Utiles",
       "needHelp": "Besoin d'aide ?",
       "needHelpDescription": "Posez des questions à notre assistant IA sur les aides au logement et la recherche d'un logement en France.",
-      "askAssistant": "Demander à l'Assistant IA"
+      "askAssistant": "Demander à l'Assistant IA",
+      "platformsAvailable": "Plateformes Disponibles",
+      "savedPlatforms": "Plateformes Sauvegardées",
+      "guarantorServices": "Services de Garantie",
+      "guarantorDescription": "Obtenez un garant pour votre dossier de location sans garant personnel.",
+      "searchPlatforms": "Rechercher des plateformes...",
+      "noPlatformsFound": "Aucune plateforme trouvée",
+      "visitSite": "Visiter le site",
+      "noFees": "Sans frais",
+      "noAgencyFees": "Sans frais d'agence",
+      "mobileApp": "Application Mobile",
+      "platformSaved": "Plateforme ajoutée aux favoris",
+      "platformUnsaved": "Plateforme retirée des favoris",
+      "save": "Sauvegarder",
+      "unsave": "Retirer",
+      "tipsTitle": "Conseils & Astuces",
+      "forForeigners": "Pour les Étrangers",
+      "features": "Fonctionnalités",
+      "pros": "Avantages",
+      "cons": "Inconvénients",
+      "tips": "Conseils",
+      "eligibility": "Éligibilité"
     },
     "procedures": {
       "title": "Mes Démarches",

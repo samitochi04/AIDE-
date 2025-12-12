@@ -36,6 +36,22 @@ export const API_ENDPOINTS = {
     UPLOAD_DOCUMENT: (id) => `/api/v1/procedures/${id}/document`,
     DELETE: (id) => `/api/v1/procedures/${id}`,
   },
+
+  // Housing
+  HOUSING: {
+    PLATFORMS: '/api/v1/housing/platforms',
+    PLATFORMS_BY_CATEGORY: (category) => `/api/v1/housing/platforms/${category}`,
+    PLATFORM: (id) => `/api/v1/housing/platform/${id}`,
+    SEARCH: '/api/v1/housing/search',
+    RESOURCES: '/api/v1/housing/resources',
+    GUARANTORS: '/api/v1/housing/guarantors',
+    TIPS: '/api/v1/housing/tips',
+    CATEGORIES: '/api/v1/housing/categories',
+    PREFERENCES: '/api/v1/housing/preferences',
+    SAVED: '/api/v1/housing/saved',
+    SAVE: '/api/v1/housing/saved',
+    UNSAVE: (platformId) => `/api/v1/housing/saved/${platformId}`,
+  },
   
   // Chat
   CHAT: {

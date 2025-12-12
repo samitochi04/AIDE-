@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button, Card, Input, Badge, Loading } from '../../../components/ui';
+import { Button, Card, Input, Badge, Loading, Modal } from '../../../components/ui';
+import { useToast } from '../../../context/ToastContext';
+import { api, API_ENDPOINTS } from '../../../config/api';
 import styles from './Housing.module.css';
 
 const containerVariants = {
@@ -17,98 +20,186 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-// Mock housing assistance data
-const HOUSING_AIDES = [
-  {
-    id: 1,
-    name: 'APL',
-    fullName: 'Aide Personnalisée au Logement',
-    status: 'active',
-    monthlyAmount: 350,
-    nextPayment: '2024-02-05',
-    lastUpdated: '2024-01-15',
-    provider: 'CAF'
-  },
-  {
-    id: 2,
-    name: 'ALS',
-    fullName: 'Allocation de Logement Social',
-    status: 'pending',
-    monthlyAmount: 200,
-    applicationDate: '2024-01-10',
-    estimatedDecision: '2024-02-01',
-    provider: 'CAF'
-  }
-];
+// Category icons mapping
+const CATEGORY_ICONS = {
+  majorPortals: 'ri-building-2-line',
+  directOwner: 'ri-user-heart-line',
+  studentHousing: 'ri-graduation-cap-line',
+  privateStudentResidences: 'ri-community-line',
+  colocation: 'ri-team-line',
+  furnished: 'ri-sofa-line',
+  socialHousing: 'ri-government-line',
+  temporary: 'ri-time-line',
+  relocation: 'ri-truck-line',
+  luxury: 'ri-vip-crown-2-line',
+  apps: 'ri-smartphone-line',
+  guarantorServices: 'ri-shield-check-line',
+  depositHelp: 'ri-money-euro-circle-line'
+};
 
-const HOUSING_RESOURCES = [
-  {
-    id: 1,
-    title: 'How to Find an Apartment in France',
-    type: 'guide',
-    icon: 'ri-book-open-line',
-    readTime: '8 min'
-  },
-  {
-    id: 2,
-    title: 'Understanding Your Rental Agreement',
-    type: 'guide',
-    icon: 'ri-file-text-line',
-    readTime: '5 min'
-  },
-  {
-    id: 3,
-    title: 'Social Housing (HLM) Application',
-    type: 'procedure',
-    icon: 'ri-building-line',
-    readTime: '10 min'
-  },
-  {
-    id: 4,
-    title: 'Tenant Rights in France',
-    type: 'guide',
-    icon: 'ri-shield-check-line',
-    readTime: '6 min'
-  }
-];
-
-const STATUS_CONFIG = {
-  active: { color: 'success', label: 'Active' },
-  pending: { color: 'warning', label: 'Pending' },
-  rejected: { color: 'danger', label: 'Rejected' },
-  expired: { color: 'default', label: 'Expired' }
+// Price range display
+const PRICE_DISPLAY = {
+  '€': { label: 'Budget', color: 'success' },
+  '€€': { label: 'Moderate', color: 'warning' },
+  '€€€': { label: 'Premium', color: 'primary' },
+  '€€€€': { label: 'Luxury', color: 'danger' }
 };
 
 export function Housing() {
-  const { t } = useTranslation();
-  const [loading] = useState(false);
-  const [housingInfo, setHousingInfo] = useState({
-    type: 'renter',
-    rent: 850,
-    region: 'ile-de-france',
-    surface: 35,
-    hasLeaseContract: true
-  });
+  const { t, i18n } = useTranslation();
+  const toast = useToast();
+  const navigate = useNavigate();
+  const currentLang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0
-    }).format(amount);
-  };
+  // State
+  const [loading, setLoading] = useState(true);
+  const [platforms, setPlatforms] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [savedPlatforms, setSavedPlatforms] = useState([]);
+  const [guarantors, setGuarantors] = useState([]);
+  const [tips, setTips] = useState({ general: [], forForeigners: [] });
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const [showPlatformModal, setShowPlatformModal] = useState(false);
+  const [savingPlatform, setSavingPlatform] = useState(null);
 
-  const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
+  // Fetch all housing data
+  const fetchHousingData = useCallback(async () => {
+    try {
+      setLoading(true);
+      
+      const [platformsRes, categoriesRes, guarantorsRes, tipsRes] = await Promise.all([
+        api.get(API_ENDPOINTS.HOUSING.PLATFORMS),
+        api.get(API_ENDPOINTS.HOUSING.CATEGORIES),
+        api.get(API_ENDPOINTS.HOUSING.GUARANTORS),
+        api.get(API_ENDPOINTS.HOUSING.TIPS)
+      ]);
+
+      setPlatforms(platformsRes.data || []);
+      setCategories(categoriesRes.data || []);
+      setGuarantors(guarantorsRes.data || []);
+      setTips(tipsRes.data || { general: [], forForeigners: [] });
+
+      // Fetch saved platforms (requires auth)
+      try {
+        const savedRes = await api.get(API_ENDPOINTS.HOUSING.SAVED);
+        setSavedPlatforms(savedRes.data || []);
+      } catch (err) {
+        // User not logged in or no saved platforms
+        setSavedPlatforms([]);
+      }
+    } catch (error) {
+      console.error('Error fetching housing data:', error);
+      toast.error(t('common.error'));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchHousingData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Filter platforms based on category and search
+  const filteredPlatforms = useMemo(() => {
+    let result = [];
+    
+    // Flatten platforms from categories
+    platforms.forEach(cat => {
+      if (cat.platforms) {
+        cat.platforms.forEach(platform => {
+          result.push({
+            ...platform,
+            categoryId: cat.category,
+            categoryName: cat.name
+          });
+        });
+      }
     });
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      result = result.filter(p => p.categoryId === selectedCategory);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(p => 
+        p.name?.toLowerCase().includes(query) ||
+        p.description?.toLowerCase().includes(query) ||
+        p.features?.some(f => f.toLowerCase().includes(query))
+      );
+    }
+
+    return result;
+  }, [platforms, selectedCategory, searchQuery]);
+
+  // Check if platform is saved
+  const isPlatformSaved = (platformId) => {
+    return savedPlatforms.some(p => p.id === platformId);
   };
 
-  const totalMonthlyAides = HOUSING_AIDES
-    .filter(a => a.status === 'active')
-    .reduce((sum, a) => sum + a.monthlyAmount, 0);
+  // Save/unsave platform
+  const handleSavePlatform = async (platform, e) => {
+    e?.stopPropagation();
+    setSavingPlatform(platform.id);
+
+    try {
+      if (isPlatformSaved(platform.id)) {
+        await api.delete(API_ENDPOINTS.HOUSING.UNSAVE(platform.id));
+        setSavedPlatforms(prev => prev.filter(p => p.id !== platform.id));
+        toast.success(t('dashboard.housing.platformUnsaved'));
+      } else {
+        await api.post(API_ENDPOINTS.HOUSING.SAVE, {
+          platformId: platform.id,
+          category: platform.categoryId
+        });
+        setSavedPlatforms(prev => [...prev, platform]);
+        toast.success(t('dashboard.housing.platformSaved'));
+      }
+    } catch (error) {
+      console.error('Error saving platform:', error);
+      toast.error(t('common.error'));
+    } finally {
+      setSavingPlatform(null);
+    }
+  };
+
+  // Open platform details
+  const handleOpenPlatform = (platform) => {
+    // Normalize the platform object to ensure it has categoryId and categoryName
+    const normalizedPlatform = {
+      ...platform,
+      categoryId: platform.categoryId || platform.category,
+      categoryName: platform.categoryName || { 
+        en: platform.category, 
+        fr: platform.category 
+      }
+    };
+    setSelectedPlatform(normalizedPlatform);
+    setShowPlatformModal(true);
+  };
+
+  // Visit platform website
+  const handleVisitPlatform = (url, e) => {
+    e?.stopPropagation();
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Get category name in current language
+  const getCategoryName = (cat) => {
+    if (!cat) return '';
+    if (typeof cat === 'string') return cat;
+    if (typeof cat.name === 'object') {
+      return cat.name[currentLang] || cat.name.en || cat.category || '';
+    }
+    return cat.name || cat.category || '';
+  };
 
   if (loading) {
     return (
@@ -133,204 +224,249 @@ export function Housing() {
         </div>
       </motion.div>
 
-      <div className={styles.mainGrid}>
-        {/* Left Column */}
-        <div className={styles.leftColumn}>
-          {/* Housing Summary Card */}
-          <motion.div variants={itemVariants}>
-            <Card className={styles.summaryCard}>
-              <div className={styles.summaryHeader}>
-                <h2>{t('dashboard.housing.currentSituation')}</h2>
-                <Button variant="ghost" size="sm">
-                  <i className="ri-edit-line" />
-                  {t('common.edit')}
-                </Button>
-              </div>
-              
-              <div className={styles.housingDetails}>
-                <div className={styles.housingType}>
-                  <i className={housingInfo.type === 'renter' ? 'ri-home-line' : 'ri-home-heart-line'} />
-                  <span>
-                    {housingInfo.type === 'renter' 
-                      ? t('dashboard.housing.renter') 
-                      : t('dashboard.housing.owner')
-                    }
-                  </span>
-                </div>
-                
-                <div className={styles.detailsGrid}>
-                  <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>{t('dashboard.housing.monthlyRent')}</span>
-                    <span className={styles.detailValue}>{formatCurrency(housingInfo.rent)}</span>
-                  </div>
-                  
-                  <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>{t('dashboard.housing.region')}</span>
-                    <span className={styles.detailValue}>Île-de-France</span>
-                  </div>
-                  
-                  <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>{t('dashboard.housing.surface')}</span>
-                    <span className={styles.detailValue}>{housingInfo.surface} m²</span>
-                  </div>
-                  
-                  <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>{t('dashboard.housing.leaseContract')}</span>
-                    <span className={styles.detailValue}>
-                      {housingInfo.hasLeaseContract ? (
-                        <Badge variant="success" size="sm">
-                          <i className="ri-check-line" /> {t('common.yes')}
-                        </Badge>
-                      ) : (
-                        <Badge variant="warning" size="sm">
-                          <i className="ri-close-line" /> {t('common.no')}
-                        </Badge>
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className={styles.summaryFooter}>
-                <div className={styles.savingsInfo}>
-                  <span className={styles.savingsLabel}>{t('dashboard.housing.monthlyAides')}</span>
-                  <span className={styles.savingsValue}>{formatCurrency(totalMonthlyAides)}</span>
-                </div>
-                <div className={styles.netRent}>
-                  <span className={styles.netLabel}>{t('dashboard.housing.effectiveRent')}</span>
-                  <span className={styles.netValue}>
-                    {formatCurrency(housingInfo.rent - totalMonthlyAides)}
-                  </span>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-
-          {/* Housing Aides List */}
-          <motion.div variants={itemVariants}>
-            <Card className={styles.aidesCard}>
-              <div className={styles.aidesHeader}>
-                <h2>{t('dashboard.housing.yourAides')}</h2>
-                <Button variant="outline" size="sm">
-                  <i className="ri-add-line" />
-                  {t('dashboard.housing.addAide')}
-                </Button>
-              </div>
-              
-              <div className={styles.aidesList}>
-                {HOUSING_AIDES.map(aide => (
-                  <div key={aide.id} className={styles.aideItem}>
-                    <div className={styles.aideIcon}>
-                      <i className="ri-home-heart-line" />
-                    </div>
-                    
-                    <div className={styles.aideInfo}>
-                      <div className={styles.aideTitleRow}>
-                        <h3 className={styles.aideName}>{aide.name}</h3>
-                        <Badge variant={STATUS_CONFIG[aide.status]?.color}>
-                          {STATUS_CONFIG[aide.status]?.label}
-                        </Badge>
-                      </div>
-                      <p className={styles.aideFullName}>{aide.fullName}</p>
-                      
-                      {aide.status === 'active' && (
-                        <div className={styles.aideDetails}>
-                          <span>
-                            <i className="ri-calendar-line" />
-                            {t('dashboard.housing.nextPayment')}: {formatDate(aide.nextPayment)}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {aide.status === 'pending' && (
-                        <div className={styles.aideDetails}>
-                          <span>
-                            <i className="ri-time-line" />
-                            {t('dashboard.housing.estimatedDecision')}: {formatDate(aide.estimatedDecision)}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className={styles.aideAmount}>
-                      <span className={styles.amountValue}>
-                        {formatCurrency(aide.monthlyAmount)}
-                      </span>
-                      <span className={styles.amountPeriod}>/{t('pricing.month')}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </motion.div>
+      {/* Stats Bar */}
+      <motion.div className={styles.statsBar} variants={itemVariants}>
+        <div className={styles.statItem}>
+          <i className="ri-building-2-line" />
+          <div className={styles.statContent}>
+            <span className={styles.statValue}>{filteredPlatforms.length}</span>
+            <span className={styles.statLabel}>{t('dashboard.housing.platformsAvailable')}</span>
+          </div>
         </div>
+        <div className={styles.statItem}>
+          <i className="ri-bookmark-line" />
+          <div className={styles.statContent}>
+            <span className={styles.statValue}>{savedPlatforms.length}</span>
+            <span className={styles.statLabel}>{t('dashboard.housing.savedPlatforms')}</span>
+          </div>
+        </div>
+        <div className={styles.statItem}>
+          <i className="ri-shield-check-line" />
+          <div className={styles.statContent}>
+            <span className={styles.statValue}>{guarantors.length}</span>
+            <span className={styles.statLabel}>{t('dashboard.housing.guarantorServices')}</span>
+          </div>
+        </div>
+      </motion.div>
 
-        {/* Right Column */}
-        <div className={styles.rightColumn}>
-          {/* Quick Calculator */}
+      <div className={styles.mainGrid}>
+        {/* Left Column - Platforms */}
+        <div className={styles.leftColumn}>
+          {/* Search & Filter */}
           <motion.div variants={itemVariants}>
-            <Card className={styles.calculatorCard}>
-              <h3>{t('dashboard.housing.rentCalculator')}</h3>
-              <p className={styles.calculatorDesc}>
-                {t('dashboard.housing.calculatorDescription')}
-              </p>
-              
-              <div className={styles.calculatorForm}>
+            <Card className={styles.filterCard}>
+              <div className={styles.searchRow}>
                 <Input
-                  type="number"
-                  label={t('dashboard.housing.yourRent')}
-                  value={housingInfo.rent}
-                  onChange={(e) => setHousingInfo(prev => ({
-                    ...prev,
-                    rent: parseFloat(e.target.value) || 0
-                  }))}
-                  leftIcon={<span>€</span>}
+                  type="text"
+                  placeholder={t('dashboard.housing.searchPlatforms')}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  icon="ri-search-line"
+                  className={styles.searchInput}
                 />
-                
-                <div className={styles.calculatorResult}>
-                  <div className={styles.resultRow}>
-                    <span>{t('dashboard.housing.grossRent')}</span>
-                    <span>{formatCurrency(housingInfo.rent)}</span>
-                  </div>
-                  <div className={styles.resultRow}>
-                    <span>{t('dashboard.housing.housingAides')}</span>
-                    <span className={styles.deduction}>- {formatCurrency(totalMonthlyAides)}</span>
-                  </div>
-                  <div className={`${styles.resultRow} ${styles.totalRow}`}>
-                    <span>{t('dashboard.housing.youPay')}</span>
-                    <span className={styles.totalValue}>
-                      {formatCurrency(Math.max(0, housingInfo.rent - totalMonthlyAides))}
-                    </span>
-                  </div>
-                </div>
               </div>
-            </Card>
-          </motion.div>
-
-          {/* Resources */}
-          <motion.div variants={itemVariants}>
-            <Card className={styles.resourcesCard}>
-              <h3>{t('dashboard.housing.helpfulResources')}</h3>
               
-              <div className={styles.resourcesList}>
-                {HOUSING_RESOURCES.map(resource => (
-                  <button key={resource.id} className={styles.resourceItem}>
-                    <div className={styles.resourceIcon}>
-                      <i className={resource.icon} />
-                    </div>
-                    <div className={styles.resourceInfo}>
-                      <span className={styles.resourceTitle}>{resource.title}</span>
-                      <span className={styles.resourceMeta}>
-                        <Badge variant="default" size="sm">{resource.type}</Badge>
-                        <span>{resource.readTime}</span>
-                      </span>
-                    </div>
-                    <i className="ri-arrow-right-s-line" />
+              <div className={styles.categoryTabs}>
+                <button
+                  className={`${styles.categoryTab} ${selectedCategory === 'all' ? styles.active : ''}`}
+                  onClick={() => setSelectedCategory('all')}
+                >
+                  <i className="ri-apps-line" />
+                  <span>{t('common.all')}</span>
+                </button>
+                {categories.slice(0, 8).map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`${styles.categoryTab} ${selectedCategory === cat.id ? styles.active : ''}`}
+                    onClick={() => setSelectedCategory(cat.id)}
+                  >
+                    <i className={CATEGORY_ICONS[cat.id] || cat.icon || 'ri-home-line'} />
+                    <span>{getCategoryName(cat)}</span>
                   </button>
                 ))}
               </div>
             </Card>
           </motion.div>
+
+          {/* Platforms List */}
+          <motion.div variants={itemVariants}>
+            <div className={styles.platformsGrid}>
+              {filteredPlatforms.length === 0 ? (
+                <Card className={styles.emptyCard}>
+                  <div className={styles.emptyState}>
+                    <i className="ri-search-line" />
+                    <p>{t('dashboard.housing.noPlatformsFound')}</p>
+                  </div>
+                </Card>
+              ) : (
+                filteredPlatforms.map(platform => (
+                  <Card
+                    key={`${platform.categoryId}-${platform.id}`}
+                    className={styles.platformCard}
+                    onClick={() => handleOpenPlatform(platform)}
+                  >
+                    <div className={styles.platformHeader}>
+                      <div className={styles.platformIcon}>
+                        <i className={CATEGORY_ICONS[platform.categoryId] || 'ri-home-line'} />
+                      </div>
+                      <div className={styles.platformInfo}>
+                        <h3 className={styles.platformName}>{platform.name}</h3>
+                        <span className={styles.platformCategory}>
+                          {getCategoryName(platform.categoryName)}
+                        </span>
+                      </div>
+                      <button
+                        className={`${styles.saveBtn} ${isPlatformSaved(platform.id) ? styles.saved : ''}`}
+                        onClick={(e) => handleSavePlatform(platform, e)}
+                        disabled={savingPlatform === platform.id}
+                      >
+                        <i className={isPlatformSaved(platform.id) ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
+                      </button>
+                    </div>
+
+                    <p className={styles.platformDescription}>
+                      {platform.description}
+                    </p>
+
+                    <div className={styles.platformMeta}>
+                      {platform.priceRange && PRICE_DISPLAY[platform.priceRange] && (
+                        <Badge variant={PRICE_DISPLAY[platform.priceRange].color} size="sm">
+                          {platform.priceRange}
+                        </Badge>
+                      )}
+                      {platform.languages?.length > 0 && (
+                        <Badge variant="default" size="sm">
+                          {platform.languages.join(', ')}
+                        </Badge>
+                      )}
+                      {platform.hasApp && (
+                        <Badge variant="primary" size="sm">
+                          <i className="ri-smartphone-line" /> App
+                        </Badge>
+                      )}
+                      {platform.agencyFees === false && (
+                        <Badge variant="success" size="sm">
+                          {t('dashboard.housing.noFees')}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className={styles.platformActions}>
+                      {platform.url && (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={(e) => handleVisitPlatform(platform.url, e)}
+                        >
+                          <i className="ri-external-link-line" />
+                          {t('dashboard.housing.visitSite')}
+                        </Button>
+                      )}
+                    </div>
+                  </Card>
+                ))
+              )}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Right Column - Sidebar */}
+        <div className={styles.rightColumn}>
+          {/* Guarantor Services */}
+          <motion.div variants={itemVariants}>
+            <Card className={styles.guarantorsCard}>
+              <h3>
+                <i className="ri-shield-check-line" />
+                {t('dashboard.housing.guarantorServices')}
+              </h3>
+              <p className={styles.cardDescription}>
+                {t('dashboard.housing.guarantorDescription')}
+              </p>
+              
+              <div className={styles.guarantorsList}>
+                {guarantors.slice(0, 4).map(guarantor => (
+                  <div 
+                    key={guarantor.id} 
+                    className={styles.guarantorItem}
+                    onClick={() => handleOpenPlatform(guarantor)}
+                  >
+                    <div className={styles.guarantorInfo}>
+                      <span className={styles.guarantorName}>{guarantor.name}</span>
+                      {guarantor.cost && (
+                        <Badge 
+                          variant={guarantor.cost === 'Free' ? 'success' : 'default'} 
+                          size="sm"
+                        >
+                          {guarantor.cost}
+                        </Badge>
+                      )}
+                    </div>
+                    <i className="ri-arrow-right-s-line" />
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </motion.div>
+
+          {/* Tips & Advice */}
+          <motion.div variants={itemVariants}>
+            <Card className={styles.tipsCard}>
+              <h3>
+                <i className="ri-lightbulb-line" />
+                {t('dashboard.housing.tipsTitle')}
+              </h3>
+              
+              <div className={styles.tipsList}>
+                {(tips.general?.general || []).slice(0, 5).map((tip, index) => (
+                  <div key={index} className={styles.tipItem}>
+                    <i className="ri-check-line" />
+                    <span>{tip}</span>
+                  </div>
+                ))}
+                {tips.general?.forForeigners && tips.general.forForeigners.length > 0 && (
+                  <div className={styles.foreignerTips}>
+                    <h4>{t('dashboard.housing.forForeigners')}</h4>
+                    {tips.general.forForeigners.slice(0, 3).map((tip, index) => (
+                      <div key={index} className={styles.tipItem}>
+                        <i className="ri-global-line" />
+                        <span>{tip}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Card>
+          </motion.div>
+
+          {/* Saved Platforms */}
+          {savedPlatforms.length > 0 && (
+            <motion.div variants={itemVariants}>
+              <Card className={styles.savedCard}>
+                <h3>
+                  <i className="ri-bookmark-line" />
+                  {t('dashboard.housing.savedPlatforms')}
+                </h3>
+                
+                <div className={styles.savedList}>
+                  {savedPlatforms.slice(0, 5).map(platform => (
+                    <div 
+                      key={platform.id} 
+                      className={styles.savedItem}
+                      onClick={() => handleOpenPlatform(platform)}
+                    >
+                      <span className={styles.savedName}>{platform.name}</span>
+                      <button
+                        className={styles.unsaveBtn}
+                        onClick={(e) => handleSavePlatform(platform, e)}
+                      >
+                        <i className="ri-close-line" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
+          )}
 
           {/* Need Help */}
           <motion.div variants={itemVariants}>
@@ -339,7 +475,11 @@ export function Housing() {
                 <i className="ri-questionnaire-line" />
                 <h3>{t('dashboard.housing.needHelp')}</h3>
                 <p>{t('dashboard.housing.needHelpDescription')}</p>
-                <Button variant="outline" fullWidth>
+                <Button 
+                  variant="outline" 
+                  fullWidth
+                  onClick={() => navigate('/dashboard/chat')}
+                >
                   <i className="ri-message-3-line" />
                   {t('dashboard.housing.askAssistant')}
                 </Button>
@@ -348,6 +488,163 @@ export function Housing() {
           </motion.div>
         </div>
       </div>
+
+      {/* Platform Detail Modal */}
+      <Modal
+        isOpen={showPlatformModal}
+        onClose={() => setShowPlatformModal(false)}
+        title={selectedPlatform?.name}
+        size="lg"
+      >
+        {selectedPlatform && (
+          <div className={styles.platformModal}>
+            <div className={styles.modalHeader}>
+              <div className={styles.modalIcon}>
+                <i className={CATEGORY_ICONS[selectedPlatform.categoryId] || 'ri-home-line'} />
+              </div>
+              <div className={styles.modalTitleSection}>
+                <h2>{selectedPlatform.name}</h2>
+                <span className={styles.modalCategory}>
+                  {getCategoryName(selectedPlatform.categoryName)}
+                </span>
+              </div>
+            </div>
+
+            <p className={styles.modalDescription}>
+              {selectedPlatform.description}
+            </p>
+
+            <div className={styles.modalBadges}>
+              {selectedPlatform.priceRange && PRICE_DISPLAY[selectedPlatform.priceRange] && (
+                <Badge variant={PRICE_DISPLAY[selectedPlatform.priceRange].color}>
+                  {selectedPlatform.priceRange} - {PRICE_DISPLAY[selectedPlatform.priceRange].label}
+                </Badge>
+              )}
+              {selectedPlatform.languages?.length > 0 && (
+                <Badge variant="default">
+                  <i className="ri-global-line" /> {selectedPlatform.languages.join(', ')}
+                </Badge>
+              )}
+              {selectedPlatform.coverage && (
+                <Badge variant="default">
+                  <i className="ri-map-pin-line" /> {selectedPlatform.coverage}
+                </Badge>
+              )}
+              {selectedPlatform.hasApp && (
+                <Badge variant="primary">
+                  <i className="ri-smartphone-line" /> {t('dashboard.housing.mobileApp')}
+                </Badge>
+              )}
+              {selectedPlatform.agencyFees === false && (
+                <Badge variant="success">
+                  <i className="ri-money-euro-circle-line" /> {t('dashboard.housing.noAgencyFees')}
+                </Badge>
+              )}
+            </div>
+
+            {/* Features */}
+            {selectedPlatform.features?.length > 0 && (
+              <div className={styles.modalSection}>
+                <h4>{t('dashboard.housing.features')}</h4>
+                <ul className={styles.featureList}>
+                  {selectedPlatform.features.map((feature, i) => (
+                    <li key={i}>
+                      <i className="ri-check-line" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Pros */}
+            {selectedPlatform.pros?.length > 0 && (
+              <div className={styles.modalSection}>
+                <h4>{t('dashboard.housing.pros')}</h4>
+                <ul className={styles.prosList}>
+                  {selectedPlatform.pros.map((pro, i) => (
+                    <li key={i}>
+                      <i className="ri-thumb-up-line" />
+                      {pro}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Cons */}
+            {selectedPlatform.cons?.length > 0 && (
+              <div className={styles.modalSection}>
+                <h4>{t('dashboard.housing.cons')}</h4>
+                <ul className={styles.consList}>
+                  {selectedPlatform.cons.map((con, i) => (
+                    <li key={i}>
+                      <i className="ri-thumb-down-line" />
+                      {con}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Tips */}
+            {selectedPlatform.tips?.length > 0 && (
+              <div className={styles.modalSection}>
+                <h4>{t('dashboard.housing.tips')}</h4>
+                <ul className={styles.tipsList}>
+                  {selectedPlatform.tips.map((tip, i) => (
+                    <li key={i}>
+                      <i className="ri-lightbulb-line" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Eligibility for guarantor services */}
+            {selectedPlatform.eligibility && (
+              <div className={styles.modalSection}>
+                <h4>{t('dashboard.housing.eligibility')}</h4>
+                {Array.isArray(selectedPlatform.eligibility) ? (
+                  <ul className={styles.eligibilityList}>
+                    {selectedPlatform.eligibility.map((item, i) => (
+                      <li key={i}>
+                        <i className="ri-user-line" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{selectedPlatform.eligibility}</p>
+                )}
+              </div>
+            )}
+
+            <div className={styles.modalActions}>
+              <Button
+                variant="ghost"
+                onClick={() => handleSavePlatform(selectedPlatform)}
+              >
+                <i className={isPlatformSaved(selectedPlatform.id) ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
+                {isPlatformSaved(selectedPlatform.id) 
+                  ? t('dashboard.housing.unsave') 
+                  : t('dashboard.housing.save')
+                }
+              </Button>
+              {selectedPlatform.url && (
+                <Button
+                  variant="primary"
+                  onClick={() => handleVisitPlatform(selectedPlatform.url)}
+                >
+                  <i className="ri-external-link-line" />
+                  {t('dashboard.housing.visitSite')}
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
+      </Modal>
     </motion.div>
   );
 }

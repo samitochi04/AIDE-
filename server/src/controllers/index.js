@@ -6,3 +6,4 @@ export * as adminController from './admin.controller.js';
 export * as analyticsController from './analytics.controller.js';
 export * as affiliateController from './affiliate.controller.js';
 export * as contactController from './contact.controller.js';
+export * as housingController from './housing.controller.js';
