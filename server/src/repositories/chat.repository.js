@@ -6,7 +6,7 @@ import { BaseRepository } from './base.repository.js';
  */
 class ChatConversationRepository extends BaseRepository {
   constructor() {
-    super('ai_conversations');
+    super('chat_conversations');
   }
 
   /**
@@ -18,15 +18,24 @@ class ChatConversationRepository extends BaseRepository {
 
     const { data, error, count } = await this.db
       .from(this.tableName)
-      .select('*', { count: 'exact' })
+      .select(`
+        *,
+        message_count:chat_messages(count)
+      `, { count: 'exact' })
       .eq('user_id', userId)
       .order(orderBy, { ascending })
       .range(offset, offset + limit - 1);
 
     if (error) throw error;
 
+    // Flatten message_count from array to number
+    const conversations = (data || []).map(conv => ({
+      ...conv,
+      message_count: conv.message_count?.[0]?.count || 0
+    }));
+
     return {
-      conversations: data || [],
+      conversations,
       pagination: {
         page,
         limit,
@@ -66,7 +75,7 @@ class ChatConversationRepository extends BaseRepository {
       .from(this.tableName)
       .select(`
         *,
-        message_count:ai_messages(count)
+        message_count:chat_messages(count)
       `)
       .eq('id', conversationId)
       .single();
@@ -95,7 +104,7 @@ class ChatConversationRepository extends BaseRepository {
  */
 class ChatMessageRepository extends BaseRepository {
   constructor() {
-    super('ai_messages');
+    super('chat_messages');
   }
 
   /**

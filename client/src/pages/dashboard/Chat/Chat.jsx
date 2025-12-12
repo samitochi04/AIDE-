@@ -1,8 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button, Card, Input, Loading, Logo } from '../../../components/ui';
+import { Helmet } from 'react-helmet-async';
+import { Button, Card, Loading } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
+import { useToast } from '../../../context/ToastContext';
+import { api, API_ENDPOINTS } from '../../../config/api';
 import styles from './Chat.module.css';
 
 // Suggested questions for quick start
@@ -13,28 +16,20 @@ const SUGGESTED_QUESTIONS = [
   { icon: 'ri-calendar-line', key: 'timeline' }
 ];
 
-// Mock conversation history
-const INITIAL_MESSAGES = [
-  {
-    id: 1,
-    role: 'assistant',
-    content: 'Hello! I\'m your AIDE+ assistant. I can help you understand French social benefits, check your eligibility, and guide you through application processes. What would you like to know?',
-    timestamp: new Date(Date.now() - 60000)
-  }
-];
-
 export function Chat() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const toast = useToast();
+  
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [conversationHistory, setConversationHistory] = useState([
-    { id: 1, title: 'APL Eligibility', date: '2024-01-15', preview: 'Am I eligible for APL...' },
-    { id: 2, title: 'Required Documents', date: '2024-01-14', preview: 'What documents do I need...' },
-    { id: 3, title: 'CAF Registration', date: '2024-01-12', preview: 'How do I create a CAF account...' }
-  ]);
+  const [conversationId, setConversationId] = useState(null);
+  const [conversations, setConversations] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -46,10 +41,85 @@ export function Chat() {
     scrollToBottom();
   }, [messages]);
 
+  // Load conversation history on mount
+  useEffect(() => {
+    loadConversations();
+  }, []);
+
+  // Add welcome message when starting fresh
+  useEffect(() => {
+    if (messages.length === 0 && !loadingMessages) {
+      setMessages([{
+        id: 'welcome',
+        role: 'assistant',
+        content: t('dashboard.chat.welcomeMessage'),
+        timestamp: new Date()
+      }]);
+    }
+  }, [messages.length, loadingMessages, t]);
+
+  const loadConversations = async () => {
+    setLoadingHistory(true);
+    try {
+      const response = await api.get(API_ENDPOINTS.CHAT.GET_CONVERSATIONS);
+      if (response?.data?.conversations) {
+        setConversations(response.data.conversations);
+      }
+    } catch (error) {
+      console.error('Failed to load conversations:', error);
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
+
+  const loadConversation = async (convId) => {
+    setLoadingMessages(true);
+    try {
+      const response = await api.get(API_ENDPOINTS.CHAT.GET_CONVERSATION(convId));
+      if (response?.data?.messages) {
+        setMessages(response.data.messages.map(msg => ({
+          id: msg.id,
+          role: msg.role,
+          content: msg.content,
+          timestamp: new Date(msg.created_at)
+        })));
+        setConversationId(convId);
+        setShowHistory(false);
+      }
+    } catch (error) {
+      console.error('Failed to load conversation:', error);
+      toast.error(t('dashboard.chat.loadError'));
+    } finally {
+      setLoadingMessages(false);
+    }
+  };
+
+  const deleteConversation = async (convId, e) => {
+    e.stopPropagation();
+    try {
+      await api.delete(API_ENDPOINTS.CHAT.DELETE_CONVERSATION(convId));
+      setConversations(prev => prev.filter(c => c.id !== convId));
+      if (conversationId === convId) {
+        startNewChat();
+      }
+      toast.success(t('dashboard.chat.deleted'));
+    } catch (error) {
+      console.error('Failed to delete conversation:', error);
+      toast.error(t('dashboard.chat.deleteError'));
+    }
+  };
+
   const formatTime = (date) => {
     return new Date(date).toLocaleTimeString('fr-FR', {
       hour: '2-digit',
       minute: '2-digit'
+    });
+  };
+
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString('fr-FR', {
+      month: 'short',
+      day: 'numeric'
     });
   };
 
@@ -60,39 +130,122 @@ export function Chat() {
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isTyping) return;
 
     const userMessage = {
-      id: messages.length + 1,
+      id: `user-${Date.now()}`,
       role: 'user',
       content: inputValue.trim(),
       timestamp: new Date()
     };
 
+    const assistantMessageId = `assistant-${Date.now()}`;
+    
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI response delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    // Mock AI response
-    const responses = {
-      housing: 'For housing assistance in France, the main options are APL (Aide Personnalisée au Logement) and ALS (Allocation de Logement Social). To be eligible, you need to:\n\n1. Have a valid residence permit\n2. Have a rental agreement in your name\n3. Pay rent regularly\n4. Meet income criteria\n\nWould you like me to check your specific eligibility?',
-      default: 'That\'s a great question! Based on your profile, here\'s what I can tell you:\n\nThere are several social benefits you might be eligible for in France. The main categories include:\n\n• **Housing assistance** (APL, ALS)\n• **Family benefits** (Allocations familiales)\n• **Employment support** (Prime d\'activité, ARE)\n• **Health coverage** (CSS)\n\nWould you like me to explain any of these in more detail, or shall we run a quick eligibility check?'
-    };
-
-    const assistantMessage = {
-      id: messages.length + 2,
+    // Add empty assistant message that will be streamed into
+    setMessages(prev => [...prev, {
+      id: assistantMessageId,
       role: 'assistant',
-      content: inputValue.toLowerCase().includes('housing') || inputValue.toLowerCase().includes('apl') 
-        ? responses.housing 
-        : responses.default,
-      timestamp: new Date()
-    };
+      content: '',
+      timestamp: new Date(),
+      isStreaming: true
+    }]);
 
-    setMessages(prev => [...prev, assistantMessage]);
-    setIsTyping(false);
+    try {
+      // Build request body - only include conversationId if it exists
+      const requestBody = { message: userMessage.content };
+      if (conversationId) {
+        requestBody.conversationId = conversationId;
+      }
+
+      // Get auth token
+      const { supabase } = await import('../../../lib/supabaseClient');
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Use streaming endpoint
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/v1/ai/chat/stream`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullContent = '';
+      let newConversationId = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            
+            if (data === '[DONE]') {
+              continue;
+            }
+
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.content) {
+                fullContent += parsed.content;
+                // Update the streaming message
+                setMessages(prev => prev.map(msg => 
+                  msg.id === assistantMessageId 
+                    ? { ...msg, content: fullContent }
+                    : msg
+                ));
+              }
+              if (parsed.conversationId) {
+                newConversationId = parsed.conversationId;
+              }
+            } catch (e) {
+              // Ignore parse errors for incomplete chunks
+            }
+          }
+        }
+      }
+
+      // Mark message as complete
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessageId 
+          ? { ...msg, isStreaming: false }
+          : msg
+      ));
+
+      // Update conversation ID if new
+      if (newConversationId && !conversationId) {
+        setConversationId(newConversationId);
+        loadConversations();
+      }
+
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      toast.error(t('dashboard.chat.sendError'));
+      
+      // Update to error message
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessageId 
+          ? { ...msg, content: t('dashboard.chat.errorResponse'), isError: true, isStreaming: false }
+          : msg
+      ));
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -103,12 +256,105 @@ export function Chat() {
   };
 
   const startNewChat = () => {
-    setMessages(INITIAL_MESSAGES);
+    setMessages([]);
+    setConversationId(null);
     setShowHistory(false);
+  };
+
+  // Parse markdown text and convert to HTML with clickable links
+  const parseMarkdown = (text) => {
+    if (!text) return '';
+    
+    let result = text;
+    
+    // Convert markdown links [text](url) to clickable <a> tags
+    result = result.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="' + styles.messageLink + '">$1</a>'
+    );
+    
+    // Convert plain URLs to clickable links (but not if already in an <a> tag)
+    result = result.replace(
+      /(?<!href="|">)(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="' + styles.messageLink + '">$1</a>'
+    );
+    
+    // Bold text
+    result = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Italic text
+    result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    return result;
+  };
+
+  // Render markdown-like formatting
+  const renderMessageContent = (content) => {
+    if (!content) return null;
+
+    // Split by lines and process
+    const lines = content.split('\n');
+    const elements = [];
+    let currentList = [];
+    let inList = false;
+
+    lines.forEach((line, index) => {
+      // Parse markdown for this line
+      const parsedLine = parseMarkdown(line);
+      
+      // Check for bullet points
+      if (line.trim().startsWith('•') || line.trim().startsWith('-') || line.trim().match(/^\d+\./)) {
+        if (!inList) {
+          inList = true;
+          currentList = [];
+        }
+        const listContent = parseMarkdown(line.trim().replace(/^[•\-\*]\s*/, '').replace(/^\d+\.\s*/, ''));
+        currentList.push(listContent);
+      } else {
+        // End list if we were in one
+        if (inList && currentList.length > 0) {
+          elements.push(
+            <ul key={`list-${index}`} className={styles.messageList}>
+              {currentList.map((item, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+              ))}
+            </ul>
+          );
+          currentList = [];
+          inList = false;
+        }
+        
+        // Add regular paragraph
+        if (line.trim()) {
+          elements.push(
+            <p key={index} dangerouslySetInnerHTML={{ __html: parsedLine }} />
+          );
+        } else if (index > 0 && lines[index - 1].trim()) {
+          elements.push(<br key={index} />);
+        }
+      }
+    });
+
+    // Don't forget trailing list
+    if (inList && currentList.length > 0) {
+      elements.push(
+        <ul key="list-end" className={styles.messageList}>
+          {currentList.map((item, i) => (
+            <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+          ))}
+        </ul>
+      );
+    }
+
+    return elements;
   };
 
   return (
     <div className={styles.container}>
+      <Helmet>
+        <title>{t('dashboard.chat.pageTitle')} | AIDE+</title>
+      </Helmet>
+      
       {/* Sidebar - Conversation History */}
       <aside className={`${styles.sidebar} ${showHistory ? styles.open : ''}`}>
         <div className={styles.sidebarHeader}>
@@ -120,22 +366,43 @@ export function Chat() {
         </div>
         
         <div className={styles.historyList}>
-          {conversationHistory.map(conv => (
-            <button
-              key={conv.id}
-              className={styles.historyItem}
-              onClick={() => {/* Load conversation */}}
-            >
-              <div className={styles.historyIcon}>
-                <i className="ri-message-3-line" />
+          {loadingHistory ? (
+            <div className={styles.loadingHistory}>
+              <Loading.Spinner size="sm" />
+            </div>
+          ) : conversations.length === 0 ? (
+            <div className={styles.noHistory}>
+              <i className="ri-chat-3-line" />
+              <p>{t('dashboard.chat.noHistory')}</p>
+            </div>
+          ) : (
+            conversations.map(conv => (
+              <div
+                key={conv.id}
+                className={`${styles.historyItem} ${conv.id === conversationId ? styles.active : ''}`}
+                onClick={() => loadConversation(conv.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && loadConversation(conv.id)}
+              >
+                <div className={styles.historyIcon}>
+                  <i className="ri-message-3-line" />
+                </div>
+                <div className={styles.historyContent}>
+                  <span className={styles.historyTitle}>{conv.title || t('dashboard.chat.untitled')}</span>
+                  <span className={styles.historyPreview}>{conv.message_count} {t('dashboard.chat.messages')}</span>
+                  <span className={styles.historyDate}>{formatDate(conv.updated_at)}</span>
+                </div>
+                <button
+                  className={styles.deleteConversation}
+                  onClick={(e) => deleteConversation(conv.id, e)}
+                  aria-label={t('common.delete')}
+                >
+                  <i className="ri-delete-bin-line" />
+                </button>
               </div>
-              <div className={styles.historyContent}>
-                <span className={styles.historyTitle}>{conv.title}</span>
-                <span className={styles.historyPreview}>{conv.preview}</span>
-                <span className={styles.historyDate}>{conv.date}</span>
-              </div>
-            </button>
-          ))}
+            ))
+          )}
         </div>
         
         <button 
@@ -160,7 +427,7 @@ export function Chat() {
           <div className={styles.chatHeaderContent}>
             <div className={styles.assistantInfo}>
               <div className={styles.assistantAvatar}>
-                <Logo size="sm" iconOnly />
+                <span className={styles.avatarText}>A+</span>
               </div>
               <div>
                 <h1>{t('dashboard.chat.title')}</h1>
@@ -180,41 +447,63 @@ export function Chat() {
         {/* Messages */}
         <div className={styles.messagesContainer}>
           <div className={styles.messages}>
-            <AnimatePresence mode="popLayout">
-              {messages.map((message) => (
-                <motion.div
-                  key={message.id}
-                  className={`${styles.message} ${styles[message.role]}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  layout
-                >
-                  {message.role === 'assistant' && (
-                    <div className={styles.messageAvatar}>
-                      <Logo size="xs" iconOnly />
+            {loadingMessages ? (
+              <div className={styles.loadingMessages}>
+                <Loading.Spinner size="lg" />
+                <p>{t('dashboard.chat.loadingMessages')}</p>
+              </div>
+            ) : (
+              <AnimatePresence mode="popLayout">
+                {messages.map((message) => (
+                  <motion.div
+                    key={message.id}
+                    className={`${styles.message} ${styles[message.role]} ${message.isError ? styles.error : ''} ${message.isStreaming ? styles.streaming : ''}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    layout
+                  >
+                    {message.role === 'assistant' && (
+                      <div className={styles.messageAvatar}>
+                        <span>A+</span>
+                      </div>
+                    )}
+                    
+                    <div className={styles.messageContent}>
+                      <div className={styles.messageBubble}>
+                        {renderMessageContent(message.content)}
+                      </div>
+                      {message.sources && message.sources.length > 0 && (
+                        <div className={styles.messageSources}>
+                          <span className={styles.sourcesLabel}>
+                            <i className="ri-links-line" />
+                            {t('dashboard.chat.sources')}:
+                          </span>
+                          {message.sources.map((source, i) => (
+                            <span key={i} className={styles.sourceTag}>
+                              {source}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <span className={styles.messageTime}>
+                        {formatTime(message.timestamp)}
+                      </span>
                     </div>
-                  )}
-                  
-                  <div className={styles.messageContent}>
-                    <div className={styles.messageBubble}>
-                      {message.content.split('\n').map((line, i) => (
-                        <p key={i}>{line || <br />}</p>
-                      ))}
-                    </div>
-                    <span className={styles.messageTime}>
-                      {formatTime(message.timestamp)}
-                    </span>
-                  </div>
-                  
-                  {message.role === 'user' && (
-                    <div className={styles.messageAvatar}>
-                      <span>{user?.email?.[0]?.toUpperCase() || 'U'}</span>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                    
+                    {message.role === 'user' && (
+                      <div className={styles.messageAvatar}>
+                        {user?.avatar_url ? (
+                          <img src={user.avatar_url} alt="" />
+                        ) : (
+                          <span>{user?.full_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}</span>
+                        )}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            )}
 
             {/* Typing Indicator */}
             {isTyping && (
@@ -224,7 +513,7 @@ export function Chat() {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <div className={styles.messageAvatar}>
-                  <Logo size="xs" iconOnly />
+                  <span>A+</span>
                 </div>
                 <div className={styles.messageContent}>
                   <div className={`${styles.messageBubble} ${styles.typing}`}>
