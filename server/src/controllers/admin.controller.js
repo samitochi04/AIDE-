@@ -1,6 +1,9 @@
 import { adminService } from '../services/admin.service.js';
 import { analyticsService } from '../services/analytics.service.js';
 import { affiliateService } from '../services/affiliate.service.js';
+import { schedulerService } from '../services/scheduler.service.js';
+import { emailService } from '../services/email.service.js';
+import { emailTemplateRepository } from '../repositories/index.js';
 import { formatResponse } from '../utils/helpers.js';
 
 // ============================================
@@ -253,6 +256,83 @@ export const clearCache = async (req, res, next) => {
   try {
     const result = await adminService.clearCache();
     res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Platform Updates / Notifications
+// ============================================
+
+export const sendPlatformUpdate = async (req, res, next) => {
+  try {
+    const { title, content, ctaText, ctaUrl } = req.body;
+    const results = await schedulerService.sendPlatformUpdateToAll({
+      title,
+      content,
+      ctaText,
+      ctaUrl,
+    });
+    res.json(formatResponse({
+      message: 'Platform update sent',
+      results: {
+        total: results.length,
+        success: results.filter(r => r.success).length,
+        failed: results.filter(r => !r.success).length,
+      },
+    }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Email Management
+// ============================================
+
+export const getEmailStats = async (req, res, next) => {
+  try {
+    const { startDate, endDate } = req.query;
+    const stats = await emailService.getEmailStats({ startDate, endDate });
+    res.json(formatResponse(stats));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRecentEmails = async (req, res, next) => {
+  try {
+    const { limit = 50 } = req.query;
+    const emails = await emailService.getRecentEmails(parseInt(limit));
+    res.json(formatResponse({ emails }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getEmailTemplates = async (req, res, next) => {
+  try {
+    const templates = await emailTemplateRepository.findAllActive();
+    res.json(formatResponse({ templates }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateEmailTemplate = async (req, res, next) => {
+  try {
+    const { templateKey } = req.params;
+    const { subject, body_html, body_text, is_active } = req.body;
+    
+    const template = await emailTemplateRepository.updateTemplate(templateKey, {
+      subject,
+      body_html,
+      body_text,
+      is_active,
+    });
+    
+    res.json(formatResponse(template));
   } catch (error) {
     next(error);
   }

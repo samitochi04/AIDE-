@@ -48,3 +48,9 @@ export {
   adminRepository,
   AdminRepository,
 } from './admin.repository.js';
+export {
+  emailTemplateRepository,
+  emailLogRepository,
+  EmailTemplateRepository,
+  EmailLogRepository,
+} from './email.repository.js';

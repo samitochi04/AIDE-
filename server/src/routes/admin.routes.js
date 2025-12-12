@@ -228,4 +228,71 @@ router.get('/logs', requireSuperAdmin, adminController.getLogs);
  */
 router.post('/cache/clear', requireSuperAdmin, adminController.clearCache);
 
+// ============================================
+// Platform Updates / Notifications
+// ============================================
+
+/**
+ * @route   POST /admin/notifications/platform-update
+ * @desc    Send platform update notification to all users
+ * @access  Super Admin
+ */
+router.post(
+  '/notifications/platform-update',
+  requireSuperAdmin,
+  validateBody(
+    Joi.object({
+      title: Joi.string().required().max(200),
+      content: Joi.string().required().max(5000),
+      ctaText: Joi.string().max(50),
+      ctaUrl: Joi.string().uri(),
+    })
+  ),
+  adminController.sendPlatformUpdate
+);
+
+// ============================================
+// Email Management
+// ============================================
+
+/**
+ * @route   GET /admin/emails/stats
+ * @desc    Get email sending statistics
+ * @access  Admin
+ */
+router.get('/emails/stats', adminController.getEmailStats);
+
+/**
+ * @route   GET /admin/emails/recent
+ * @desc    Get recent email logs
+ * @access  Admin
+ */
+router.get('/emails/recent', adminController.getRecentEmails);
+
+/**
+ * @route   GET /admin/emails/templates
+ * @desc    Get all email templates
+ * @access  Admin
+ */
+router.get('/emails/templates', adminController.getEmailTemplates);
+
+/**
+ * @route   PATCH /admin/emails/templates/:templateKey
+ * @desc    Update an email template
+ * @access  Super Admin
+ */
+router.patch(
+  '/emails/templates/:templateKey',
+  requireSuperAdmin,
+  validateBody(
+    Joi.object({
+      subject: Joi.string().max(200),
+      body_html: Joi.string().max(50000),
+      body_text: Joi.string().max(10000),
+      is_active: Joi.boolean(),
+    })
+  ),
+  adminController.updateEmailTemplate
+);
+
 export default router;

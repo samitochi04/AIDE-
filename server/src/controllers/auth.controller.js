@@ -35,9 +35,17 @@ export const sendMagicLink = async (req, res, next) => {
  */
 export const sendWelcomeEmail = async (req, res, next) => {
   try {
-    const { email, name } = req.body;
+    const { email, name, source } = req.body;
 
+    // Send welcome email to user
     await emailService.sendWelcome(email, { name });
+
+    // Send admin notification for new user
+    await emailService.sendAdminNewUser({
+      name,
+      email,
+      source: source || 'Direct',
+    }).catch(err => logger.error('Failed to send admin new user notification', { error: err.message }));
 
     res.json(formatResponse({ message: 'Welcome email sent' }));
   } catch (error) {
