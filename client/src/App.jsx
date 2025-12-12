@@ -8,6 +8,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { LanguageProvider } from './context/LanguageContext'
 import { ToastProvider } from './context/ToastContext'
 import { SimulationProvider } from './context/SimulationContext'
+import { NotificationProvider } from './context/NotificationContext'
 
 // i18n initialization
 import './i18n'
@@ -54,37 +55,39 @@ function App() {
             <LanguageProvider>
               <AuthProvider>
                 <ToastProvider>
-                  <SimulationProvider>
-                    <Routes>
-                      {/* Public Routes */}
-                      <Route element={<PublicLayout />}>
-                        <Route path="/" element={<LandingPage />} />
-                        <Route path="/pricing" element={<Pricing />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/blog" element={<Blog />} />
-                      </Route>
-                      
-                      {/* Auth Routes */}
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/auth/callback" element={<AuthCallback />} />
-                      
-                      {/* Simulation Routes */}
-                      <Route path="/simulation" element={<Simulation />} />
-                      <Route path="/simulation/results" element={<SimulationResults />} />
-                      
-                      {/* Dashboard Routes (Protected) */}
-                      <Route path="/dashboard" element={<DashboardLayout />}>
-                        <Route index element={<DashboardOverview />} />
-                        <Route path="aides" element={<DashboardAides />} />
-                        <Route path="housing" element={<DashboardHousing />} />
-                        <Route path="procedures" element={<DashboardProcedures />} />
-                        <Route path="chat" element={<DashboardChat />} />
-                        <Route path="profile" element={<DashboardProfile />} />
-                        <Route path="settings" element={<DashboardSettings />} />
-                      </Route>
-                    </Routes>
-                  </SimulationProvider>
+                  <NotificationProvider>
+                    <SimulationProvider>
+                      <Routes>
+                        {/* Public Routes */}
+                        <Route element={<PublicLayout />}>
+                          <Route path="/" element={<LandingPage />} />
+                          <Route path="/pricing" element={<Pricing />} />
+                          <Route path="/contact" element={<Contact />} />
+                          <Route path="/blog" element={<Blog />} />
+                        </Route>
+                        
+                        {/* Auth Routes */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/auth/callback" element={<AuthCallback />} />
+                        
+                        {/* Simulation Routes */}
+                        <Route path="/simulation" element={<Simulation />} />
+                        <Route path="/simulation/results" element={<SimulationResults />} />
+                        
+                        {/* Dashboard Routes (Protected) */}
+                        <Route path="/dashboard" element={<DashboardLayout />}>
+                          <Route index element={<DashboardOverview />} />
+                          <Route path="aides" element={<DashboardAides />} />
+                          <Route path="housing" element={<DashboardHousing />} />
+                          <Route path="procedures" element={<DashboardProcedures />} />
+                          <Route path="chat" element={<DashboardChat />} />
+                          <Route path="profile" element={<DashboardProfile />} />
+                          <Route path="settings" element={<DashboardSettings />} />
+                        </Route>
+                      </Routes>
+                    </SimulationProvider>
+                  </NotificationProvider>
                 </ToastProvider>
               </AuthProvider>
             </LanguageProvider>

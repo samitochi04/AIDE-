@@ -610,20 +610,35 @@
         "deadlines": "Deadline reminders",
         "deadlinesDesc": "Reminders for application deadlines",
         "marketing": "Product updates",
-        "marketingDesc": "News and feature announcements"
+        "marketingDesc": "News and feature announcements",
+        "updated": "Notification preferences updated"
       },
       "privacy": {
         "title": "Privacy & Security",
         "analytics": "Usage analytics",
         "analyticsDesc": "Help us improve AIDE+ with anonymous usage data",
-        "changePassword": "Change Password",
-        "twoFactor": "Two-Factor Auth"
+        "changePassword": "Change Password"
+      },
+      "password": {
+        "title": "Change Password",
+        "current": "Current Password",
+        "new": "New Password",
+        "confirm": "Confirm New Password",
+        "submit": "Update Password",
+        "success": "Password changed successfully",
+        "error": "Failed to change password",
+        "minLength": "Password must be at least 8 characters",
+        "mismatch": "Passwords do not match"
       },
       "data": {
         "title": "Data & Account",
         "export": "Export your data",
         "exportDesc": "Download all your data in JSON format",
+        "exportDescPdf": "Request a PDF export of all your data. You'll receive it by email. (1 request per day)",
         "download": "Download",
+        "requestExport": "Request Export",
+        "exportRequested": "Export requested! You'll receive your data by email shortly.",
+        "exportRateLimit": "You can only request one export per day. Please try again tomorrow.",
         "signOut": "Sign out",
         "signOutDesc": "Sign out of your account on this device",
         "dangerZone": "Danger Zone",
@@ -633,7 +648,10 @@
       "deleteModal": {
         "title": "Delete Account?",
         "description": "This will permanently delete your account and all your data. This action cannot be undone.",
-        "confirm": "Yes, Delete My Account"
+        "typeConfirm": "Type DELETE to confirm:",
+        "typeDelete": "Please type DELETE to confirm",
+        "confirm": "Yes, Delete My Account",
+        "success": "Your account has been deleted"
       }
     }
   },

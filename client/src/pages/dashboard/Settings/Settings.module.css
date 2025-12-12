@@ -349,6 +349,40 @@
   gap: 0.75rem;
 }
 
+/* Delete Modal */
+.deleteWarning {
+  font-size: 0.8125rem;
+  color: var(--danger);
+  margin-bottom: 0.75rem !important;
+}
+
+.deleteInput {
+  margin-bottom: 1rem;
+}
+
+.deleteInput input {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* Password Modal */
+.passwordForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.passwordForm .modalActions {
+  margin-top: 0.5rem;
+}
+
+.errorText {
+  color: var(--danger);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .settingsGrid {

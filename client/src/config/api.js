@@ -83,9 +83,17 @@ export const API_ENDPOINTS = {
   PROFILE: {
     GET: '/api/v1/profile',
     UPDATE: '/api/v1/profile',
+    DELETE: '/api/v1/profile',
     STATS: '/api/v1/profile/stats',
     UPLOAD_AVATAR: '/api/v1/profile/avatar',
     DELETE_AVATAR: '/api/v1/profile/avatar',
+    UPDATE_NOTIFICATIONS: '/api/v1/profile/notifications',
+    CHANGE_PASSWORD: '/api/v1/profile/change-password',
+    REQUEST_EXPORT: '/api/v1/profile/export',
+    GET_EXPORT_STATUS: (exportId) => `/api/v1/profile/export/${exportId}`,
+    GET_EXPORTS: '/api/v1/profile/exports',
+    GET_SESSIONS: '/api/v1/profile/sessions',
+    SIGN_OUT_ALL: '/api/v1/profile/sign-out-all',
   },
 }
 

@@ -48,16 +48,16 @@ const templates = {
   welcome: (data) => ({
     subject: 'Bienvenue sur AIDE+ ! 🎉',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue ${data.name || ''} ! 👋</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue ${data.name || ''} !</h2>
       
       <p>Merci de vous être inscrit sur AIDE+, votre assistant pour naviguer dans les aides et démarches administratives en France.</p>
       
       <p>Avec AIDE+, vous pouvez :</p>
       <ul style="padding-left: 20px;">
-        <li>🔍 Découvrir les aides auxquelles vous avez droit</li>
-        <li>📋 Suivre vos démarches administratives</li>
-        <li>🤖 Poser vos questions à notre assistant IA</li>
-        <li>📚 Accéder à des guides personnalisés</li>
+        <li>Découvrir les aides auxquelles vous avez droit</li>
+        <li>Suivre vos démarches administratives</li>
+        <li>Poser vos questions à notre assistant IA</li>
+        <li>Accéder à des guides personnalisés</li>
       </ul>
       
       <div style="text-align: center; margin: 30px 0;">
@@ -67,7 +67,7 @@ const templates = {
       </div>
       
       <p style="color: #64748b; font-size: 14px;">
-        💡 <strong>Conseil :</strong> Commencez par faire une simulation pour découvrir les aides auxquelles vous avez droit !
+        <strong>Conseil :</strong> Commencez par faire une simulation pour découvrir les aides auxquelles vous avez droit !
       </p>
     `),
   }),
@@ -75,7 +75,7 @@ const templates = {
   magicLink: (data) => ({
     subject: 'Votre lien de connexion AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Connexion à votre compte 🔐</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Connexion à votre compte</h2>
       
       <p>Cliquez sur le bouton ci-dessous pour vous connecter à votre compte AIDE+ :</p>
       
@@ -87,7 +87,7 @@ const templates = {
       
       <div style="${warningCardStyle}">
         <p style="margin: 0; font-size: 14px;">
-          ⚠️ Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet email.
+          Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet email.
         </p>
       </div>
     `),
@@ -108,7 +108,7 @@ const templates = {
       
       <div style="${warningCardStyle}">
         <p style="margin: 0; font-size: 14px;">
-          ⚠️ Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez cet email.
+          Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez cet email.
         </p>
       </div>
     `),
@@ -134,7 +134,7 @@ const templates = {
       
       <p>Vous avez maintenant accès à :</p>
       <ul style="padding-left: 20px;">
-        ${(data.features || []).map(f => `<li>✅ ${f}</li>`).join('')}
+        ${(data.features || []).map(f => `<li>${f}</li>`).join('')}
       </ul>
       
       <div style="text-align: center; margin: 30px 0;">
@@ -148,7 +148,7 @@ const templates = {
   subscriptionConfirmation: (data) => ({
     subject: `Confirmation de paiement - AIDE+ ${data.planName}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement reçu ✅</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Paiement reçu</h2>
       
       <p>Votre paiement pour AIDE+ ${data.planName} a été traité avec succès.</p>
       
@@ -170,13 +170,13 @@ const templates = {
   subscriptionCancelled: (data) => ({
     subject: 'Confirmation d\'annulation - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Abonnement annulé 😢</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Abonnement annulé</h2>
       
       <p>Nous confirmons l'annulation de votre abonnement AIDE+ ${data.planName}.</p>
       
       <div style="${warningCardStyle}">
         <p style="margin: 0;">
-          📅 Vous conservez l'accès à toutes les fonctionnalités jusqu'au <strong>${data.endDate}</strong>.
+          Vous conservez l'accès à toutes les fonctionnalités jusqu'au <strong>${data.endDate}</strong>.
         </p>
       </div>
       
@@ -193,9 +193,9 @@ const templates = {
   }),
 
   paymentFailed: (data) => ({
-    subject: '⚠️ Échec de paiement - AIDE+',
+    subject: 'Échec de paiement - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #dc2626; margin-top: 0;">Problème de paiement ⚠️</h2>
+      <h2 style="color: #dc2626; margin-top: 0;">Problème de paiement</h2>
       
       <p>Nous n'avons pas pu traiter votre paiement pour AIDE+ ${data.planName}.</p>
       
@@ -221,9 +221,9 @@ const templates = {
   // ========================================
   
   adminNewSubscription: (data) => ({
-    subject: `🎉 Nouvel abonnement - ${data.planName}`,
+    subject: `Nouvel abonnement - ${data.planName}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Nouvel abonnement ! 🎉</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Nouvel abonnement !</h2>
       
       <div style="${successCardStyle}">
         <p style="margin: 5px 0;"><strong>Utilisateur :</strong> ${data.userName}</p>
@@ -266,7 +266,7 @@ const templates = {
   // ========================================
   
   platformUpdate: (data) => ({
-    subject: `📢 ${data.title}`,
+    subject: `${data.title}`,
     html: wrapEmailContent(`
       <h2 style="color: #1e293b; margin-top: 0;">${data.title} 📢</h2>
       
@@ -293,9 +293,9 @@ const templates = {
   // ========================================
   
   newAidesAvailable: (data) => ({
-    subject: `🆕 ${data.aides.length} nouvelle(s) aide(s) pour vous !`,
+    subject: `${data.aides.length} nouvelle(s) aide(s) pour vous !`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Nouvelles aides disponibles ! 🆕</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Nouvelles aides disponibles !</h2>
       
       <p>Bonne nouvelle ! De nouvelles aides correspondent à votre profil :</p>
       
@@ -316,9 +316,9 @@ const templates = {
   }),
 
   aidesUpdate: (data) => ({
-    subject: `📝 Mise à jour de l'aide : ${data.aideName}`,
+    subject: `Mise à jour de l'aide : ${data.aideName}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Mise à jour importante 📝</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Mise à jour importante</h2>
       
       <p>L'aide <strong>${data.aideName}</strong> que vous suivez a été mise à jour.</p>
       
@@ -330,7 +330,7 @@ const templates = {
       ${data.actionRequired ? `
         <div style="${warningCardStyle}">
           <p style="margin: 0;">
-            ⚠️ <strong>Action requise :</strong> ${data.actionRequired}
+            <strong>Action requise :</strong> ${data.actionRequired}
           </p>
         </div>
       ` : ''}
@@ -344,14 +344,14 @@ const templates = {
   }),
 
   simulationResults: (data) => ({
-    subject: `🎯 Vos résultats de simulation AIDE+`,
+    subject: `Vos résultats de simulation AIDE+`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Résultats de votre simulation 🎯</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Résultats de votre simulation</h2>
       
       <p>Voici un récapitulatif des aides auxquelles vous pourriez avoir droit :</p>
       
       <div style="${successCardStyle}">
-        <h3 style="margin-top: 0; color: #166534;">💰 Montant total estimé : ${data.totalAmount}€/an</h3>
+        <h3 style="margin-top: 0; color: #166534;">Montant total estimé : ${data.totalAmount}€/an</h3>
         <p style="margin: 0;">${data.aidesCount} aide(s) identifiée(s)</p>
       </div>
       
@@ -376,9 +376,9 @@ const templates = {
   // ========================================
   
   procedureReminder: (data) => ({
-    subject: `⏰ Rappel : ${data.proceduresCount} démarche(s) en cours`,
+    subject: `Rappel : ${data.proceduresCount} démarche(s) en cours`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Rappel de vos démarches ⏰</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Rappel de vos démarches</h2>
       
       <p>Vous avez <strong>${data.proceduresCount} démarche(s)</strong> en cours. N'oubliez pas de les compléter !</p>
       
@@ -400,9 +400,9 @@ const templates = {
   }),
 
   procedureDeadline: (data) => ({
-    subject: `🚨 Échéance proche : ${data.procedureName}`,
+    subject: `Échéance proche : ${data.procedureName}`,
     html: wrapEmailContent(`
-      <h2 style="color: #dc2626; margin-top: 0;">Échéance imminente ! 🚨</h2>
+      <h2 style="color: #dc2626; margin-top: 0;">Échéance imminente !</h2>
       
       <div style="${warningCardStyle}">
         <h3 style="margin-top: 0;">${data.procedureName}</h3>
@@ -425,9 +425,9 @@ const templates = {
   // ========================================
   
   affiliateWelcome: (data) => ({
-    subject: 'Bienvenue dans le programme d\'affiliation AIDE+ ! 🤝',
+    subject: 'Bienvenue dans le programme d\'affiliation AIDE+ !',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue parmi nos affiliés ! 🤝</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue parmi nos affiliés !</h2>
       
       <p>Votre demande d'affiliation a été approuvée. Vous pouvez maintenant commencer à gagner des commissions !</p>
       
@@ -456,9 +456,9 @@ const templates = {
   }),
 
   affiliateNewReferral: (data) => ({
-    subject: `🎉 Nouvelle conversion ! +${data.commission}€`,
+    subject: `Nouvelle conversion ! +${data.commission}€`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Félicitations ! 🎉</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Félicitations !</h2>
       
       <p>Un utilisateur s'est abonné grâce à votre lien d'affiliation !</p>
       
@@ -482,9 +482,9 @@ const templates = {
   }),
 
   affiliatePayout: (data) => ({
-    subject: `💸 Paiement de ${data.amount}€ envoyé !`,
+    subject: `Paiement de ${data.amount}€ envoyé !`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement envoyé ! 💸</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Paiement envoyé !</h2>
       
       <p>Votre paiement d'affiliation a été effectué.</p>
       
@@ -506,9 +506,9 @@ const templates = {
   }),
 
   affiliatePayoutPending: (data) => ({
-    subject: `📋 Paiement de ${data.amount}€ en cours de traitement`,
+    subject: `Paiement de ${data.amount}€ en cours de traitement`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement en attente 📋</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Paiement en attente </h2>
       
       <p>Votre demande de paiement est en cours de traitement.</p>
       
@@ -531,7 +531,7 @@ const templates = {
   contactConfirmation: (data) => ({
     subject: 'Nous avons bien reçu votre message - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Message reçu ! 📬</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Message reçu !</h2>
       
       <p>Bonjour ${data.name},</p>
       
@@ -550,7 +550,7 @@ const templates = {
   supportNotification: (data) => ({
     subject: `[Support AIDE+] ${data.category}: ${data.subject}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Nouveau message de support 📩</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Nouveau message de support</h2>
       
       <div style="${cardStyle}">
         <p style="margin: 5px 0;"><strong>De :</strong> ${data.name} (${data.email})</p>
@@ -574,20 +574,20 @@ const templates = {
   // ========================================
   
   weeklyDigest: (data) => ({
-    subject: `📊 Votre récap hebdomadaire AIDE+`,
+    subject: `Votre récap hebdomadaire AIDE+`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Votre semaine sur AIDE+ 📊</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Votre semaine sur AIDE+ </h2>
       
       <div style="${cardStyle}">
         <h3 style="margin-top: 0;">Résumé de la semaine</h3>
-        <p style="margin: 5px 0;">🎯 <strong>${data.newAidesCount}</strong> nouvelle(s) aide(s) disponible(s)</p>
-        <p style="margin: 5px 0;">📋 <strong>${data.proceduresProgress}</strong> démarche(s) en cours</p>
-        <p style="margin: 5px 0;">💬 <strong>${data.chatMessages}</strong> message(s) avec l'assistant</p>
+        <p style="margin: 5px 0;"><strong>${data.newAidesCount}</strong> nouvelle(s) aide(s) disponible(s)</p>
+        <p style="margin: 5px 0;"><strong>${data.proceduresProgress}</strong> démarche(s) en cours</p>
+        <p style="margin: 5px 0;"><strong>${data.chatMessages}</strong> message(s) avec l'assistant</p>
       </div>
       
       ${data.upcomingDeadlines.length > 0 ? `
         <div style="${warningCardStyle}">
-          <h3 style="margin-top: 0;">⏰ Échéances à venir</h3>
+          <h3 style="margin-top: 0;">Échéances à venir</h3>
           ${data.upcomingDeadlines.map(d => `
             <p style="margin: 5px 0;">• ${d.name} - <strong>${d.date}</strong></p>
           `).join('')}
@@ -609,7 +609,7 @@ const templates = {
   securityAlert: (data) => ({
     subject: '🔒 Alerte de sécurité - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #dc2626; margin-top: 0;">Alerte de sécurité 🔒</h2>
+      <h2 style="color: #dc2626; margin-top: 0;">Alerte de sécurité</h2>
       
       <p>Une activité inhabituelle a été détectée sur votre compte :</p>
       
@@ -639,7 +639,7 @@ const templates = {
   accountDeleted: (data) => ({
     subject: 'Votre compte AIDE+ a été supprimé',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Au revoir... 👋</h2>
+      <h2 style="color: #1e293b; margin-top: 0;">Au revoir...</h2>
       
       <p>Votre compte AIDE+ a été supprimé avec succès.</p>
       
@@ -652,6 +652,75 @@ const templates = {
       <p>Si vous changez d'avis, vous pouvez toujours créer un nouveau compte.</p>
       
       <p>Merci d'avoir utilisé AIDE+.<br>L'équipe AIDE+</p>
+    `),
+  }),
+
+  dataExportReady: (data) => ({
+    subject: 'Votre export de données AIDE+ est prêt !',
+    html: wrapEmailContent(`
+      <h2 style="color: #1e293b; margin-top: 0;">Export de données prêt !</h2>
+      
+      <p>Bonjour ${data.name},</p>
+      
+      <p>Votre export de données est maintenant disponible au téléchargement.</p>
+      
+      <div style="${successCardStyle}">
+        <p style="margin: 0;">
+          <strong>Fichier PDF</strong><br>
+          Contient toutes vos données personnelles, simulations, démarches et historique.
+        </p>
+      </div>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${data.downloadUrl}" style="${buttonStyle}">
+          Télécharger mon export
+        </a>
+      </div>
+      
+      <div style="${warningCardStyle}">
+        <p style="margin: 0; font-size: 14px;">
+          Ce lien expire le <strong>${new Date(data.expiresAt).toLocaleDateString('fr-FR')}</strong>. 
+          Pensez à télécharger votre fichier avant cette date.
+        </p>
+      </div>
+      
+      <p style="color: #64748b; font-size: 14px;">
+        Si vous n'avez pas demandé cet export, veuillez contacter notre support.
+      </p>
+    `),
+  }),
+
+  passwordChanged: (data) => ({
+    subject: 'Votre mot de passe AIDE+ a été modifié ',
+    html: wrapEmailContent(`
+      <h2 style="color: #1e293b; margin-top: 0;">Mot de passe modifié </h2>
+      
+      <p>Bonjour ${data.name || 'Utilisateur'},</p>
+      
+      <p>Votre mot de passe AIDE+ a été modifié avec succès.</p>
+      
+      <div style="${cardStyle}">
+        <p style="margin: 0;">
+          <strong>Date :</strong> ${new Date().toLocaleDateString('fr-FR', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+        </p>
+      </div>
+      
+      <div style="${warningCardStyle}">
+        <p style="margin: 0; font-size: 14px;">
+          Si vous n'êtes pas à l'origine de ce changement, veuillez immédiatement 
+          <a href="${APP_CONFIG.frontendUrl}/login" style="color: #d97706;">réinitialiser votre mot de passe</a> 
+          et contacter notre support.
+        </p>
+      </div>
+      
+      <p>L'équipe AIDE+</p>
     `),
   }),
 };
@@ -1041,6 +1110,16 @@ class EmailService {
   async sendAccountDeleted(to, data) {
     const template = templates.accountDeleted(data);
     return this.send({ to, ...template, templateKey: 'account_deleted' });
+  }
+
+  async sendDataExportReady(data) {
+    const template = templates.dataExportReady(data);
+    return this.send({ to: data.email, ...template, templateKey: 'data_export_ready', userId: data.userId });
+  }
+
+  async sendPasswordChanged(to, data) {
+    const template = templates.passwordChanged(data);
+    return this.send({ to, ...template, templateKey: 'password_changed' });
   }
 }
 
