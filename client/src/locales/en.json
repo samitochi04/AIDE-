@@ -248,6 +248,11 @@
   
   "dashboard": {
     "search": "Search...",
+    "searchPlaceholder": "Search pages, features...",
+    "noSearchResults": "No results found",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "markAllRead": "Mark all as read",
     "user": "User",
     "sidebar": {
       "main": "Main",
@@ -278,7 +283,11 @@
       "askAI": "Ask AI",
       "findHousing": "Find Housing",
       "startProcedure": "Start Procedure",
-      "updateProfile": "Update Profile"
+      "updateProfile": "Update Profile",
+      "noAidesYet": "No benefits discovered yet",
+      "runFirstSimulation": "Run your first simulation",
+      "noProceduresYet": "No procedures started yet",
+      "exploreProcedures": "Explore procedures"
     },
     "status": {
       "eligible": "Eligible",

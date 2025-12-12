@@ -248,6 +248,11 @@
   
   "dashboard": {
     "search": "Rechercher...",
+    "searchPlaceholder": "Rechercher des pages, fonctionnalités...",
+    "noSearchResults": "Aucun résultat trouvé",
+    "notifications": "Notifications",
+    "noNotifications": "Aucune notification",
+    "markAllRead": "Tout marquer comme lu",
     "user": "Utilisateur",
     "sidebar": {
       "main": "Principal",
@@ -278,7 +283,11 @@
       "askAI": "Demander à l'IA",
       "findHousing": "Trouver un Logement",
       "startProcedure": "Démarrer une Démarche",
-      "updateProfile": "Mettre à Jour le Profil"
+      "updateProfile": "Mettre à Jour le Profil",
+      "noAidesYet": "Aucune aide découverte",
+      "runFirstSimulation": "Lancer votre première simulation",
+      "noProceduresYet": "Aucune démarche en cours",
+      "exploreProcedures": "Explorer les démarches"
     },
     "status": {
       "eligible": "Éligible",

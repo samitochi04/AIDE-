@@ -6,6 +6,14 @@
   margin: 0 auto;
 }
 
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
 /* Welcome Header */
 .welcomeHeader {
   display: flex;
@@ -72,12 +80,12 @@
 
 .statIcon.iconGreen {
   background: rgba(34, 197, 94, 0.1);
-  color: var(--success);
+  color: #22c55e;
 }
 
 .statIcon.iconPurple {
   background: rgba(139, 92, 246, 0.1);
-  color: var(--accent);
+  color: #8b5cf6;
 }
 
 .statIcon.iconOrange {
@@ -160,6 +168,8 @@
   background: var(--surface-secondary);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .aideItem:hover {
@@ -184,6 +194,21 @@
   text-transform: capitalize;
 }
 
+.aideLearnMore {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--primary);
+  white-space: nowrap;
+  transition: gap var(--transition-fast);
+}
+
+.aideItem:hover .aideLearnMore {
+  gap: var(--spacing-2);
+}
+
 .aideRight {
   display: flex;
   flex-direction: column;
@@ -194,7 +219,7 @@
 .aideAmount {
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--success);
+  color: #22c55e;
 }
 
 .aideStatus {
@@ -206,7 +231,7 @@
 
 .aideStatus.eligible {
   background: rgba(34, 197, 94, 0.1);
-  color: var(--success);
+  color: #22c55e;
 }
 
 .aideStatus.pending {
@@ -216,7 +241,46 @@
 
 .aideStatus.ineligible {
   background: rgba(239, 68, 68, 0.1);
-  color: var(--danger);
+  color: #ef4444;
+}
+
+/* Status color classes */
+.statusEligible {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.statusPending {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+.statusApplied {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-4);
+  text-align: center;
+  gap: var(--spacing-3);
+}
+
+.emptyState i {
+  font-size: 2.5rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.emptyState p {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* Tasks List */
@@ -240,14 +304,21 @@
   background: var(--surface-tertiary);
 }
 
+.taskItem > i {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  margin-left: auto;
+}
+
 .taskPriority {
   width: 4px;
   height: 40px;
   border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
 .priorityHigh {
-  background: var(--danger);
+  background: #ef4444;
 }
 
 .priorityMedium {
@@ -255,13 +326,14 @@
 }
 
 .priorityLow {
-  background: var(--success);
+  background: #22c55e;
 }
 
 .taskInfo {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
+  flex: 1;
 }
 
 .taskTitle {
@@ -270,12 +342,27 @@
   color: var(--text-primary);
 }
 
+.taskMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
 .taskDeadline {
   display: flex;
   align-items: center;
   gap: var(--spacing-1);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
+}
+
+.taskProgress {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
 }
 
 /* Quick Actions */
@@ -310,6 +397,26 @@
   height: 56px;
   border-radius: var(--radius-xl);
   font-size: 1.5rem;
+}
+
+.actionIcon.iconBlue {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.actionIcon.iconGreen {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+}
+
+.actionIcon.iconPurple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+.actionIcon.iconOrange {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
 }
 
 .actionLabel {
