@@ -5,6 +5,7 @@ import {
   authenticate,
   requireAdmin,
   requireSuperAdmin,
+  requirePermission,
   validateBody,
   validateQuery,
   schemas,
@@ -38,10 +39,18 @@ router.get(
       startDate: Joi.date(),
       endDate: Joi.date(),
       metric: Joi.string(),
+      days: Joi.number().integer().min(1).max(365),
     })
   ),
   adminController.getAnalytics
 );
+
+/**
+ * @route   GET /admin/activity-logs
+ * @desc    Get admin activity logs
+ * @access  Super Admin
+ */
+router.get('/activity-logs', requireSuperAdmin, adminController.getActivityLogs);
 
 // ============================================
 // User Management
@@ -124,7 +133,7 @@ router.post(
 );
 
 // ============================================
-// Content Management
+// Content Management (Legacy Aides)
 // ============================================
 
 /**
@@ -156,6 +165,141 @@ router.put('/aides/:aideId', adminController.updateAide);
 router.delete('/aides/:aideId', requireSuperAdmin, adminController.deleteAide);
 
 // ============================================
+// Gov Aides Management
+// ============================================
+
+/**
+ * @route   GET /admin/gov-aides
+ * @desc    Get all government aides
+ * @access  Admin
+ */
+router.get('/gov-aides', adminController.getGovAides);
+
+/**
+ * @route   POST /admin/gov-aides
+ * @desc    Create government aide
+ * @access  Admin
+ */
+router.post('/gov-aides', adminController.createGovAide);
+
+/**
+ * @route   PUT /admin/gov-aides/:aideId
+ * @desc    Update government aide
+ * @access  Admin
+ */
+router.put('/gov-aides/:aideId', adminController.updateGovAide);
+
+/**
+ * @route   DELETE /admin/gov-aides/:aideId
+ * @desc    Delete government aide
+ * @access  Super Admin
+ */
+router.delete('/gov-aides/:aideId', requireSuperAdmin, adminController.deleteGovAide);
+
+// ============================================
+// Procedures Management
+// ============================================
+
+/**
+ * @route   GET /admin/procedures
+ * @desc    Get all procedures
+ * @access  Admin
+ */
+router.get('/procedures', adminController.getProcedures);
+
+/**
+ * @route   POST /admin/procedures
+ * @desc    Create procedure
+ * @access  Admin
+ */
+router.post('/procedures', adminController.createProcedure);
+
+/**
+ * @route   PUT /admin/procedures/:procedureId
+ * @desc    Update procedure
+ * @access  Admin
+ */
+router.put('/procedures/:procedureId', adminController.updateProcedure);
+
+/**
+ * @route   DELETE /admin/procedures/:procedureId
+ * @desc    Delete procedure
+ * @access  Super Admin
+ */
+router.delete('/procedures/:procedureId', requireSuperAdmin, adminController.deleteProcedure);
+
+// ============================================
+// Renting Management
+// ============================================
+
+/**
+ * @route   GET /admin/renting
+ * @desc    Get all renting platforms
+ * @access  Admin
+ */
+router.get('/renting', adminController.getRentingPlatforms);
+
+/**
+ * @route   POST /admin/renting
+ * @desc    Create renting platform
+ * @access  Admin
+ */
+router.post('/renting', adminController.createRentingPlatform);
+
+/**
+ * @route   PUT /admin/renting/:platformId
+ * @desc    Update renting platform
+ * @access  Admin
+ */
+router.put('/renting/:platformId', adminController.updateRentingPlatform);
+
+/**
+ * @route   DELETE /admin/renting/:platformId
+ * @desc    Delete renting platform
+ * @access  Super Admin
+ */
+router.delete('/renting/:platformId', requireSuperAdmin, adminController.deleteRentingPlatform);
+
+// ============================================
+// Content Management (Blog & Tutorials)
+// ============================================
+
+/**
+ * @route   GET /admin/contents
+ * @desc    Get all content (blog, tutorials)
+ * @access  Admin
+ */
+router.get('/contents', adminController.getContents);
+
+/**
+ * @route   GET /admin/contents/:contentId
+ * @desc    Get content by ID
+ * @access  Admin
+ */
+router.get('/contents/:contentId', adminController.getContentById);
+
+/**
+ * @route   POST /admin/contents
+ * @desc    Create content
+ * @access  Admin
+ */
+router.post('/contents', adminController.createContent);
+
+/**
+ * @route   PUT /admin/contents/:contentId
+ * @desc    Update content
+ * @access  Admin
+ */
+router.put('/contents/:contentId', adminController.updateContent);
+
+/**
+ * @route   DELETE /admin/contents/:contentId
+ * @desc    Delete content
+ * @access  Super Admin
+ */
+router.delete('/contents/:contentId', requireSuperAdmin, adminController.deleteContent);
+
+// ============================================
 // Admin Management
 // ============================================
 
@@ -184,6 +328,13 @@ router.post(
  * @access  Super Admin
  */
 router.delete('/admins/:adminId', requireSuperAdmin, adminController.removeAdmin);
+
+/**
+ * @route   PATCH /admin/admins/:adminId
+ * @desc    Update admin role and permissions
+ * @access  Super Admin
+ */
+router.patch('/admins/:adminId', requireSuperAdmin, adminController.updateAdmin);
 
 // ============================================
 // Affiliate Management
@@ -293,6 +444,90 @@ router.patch(
     })
   ),
   adminController.updateEmailTemplate
+);
+
+// ============================================
+// Bulk Email
+// ============================================
+
+/**
+ * @route   GET /admin/bulk-emails/recipients
+ * @desc    Get users matching filters for bulk email preview
+ * @access  Admin
+ */
+router.get('/bulk-emails/recipients', adminController.getBulkEmailRecipients);
+
+/**
+ * @route   GET /admin/bulk-emails
+ * @desc    Get all bulk email campaigns
+ * @access  Admin
+ */
+router.get('/bulk-emails', adminController.getBulkEmails);
+
+/**
+ * @route   POST /admin/bulk-emails
+ * @desc    Create bulk email campaign
+ * @access  Super Admin
+ */
+router.post(
+  '/bulk-emails',
+  requireSuperAdmin,
+  validateBody(
+    Joi.object({
+      subject: Joi.string().required().max(200),
+      subject_fr: Joi.string().allow('').max(200),
+      content: Joi.string().required().max(100000),
+      content_fr: Joi.string().allow('').max(100000),
+      body_html: Joi.string().max(100000),
+      body_text: Joi.string().max(50000),
+      filters: Joi.object({
+        all: Joi.boolean(),
+        subscribers_only: Joi.boolean(),
+        profile_type: Joi.string().allow(''),
+        nationality: Joi.string().allow(''),
+        has_subscription: Joi.string().allow(''),
+        region: Joi.string().allow(''),
+        saved_aide_id: Joi.string().allow(''),
+        custom_emails: Joi.string().allow(''),
+      }),
+      scheduled_at: Joi.date(),
+    })
+  ),
+  adminController.createBulkEmail
+);
+
+// ============================================
+// App Settings
+// ============================================
+
+/**
+ * @route   GET /admin/settings
+ * @desc    Get all app settings
+ * @access  Super Admin
+ */
+router.get('/settings', requireSuperAdmin, adminController.getSettings);
+
+/**
+ * @route   PUT /admin/settings
+ * @desc    Bulk update app settings
+ * @access  Super Admin
+ */
+router.put('/settings', requireSuperAdmin, adminController.bulkUpdateSettings);
+
+/**
+ * @route   PATCH /admin/settings/:key
+ * @desc    Update app setting
+ * @access  Super Admin
+ */
+router.patch(
+  '/settings/:key',
+  requireSuperAdmin,
+  validateBody(
+    Joi.object({
+      value: Joi.any().required(),
+    })
+  ),
+  adminController.updateSetting
 );
 
 export default router;

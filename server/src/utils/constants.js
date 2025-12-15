@@ -71,6 +71,7 @@ export const ADMIN_ROLES = {
 // Content types
 export const CONTENT_TYPES = {
   VIDEO: 'video',
+  TUTORIAL: 'tutorial',
   IMAGE: 'image',
   ARTICLE: 'article',
   GUIDE: 'guide',

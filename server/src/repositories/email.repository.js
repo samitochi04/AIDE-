@@ -12,7 +12,7 @@ class EmailTemplateRepository extends BaseRepository {
    * Find template by key
    */
   async findByKey(templateKey) {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .select('*')
       .eq('template_key', templateKey)
@@ -51,7 +51,7 @@ class EmailTemplateRepository extends BaseRepository {
    * Get all templates by category
    */
   async findByCategory(category) {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .select('*')
       .eq('category', category)
@@ -66,7 +66,7 @@ class EmailTemplateRepository extends BaseRepository {
    * Update template
    */
   async updateTemplate(templateKey, updates) {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .update({
         ...updates,
@@ -84,7 +84,7 @@ class EmailTemplateRepository extends BaseRepository {
    * Increment send count
    */
   async incrementSendCount(templateKey) {
-    const { error } = await this.supabase.rpc('increment_email_template_send_count', {
+    const { error } = await this.db.rpc('increment_email_template_send_count', {
       p_template_key: templateKey,
     });
 
@@ -92,7 +92,7 @@ class EmailTemplateRepository extends BaseRepository {
     if (error) {
       const template = await this.findByKey(templateKey);
       if (template) {
-        await this.supabase
+        await this.db
           .from(this.tableName)
           .update({
             send_count: (template.send_count || 0) + 1,
@@ -107,7 +107,7 @@ class EmailTemplateRepository extends BaseRepository {
    * Get all active templates
    */
   async findAllActive() {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .select('*')
       .eq('is_active', true)
@@ -131,7 +131,7 @@ class EmailLogRepository extends BaseRepository {
    * Create email log entry
    */
   async logEmail(data) {
-    const { data: log, error } = await this.supabase
+    const { data: log, error } = await this.db
       .from(this.tableName)
       .insert({
         template_id: data.templateId,
@@ -165,7 +165,7 @@ class EmailLogRepository extends BaseRepository {
       updateData.delivered_at = new Date().toISOString();
     }
 
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .update(updateData)
       .eq('id', logId)
@@ -189,7 +189,7 @@ class EmailLogRepository extends BaseRepository {
    * Mark as clicked
    */
   async markClicked(logId) {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .update({
         clicked_at: new Date().toISOString(),
@@ -209,7 +209,7 @@ class EmailLogRepository extends BaseRepository {
     const { page = 1, limit = 20 } = options;
     const offset = (page - 1) * limit;
 
-    const { data, error, count } = await this.supabase
+    const { data, error, count } = await this.db
       .from(this.tableName)
       .select('*, email_templates(template_name, category)', { count: 'exact' })
       .eq('user_id', userId)
@@ -233,7 +233,7 @@ class EmailLogRepository extends BaseRepository {
   async getStats(options = {}) {
     const { startDate, endDate } = options;
 
-    let query = this.supabase
+    let query = this.db
       .from(this.tableName)
       .select('status', { count: 'exact' });
 
@@ -274,7 +274,7 @@ class EmailLogRepository extends BaseRepository {
    * Get recent emails for admin dashboard
    */
   async findRecent(limit = 50) {
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .select('*, email_templates(template_name, category), profiles(email, full_name)')
       .order('created_at', { ascending: false })
@@ -290,7 +290,7 @@ class EmailLogRepository extends BaseRepository {
   async findFailedEmails(olderThan = 24) {
     const cutoffDate = new Date(Date.now() - olderThan * 60 * 60 * 1000).toISOString();
 
-    const { data, error } = await this.supabase
+    const { data, error } = await this.db
       .from(this.tableName)
       .select('*')
       .eq('status', 'failed')

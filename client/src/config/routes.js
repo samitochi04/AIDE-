@@ -30,6 +30,8 @@ export const ROUTES = {
   HOUSING_DETAIL: '/dashboard/housing/:id',
   PROCEDURES: '/dashboard/procedures',
   PROCEDURE_DETAIL: '/dashboard/procedures/:id',
+  TUTORIALS: '/dashboard/tutorials',
+  TUTORIAL_VIEW: '/dashboard/tutorials/:slug',
   CHAT: '/dashboard/chat',
   CHAT_CONVERSATION: '/dashboard/chat/:conversationId',
   PROFILE: '/dashboard/profile',
@@ -39,6 +41,25 @@ export const ROUTES = {
   CHECKOUT: '/checkout',
   CHECKOUT_SUCCESS: '/checkout/success',
   CHECKOUT_CANCEL: '/checkout/cancel',
+
+  // Admin (hidden, no public link)
+  ADMIN_LOGIN: '/x-admin',
+  ADMIN: '/x-admin',
+  ADMIN_DASHBOARD: '/x-admin/dashboard',
+  ADMIN_USERS: '/x-admin/users',
+  ADMIN_USER_DETAIL: '/x-admin/users/:id',
+  ADMIN_AFFILIATES: '/x-admin/affiliates',
+  ADMIN_AFFILIATE_DETAIL: '/x-admin/affiliates/:id',
+  ADMIN_GOV_AIDES: '/x-admin/gov-aides',
+  ADMIN_PROCEDURES: '/x-admin/procedures',
+  ADMIN_RENTING: '/x-admin/renting',
+  ADMIN_CONTENT: '/x-admin/content',
+  ADMIN_CONTENT_EDIT: '/x-admin/content/:id',
+  ADMIN_EMAILS: '/x-admin/emails',
+  ADMIN_EMAIL_TEMPLATES: '/x-admin/emails/templates',
+  ADMIN_ANALYTICS: '/x-admin/analytics',
+  ADMIN_SETTINGS: '/x-admin/settings',
+  ADMIN_ADMINS: '/x-admin/admins',
 }
 
 // Helper to generate paths with params

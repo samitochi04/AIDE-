@@ -210,7 +210,7 @@ class UserRepository extends BaseRepository {
   async findRecentSignups(limit = 10) {
     const { data, error } = await this.db
       .from(this.tableName)
-      .select('id, email, first_name, last_name, created_at, subscription_tier')
+      .select('id, email, full_name, created_at, subscription_tier')
       .order('created_at', { ascending: false })
       .limit(limit);
 

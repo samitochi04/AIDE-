@@ -13,7 +13,15 @@ import { formatResponse } from '../utils/helpers.js';
 export const getDashboard = async (req, res, next) => {
   try {
     const data = await adminService.getDashboard();
-    res.json(formatResponse(data));
+    // Include admin info for frontend permission checks
+    res.json(formatResponse({
+      ...data,
+      admin: {
+        id: req.admin.id,
+        role: req.admin.role,
+        permissions: req.admin.permissions || {},
+      }
+    }));
   } catch (error) {
     next(error);
   }
@@ -21,12 +29,76 @@ export const getDashboard = async (req, res, next) => {
 
 export const getAnalytics = async (req, res, next) => {
   try {
-    const { startDate, endDate, metric } = req.query;
-    const data = await analyticsService.getDetailedAnalytics({ startDate, endDate, metric });
+    const { startDate, endDate, metric, days } = req.query;
+    
+    // Support both days parameter and startDate/endDate
+    let start = startDate ? new Date(startDate) : null;
+    let end = endDate ? new Date(endDate) : new Date();
+    
+    if (days && !startDate) {
+      start = new Date(Date.now() - parseInt(days) * 24 * 60 * 60 * 1000);
+    }
+    
+    const data = await analyticsService.getDetailedAnalytics({ 
+      startDate: start?.toISOString(), 
+      endDate: end?.toISOString(), 
+      metric 
+    });
     res.json(formatResponse(data));
   } catch (error) {
     next(error);
   }
+};
+
+// ============================================
+// Activity Logs
+// ============================================
+
+export const getActivityLogs = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 50, adminId, action, resourceType, startDate, endDate } = req.query;
+    const data = await adminService.getActivityLogs({
+      page: parseInt(page),
+      limit: parseInt(limit),
+      adminId,
+      action,
+      resourceType,
+      startDate,
+      endDate,
+    });
+    
+    // Transform logs to match client expectations
+    const transformedLogs = (data.logs || []).map(log => ({
+      ...log,
+      type: `${log.action}_${log.resource_type}`.toLowerCase(),
+      message: generateLogMessage(log),
+      description: generateLogMessage(log),
+    }));
+    
+    res.json(formatResponse({ ...data, logs: transformedLogs }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Helper function to generate human-readable log messages
+const generateLogMessage = (log) => {
+  const adminName = log.admin?.user?.full_name || log.admin?.user?.email || 'Admin';
+  const action = log.action || 'performed action';
+  const resourceType = log.resource_type || 'resource';
+  
+  const actionVerbs = {
+    create: 'created',
+    update: 'updated',
+    delete: 'deleted',
+    login: 'logged in',
+    export: 'exported',
+    email_send: 'sent email to',
+  };
+  
+  const verb = actionVerbs[action] || action;
+  
+  return `${adminName} ${verb} ${resourceType}${log.resource_id ? ` #${log.resource_id.slice(0, 8)}` : ''}`;
 };
 
 // ============================================
@@ -81,7 +153,7 @@ export const getUserActivity = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const data = await adminService.getUserActivity(userId);
-    res.json(formatResponse({ activity: data }));
+    res.json(formatResponse(data));
   } catch (error) {
     next(error);
   }
@@ -177,8 +249,14 @@ export const deleteAide = async (req, res, next) => {
 
 export const getAdmins = async (req, res, next) => {
   try {
-    const data = await adminService.getAdmins();
-    res.json(formatResponse({ admins: data }));
+    const { search, role, page = 1, limit = 20 } = req.query;
+    const data = await adminService.getAdmins({
+      search,
+      role,
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+    res.json(formatResponse(data));
   } catch (error) {
     next(error);
   }
@@ -186,8 +264,8 @@ export const getAdmins = async (req, res, next) => {
 
 export const createAdmin = async (req, res, next) => {
   try {
-    const { userId, role, permissions } = req.body;
-    const data = await adminService.createAdmin(userId, role, permissions);
+    const { email, role, permissions } = req.body;
+    const data = await adminService.createAdmin(email, role, permissions);
     res.status(201).json(formatResponse(data));
   } catch (error) {
     next(error);
@@ -198,6 +276,17 @@ export const removeAdmin = async (req, res, next) => {
   try {
     const { adminId } = req.params;
     const result = await adminService.removeAdmin(adminId);
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateAdmin = async (req, res, next) => {
+  try {
+    const { adminId } = req.params;
+    const { role, permissions } = req.body;
+    const result = await adminService.updateAdmin(adminId, { role, permissions });
     res.json(formatResponse(result));
   } catch (error) {
     next(error);
@@ -333,6 +422,272 @@ export const updateEmailTemplate = async (req, res, next) => {
     });
     
     res.json(formatResponse(template));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Content Management (Blog & Tutorials)
+// ============================================
+
+export const getContents = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, contentType, category, isPublished, language, search } = req.query;
+    const data = await adminService.getContents(parseInt(page), parseInt(limit), {
+      contentType,
+      category,
+      isPublished: isPublished === 'true' ? true : isPublished === 'false' ? false : undefined,
+      language,
+      search,
+    });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getContentById = async (req, res, next) => {
+  try {
+    const { contentId } = req.params;
+    const data = await adminService.getContentById(contentId);
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createContent = async (req, res, next) => {
+  try {
+    const data = await adminService.createContent(req.body, req.admin.id);
+    res.status(201).json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateContent = async (req, res, next) => {
+  try {
+    const { contentId } = req.params;
+    const data = await adminService.updateContent(contentId, req.body, req.admin.id);
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteContent = async (req, res, next) => {
+  try {
+    const { contentId } = req.params;
+    const result = await adminService.deleteContent(contentId, req.admin.id);
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Gov Aides Management
+// ============================================
+
+export const getGovAides = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, region, profileType, search } = req.query;
+    const data = await adminService.getGovAides(parseInt(page), parseInt(limit), {
+      region,
+      profileType,
+      search,
+    });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createGovAide = async (req, res, next) => {
+  try {
+    const data = await adminService.createGovAide(req.body, req.admin.id);
+    res.status(201).json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateGovAide = async (req, res, next) => {
+  try {
+    const { aideId } = req.params;
+    const data = await adminService.updateGovAide(aideId, req.body, req.admin.id);
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteGovAide = async (req, res, next) => {
+  try {
+    const { aideId } = req.params;
+    const result = await adminService.deleteGovAide(aideId, req.admin.id);
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Procedures Management
+// ============================================
+
+export const getProcedures = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, category, section, search } = req.query;
+    const data = await adminService.getProcedures(parseInt(page), parseInt(limit), {
+      category,
+      section,
+      search,
+    });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createProcedure = async (req, res, next) => {
+  try {
+    const data = await adminService.createProcedure(req.body, req.admin.id);
+    res.status(201).json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProcedure = async (req, res, next) => {
+  try {
+    const { procedureId } = req.params;
+    const data = await adminService.updateProcedure(procedureId, req.body, req.admin.id);
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProcedure = async (req, res, next) => {
+  try {
+    const { procedureId } = req.params;
+    const result = await adminService.deleteProcedure(procedureId, req.admin.id);
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Renting Management
+// ============================================
+
+export const getRentingPlatforms = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, category, search } = req.query;
+    const data = await adminService.getRentingPlatforms(parseInt(page), parseInt(limit), {
+      category,
+      search,
+    });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createRentingPlatform = async (req, res, next) => {
+  try {
+    const data = await adminService.createRentingPlatform(req.body, req.admin.id);
+    res.status(201).json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateRentingPlatform = async (req, res, next) => {
+  try {
+    const { platformId } = req.params;
+    const data = await adminService.updateRentingPlatform(platformId, req.body, req.admin.id);
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteRentingPlatform = async (req, res, next) => {
+  try {
+    const { platformId } = req.params;
+    const result = await adminService.deleteRentingPlatform(platformId, req.admin.id);
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Bulk Email
+// ============================================
+
+export const getBulkEmailRecipients = async (req, res, next) => {
+  try {
+    const filters = req.query;
+    const users = await adminService.getUsersForBulkEmail(filters);
+    res.json(formatResponse({ users, count: users.length }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createBulkEmail = async (req, res, next) => {
+  try {
+    const data = await adminService.createBulkEmail(req.body, req.admin.id);
+    res.status(201).json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBulkEmails = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20, status } = req.query;
+    const data = await adminService.getBulkEmails(parseInt(page), parseInt(limit), { status });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// App Settings
+// ============================================
+
+export const getSettings = async (req, res, next) => {
+  try {
+    const settings = await adminService.getSettings();
+    res.json(formatResponse({ settings }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateSetting = async (req, res, next) => {
+  try {
+    const { key } = req.params;
+    const { value } = req.body;
+    const setting = await adminService.updateSetting(key, value, req.admin.id);
+    res.json(formatResponse(setting));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const bulkUpdateSettings = async (req, res, next) => {
+  try {
+    const settings = req.body;
+    const result = await adminService.bulkUpdateSettings(settings, req.admin.id);
+    res.json(formatResponse({ success: true, updated: result.length }));
   } catch (error) {
     next(error);
   }

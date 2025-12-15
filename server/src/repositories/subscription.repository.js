@@ -6,7 +6,7 @@ import { BaseRepository } from './base.repository.js';
  */
 class SubscriptionRepository extends BaseRepository {
   constructor() {
-    super('subscriptions');
+    super('stripe_subscriptions');
   }
 
   /**

@@ -41,6 +41,7 @@ export function DashboardLayout() {
     { id: 'aides', label: t('dashboard.sidebar.aides'), icon: 'ri-hand-coin-line', route: ROUTES.AIDES },
     { id: 'procedures', label: t('dashboard.sidebar.procedures'), icon: 'ri-file-list-3-line', route: ROUTES.PROCEDURES },
     { id: 'housing', label: t('dashboard.sidebar.housing'), icon: 'ri-home-line', route: ROUTES.HOUSING },
+    { id: 'tutorials', label: t('dashboard.sidebar.tutorials'), icon: 'ri-play-circle-line', route: ROUTES.TUTORIALS },
     { id: 'chat', label: t('dashboard.sidebar.chat'), icon: 'ri-chat-3-line', route: ROUTES.CHAT },
     { id: 'profile', label: t('dashboard.sidebar.profile'), icon: 'ri-user-line', route: ROUTES.PROFILE },
     { id: 'settings', label: t('dashboard.sidebar.settings'), icon: 'ri-settings-3-line', route: ROUTES.SETTINGS },

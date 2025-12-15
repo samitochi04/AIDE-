@@ -46,7 +46,23 @@ export {
 } from './knowledgeBase.repository.js';
 export {
   adminRepository,
+  adminActivityLogRepository,
+  bulkEmailRepository,
+  bulkEmailRecipientsRepository,
+  appSettingsRepository,
+  contentRepository,
+  govAidesRepository,
+  proceduresRepository,
+  rentingRepository as adminRentingRepository,
   AdminRepository,
+  AdminActivityLogRepository,
+  BulkEmailRepository,
+  BulkEmailRecipientsRepository,
+  AppSettingsRepository,
+  ContentRepository,
+  GovAidesRepository,
+  ProceduresRepository,
+  RentingRepository as AdminRentingRepository,
 } from './admin.repository.js';
 export {
   emailTemplateRepository,

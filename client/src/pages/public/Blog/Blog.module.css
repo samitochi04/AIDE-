@@ -77,6 +77,13 @@
   position: relative;
   aspect-ratio: 16/10;
   background: var(--color-surface-elevated);
+  overflow: hidden;
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .imagePlaceholder {
@@ -251,6 +258,14 @@
 .postImage {
   aspect-ratio: 16/10;
   background: var(--color-surface-elevated);
+  overflow: hidden;
+  position: relative;
+}
+
+.postImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .postContent {

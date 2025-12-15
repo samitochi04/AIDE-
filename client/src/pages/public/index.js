@@ -1,4 +1,4 @@
 // Public Pages - Central Export
 export { default as Pricing } from './Pricing';
 export { default as Contact } from './Contact';
-export { default as Blog } from './Blog';
+export { default as Blog, BlogPost } from './Blog';

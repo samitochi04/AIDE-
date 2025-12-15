@@ -11,85 +11,118 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE EXTENSION IF NOT EXISTS "vector";  -- For RAG/AI embeddings
 
 -- ============================================
--- ENUMS
+-- ENUMS (with IF NOT EXISTS pattern)
 -- ============================================
 
 -- User status enum
-CREATE TYPE user_status AS ENUM (
-    'student',
-    'worker', 
-    'job_seeker',
-    'retiree',
-    'tourist',
-    'other'
-);
+DO $$ BEGIN
+    CREATE TYPE user_status AS ENUM (
+        'student',
+        'worker', 
+        'job_seeker',
+        'retiree',
+        'tourist',
+        'other'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- User nationality type
-CREATE TYPE nationality_type AS ENUM (
-    'french',
-    'eu_eea',
-    'non_eu',
-    'other'
-);
+DO $$ BEGIN
+    CREATE TYPE nationality_type AS ENUM (
+        'french',
+        'eu_eea',
+        'non_eu',
+        'other'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Subscription status
-CREATE TYPE subscription_status AS ENUM (
-    'active',
-    'canceled',
-    'past_due',
-    'unpaid',
-    'trialing',
-    'incomplete',
-    'incomplete_expired',
-    'paused'
-);
+DO $$ BEGIN
+    CREATE TYPE subscription_status AS ENUM (
+        'active',
+        'canceled',
+        'past_due',
+        'unpaid',
+        'trialing',
+        'incomplete',
+        'incomplete_expired',
+        'paused'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Subscription tier
-CREATE TYPE subscription_tier AS ENUM (
-    'free',
-    'basic',
-    'premium',
-    'enterprise'
-);
+DO $$ BEGIN
+    CREATE TYPE subscription_tier AS ENUM (
+        'free',
+        'basic',
+        'premium',
+        'enterprise'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Content type enum
-CREATE TYPE content_type AS ENUM (
-    'video',
-    'image',
-    'article',
-    'guide',
-    'infographic'
-);
+DO $$ BEGIN
+    CREATE TYPE content_type AS ENUM (
+        'video',
+        'image',
+        'tutorial',
+        'article',
+        'guide',
+        'infographic'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Admin role enum
-CREATE TYPE admin_role AS ENUM (
-    'super_admin',
-    'admin',
-    'moderator',
-    'support'
-);
+DO $$ BEGIN
+    CREATE TYPE admin_role AS ENUM (
+        'super_admin',
+        'admin',
+        'moderator',
+        'support'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Payout status
-CREATE TYPE payout_status AS ENUM (
-    'pending',
-    'processing',
-    'completed',
-    'failed',
-    'cancelled'
-);
+DO $$ BEGIN
+    CREATE TYPE payout_status AS ENUM (
+        'pending',
+        'processing',
+        'completed',
+        'failed',
+        'cancelled'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Chat message role
-CREATE TYPE chat_role AS ENUM (
-    'user',
-    'assistant',
-    'system'
-);
+DO $$ BEGIN
+    CREATE TYPE chat_role AS ENUM (
+        'user',
+        'assistant',
+        'system'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- ============================================
 -- TABLE: profiles
 -- User profiles linked to Supabase auth
 -- ============================================
-CREATE TABLE profiles (
+CREATE TABLE IF NOT EXISTS profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     email TEXT UNIQUE NOT NULL,
     full_name TEXT,
@@ -135,19 +168,19 @@ CREATE TABLE profiles (
 );
 
 -- Index for common queries
-CREATE INDEX idx_profiles_email ON profiles(email);
-CREATE INDEX idx_profiles_referral_code ON profiles(referral_code);
-CREATE INDEX idx_profiles_referred_by ON profiles(referred_by);
-CREATE INDEX idx_profiles_region ON profiles(region);
-CREATE INDEX idx_profiles_status ON profiles(status);
-CREATE INDEX idx_profiles_subscription ON profiles(subscription_tier);
-CREATE INDEX idx_profiles_created_at ON profiles(created_at);
+CREATE INDEX IF NOT EXISTS idx_profiles_email ON profiles(email);
+CREATE INDEX IF NOT EXISTS idx_profiles_referral_code ON profiles(referral_code);
+CREATE INDEX IF NOT EXISTS idx_profiles_referred_by ON profiles(referred_by);
+CREATE INDEX IF NOT EXISTS idx_profiles_region ON profiles(region);
+CREATE INDEX IF NOT EXISTS idx_profiles_status ON profiles(status);
+CREATE INDEX IF NOT EXISTS idx_profiles_subscription ON profiles(subscription_tier);
+CREATE INDEX IF NOT EXISTS idx_profiles_created_at ON profiles(created_at);
 
 -- ============================================
 -- TABLE: admins
 -- Admin users with special privileges
 -- ============================================
-CREATE TABLE admins (
+CREATE TABLE IF NOT EXISTS admins (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     role admin_role NOT NULL DEFAULT 'moderator',
@@ -163,7 +196,9 @@ CREATE TABLE admins (
         "manage_affiliates": false,
         "manage_subscriptions": false,
         "view_analytics": true,
-        "manage_admins": false
+        "send_bulk_emails": false,
+        "manage_admins": false,
+        "manage_settings": false
     }'::jsonb,
     
     -- Timestamps
@@ -174,14 +209,19 @@ CREATE TABLE admins (
     UNIQUE(user_id)
 );
 
-CREATE INDEX idx_admins_user_id ON admins(user_id);
-CREATE INDEX idx_admins_role ON admins(role);
+CREATE INDEX IF NOT EXISTS idx_admins_user_id ON admins(user_id);
+CREATE INDEX IF NOT EXISTS idx_admins_role ON admins(role);
+
+-- Update existing admins to have new permission fields
+UPDATE admins 
+SET permissions = permissions || '{"send_bulk_emails": false, "manage_settings": false}'::jsonb
+WHERE NOT (permissions ? 'send_bulk_emails' AND permissions ? 'manage_settings');
 
 -- ============================================
 -- TABLE: affiliates
 -- Affiliate program for referrals
 -- ============================================
-CREATE TABLE affiliates (
+CREATE TABLE IF NOT EXISTS affiliates (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     
@@ -214,15 +254,15 @@ CREATE TABLE affiliates (
     UNIQUE(user_id)
 );
 
-CREATE INDEX idx_affiliates_code ON affiliates(affiliate_code);
-CREATE INDEX idx_affiliates_user_id ON affiliates(user_id);
-CREATE INDEX idx_affiliates_active ON affiliates(is_active);
+CREATE INDEX IF NOT EXISTS idx_affiliates_code ON affiliates(affiliate_code);
+CREATE INDEX IF NOT EXISTS idx_affiliates_user_id ON affiliates(user_id);
+CREATE INDEX IF NOT EXISTS idx_affiliates_active ON affiliates(is_active);
 
 -- ============================================
 -- TABLE: promo_codes
 -- Promotional codes (admin-created)
 -- ============================================
-CREATE TABLE promo_codes (
+CREATE TABLE IF NOT EXISTS promo_codes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     code TEXT UNIQUE NOT NULL,
     
@@ -253,15 +293,15 @@ CREATE TABLE promo_codes (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_promo_codes_code ON promo_codes(code);
-CREATE INDEX idx_promo_codes_active ON promo_codes(is_active);
-CREATE INDEX idx_promo_codes_valid ON promo_codes(valid_from, valid_until);
+CREATE INDEX IF NOT EXISTS idx_promo_codes_code ON promo_codes(code);
+CREATE INDEX IF NOT EXISTS idx_promo_codes_active ON promo_codes(is_active);
+CREATE INDEX IF NOT EXISTS idx_promo_codes_valid ON promo_codes(valid_from, valid_until);
 
 -- ============================================
 -- TABLE: gov_aides
 -- Government aides knowledge base (RAG-enabled)
 -- ============================================
-CREATE TABLE gov_aides (
+CREATE TABLE IF NOT EXISTS gov_aides (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Region info
@@ -300,17 +340,17 @@ CREATE TABLE gov_aides (
 );
 
 -- Indexes for search and RAG
-CREATE INDEX idx_gov_aides_region ON gov_aides(region_id);
-CREATE INDEX idx_gov_aides_profile ON gov_aides(profile_type, profile_subtype);
-CREATE INDEX idx_gov_aides_category ON gov_aides(aide_category);
-CREATE INDEX idx_gov_aides_content_search ON gov_aides USING gin(to_tsvector('french', content_text));
-CREATE INDEX idx_gov_aides_embedding ON gov_aides USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_gov_aides_region ON gov_aides(region_id);
+CREATE INDEX IF NOT EXISTS idx_gov_aides_profile ON gov_aides(profile_type, profile_subtype);
+CREATE INDEX IF NOT EXISTS idx_gov_aides_category ON gov_aides(aide_category);
+CREATE INDEX IF NOT EXISTS idx_gov_aides_content_search ON gov_aides USING gin(to_tsvector('french', content_text));
+CREATE INDEX IF NOT EXISTS idx_gov_aides_embedding ON gov_aides USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
 -- ============================================
 -- TABLE: procedures
 -- Administrative procedures (RAG-enabled)
 -- ============================================
-CREATE TABLE procedures (
+CREATE TABLE IF NOT EXISTS procedures (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Category
@@ -346,16 +386,16 @@ CREATE TABLE procedures (
 );
 
 -- Indexes for search and RAG
-CREATE INDEX idx_procedures_category ON procedures(category, subcategory);
-CREATE INDEX idx_procedures_section ON procedures(section);
-CREATE INDEX idx_procedures_content_search ON procedures USING gin(to_tsvector('french', content_text));
-CREATE INDEX idx_procedures_embedding ON procedures USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_procedures_category ON procedures(category, subcategory);
+CREATE INDEX IF NOT EXISTS idx_procedures_section ON procedures(section);
+CREATE INDEX IF NOT EXISTS idx_procedures_content_search ON procedures USING gin(to_tsvector('french', content_text));
+CREATE INDEX IF NOT EXISTS idx_procedures_embedding ON procedures USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
 -- ============================================
 -- TABLE: renting
 -- Rental platforms and resources (RAG-enabled)
 -- ============================================
-CREATE TABLE renting (
+CREATE TABLE IF NOT EXISTS renting (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Category
@@ -383,15 +423,15 @@ CREATE TABLE renting (
 );
 
 -- Indexes for search and RAG
-CREATE INDEX idx_renting_category ON renting(category);
-CREATE INDEX idx_renting_content_search ON renting USING gin(to_tsvector('french', content_text));
-CREATE INDEX idx_renting_embedding ON renting USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_renting_category ON renting(category);
+CREATE INDEX IF NOT EXISTS idx_renting_content_search ON renting USING gin(to_tsvector('french', content_text));
+CREATE INDEX IF NOT EXISTS idx_renting_embedding ON renting USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
 -- ============================================
 -- TABLE: contents
 -- Admin-posted educational content
 -- ============================================
-CREATE TABLE contents (
+CREATE TABLE IF NOT EXISTS contents (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Content details
@@ -440,18 +480,18 @@ CREATE TABLE contents (
 );
 
 -- Indexes
-CREATE INDEX idx_contents_type ON contents(content_type);
-CREATE INDEX idx_contents_tags ON contents USING gin(tags);
-CREATE INDEX idx_contents_published ON contents(is_published, published_at);
-CREATE INDEX idx_contents_featured ON contents(is_featured);
-CREATE INDEX idx_contents_language ON contents(language);
-CREATE INDEX idx_contents_slug ON contents(slug);
+CREATE INDEX IF NOT EXISTS idx_contents_type ON contents(content_type);
+CREATE INDEX IF NOT EXISTS idx_contents_tags ON contents USING gin(tags);
+CREATE INDEX IF NOT EXISTS idx_contents_published ON contents(is_published, published_at);
+CREATE INDEX IF NOT EXISTS idx_contents_featured ON contents(is_featured);
+CREATE INDEX IF NOT EXISTS idx_contents_language ON contents(language);
+CREATE INDEX IF NOT EXISTS idx_contents_slug ON contents(slug);
 
 -- ============================================
 -- TABLE: content_likes
 -- User likes on content
 -- ============================================
-CREATE TABLE content_likes (
+CREATE TABLE IF NOT EXISTS content_likes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     content_id UUID NOT NULL REFERENCES contents(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -461,14 +501,14 @@ CREATE TABLE content_likes (
     UNIQUE(content_id, user_id)
 );
 
-CREATE INDEX idx_content_likes_content ON content_likes(content_id);
-CREATE INDEX idx_content_likes_user ON content_likes(user_id);
+CREATE INDEX IF NOT EXISTS idx_content_likes_content ON content_likes(content_id);
+CREATE INDEX IF NOT EXISTS idx_content_likes_user ON content_likes(user_id);
 
 -- ============================================
 -- TABLE: email_templates
 -- Email templates for automated emails
 -- ============================================
-CREATE TABLE email_templates (
+CREATE TABLE IF NOT EXISTS email_templates (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Template identification
@@ -502,15 +542,15 @@ CREATE TABLE email_templates (
     created_by UUID REFERENCES admins(id)
 );
 
-CREATE INDEX idx_email_templates_key ON email_templates(template_key);
-CREATE INDEX idx_email_templates_category ON email_templates(category);
-CREATE INDEX idx_email_templates_active ON email_templates(is_active);
+CREATE INDEX IF NOT EXISTS idx_email_templates_key ON email_templates(template_key);
+CREATE INDEX IF NOT EXISTS idx_email_templates_category ON email_templates(category);
+CREATE INDEX IF NOT EXISTS idx_email_templates_active ON email_templates(is_active);
 
 -- ============================================
 -- TABLE: email_logs
 -- Track sent emails
 -- ============================================
-CREATE TABLE email_logs (
+CREATE TABLE IF NOT EXISTS email_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     template_id UUID REFERENCES email_templates(id),
     user_id UUID REFERENCES profiles(id),
@@ -533,9 +573,9 @@ CREATE TABLE email_logs (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_email_logs_user ON email_logs(user_id);
-CREATE INDEX idx_email_logs_status ON email_logs(status);
-CREATE INDEX idx_email_logs_sent ON email_logs(sent_at);
+CREATE INDEX IF NOT EXISTS idx_email_logs_user ON email_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_email_logs_status ON email_logs(status);
+CREATE INDEX IF NOT EXISTS idx_email_logs_sent ON email_logs(sent_at);
 
 -- ============================================
 -- STRIPE INTEGRATION TABLES
@@ -543,7 +583,7 @@ CREATE INDEX idx_email_logs_sent ON email_logs(sent_at);
 
 -- TABLE: stripe_customers
 -- Link profiles to Stripe customers
-CREATE TABLE stripe_customers (
+CREATE TABLE IF NOT EXISTS stripe_customers (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     stripe_customer_id TEXT UNIQUE NOT NULL,
@@ -559,12 +599,12 @@ CREATE TABLE stripe_customers (
     UNIQUE(user_id)
 );
 
-CREATE INDEX idx_stripe_customers_user ON stripe_customers(user_id);
-CREATE INDEX idx_stripe_customers_stripe ON stripe_customers(stripe_customer_id);
+CREATE INDEX IF NOT EXISTS idx_stripe_customers_user ON stripe_customers(user_id);
+CREATE INDEX IF NOT EXISTS idx_stripe_customers_stripe ON stripe_customers(stripe_customer_id);
 
 -- TABLE: stripe_products
 -- Subscription products/plans
-CREATE TABLE stripe_products (
+CREATE TABLE IF NOT EXISTS stripe_products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     stripe_product_id TEXT UNIQUE NOT NULL,
     stripe_price_id TEXT UNIQUE NOT NULL,
@@ -594,12 +634,12 @@ CREATE TABLE stripe_products (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_stripe_products_tier ON stripe_products(tier);
-CREATE INDEX idx_stripe_products_active ON stripe_products(is_active);
+CREATE INDEX IF NOT EXISTS idx_stripe_products_tier ON stripe_products(tier);
+CREATE INDEX IF NOT EXISTS idx_stripe_products_active ON stripe_products(is_active);
 
 -- TABLE: stripe_subscriptions
 -- User subscriptions
-CREATE TABLE stripe_subscriptions (
+CREATE TABLE IF NOT EXISTS stripe_subscriptions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     stripe_customer_id TEXT NOT NULL REFERENCES stripe_customers(stripe_customer_id),
@@ -629,14 +669,14 @@ CREATE TABLE stripe_subscriptions (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_stripe_subscriptions_user ON stripe_subscriptions(user_id);
-CREATE INDEX idx_stripe_subscriptions_status ON stripe_subscriptions(status);
-CREATE INDEX idx_stripe_subscriptions_tier ON stripe_subscriptions(tier);
-CREATE INDEX idx_stripe_subscriptions_stripe ON stripe_subscriptions(stripe_subscription_id);
+CREATE INDEX IF NOT EXISTS idx_stripe_subscriptions_user ON stripe_subscriptions(user_id);
+CREATE INDEX IF NOT EXISTS idx_stripe_subscriptions_status ON stripe_subscriptions(status);
+CREATE INDEX IF NOT EXISTS idx_stripe_subscriptions_tier ON stripe_subscriptions(tier);
+CREATE INDEX IF NOT EXISTS idx_stripe_subscriptions_stripe ON stripe_subscriptions(stripe_subscription_id);
 
 -- TABLE: stripe_invoices
 -- Invoice history
-CREATE TABLE stripe_invoices (
+CREATE TABLE IF NOT EXISTS stripe_invoices (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     stripe_invoice_id TEXT UNIQUE NOT NULL,
@@ -662,12 +702,12 @@ CREATE TABLE stripe_invoices (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_stripe_invoices_user ON stripe_invoices(user_id);
-CREATE INDEX idx_stripe_invoices_status ON stripe_invoices(status);
+CREATE INDEX IF NOT EXISTS idx_stripe_invoices_user ON stripe_invoices(user_id);
+CREATE INDEX IF NOT EXISTS idx_stripe_invoices_status ON stripe_invoices(status);
 
 -- TABLE: affiliate_transactions
 -- Track affiliate earnings
-CREATE TABLE affiliate_transactions (
+CREATE TABLE IF NOT EXISTS affiliate_transactions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     affiliate_id UUID NOT NULL REFERENCES affiliates(id) ON DELETE CASCADE,
     
@@ -696,9 +736,9 @@ CREATE TABLE affiliate_transactions (
     processed_at TIMESTAMPTZ
 );
 
-CREATE INDEX idx_affiliate_transactions_affiliate ON affiliate_transactions(affiliate_id);
-CREATE INDEX idx_affiliate_transactions_status ON affiliate_transactions(status);
-CREATE INDEX idx_affiliate_transactions_type ON affiliate_transactions(transaction_type);
+CREATE INDEX IF NOT EXISTS idx_affiliate_transactions_affiliate ON affiliate_transactions(affiliate_id);
+CREATE INDEX IF NOT EXISTS idx_affiliate_transactions_status ON affiliate_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_affiliate_transactions_type ON affiliate_transactions(transaction_type);
 
 -- ============================================
 -- AI CHAT TABLES
@@ -706,7 +746,7 @@ CREATE INDEX idx_affiliate_transactions_type ON affiliate_transactions(transacti
 
 -- TABLE: chat_conversations
 -- Chat sessions with AI
-CREATE TABLE chat_conversations (
+CREATE TABLE IF NOT EXISTS chat_conversations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
     
@@ -733,14 +773,14 @@ CREATE TABLE chat_conversations (
     last_message_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_chat_conversations_user ON chat_conversations(user_id);
-CREATE INDEX idx_chat_conversations_anonymous ON chat_conversations(anonymous_id);
-CREATE INDEX idx_chat_conversations_active ON chat_conversations(is_active);
-CREATE INDEX idx_chat_conversations_last_message ON chat_conversations(last_message_at);
+CREATE INDEX IF NOT EXISTS idx_chat_conversations_user ON chat_conversations(user_id);
+CREATE INDEX IF NOT EXISTS idx_chat_conversations_anonymous ON chat_conversations(anonymous_id);
+CREATE INDEX IF NOT EXISTS idx_chat_conversations_active ON chat_conversations(is_active);
+CREATE INDEX IF NOT EXISTS idx_chat_conversations_last_message ON chat_conversations(last_message_at);
 
 -- TABLE: chat_messages
 -- Individual messages in conversations
-CREATE TABLE chat_messages (
+CREATE TABLE IF NOT EXISTS chat_messages (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     conversation_id UUID NOT NULL REFERENCES chat_conversations(id) ON DELETE CASCADE,
     
@@ -763,13 +803,13 @@ CREATE TABLE chat_messages (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_chat_messages_conversation ON chat_messages(conversation_id);
-CREATE INDEX idx_chat_messages_role ON chat_messages(role);
-CREATE INDEX idx_chat_messages_created ON chat_messages(created_at);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_conversation ON chat_messages(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_role ON chat_messages(role);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_created ON chat_messages(created_at);
 
 -- TABLE: chat_usage
 -- Track AI usage for rate limiting
-CREATE TABLE chat_usage (
+CREATE TABLE IF NOT EXISTS chat_usage (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
     
@@ -791,14 +831,14 @@ CREATE TABLE chat_usage (
     UNIQUE(user_id, period_start)
 );
 
-CREATE INDEX idx_chat_usage_user ON chat_usage(user_id);
-CREATE INDEX idx_chat_usage_period ON chat_usage(period_start, period_end);
+CREATE INDEX IF NOT EXISTS idx_chat_usage_user ON chat_usage(user_id);
+CREATE INDEX IF NOT EXISTS idx_chat_usage_period ON chat_usage(period_start, period_end);
 
 -- ============================================
 -- TABLE: simulations
 -- User's aide eligibility simulation results
 -- ============================================
-CREATE TABLE simulations (
+CREATE TABLE IF NOT EXISTS simulations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
     
@@ -820,8 +860,8 @@ CREATE TABLE simulations (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_simulations_user ON simulations(user_id);
-CREATE INDEX idx_simulations_created ON simulations(created_at);
+CREATE INDEX IF NOT EXISTS idx_simulations_user ON simulations(user_id);
+CREATE INDEX IF NOT EXISTS idx_simulations_created ON simulations(created_at);
 
 -- ============================================
 -- ANALYTICS & TRACKING TABLES
@@ -829,7 +869,7 @@ CREATE INDEX idx_simulations_created ON simulations(created_at);
 
 -- TABLE: anonymous_visitors
 -- Track anonymous visitors before signup
-CREATE TABLE anonymous_visitors (
+CREATE TABLE IF NOT EXISTS anonymous_visitors (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- Identification
@@ -864,13 +904,13 @@ CREATE TABLE anonymous_visitors (
     total_time_seconds INTEGER DEFAULT 0
 );
 
-CREATE INDEX idx_anonymous_visitors_fingerprint ON anonymous_visitors(device_fingerprint);
-CREATE INDEX idx_anonymous_visitors_first_seen ON anonymous_visitors(first_seen_at);
-CREATE INDEX idx_anonymous_visitors_converted ON anonymous_visitors(converted_to_user_id);
+CREATE INDEX IF NOT EXISTS idx_anonymous_visitors_fingerprint ON anonymous_visitors(device_fingerprint);
+CREATE INDEX IF NOT EXISTS idx_anonymous_visitors_first_seen ON anonymous_visitors(first_seen_at);
+CREATE INDEX IF NOT EXISTS idx_anonymous_visitors_converted ON anonymous_visitors(converted_to_user_id);
 
 -- TABLE: view_records
 -- Detailed activity tracking for all users (anonymous + registered)
-CREATE TABLE view_records (
+CREATE TABLE IF NOT EXISTS view_records (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- User identification (one must be present)
@@ -923,22 +963,22 @@ CREATE TABLE view_records (
 );
 
 -- Partition by month for better performance
--- CREATE TABLE view_records_y2025m01 PARTITION OF view_records 
+-- CREATE TABLE IF NOT EXISTS view_records_y2025m01 PARTITION OF view_records 
 --     FOR VALUES FROM ('2025-01-01') TO ('2025-02-01');
 
-CREATE INDEX idx_view_records_user ON view_records(user_id);
-CREATE INDEX idx_view_records_anonymous ON view_records(anonymous_visitor_id);
-CREATE INDEX idx_view_records_session ON view_records(session_id);
-CREATE INDEX idx_view_records_action ON view_records(action_type);
-CREATE INDEX idx_view_records_created ON view_records(created_at);
-CREATE INDEX idx_view_records_fingerprint ON view_records(device_fingerprint);
-CREATE INDEX idx_view_records_page ON view_records(page_url);
+CREATE INDEX IF NOT EXISTS idx_view_records_user ON view_records(user_id);
+CREATE INDEX IF NOT EXISTS idx_view_records_anonymous ON view_records(anonymous_visitor_id);
+CREATE INDEX IF NOT EXISTS idx_view_records_session ON view_records(session_id);
+CREATE INDEX IF NOT EXISTS idx_view_records_action ON view_records(action_type);
+CREATE INDEX IF NOT EXISTS idx_view_records_created ON view_records(created_at);
+CREATE INDEX IF NOT EXISTS idx_view_records_fingerprint ON view_records(device_fingerprint);
+CREATE INDEX IF NOT EXISTS idx_view_records_page ON view_records(page_url);
 
 -- ============================================
 -- TABLE: user_searches
 -- Track what users search for (analytics)
 -- ============================================
-CREATE TABLE user_searches (
+CREATE TABLE IF NOT EXISTS user_searches (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
     anonymous_visitor_id UUID REFERENCES anonymous_visitors(id) ON DELETE SET NULL,
@@ -957,15 +997,15 @@ CREATE TABLE user_searches (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_user_searches_query ON user_searches USING gin(to_tsvector('french', query));
-CREATE INDEX idx_user_searches_type ON user_searches(search_type);
-CREATE INDEX idx_user_searches_created ON user_searches(created_at);
+CREATE INDEX IF NOT EXISTS idx_user_searches_query ON user_searches USING gin(to_tsvector('french', query));
+CREATE INDEX IF NOT EXISTS idx_user_searches_type ON user_searches(search_type);
+CREATE INDEX IF NOT EXISTS idx_user_searches_created ON user_searches(created_at);
 
 -- ============================================
 -- TABLE: user_favorites
 -- Saved aides/procedures/rentals
 -- ============================================
-CREATE TABLE user_favorites (
+CREATE TABLE IF NOT EXISTS user_favorites (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     
@@ -982,14 +1022,14 @@ CREATE TABLE user_favorites (
     UNIQUE(user_id, item_type, item_id)
 );
 
-CREATE INDEX idx_user_favorites_user ON user_favorites(user_id);
-CREATE INDEX idx_user_favorites_item ON user_favorites(item_type, item_id);
+CREATE INDEX IF NOT EXISTS idx_user_favorites_user ON user_favorites(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_favorites_item ON user_favorites(item_type, item_id);
 
 -- ============================================
 -- TABLE: notifications
 -- User notifications
 -- ============================================
-CREATE TABLE notifications (
+CREATE TABLE IF NOT EXISTS notifications (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     
@@ -1013,16 +1053,16 @@ CREATE TABLE notifications (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_notifications_user ON notifications(user_id);
-CREATE INDEX idx_notifications_read ON notifications(is_read);
-CREATE INDEX idx_notifications_type ON notifications(notification_type);
-CREATE INDEX idx_notifications_created ON notifications(created_at);
+CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_read ON notifications(is_read);
+CREATE INDEX IF NOT EXISTS idx_notifications_type ON notifications(notification_type);
+CREATE INDEX IF NOT EXISTS idx_notifications_created ON notifications(created_at);
 
 -- ============================================
 -- TABLE: system_settings
 -- Application settings
 -- ============================================
-CREATE TABLE system_settings (
+CREATE TABLE IF NOT EXISTS system_settings (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     key TEXT UNIQUE NOT NULL,
     value JSONB NOT NULL,
@@ -1034,7 +1074,7 @@ CREATE TABLE system_settings (
     updated_by UUID REFERENCES admins(id)
 );
 
-CREATE INDEX idx_system_settings_key ON system_settings(key);
+CREATE INDEX IF NOT EXISTS idx_system_settings_key ON system_settings(key);
 
 -- ============================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
@@ -1072,16 +1112,19 @@ ALTER TABLE system_settings ENABLE ROW LEVEL SECURITY;
 -- PROFILES POLICIES
 -- ============================================
 -- Users can read their own profile
+DROP POLICY IF EXISTS "Users can view own profile" ON profiles;
 CREATE POLICY "Users can view own profile"
     ON profiles FOR SELECT
     USING (auth.uid() = id);
 
 -- Users can update their own profile
+DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
 CREATE POLICY "Users can update own profile"
     ON profiles FOR UPDATE
     USING (auth.uid() = id);
 
 -- Service role can do everything (for backend)
+DROP POLICY IF EXISTS "Service role full access to profiles" ON profiles;
 CREATE POLICY "Service role full access to profiles"
     ON profiles FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
@@ -1089,6 +1132,7 @@ CREATE POLICY "Service role full access to profiles"
 -- ============================================
 -- ADMINS POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Admins can view admin table" ON admins;
 CREATE POLICY "Admins can view admin table"
     ON admins FOR SELECT
     USING (
@@ -1097,6 +1141,7 @@ CREATE POLICY "Admins can view admin table"
         )
     );
 
+DROP POLICY IF EXISTS "Super admins can manage admins" ON admins;
 CREATE POLICY "Super admins can manage admins"
     ON admins FOR ALL
     USING (
@@ -1110,19 +1155,23 @@ CREATE POLICY "Super admins can manage admins"
 -- ============================================
 -- KNOWLEDGE BASE POLICIES (Public read)
 -- ============================================
+DROP POLICY IF EXISTS "Anyone can read gov_aides" ON gov_aides;
 CREATE POLICY "Anyone can read gov_aides"
     ON gov_aides FOR SELECT
     USING (true);
 
+DROP POLICY IF EXISTS "Anyone can read procedures" ON procedures;
 CREATE POLICY "Anyone can read procedures"
     ON procedures FOR SELECT
     USING (true);
 
+DROP POLICY IF EXISTS "Anyone can read renting" ON renting;
 CREATE POLICY "Anyone can read renting"
     ON renting FOR SELECT
     USING (true);
 
 -- Admins can manage knowledge base
+DROP POLICY IF EXISTS "Admins can manage gov_aides" ON gov_aides;
 CREATE POLICY "Admins can manage gov_aides"
     ON gov_aides FOR ALL
     USING (
@@ -1131,6 +1180,7 @@ CREATE POLICY "Admins can manage gov_aides"
         )
     );
 
+DROP POLICY IF EXISTS "Admins can manage procedures" ON procedures;
 CREATE POLICY "Admins can manage procedures"
     ON procedures FOR ALL
     USING (
@@ -1139,6 +1189,7 @@ CREATE POLICY "Admins can manage procedures"
         )
     );
 
+DROP POLICY IF EXISTS "Admins can manage renting" ON renting;
 CREATE POLICY "Admins can manage renting"
     ON renting FOR ALL
     USING (
@@ -1150,10 +1201,12 @@ CREATE POLICY "Admins can manage renting"
 -- ============================================
 -- CONTENT POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Anyone can read published content" ON contents;
 CREATE POLICY "Anyone can read published content"
     ON contents FOR SELECT
     USING (is_published = true);
 
+DROP POLICY IF EXISTS "Admins can manage content" ON contents;
 CREATE POLICY "Admins can manage content"
     ON contents FOR ALL
     USING (
@@ -1165,14 +1218,17 @@ CREATE POLICY "Admins can manage content"
 -- ============================================
 -- CONTENT LIKES POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view likes" ON content_likes;
 CREATE POLICY "Users can view likes"
     ON content_likes FOR SELECT
     USING (true);
 
+DROP POLICY IF EXISTS "Users can like content" ON content_likes;
 CREATE POLICY "Users can like content"
     ON content_likes FOR INSERT
     WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can unlike their own likes" ON content_likes;
 CREATE POLICY "Users can unlike their own likes"
     ON content_likes FOR DELETE
     USING (auth.uid() = user_id);
@@ -1180,10 +1236,12 @@ CREATE POLICY "Users can unlike their own likes"
 -- ============================================
 -- AFFILIATE POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own affiliate" ON affiliates;
 CREATE POLICY "Users can view own affiliate"
     ON affiliates FOR SELECT
     USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Admins can manage affiliates" ON affiliates;
 CREATE POLICY "Admins can manage affiliates"
     ON affiliates FOR ALL
     USING (
@@ -1195,31 +1253,38 @@ CREATE POLICY "Admins can manage affiliates"
 -- ============================================
 -- STRIPE POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own stripe customer" ON stripe_customers;
 CREATE POLICY "Users can view own stripe customer"
     ON stripe_customers FOR SELECT
     USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Anyone can view products" ON stripe_products;
 CREATE POLICY "Anyone can view products"
     ON stripe_products FOR SELECT
     USING (is_active = true);
 
+DROP POLICY IF EXISTS "Users can view own subscriptions" ON stripe_subscriptions;
 CREATE POLICY "Users can view own subscriptions"
     ON stripe_subscriptions FOR SELECT
     USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Users can view own invoices" ON stripe_invoices;
 CREATE POLICY "Users can view own invoices"
     ON stripe_invoices FOR SELECT
     USING (user_id = auth.uid());
 
 -- Service role for backend operations
+DROP POLICY IF EXISTS "Service role full access to stripe_customers" ON stripe_customers;
 CREATE POLICY "Service role full access to stripe_customers"
     ON stripe_customers FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
 
+DROP POLICY IF EXISTS "Service role full access to stripe_subscriptions" ON stripe_subscriptions;
 CREATE POLICY "Service role full access to stripe_subscriptions"
     ON stripe_subscriptions FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
 
+DROP POLICY IF EXISTS "Service role full access to stripe_invoices" ON stripe_invoices;
 CREATE POLICY "Service role full access to stripe_invoices"
     ON stripe_invoices FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
@@ -1227,14 +1292,17 @@ CREATE POLICY "Service role full access to stripe_invoices"
 -- ============================================
 -- CHAT POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own conversations" ON chat_conversations;
 CREATE POLICY "Users can view own conversations"
     ON chat_conversations FOR SELECT
     USING (user_id = auth.uid() OR (user_id IS NULL AND anonymous_id IS NOT NULL));
 
+DROP POLICY IF EXISTS "Users can create conversations" ON chat_conversations;
 CREATE POLICY "Users can create conversations"
     ON chat_conversations FOR INSERT
     WITH CHECK (user_id = auth.uid() OR user_id IS NULL);
 
+DROP POLICY IF EXISTS "Users can view messages in their conversations" ON chat_messages;
 CREATE POLICY "Users can view messages in their conversations"
     ON chat_messages FOR SELECT
     USING (
@@ -1245,6 +1313,7 @@ CREATE POLICY "Users can view messages in their conversations"
         )
     );
 
+DROP POLICY IF EXISTS "Users can insert messages" ON chat_messages;
 CREATE POLICY "Users can insert messages"
     ON chat_messages FOR INSERT
     WITH CHECK (
@@ -1255,6 +1324,7 @@ CREATE POLICY "Users can insert messages"
         )
     );
 
+DROP POLICY IF EXISTS "Users can view own chat usage" ON chat_usage;
 CREATE POLICY "Users can view own chat usage"
     ON chat_usage FOR SELECT
     USING (user_id = auth.uid());
@@ -1262,14 +1332,17 @@ CREATE POLICY "Users can view own chat usage"
 -- ============================================
 -- SIMULATIONS POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own simulations" ON simulations;
 CREATE POLICY "Users can view own simulations"
     ON simulations FOR SELECT
     USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Users can create simulations" ON simulations;
 CREATE POLICY "Users can create simulations"
     ON simulations FOR INSERT
     WITH CHECK (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Service role full access to simulations" ON simulations;
 CREATE POLICY "Service role full access to simulations"
     ON simulations FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
@@ -1277,10 +1350,12 @@ CREATE POLICY "Service role full access to simulations"
 -- ============================================
 -- NOTIFICATIONS POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own notifications" ON notifications;
 CREATE POLICY "Users can view own notifications"
     ON notifications FOR SELECT
     USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Users can update own notifications" ON notifications;
 CREATE POLICY "Users can update own notifications"
     ON notifications FOR UPDATE
     USING (user_id = auth.uid());
@@ -1288,6 +1363,7 @@ CREATE POLICY "Users can update own notifications"
 -- ============================================
 -- USER FAVORITES POLICIES
 -- ============================================
+DROP POLICY IF EXISTS "Users can manage own favorites" ON user_favorites;
 CREATE POLICY "Users can manage own favorites"
     ON user_favorites FOR ALL
     USING (user_id = auth.uid());
@@ -1295,10 +1371,12 @@ CREATE POLICY "Users can manage own favorites"
 -- ============================================
 -- VIEW RECORDS POLICIES (Service role only)
 -- ============================================
+DROP POLICY IF EXISTS "Service role full access to view_records" ON view_records;
 CREATE POLICY "Service role full access to view_records"
     ON view_records FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
 
+DROP POLICY IF EXISTS "Service role full access to anonymous_visitors" ON anonymous_visitors;
 CREATE POLICY "Service role full access to anonymous_visitors"
     ON anonymous_visitors FOR ALL
     USING (auth.jwt() ->> 'role' = 'service_role');
@@ -1385,7 +1463,8 @@ VALUES
     'Votre paiement de {{amount}}€ a été envoyé!',
     'transactional',
     '["{{name}}", "{{amount}}", "{{payout_method}}"]'
-);
+)
+ON CONFLICT (template_key) DO NOTHING;
 
 -- Insert default system settings
 INSERT INTO system_settings (key, value, description)
@@ -1395,7 +1474,8 @@ VALUES
 ('basic_tier_messages', '50', 'Daily AI messages for basic tier'),
 ('premium_tier_messages', '200', 'Daily AI messages for premium tier'),
 ('default_commission_rate', '10', 'Default affiliate commission percentage'),
-('minimum_payout', '50', 'Minimum affiliate payout amount in EUR');
+('minimum_payout', '50', 'Minimum affiliate payout amount in EUR')
+ON CONFLICT (key) DO NOTHING;
 
 -- ============================================
 -- SUCCESS MESSAGE
