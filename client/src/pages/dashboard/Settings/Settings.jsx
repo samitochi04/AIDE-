@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Button, Card, Input, Badge } from '../../../components/ui';
+import { Button, Card, Input } from '../../../components/ui';
 import { useTheme } from '../../../context/ThemeContext';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useAuth } from '../../../context/AuthContext';
+import { useToast } from '../../../context/ToastContext';
+import { API_URL } from '../../../config/constants';
+import { API_ENDPOINTS } from '../../../config/api';
 import styles from './Settings.module.css';
 
 const containerVariants = {
@@ -24,36 +27,188 @@ export function Settings() {
   const { t } = useTranslation();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut, session, refreshProfile } = useAuth();
+  const toast = useToast();
 
+  // Notification preferences from user profile
   const [notifications, setNotifications] = useState({
-    email: true,
-    push: false,
-    newAides: true,
-    deadlines: true,
-    updates: false,
-    marketing: false
+    email_notifications: true,
+    new_aides_alerts: true,
+    deadline_reminders: true,
+    marketing_emails: false
   });
+  const [notificationsLoading, setNotificationsLoading] = useState(false);
 
-  const [privacy, setPrivacy] = useState({
-    showProfile: true,
-    shareData: false,
-    analytics: true
-  });
-
+  // Modals
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  
+  // Password change
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
-  const handleNotificationChange = (key) => {
-    setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
+  // Export data
+  const [exportLoading, setExportLoading] = useState(false);
+
+  // Load user notification preferences from profile on mount and when profile changes
+  useEffect(() => {
+    if (profile) {
+      // Get marketing preference from notification_preferences JSONB
+      const notifPrefs = profile.notification_preferences || {};
+      
+      setNotifications({
+        email_notifications: profile.weekly_digest_enabled ?? true,
+        new_aides_alerts: profile.new_aides_notification_enabled ?? true,
+        deadline_reminders: profile.in_app_notifications_enabled ?? true,
+        marketing_emails: notifPrefs.marketing ?? false
+      });
+    }
+  }, [profile]);
+
+  const handleNotificationChange = async (key) => {
+    const newValue = !notifications[key];
+    const updatedNotifications = { ...notifications, [key]: newValue };
+    setNotifications(updatedNotifications);
+    setNotificationsLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.PROFILE.UPDATE_NOTIFICATIONS}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify({ preferences: updatedNotifications })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update notification preferences');
+      }
+
+      // Refresh the profile to sync the updated preferences
+      await refreshProfile();
+      
+      toast.success(t('dashboard.settings.notifications.updated'));
+    } catch (error) {
+      // Revert on error
+      setNotifications(prev => ({ ...prev, [key]: !newValue }));
+      toast.error(t('common.error'));
+    } finally {
+      setNotificationsLoading(false);
+    }
   };
 
-  const handlePrivacyChange = (key) => {
-    setPrivacy(prev => ({ ...prev, [key]: !prev[key] }));
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    setPasswordError('');
+
+    // Validation
+    if (passwordData.newPassword.length < 8) {
+      setPasswordError(t('dashboard.settings.password.minLength'));
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setPasswordError(t('dashboard.settings.password.mismatch'));
+      return;
+    }
+
+    setPasswordLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.PROFILE.CHANGE_PASSWORD}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to change password');
+      }
+
+      toast.success(t('dashboard.settings.password.success'));
+      setShowPasswordModal(false);
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      setPasswordError(error.message || t('dashboard.settings.password.error'));
+    } finally {
+      setPasswordLoading(false);
+    }
   };
 
-  const handleExportData = () => {
-    // Mock data export
-    console.log('Exporting user data...');
+  const handleExportData = async () => {
+    setExportLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.PROFILE.REQUEST_EXPORT}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        }
+      });
+
+      if (!response.ok) {
+        // Handle rate limit error specifically
+        if (response.status === 429) {
+          toast.warning(t('dashboard.settings.data.exportRateLimit'));
+          return;
+        }
+        throw new Error('Failed to request data export');
+      }
+
+      toast.success(t('dashboard.settings.data.exportRequested'));
+    } catch (error) {
+      toast.error(t('common.error'));
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== 'DELETE') {
+      toast.warning(t('dashboard.settings.deleteModal.typeDelete'));
+      return;
+    }
+
+    setDeleteLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.PROFILE.DELETE}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete account');
+      }
+
+      toast.success(t('dashboard.settings.deleteModal.success'));
+      // Sign out and redirect
+      await signOut();
+    } catch (error) {
+      toast.error(t('common.error'));
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   return (
@@ -160,8 +315,9 @@ export function Settings() {
                   </span>
                 </div>
                 <button
-                  className={`${styles.toggle} ${notifications.email ? styles.active : ''}`}
-                  onClick={() => handleNotificationChange('email')}
+                  className={`${styles.toggle} ${notifications.email_notifications ? styles.active : ''}`}
+                  onClick={() => handleNotificationChange('email_notifications')}
+                  disabled={notificationsLoading}
                 >
                   <span className={styles.toggleThumb} />
                 </button>
@@ -177,8 +333,9 @@ export function Settings() {
                   </span>
                 </div>
                 <button
-                  className={`${styles.toggle} ${notifications.newAides ? styles.active : ''}`}
-                  onClick={() => handleNotificationChange('newAides')}
+                  className={`${styles.toggle} ${notifications.new_aides_alerts ? styles.active : ''}`}
+                  onClick={() => handleNotificationChange('new_aides_alerts')}
+                  disabled={notificationsLoading}
                 >
                   <span className={styles.toggleThumb} />
                 </button>
@@ -194,8 +351,9 @@ export function Settings() {
                   </span>
                 </div>
                 <button
-                  className={`${styles.toggle} ${notifications.deadlines ? styles.active : ''}`}
-                  onClick={() => handleNotificationChange('deadlines')}
+                  className={`${styles.toggle} ${notifications.deadline_reminders ? styles.active : ''}`}
+                  onClick={() => handleNotificationChange('deadline_reminders')}
+                  disabled={notificationsLoading}
                 >
                   <span className={styles.toggleThumb} />
                 </button>
@@ -211,8 +369,9 @@ export function Settings() {
                   </span>
                 </div>
                 <button
-                  className={`${styles.toggle} ${notifications.marketing ? styles.active : ''}`}
-                  onClick={() => handleNotificationChange('marketing')}
+                  className={`${styles.toggle} ${notifications.marketing_emails ? styles.active : ''}`}
+                  onClick={() => handleNotificationChange('marketing_emails')}
+                  disabled={notificationsLoading}
                 >
                   <span className={styles.toggleThumb} />
                 </button>
@@ -228,34 +387,11 @@ export function Settings() {
               <i className="ri-shield-line" />
               <h2>{t('dashboard.settings.privacy.title')}</h2>
             </div>
-            
-            <div className={styles.toggleGroup}>
-              <div className={styles.toggleItem}>
-                <div className={styles.toggleInfo}>
-                  <span className={styles.toggleLabel}>
-                    {t('dashboard.settings.privacy.analytics')}
-                  </span>
-                  <span className={styles.toggleDesc}>
-                    {t('dashboard.settings.privacy.analyticsDesc')}
-                  </span>
-                </div>
-                <button
-                  className={`${styles.toggle} ${privacy.analytics ? styles.active : ''}`}
-                  onClick={() => handlePrivacyChange('analytics')}
-                >
-                  <span className={styles.toggleThumb} />
-                </button>
-              </div>
-            </div>
 
             <div className={styles.securityActions}>
-              <Button variant="outline" onClick={() => {}}>
+              <Button variant="outline" onClick={() => setShowPasswordModal(true)}>
                 <i className="ri-lock-password-line" />
                 {t('dashboard.settings.privacy.changePassword')}
-              </Button>
-              <Button variant="outline" onClick={() => {}}>
-                <i className="ri-shield-keyhole-line" />
-                {t('dashboard.settings.privacy.twoFactor')}
               </Button>
             </div>
           </Card>
@@ -272,18 +408,27 @@ export function Settings() {
             <div className={styles.dataActions}>
               <div className={styles.dataItem}>
                 <div className={styles.dataInfo}>
-                  <i className="ri-download-2-line" />
+                  <i className="ri-file-pdf-line" />
                   <div>
                     <span className={styles.dataLabel}>
                       {t('dashboard.settings.data.export')}
                     </span>
                     <span className={styles.dataDesc}>
-                      {t('dashboard.settings.data.exportDesc')}
+                      {t('dashboard.settings.data.exportDescPdf')}
                     </span>
                   </div>
                 </div>
-                <Button variant="outline" size="sm" onClick={handleExportData}>
-                  {t('dashboard.settings.data.download')}
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleExportData}
+                  disabled={exportLoading}
+                >
+                  {exportLoading ? (
+                    <i className="ri-loader-4-line ri-spin" />
+                  ) : (
+                    t('dashboard.settings.data.requestExport')
+                  )}
                 </Button>
               </div>
               
@@ -326,14 +471,93 @@ export function Settings() {
               <h3>{t('dashboard.settings.deleteModal.title')}</h3>
             </div>
             <p>{t('dashboard.settings.deleteModal.description')}</p>
+            <p className={styles.deleteWarning}>
+              {t('dashboard.settings.deleteModal.typeConfirm')}
+            </p>
+            <Input
+              type="text"
+              value={deleteConfirmText}
+              onChange={(e) => setDeleteConfirmText(e.target.value)}
+              placeholder="DELETE"
+              className={styles.deleteInput}
+            />
             <div className={styles.modalActions}>
-              <Button variant="ghost" onClick={() => setShowDeleteModal(false)}>
+              <Button variant="ghost" onClick={() => {
+                setShowDeleteModal(false);
+                setDeleteConfirmText('');
+              }}>
                 {t('common.cancel')}
               </Button>
-              <Button variant="danger">
-                {t('dashboard.settings.deleteModal.confirm')}
+              <Button 
+                variant="danger" 
+                onClick={handleDeleteAccount}
+                disabled={deleteLoading || deleteConfirmText !== 'DELETE'}
+              >
+                {deleteLoading ? (
+                  <i className="ri-loader-4-line ri-spin" />
+                ) : (
+                  t('dashboard.settings.deleteModal.confirm')
+                )}
               </Button>
             </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Change Password Modal */}
+      {showPasswordModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPasswordModal(false)}>
+          <Card className={styles.modal} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <i className="ri-lock-password-line" />
+              <h3>{t('dashboard.settings.password.title')}</h3>
+            </div>
+            <form onSubmit={handlePasswordChange} className={styles.passwordForm}>
+              <Input
+                type="password"
+                label={t('dashboard.settings.password.current')}
+                value={passwordData.currentPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
+                required
+              />
+              <Input
+                type="password"
+                label={t('dashboard.settings.password.new')}
+                value={passwordData.newPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                required
+              />
+              <Input
+                type="password"
+                label={t('dashboard.settings.password.confirm')}
+                value={passwordData.confirmPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                required
+              />
+              {passwordError && (
+                <p className={styles.errorText}>{passwordError}</p>
+              )}
+              <div className={styles.modalActions}>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  onClick={() => {
+                    setShowPasswordModal(false);
+                    setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                    setPasswordError('');
+                  }}
+                >
+                  {t('common.cancel')}
+                </Button>
+                <Button type="submit" disabled={passwordLoading}>
+                  {passwordLoading ? (
+                    <i className="ri-loader-4-line ri-spin" />
+                  ) : (
+                    t('dashboard.settings.password.submit')
+                  )}
+                </Button>
+              </div>
+            </form>
           </Card>
         </div>
       )}

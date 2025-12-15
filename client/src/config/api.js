@@ -79,13 +79,97 @@ export const API_ENDPOINTS = {
     SEND: '/api/v1/contact',
   },
 
+  // Content (Public - Blog, Tutorials, Guides)
+  CONTENT: {
+    LIST: '/api/v1/content',
+    FEATURED: '/api/v1/content/featured',
+    BY_TYPE: (type) => `/api/v1/content/types/${type}`,
+    BY_SLUG: (slug) => `/api/v1/content/slug/${slug}`,
+    TRACK_VIEW: (id) => `/api/v1/content/${id}/view`,
+    LIKE: (id) => `/api/v1/content/${id}/like`,
+  },
+
   // Profile
   PROFILE: {
     GET: '/api/v1/profile',
     UPDATE: '/api/v1/profile',
+    DELETE: '/api/v1/profile',
     STATS: '/api/v1/profile/stats',
     UPLOAD_AVATAR: '/api/v1/profile/avatar',
     DELETE_AVATAR: '/api/v1/profile/avatar',
+    UPDATE_NOTIFICATIONS: '/api/v1/profile/notifications',
+    CHANGE_PASSWORD: '/api/v1/profile/change-password',
+    REQUEST_EXPORT: '/api/v1/profile/export',
+    GET_EXPORT_STATUS: (exportId) => `/api/v1/profile/export/${exportId}`,
+    GET_EXPORTS: '/api/v1/profile/exports',
+    GET_SESSIONS: '/api/v1/profile/sessions',
+    SIGN_OUT_ALL: '/api/v1/profile/sign-out-all',
+  },
+
+  // Admin
+  ADMIN: {
+    // Dashboard & Analytics
+    DASHBOARD: '/api/v1/admin/dashboard',
+    ANALYTICS: '/api/v1/admin/analytics',
+    ACTIVITY_LOGS: '/api/v1/admin/activity-logs',
+
+    // Users
+    USERS: '/api/v1/admin/users',
+    USER: (id) => `/api/v1/admin/users/${id}`,
+    USER_ACTIVITY: (id) => `/api/v1/admin/users/${id}/activity`,
+
+    // Subscriptions
+    SUBSCRIPTIONS: '/api/v1/admin/subscriptions',
+    GRANT_SUBSCRIPTION: '/api/v1/admin/subscriptions/grant',
+    REVOKE_SUBSCRIPTION: '/api/v1/admin/subscriptions/revoke',
+
+    // Aides (legacy)
+    AIDES: '/api/v1/admin/aides',
+    AIDE: (id) => `/api/v1/admin/aides/${id}`,
+
+    // Gov Aides
+    GOV_AIDES: '/api/v1/admin/gov-aides',
+    GOV_AIDE: (id) => `/api/v1/admin/gov-aides/${id}`,
+
+    // Procedures
+    PROCEDURES: '/api/v1/admin/procedures',
+    PROCEDURE: (id) => `/api/v1/admin/procedures/${id}`,
+
+    // Renting
+    RENTING: '/api/v1/admin/renting',
+    RENTING_PLATFORM: (id) => `/api/v1/admin/renting/${id}`,
+
+    // Content (Blog & Tutorials)
+    CONTENTS: '/api/v1/admin/contents',
+    CONTENT: (id) => `/api/v1/admin/contents/${id}`,
+
+    // Admins
+    ADMINS: '/api/v1/admin/admins',
+    ADMIN_USER: (id) => `/api/v1/admin/admins/${id}`,
+
+    // Affiliates
+    AFFILIATES: '/api/v1/admin/affiliates',
+    AFFILIATE: (id) => `/api/v1/admin/affiliates/${id}`,
+    AFFILIATE_STATS: (id) => `/api/v1/admin/affiliates/${id}/stats`,
+
+    // Emails
+    EMAIL_STATS: '/api/v1/admin/emails/stats',
+    EMAIL_RECENT: '/api/v1/admin/emails/recent',
+    EMAIL_TEMPLATES: '/api/v1/admin/emails/templates',
+    EMAIL_TEMPLATE: (key) => `/api/v1/admin/emails/templates/${key}`,
+
+    // Bulk Email
+    BULK_EMAILS: '/api/v1/admin/bulk-emails',
+    BULK_EMAIL_RECIPIENTS: '/api/v1/admin/bulk-emails/recipients',
+
+    // Settings
+    SETTINGS: '/api/v1/admin/settings',
+    SETTING: (key) => `/api/v1/admin/settings/${key}`,
+
+    // System
+    LOGS: '/api/v1/admin/logs',
+    CLEAR_CACHE: '/api/v1/admin/cache/clear',
+    PLATFORM_UPDATE: '/api/v1/admin/notifications/platform-update',
   },
 }
 

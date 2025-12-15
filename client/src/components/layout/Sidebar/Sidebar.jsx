@@ -28,6 +28,11 @@ const navItems = [
     path: ROUTES.PROCEDURES
   },
   {
+    key: 'tutorials',
+    icon: 'ri-play-circle-line',
+    path: ROUTES.TUTORIALS
+  },
+  {
     key: 'chat',
     icon: 'ri-chat-3-line',
     path: ROUTES.CHAT

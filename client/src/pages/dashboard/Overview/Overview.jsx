@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../../context/AuthContext';
 import { Card, Button, Loading } from '../../../components/ui';
-import { ROUTES } from '../../../config/routes';
+import { ROUTES, generatePath } from '../../../config/routes';
 import { api, API_ENDPOINTS } from '../../../config/api';
 import styles from './Overview.module.css';
 

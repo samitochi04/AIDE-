@@ -164,14 +164,16 @@ export const schemas = {
 
   // Admin - create admin
   createAdmin: Joi.object({
-    userId: Joi.string().uuid().required(),
-    role: Joi.string().valid('moderator', 'admin', 'super_admin').required(),
+    email: Joi.string().email().required(),
+    role: Joi.string().valid('moderator', 'admin', 'super_admin', 'support').required(),
     permissions: Joi.object({
       manage_users: Joi.boolean(),
       manage_content: Joi.boolean(),
       manage_subscriptions: Joi.boolean(),
       view_analytics: Joi.boolean(),
       manage_affiliates: Joi.boolean(),
+      send_bulk_emails: Joi.boolean(),
+      manage_settings: Joi.boolean(),
     }),
   }),
 

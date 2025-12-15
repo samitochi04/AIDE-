@@ -303,7 +303,7 @@ Admin-posted educational content.
 | `id` | UUID | Primary key |
 | `title` | TEXT | Content title |
 | `description` | TEXT | Description |
-| `content_type` | content_type | `video`, `image`, `article`, `guide`, `infographic` |
+| `content_type` | content_type | `video`, `image`, `article`, `tutorial`, `guide`, `infographic` |
 | `media_url` | TEXT | Media file URL |
 | `thumbnail_url` | TEXT | Thumbnail URL |
 | `duration_seconds` | INTEGER | Video duration |

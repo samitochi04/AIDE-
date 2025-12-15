@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../../context/AuthContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { useLanguage } from '../../../context/LanguageContext';
+import { useNotifications } from '../../../context/NotificationContext';
 import { Sidebar } from '../Sidebar';
 import { Button, Loading, Modal } from '../../ui';
 import { ROUTES } from '../../../config/routes';
@@ -16,6 +17,15 @@ export function DashboardLayout() {
   const { user, loading, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { language, toggleLanguage } = useLanguage();
+  const { 
+    notifications, 
+    unreadCount, 
+    markAsRead, 
+    markAllAsRead,
+    showNotificationPopup,
+    latestNotification,
+    dismissPopup 
+  } = useNotifications();
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -25,21 +35,13 @@ export function DashboardLayout() {
   const [showNotifications, setShowNotifications] = useState(false);
   const searchInputRef = useRef(null);
 
-  // Mock notifications - replace with real data
-  const notifications = [
-    { id: 1, title: 'Nouvelle aide disponible', message: 'Vous êtes éligible à la Prime d\'activité', time: '2h', read: false },
-    { id: 2, title: 'Document requis', message: 'Veuillez soumettre votre justificatif de domicile', time: '1j', read: false },
-    { id: 3, title: 'Démarche complétée', message: 'Votre demande APL a été validée', time: '3j', read: true },
-  ];
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-
   // Search items for command palette
   const searchItems = [
     { id: 'overview', label: t('dashboard.sidebar.overview'), icon: 'ri-dashboard-line', route: ROUTES.DASHBOARD },
     { id: 'aides', label: t('dashboard.sidebar.aides'), icon: 'ri-hand-coin-line', route: ROUTES.AIDES },
     { id: 'procedures', label: t('dashboard.sidebar.procedures'), icon: 'ri-file-list-3-line', route: ROUTES.PROCEDURES },
     { id: 'housing', label: t('dashboard.sidebar.housing'), icon: 'ri-home-line', route: ROUTES.HOUSING },
+    { id: 'tutorials', label: t('dashboard.sidebar.tutorials'), icon: 'ri-play-circle-line', route: ROUTES.TUTORIALS },
     { id: 'chat', label: t('dashboard.sidebar.chat'), icon: 'ri-chat-3-line', route: ROUTES.CHAT },
     { id: 'profile', label: t('dashboard.sidebar.profile'), icon: 'ri-user-line', route: ROUTES.PROFILE },
     { id: 'settings', label: t('dashboard.sidebar.settings'), icon: 'ri-settings-3-line', route: ROUTES.SETTINGS },
@@ -178,7 +180,7 @@ export function DashboardLayout() {
                   >
                     <div className={styles.notificationHeader}>
                       <h3>{t('dashboard.notifications')}</h3>
-                      <button className={styles.markAllRead}>
+                      <button className={styles.markAllRead} onClick={markAllAsRead}>
                         {t('dashboard.markAllRead')}
                       </button>
                     </div>
@@ -193,6 +195,7 @@ export function DashboardLayout() {
                           <div 
                             key={notification.id} 
                             className={`${styles.notificationItem} ${!notification.read ? styles.unread : ''}`}
+                            onClick={() => markAsRead(notification.id)}
                           >
                             <div className={styles.notificationDot} />
                             <div className={styles.notificationContent}>
@@ -352,6 +355,30 @@ export function DashboardLayout() {
                 )}
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Notification Popup Toast */}
+      <AnimatePresence>
+        {showNotificationPopup && latestNotification && (
+          <motion.div
+            className={styles.notificationPopup}
+            initial={{ opacity: 0, y: -100, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: -100, x: '-50%' }}
+            onClick={dismissPopup}
+          >
+            <div className={styles.popupIcon}>
+              <i className="ri-notification-3-fill" />
+            </div>
+            <div className={styles.popupContent}>
+              <span className={styles.popupTitle}>{latestNotification.title}</span>
+              <p className={styles.popupMessage}>{latestNotification.message}</p>
+            </div>
+            <button className={styles.popupClose} onClick={dismissPopup}>
+              <i className="ri-close-line" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

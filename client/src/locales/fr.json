@@ -261,6 +261,7 @@
       "aides": "Mes Aides",
       "housing": "Logement",
       "procedures": "Démarches",
+      "tutorials": "Tutoriels",
       "chat": "Assistant IA",
       "simulation": "Simulation",
       "profile": "Profil",
@@ -288,6 +289,21 @@
       "runFirstSimulation": "Lancer votre première simulation",
       "noProceduresYet": "Aucune démarche en cours",
       "exploreProcedures": "Explorer les démarches"
+    },
+    "tutorials": {
+      "title": "Tutoriels & Ressources",
+      "subtitle": "Regardez des tutoriels et apprenez à tirer le meilleur parti d'AIDE+",
+      "searchPlaceholder": "Rechercher des tutoriels...",
+      "noContent": "Aucun contenu trouvé",
+      "noContentDesc": "Essayez d'ajuster vos filtres ou revenez plus tard.",
+      "views": "vues",
+      "types": {
+        "all": "Tous",
+        "video": "Vidéo",
+        "guide": "Guide",
+        "article": "Article",
+        "infographic": "Infographie"
+      }
     },
     "status": {
       "eligible": "Éligible",
@@ -610,20 +626,35 @@
         "deadlines": "Rappels de dates limites",
         "deadlinesDesc": "Rappels pour les dates limites de demandes",
         "marketing": "Mises à jour du produit",
-        "marketingDesc": "Actualités et annonces de fonctionnalités"
+        "marketingDesc": "Actualités et annonces de fonctionnalités",
+        "updated": "Préférences de notification mises à jour"
       },
       "privacy": {
         "title": "Confidentialité & Sécurité",
         "analytics": "Analyses d'utilisation",
         "analyticsDesc": "Aidez-nous à améliorer AIDE+ avec des données d'utilisation anonymes",
-        "changePassword": "Changer le Mot de Passe",
-        "twoFactor": "Authentification à Deux Facteurs"
+        "changePassword": "Changer le Mot de Passe"
+      },
+      "password": {
+        "title": "Changer le Mot de Passe",
+        "current": "Mot de passe actuel",
+        "new": "Nouveau mot de passe",
+        "confirm": "Confirmer le nouveau mot de passe",
+        "submit": "Mettre à jour le mot de passe",
+        "success": "Mot de passe changé avec succès",
+        "error": "Échec du changement de mot de passe",
+        "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+        "mismatch": "Les mots de passe ne correspondent pas"
       },
       "data": {
         "title": "Données & Compte",
         "export": "Exporter vos données",
         "exportDesc": "Téléchargez toutes vos données au format JSON",
+        "exportDescPdf": "Demandez un export PDF de toutes vos données. Vous le recevrez par e-mail. (1 demande par jour)",
         "download": "Télécharger",
+        "requestExport": "Demander l'export",
+        "exportRequested": "Export demandé ! Vous recevrez vos données par e-mail sous peu.",
+        "exportRateLimit": "Vous ne pouvez demander qu'un export par jour. Veuillez réessayer demain.",
         "signOut": "Déconnexion",
         "signOutDesc": "Se déconnecter de votre compte sur cet appareil",
         "dangerZone": "Zone Dangereuse",
@@ -633,7 +664,10 @@
       "deleteModal": {
         "title": "Supprimer le Compte ?",
         "description": "Cela supprimera définitivement votre compte et toutes vos données. Cette action est irréversible.",
-        "confirm": "Oui, Supprimer Mon Compte"
+        "typeConfirm": "Tapez DELETE pour confirmer :",
+        "typeDelete": "Veuillez taper DELETE pour confirmer",
+        "confirm": "Oui, Supprimer Mon Compte",
+        "success": "Votre compte a été supprimé"
       }
     }
   },
@@ -885,5 +919,167 @@
         "excerpt": "Comprendre l'Allocation de Solidarité aux Personnes Âgées et comment en faire la demande si vous êtes éligible."
       }
     }
+  },
+
+  "admin": {
+    "login": {
+      "title": "Connexion Admin",
+      "subtitle": "Connectez-vous pour accéder au tableau de bord",
+      "email": "Email Admin",
+      "emailPlaceholder": "admin@exemple.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "signIn": "Se connecter",
+      "signingIn": "Connexion...",
+      "error": "Identifiants invalides ou permissions insuffisantes"
+    },
+    "layout": {
+      "admin": "Admin",
+      "adminPanel": "Panneau Admin",
+      "signOut": "Déconnexion"
+    },
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "users": "Utilisateurs",
+      "affiliates": "Affiliés",
+      "govAides": "Aides Gov",
+      "procedures": "Démarches",
+      "renting": "Location",
+      "blog": "Blog & Tutoriels",
+      "content": "Contenu",
+      "emails": "Emails",
+      "analytics": "Analytiques",
+      "admins": "Admins",
+      "settings": "Paramètres",
+      "sections": {
+        "users": "Gestion Utilisateurs",
+        "content": "Gestion Contenu",
+        "communication": "Communication",
+        "system": "Système"
+      }
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "subtitle": "Vue d'ensemble du panneau admin",
+      "totalUsers": "Total Utilisateurs",
+      "activeSubscriptions": "Abonnements Actifs",
+      "monthlyRevenue": "Revenu Mensuel",
+      "newSignups": "Nouvelles Inscriptions",
+      "recentSignups": "Inscriptions Récentes",
+      "quickActions": "Actions Rapides",
+      "noRecentSignups": "Aucune inscription récente",
+      "viewAllUsers": "Voir Tous les Utilisateurs",
+      "sendBulkEmail": "Envoyer Email Groupé",
+      "manageContent": "Gérer le Contenu",
+      "viewAnalytics": "Voir les Analytiques"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "subtitle": "Gérer les comptes et abonnements",
+      "addUser": "Ajouter Utilisateur",
+      "searchPlaceholder": "Rechercher par nom ou email...",
+      "allStatus": "Tous les Statuts",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "suspended": "Suspendu",
+      "allSubscriptions": "Tous les Abonnements",
+      "free": "Gratuit",
+      "premium": "Premium",
+      "premiumPlus": "Premium+",
+      "user": "Utilisateur",
+      "joined": "Inscrit le",
+      "subscription": "Abonnement",
+      "status": "Statut",
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "noUsers": "Aucun utilisateur trouvé",
+      "userDetails": "Détails Utilisateur",
+      "editUser": "Modifier Utilisateur",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+      "deleteWarning": "Cette action est irréversible.",
+      "email": "Email",
+      "fullName": "Nom Complet",
+      "createdAt": "Créé le",
+      "lastLogin": "Dernière Connexion",
+      "nationality": "Nationalité",
+      "residenceStatus": "Statut de Résidence",
+      "professionalStatus": "Statut Professionnel",
+      "emailPreferences": "Préférences Email",
+      "marketing": "Marketing",
+      "updates": "Mises à jour",
+      "newsletter": "Newsletter",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
+    },
+    "affiliates": {
+      "title": "Affiliés",
+      "subtitle": "Gérer les comptes affiliés et commissions",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des affiliés avec suivi des commissions, codes de parrainage et gestion des paiements."
+    },
+    "govAides": {
+      "title": "Aides Gouvernementales",
+      "subtitle": "Gérer les programmes d'aide gouvernementale",
+      "comingSoon": "Bientôt Disponible",
+      "description": "CRUD complet pour les programmes d'aide avec critères d'éligibilité et procédures de demande."
+    },
+    "procedures": {
+      "title": "Démarches",
+      "subtitle": "Gérer les démarches administratives",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des démarches avec guides étape par étape, documents requis et contacts des organismes."
+    },
+    "renting": {
+      "title": "Location",
+      "subtitle": "Gérer les guides et ressources de location",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Guides d'aide à la location, conseils de recherche de logement et informations sur les droits des locataires."
+    },
+    "content": {
+      "title": "Contenu",
+      "subtitle": "Gérer les articles et tutoriels",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Système de gestion de contenu pour articles de blog, optimisation SEO et tutoriels multimédia."
+    },
+    "emails": {
+      "title": "Campagnes Email",
+      "subtitle": "Envoyer des emails groupés",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des campagnes email avec segmentation utilisateurs, modèles et suivi de livraison."
+    },
+    "analytics": {
+      "title": "Analytiques",
+      "subtitle": "Voir les métriques de l'application",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Tableau de bord analytique détaillé avec graphiques, métriques utilisateurs, données d'abonnement et tendances."
+    },
+    "admins": {
+      "title": "Admins",
+      "subtitle": "Gérer les comptes admin et permissions",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des utilisateurs admin, attribution des rôles et configuration des permissions."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Configurer les paramètres du panneau admin",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Configuration du panneau admin, paramètres système et gestion des préférences."
+    },
+    "common": {
+      "loading": "Chargement...",
+      "error": "Une erreur s'est produite",
+      "retry": "Réessayer",
+      "noData": "Aucune donnée disponible",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "page": "Page",
+      "of": "sur",
+      "showing": "Affichage de",
+      "to": "à",
+      "entries": "entrées"
+    }
   }
 }
+

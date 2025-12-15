@@ -4,7 +4,9 @@ import {
   affiliateReferralRepository,
   affiliateEarningRepository,
   affiliatePayoutRepository,
+  userRepository,
 } from '../repositories/index.js';
+import { emailService } from './email.service.js';
 import logger from '../utils/logger.js';
 import { AppError, NotFoundError } from '../utils/errors.js';
 import { generateToken } from '../utils/helpers.js';
@@ -257,6 +259,15 @@ class AffiliateService {
         status: 'requested',
       });
 
+      // Send payout pending email to affiliate
+      const user = await userRepository.findById(userId);
+      if (user?.email) {
+        await emailService.sendAffiliatePayoutPending(user.email, {
+          amount: pending,
+          requestDate: new Date().toLocaleDateString('fr-FR'),
+        }).catch(err => logger.error('Failed to send payout pending email', { error: err.message }));
+      }
+
       logger.info('Payout requested', { affiliateId: affiliate.id, amount: pending });
       return payout;
     } catch (error) {
@@ -329,8 +340,24 @@ class AffiliateService {
    */
   async updateAffiliate(affiliateId, updates) {
     try {
+      // Get affiliate before update to check status change
+      const affiliateBefore = await affiliateRepository.findById(affiliateId);
+      
       await affiliateRepository.update(affiliateId, updates);
       logger.info('Affiliate updated', { affiliateId, updates });
+
+      // Send welcome email if affiliate was just approved
+      if (updates.status === 'approved' && affiliateBefore?.status !== 'approved') {
+        const user = await userRepository.findById(affiliateBefore.user_id);
+        if (user?.email) {
+          const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.fr';
+          await emailService.sendAffiliateWelcome(user.email, {
+            affiliateLink: `${baseUrl}/?ref=${affiliateBefore.referral_code}`,
+            commissionRate: (affiliateBefore.commission_rate * 100).toFixed(0),
+          }).catch(err => logger.error('Failed to send affiliate welcome email', { error: err.message }));
+        }
+      }
+
       return { success: true };
     } catch (error) {
       logger.error('Failed to update affiliate', { affiliateId, error: error.message });

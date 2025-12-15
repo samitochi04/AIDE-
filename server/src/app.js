@@ -6,6 +6,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { mountRoutes } from './routes/index.js';
 import logger from './utils/logger.js';
+import { schedulerService } from './services/scheduler.service.js';
 
 const app = express();
 
@@ -71,6 +72,14 @@ app.get('/health', (req, res) => {
 // API Routes
 // ===========================================
 mountRoutes(app);
+
+// ===========================================
+// Start Scheduler Service (for email reminders)
+// ===========================================
+if (process.env.NODE_ENV === 'production') {
+  schedulerService.start();
+  logger.info('Scheduler service started for production');
+}
 
 // ===========================================
 // Error Handling

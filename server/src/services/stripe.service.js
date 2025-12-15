@@ -299,14 +299,26 @@ class StripeService {
     // Send confirmation email for new active subscriptions
     if (subscription.status === 'active') {
       const profile = await userRepository.findById(userId);
+      const planName = tier?.charAt(0).toUpperCase() + tier?.slice(1) || 'Basic';
+      const price = subscription.items.data[0]?.price.unit_amount / 100;
+      const nextBillingDate = new Date(subscription.current_period_end * 1000).toLocaleDateString('fr-FR');
 
       if (profile?.email) {
-        await emailService.sendSubscriptionConfirmation(profile.email, {
-          planName: tier?.charAt(0).toUpperCase() + tier?.slice(1),
-          price: subscription.items.data[0]?.price.unit_amount / 100,
-          nextBillingDate: new Date(subscription.current_period_end * 1000).toLocaleDateString('fr-FR'),
+        // Send subscription welcome email to user
+        await emailService.sendSubscriptionWelcome(profile.email, {
+          planName,
+          price,
+          nextBillingDate,
           features: SUBSCRIPTION_TIERS[tier]?.features || [],
-        }).catch(err => logger.error('Failed to send subscription email', { error: err.message }));
+        }).catch(err => logger.error('Failed to send subscription welcome email', { error: err.message }));
+
+        // Send admin notification for new subscription
+        await emailService.sendAdminNewSubscription({
+          userName: profile.full_name || 'Utilisateur',
+          userEmail: profile.email,
+          planName,
+          price,
+        }).catch(err => logger.error('Failed to send admin subscription notification', { error: err.message }));
       }
     }
   }
@@ -328,6 +340,15 @@ class StripeService {
     if (sub?.user_id) {
       await userRepository.updateSubscriptionTier(sub.user_id, 'free');
       logger.info('Subscription deleted, user reset to free tier', { userId: sub.user_id });
+
+      // Send cancellation email
+      const profile = await userRepository.findById(sub.user_id);
+      if (profile?.email) {
+        await emailService.sendSubscriptionCancelled(profile.email, {
+          planName: sub.tier?.charAt(0).toUpperCase() + sub.tier?.slice(1) || 'Basic',
+          endDate: new Date().toLocaleDateString('fr-FR'),
+        }).catch(err => logger.error('Failed to send cancellation email', { error: err.message }));
+      }
     }
   }
 
@@ -370,7 +391,24 @@ class StripeService {
       status: 'failed',
     });
 
-    // TODO: Send payment failed notification email
+    // Send payment failed notification email
+    if (invoice.subscription) {
+      const sub = await subscriptionRepository.findByStripeSubscriptionId(invoice.subscription);
+      if (sub?.user_id) {
+        const profile = await userRepository.findById(sub.user_id);
+        if (profile?.email) {
+          const retryDate = invoice.next_payment_attempt 
+            ? new Date(invoice.next_payment_attempt * 1000).toLocaleDateString('fr-FR')
+            : 'Dans 3 jours';
+          
+          await emailService.sendPaymentFailed(profile.email, {
+            planName: sub.tier?.charAt(0).toUpperCase() + sub.tier?.slice(1) || 'Basic',
+            reason: 'Paiement refusé',
+            retryDate,
+          }).catch(err => logger.error('Failed to send payment failed email', { error: err.message }));
+        }
+      }
+    }
   }
 }
 

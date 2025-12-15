@@ -261,6 +261,7 @@
       "aides": "My Benefits",
       "housing": "Housing",
       "procedures": "Procedures",
+      "tutorials": "Tutorials",
       "chat": "AI Assistant",
       "simulation": "Simulation",
       "profile": "Profile",
@@ -288,6 +289,21 @@
       "runFirstSimulation": "Run your first simulation",
       "noProceduresYet": "No procedures started yet",
       "exploreProcedures": "Explore procedures"
+    },
+    "tutorials": {
+      "title": "Tutorials & Resources",
+      "subtitle": "Watch tutorials and learn how to make the most of AIDE+",
+      "searchPlaceholder": "Search tutorials...",
+      "noContent": "No content found",
+      "noContentDesc": "Try adjusting your filters or check back later.",
+      "views": "views",
+      "types": {
+        "all": "All",
+        "video": "Video",
+        "guide": "Guide",
+        "article": "Article",
+        "infographic": "Infographic"
+      }
     },
     "status": {
       "eligible": "Eligible",
@@ -610,20 +626,35 @@
         "deadlines": "Deadline reminders",
         "deadlinesDesc": "Reminders for application deadlines",
         "marketing": "Product updates",
-        "marketingDesc": "News and feature announcements"
+        "marketingDesc": "News and feature announcements",
+        "updated": "Notification preferences updated"
       },
       "privacy": {
         "title": "Privacy & Security",
         "analytics": "Usage analytics",
         "analyticsDesc": "Help us improve AIDE+ with anonymous usage data",
-        "changePassword": "Change Password",
-        "twoFactor": "Two-Factor Auth"
+        "changePassword": "Change Password"
+      },
+      "password": {
+        "title": "Change Password",
+        "current": "Current Password",
+        "new": "New Password",
+        "confirm": "Confirm New Password",
+        "submit": "Update Password",
+        "success": "Password changed successfully",
+        "error": "Failed to change password",
+        "minLength": "Password must be at least 8 characters",
+        "mismatch": "Passwords do not match"
       },
       "data": {
         "title": "Data & Account",
         "export": "Export your data",
         "exportDesc": "Download all your data in JSON format",
+        "exportDescPdf": "Request a PDF export of all your data. You'll receive it by email. (1 request per day)",
         "download": "Download",
+        "requestExport": "Request Export",
+        "exportRequested": "Export requested! You'll receive your data by email shortly.",
+        "exportRateLimit": "You can only request one export per day. Please try again tomorrow.",
         "signOut": "Sign out",
         "signOutDesc": "Sign out of your account on this device",
         "dangerZone": "Danger Zone",
@@ -633,7 +664,10 @@
       "deleteModal": {
         "title": "Delete Account?",
         "description": "This will permanently delete your account and all your data. This action cannot be undone.",
-        "confirm": "Yes, Delete My Account"
+        "typeConfirm": "Type DELETE to confirm:",
+        "typeDelete": "Please type DELETE to confirm",
+        "confirm": "Yes, Delete My Account",
+        "success": "Your account has been deleted"
       }
     }
   },
@@ -885,5 +919,167 @@
         "excerpt": "Understanding the Allocation de Solidarité aux Personnes Âgées and how to apply if you're eligible."
       }
     }
+  },
+
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "subtitle": "Sign in to access the admin dashboard",
+      "email": "Admin Email",
+      "emailPlaceholder": "admin@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signIn": "Sign In",
+      "signingIn": "Signing in...",
+      "error": "Invalid credentials or insufficient permissions"
+    },
+    "layout": {
+      "admin": "Admin",
+      "adminPanel": "Admin Panel",
+      "signOut": "Sign Out"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "affiliates": "Affiliates",
+      "govAides": "Gov Aides",
+      "procedures": "Procedures",
+      "renting": "Renting",
+      "blog": "Blog & Tutorials",
+      "content": "Content",
+      "emails": "Emails",
+      "analytics": "Analytics",
+      "admins": "Admins",
+      "settings": "Settings",
+      "sections": {
+        "users": "User Management",
+        "content": "Content Management",
+        "communication": "Communication",
+        "system": "System"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your admin panel",
+      "totalUsers": "Total Users",
+      "activeSubscriptions": "Active Subscriptions",
+      "monthlyRevenue": "Monthly Revenue",
+      "newSignups": "New Signups",
+      "recentSignups": "Recent Signups",
+      "quickActions": "Quick Actions",
+      "noRecentSignups": "No recent signups",
+      "viewAllUsers": "View All Users",
+      "sendBulkEmail": "Send Bulk Email",
+      "manageContent": "Manage Content",
+      "viewAnalytics": "View Analytics"
+    },
+    "users": {
+      "title": "Users",
+      "subtitle": "Manage user accounts and subscriptions",
+      "addUser": "Add User",
+      "searchPlaceholder": "Search by name or email...",
+      "allStatus": "All Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "suspended": "Suspended",
+      "allSubscriptions": "All Subscriptions",
+      "free": "Free",
+      "premium": "Premium",
+      "premiumPlus": "Premium+",
+      "user": "User",
+      "joined": "Joined",
+      "subscription": "Subscription",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "noUsers": "No users found",
+      "userDetails": "User Details",
+      "editUser": "Edit User",
+      "confirmDelete": "Are you sure you want to delete this user?",
+      "deleteWarning": "This action cannot be undone.",
+      "email": "Email",
+      "fullName": "Full Name",
+      "createdAt": "Created At",
+      "lastLogin": "Last Login",
+      "nationality": "Nationality",
+      "residenceStatus": "Residence Status",
+      "professionalStatus": "Professional Status",
+      "emailPreferences": "Email Preferences",
+      "marketing": "Marketing",
+      "updates": "Updates",
+      "newsletter": "Newsletter",
+      "save": "Save Changes",
+      "cancel": "Cancel"
+    },
+    "affiliates": {
+      "title": "Affiliates",
+      "subtitle": "Manage affiliate accounts and commissions",
+      "comingSoon": "Coming Soon",
+      "description": "Affiliate management with commission tracking, referral codes, and payout management."
+    },
+    "govAides": {
+      "title": "Government Aides",
+      "subtitle": "Manage government assistance programs",
+      "comingSoon": "Coming Soon",
+      "description": "Full CRUD for government assistance programs with eligibility criteria and application procedures."
+    },
+    "procedures": {
+      "title": "Procedures",
+      "subtitle": "Manage administrative procedures",
+      "comingSoon": "Coming Soon",
+      "description": "Procedure management with step-by-step guides, required documents, and organization contacts."
+    },
+    "renting": {
+      "title": "Renting",
+      "subtitle": "Manage rental guides and resources",
+      "comingSoon": "Coming Soon",
+      "description": "Rental assistance guides, housing search tips, and tenant rights information."
+    },
+    "content": {
+      "title": "Content",
+      "subtitle": "Manage blog posts and tutorials",
+      "comingSoon": "Coming Soon",
+      "description": "Content management system for blog articles, SEO optimization, and multimedia tutorials."
+    },
+    "emails": {
+      "title": "Email Campaigns",
+      "subtitle": "Send bulk emails to users",
+      "comingSoon": "Coming Soon",
+      "description": "Email campaign management with user segmentation, templates, and delivery tracking."
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "View app analytics and metrics",
+      "comingSoon": "Coming Soon",
+      "description": "Detailed analytics dashboard with charts, user metrics, subscription data, and growth trends."
+    },
+    "admins": {
+      "title": "Admins",
+      "subtitle": "Manage admin accounts and permissions",
+      "comingSoon": "Coming Soon",
+      "description": "Admin user management, role assignments, and permission configuration."
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Configure admin panel settings",
+      "comingSoon": "Coming Soon",
+      "description": "Admin panel configuration, system settings, and preferences management."
+    },
+    "common": {
+      "loading": "Loading...",
+      "error": "An error occurred",
+      "retry": "Retry",
+      "noData": "No data available",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of",
+      "showing": "Showing",
+      "to": "to",
+      "entries": "entries"
+    }
   }
 }
+

@@ -148,17 +148,28 @@ class ChatMessageRepository extends BaseRepository {
   }
 
   /**
-   * Count user messages in a period
+   * Count user messages in a period (via conversations join)
    */
   async countUserMessagesInPeriod(userId, since) {
-    const { count, error } = await this.db
+    // Join through chat_conversations to get messages for this user
+    const { data, error } = await this.db
+      .from('chat_conversations')
+      .select('id')
+      .eq('user_id', userId);
+
+    if (error) throw error;
+    if (!data || data.length === 0) return 0;
+
+    const conversationIds = data.map(c => c.id);
+    
+    const { count, error: countError } = await this.db
       .from(this.tableName)
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId)
+      .in('conversation_id', conversationIds)
       .eq('role', 'user')
       .gte('created_at', since);
 
-    if (error) throw error;
+    if (countError) throw countError;
     return count || 0;
   }
 

@@ -366,7 +366,7 @@ export function Aides() {
               placeholder={t('dashboard.aides.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              leftIcon={<i className="ri-search-line" />}
+              icon="ri-search-line"
               className={styles.searchInput}
             />
           </div>

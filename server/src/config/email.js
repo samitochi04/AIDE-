@@ -12,6 +12,7 @@ export const emailConfig = {
   from: process.env.EMAIL_FROM || 'AIDE+ <noreply@aide.plus>',
   replyTo: process.env.EMAIL_REPLY_TO || 'support@aide.plus',
   supportEmail: process.env.SUPPORT_EMAIL || 'support@aide.plus',
+  adminEmail: process.env.ADMIN_EMAIL || 'admin@aide.plus',
 };
 
 // Create transporter
