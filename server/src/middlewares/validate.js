@@ -149,10 +149,27 @@ export const schemas = {
 
   // Affiliate registration
   affiliateRegistration: Joi.object({
-    company_name: Joi.string().max(255),
-    website: Joi.string().uri().max(500),
-    contact_email: Joi.string().email().required(),
-    description: Joi.string().max(1000),
+    companyName: Joi.string().max(255).allow('', null),
+    website: Joi.string().max(500).allow('', null).custom((value, helpers) => {
+      // Allow empty string or null
+      if (!value || value === '') return value;
+      
+      // Auto-prefix with https:// if no protocol
+      let url = value.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      
+      // Validate as URL
+      try {
+        new URL(url);
+        return url; // Return the normalized URL with protocol
+      } catch {
+        return helpers.error('string.uri');
+      }
+    }),
+    contactEmail: Joi.string().email().required(),
+    description: Joi.string().max(1000).allow('', null),
   }),
 
   // Admin - user management

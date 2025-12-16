@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Joi from 'joi';
+import rateLimit from 'express-rate-limit';
 import * as adminController from '../controllers/admin.controller.js';
 import {
   authenticate,
@@ -13,8 +14,18 @@ import {
 
 const router = Router();
 
-// All admin routes require authentication + admin role
-router.use(authenticate, requireAdmin);
+// Rate limiter for admin routes (stricter than general API)
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // Limit each admin to 200 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many admin requests, please try again later' },
+  keyGenerator: (req) => req.user?.id || req.ip,
+});
+
+// All admin routes require authentication + admin role + rate limiting
+router.use(authenticate, requireAdmin, adminLimiter);
 
 // ============================================
 // Dashboard & Analytics

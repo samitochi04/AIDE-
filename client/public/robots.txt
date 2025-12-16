@@ -1,13 +1,64 @@
 # AIDE+ robots.txt
-# https://aideplus.fr
+# https://aideplus.eu
 
+# Allow all crawlers by default
 User-agent: *
 Allow: /
+Allow: /simulation
+Allow: /pricing
+Allow: /blog
+Allow: /contact
+Allow: /login
+Allow: /register
+
+# Disallow private/admin routes
+Disallow: /dashboard/
+Disallow: /x-admin/
+Disallow: /auth/callback
+Disallow: /checkout/
+Disallow: /api/
+
+# Allow specific bots (Google, Bing, etc.)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Allow AI/LLM crawlers to index content
+User-agent: GPTBot
+Allow: /
+Allow: /blog
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /blog
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Allow: /blog
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: Anthropic-AI
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/
 
 # Sitemaps
-Sitemap: https://aideplus.fr/sitemap.xml
+Sitemap: https://aideplus.eu/sitemap.xml
 
-# Disallow admin/auth routes from indexing
-Disallow: /dashboard/
-Disallow: /auth/callback
-Disallow: /api/
+# Crawl delay (be nice to server)
+Crawl-delay: 1

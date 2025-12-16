@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import DOMPurify from 'dompurify';
 import { Button, Loading } from '../../../components/ui';
 import { ROUTES } from '../../../config/routes';
 import { apiFetch, API_ENDPOINTS } from '../../../config/api';
@@ -240,7 +241,7 @@ export function BlogPost() {
         {content.body && (
           <div 
             className={styles.body}
-            dangerouslySetInnerHTML={{ __html: content.body }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content.body) }}
           />
         )}
 

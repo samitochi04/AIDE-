@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button, Card, Input } from '../../../components/ui';
+import { Crown } from 'lucide-react';
+import { Button, Card, Input, Modal } from '../../../components/ui';
 import { useTheme } from '../../../context/ThemeContext';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { API_URL } from '../../../config/constants';
 import { API_ENDPOINTS } from '../../../config/api';
+import { ROUTES } from '../../../config/routes';
 import styles from './Settings.module.css';
 
 const containerVariants = {
@@ -25,6 +28,7 @@ const itemVariants = {
 
 export function Settings() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const { user, profile, signOut, session, refreshProfile } = useAuth();
@@ -56,6 +60,8 @@ export function Settings() {
 
   // Export data
   const [exportLoading, setExportLoading] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeMessage, setUpgradeMessage] = useState('');
 
   // Load user notification preferences from profile on mount and when profile changes
   useEffect(() => {
@@ -168,6 +174,15 @@ export function Settings() {
         if (response.status === 429) {
           toast.warning(t('dashboard.settings.data.exportRateLimit'));
           return;
+        }
+        // Handle feature unavailable (premium only)
+        if (response.status === 403) {
+          const data = await response.json();
+          if (data.error === 'feature_unavailable' || data.data?.error === 'feature_unavailable') {
+            setUpgradeMessage(data.message || data.data?.message || t('dashboard.settings.data.exportPremiumOnly'));
+            setShowUpgradeModal(true);
+            return;
+          }
         }
         throw new Error('Failed to request data export');
       }
@@ -561,6 +576,33 @@ export function Settings() {
           </Card>
         </div>
       )}
+
+      {/* Upgrade Required Modal */}
+      <Modal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        title={t('dashboard.settings.data.upgradeRequired')}
+      >
+        <div className={styles.upgradeModal}>
+          <div className={styles.upgradeIcon}>
+            <Crown size={48} />
+          </div>
+          <h3>{t('dashboard.settings.data.upgradeToContinue')}</h3>
+          <p>{upgradeMessage || t('dashboard.settings.data.exportPremiumOnly')}</p>
+          <div className={styles.upgradeActions}>
+            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
+              {t('common.close')}
+            </Button>
+            <Button 
+              variant="primary" 
+              onClick={() => navigate(ROUTES.PRICING)}
+            >
+              <Crown size={16} />
+              {t('common.upgrade')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </motion.div>
   );
 }

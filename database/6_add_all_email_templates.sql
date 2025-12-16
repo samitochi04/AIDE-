@@ -148,7 +148,7 @@ VALUES
         <p><strong>Email :</strong> {{userEmail}}</p>
         <p><strong>Plan :</strong> {{planName}}</p>
         <p><strong>Prix :</strong> {{price}}€/mois</p>
-        <p><a href="{{app_url}}/admin/users">Voir dans l''admin</a></p>
+        <p><a href="{{app_url}}/x-admin/users">Voir dans l''admin</a></p>
     </body></html>',
     'Nouvel abonnement: {{userName}} - {{planName}} ({{price}}€/mois)',
     'notification',
@@ -164,7 +164,7 @@ VALUES
         <p><strong>Nom :</strong> {{name}}</p>
         <p><strong>Email :</strong> {{email}}</p>
         <p><strong>Source :</strong> {{source}}</p>
-        <p><a href="{{app_url}}/admin/users">Voir dans l''admin</a></p>
+        <p><a href="{{app_url}}/x-admin/users">Voir dans l''admin</a></p>
     </body></html>',
     'Nouvel utilisateur: {{name}} ({{email}})',
     'notification',
@@ -380,7 +380,7 @@ VALUES
         <hr>
         <p><strong>Message :</strong></p>
         <p>{{message}}</p>
-        <p><a href="{{app_url}}/admin/support">Répondre dans l''admin</a></p>
+        <p><a href="{{app_url}}/x-admin/support">Répondre dans l''admin</a></p>
     </body></html>',
     'Support - {{category}}: {{subject}} de {{name}}',
     'notification',

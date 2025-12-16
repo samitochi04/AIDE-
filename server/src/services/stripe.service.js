@@ -1,31 +1,15 @@
 import Stripe from 'stripe';
-import { stripeConfig } from '../config/stripe.js';
+import { stripeConfig, getPriceToTier, getTierToPrice } from '../config/stripe.js';
 import { userRepository, subscriptionRepository, paymentRepository } from '../repositories/index.js';
 import { emailService } from './email.service.js';
+import { affiliateService } from './affiliate.service.js';
 import logger from '../utils/logger.js';
 import { AppError } from '../utils/errors.js';
-import { SUBSCRIPTION_TIERS } from '../utils/constants.js';
+import { SUBSCRIPTION_TIERS, TIER_LIMITS, SUBSCRIPTION_PRICING } from '../utils/constants.js';
 import { APP_CONFIG } from '../config/index.js';
+import { supabaseAdmin } from '../config/supabase.js';
 
 const stripe = new Stripe(stripeConfig.secretKey);
-
-/**
- * Map Stripe price IDs to subscription tiers
- */
-const priceToTier = {
-  [stripeConfig.prices.basic]: 'basic',
-  [stripeConfig.prices.plus]: 'plus',
-  [stripeConfig.prices.premium]: 'premium',
-};
-
-/**
- * Map subscription tiers to Stripe price IDs
- */
-const tierToPrice = {
-  basic: stripeConfig.prices.basic,
-  plus: stripeConfig.prices.plus,
-  premium: stripeConfig.prices.premium,
-};
 
 /**
  * Stripe Service
@@ -56,17 +40,35 @@ class StripeService {
     // Save customer ID to profile
     await userRepository.updateStripeCustomerId(userId, customer.id);
 
+    // Also create entry in stripe_customers table for foreign key reference
+    const { error: customerError } = await supabaseAdmin
+      .from('stripe_customers')
+      .upsert({
+        user_id: userId,
+        stripe_customer_id: customer.id,
+        currency: 'eur',
+      }, { onConflict: 'user_id' });
+
+    if (customerError) {
+      logger.error('Failed to create stripe_customers record', { error: customerError.message });
+    }
+
     logger.info('Created Stripe customer', { userId, customerId: customer.id });
     return customer.id;
   }
 
   /**
    * Create checkout session for subscription
+   * @param {string} userId - User ID
+   * @param {string} email - User email
+   * @param {string} name - User name
+   * @param {string} tier - Subscription tier (basic, premium, ultimate)
+   * @param {string} interval - Billing interval (monthly, yearly)
    */
-  async createCheckoutSession(userId, email, name, tier) {
-    const priceId = tierToPrice[tier];
+  async createCheckoutSession(userId, email, name, tier, interval = 'monthly') {
+    const priceId = getTierToPrice(tier, interval);
     if (!priceId) {
-      throw new AppError('Invalid subscription tier', 400);
+      throw new AppError(`Invalid subscription tier or interval: ${tier}/${interval}`, 400);
     }
 
     const customerId = await this.getOrCreateCustomer(userId, email, name);
@@ -76,14 +78,14 @@ class StripeService {
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${APP_CONFIG.frontendUrl}/subscription/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${APP_CONFIG.frontendUrl}/pricing`,
-      metadata: { userId, tier },
-      subscription_data: { metadata: { userId, tier } },
+      success_url: `${APP_CONFIG.frontendUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${APP_CONFIG.frontendUrl}/checkout/cancel`,
+      metadata: { userId, tier, interval },
+      subscription_data: { metadata: { userId, tier, interval } },
       allow_promotion_codes: true,
     });
 
-    logger.info('Created checkout session', { userId, tier, sessionId: session.id });
+    logger.info('Created checkout session', { userId, tier, interval, sessionId: session.id });
     return session;
   }
 
@@ -180,14 +182,18 @@ class StripeService {
       expand: ['data.product'],
     });
 
-    return prices.data.map((price) => ({
-      id: price.id,
-      tier: priceToTier[price.id] || 'unknown',
-      amount: price.unit_amount / 100,
-      currency: price.currency,
-      interval: price.recurring?.interval,
-      features: SUBSCRIPTION_TIERS[priceToTier[price.id]] || {},
-    }));
+    return prices.data.map((price) => {
+      const tier = getPriceToTier(price.id);
+      return {
+        id: price.id,
+        tier,
+        amount: price.unit_amount / 100,
+        currency: price.currency,
+        interval: price.recurring?.interval,
+        features: TIER_LIMITS[tier] || {},
+        pricing: SUBSCRIPTION_PRICING[tier] || {},
+      };
+    });
   }
 
   /**
@@ -259,7 +265,10 @@ class StripeService {
    */
   async handleSubscriptionUpdated(subscription) {
     let userId = subscription.metadata?.userId;
-    const tier = priceToTier[subscription.items.data[0]?.price.id];
+    const priceId = subscription.items.data[0]?.price.id;
+    const tier = getPriceToTier(priceId);
+    const interval = subscription.metadata?.interval || 
+      (subscription.items.data[0]?.price.recurring?.interval === 'year' ? 'yearly' : 'monthly');
 
     if (!userId) {
       // Try to find user by customer ID
@@ -272,10 +281,24 @@ class StripeService {
       userId = profile.id;
     }
 
+    // Ensure stripe_customers entry exists (for foreign key constraint)
+    const { error: customerError } = await supabaseAdmin
+      .from('stripe_customers')
+      .upsert({
+        user_id: userId,
+        stripe_customer_id: subscription.customer,
+        currency: 'eur',
+      }, { onConflict: 'stripe_customer_id' });
+
+    if (customerError) {
+      logger.error('Failed to ensure stripe_customers record', { error: customerError.message });
+    }
+
     const subscriptionData = {
       user_id: userId,
       stripe_subscription_id: subscription.id,
       stripe_customer_id: subscription.customer,
+      stripe_price_id: priceId,
       tier: tier || 'basic',
       status: subscription.status,
       current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
@@ -294,7 +317,7 @@ class StripeService {
     // Update user profile tier
     await userRepository.updateSubscriptionTier(userId, tier || 'basic');
 
-    logger.info('Subscription updated', { userId, tier, status: subscription.status });
+    logger.info('Subscription updated', { userId, tier, interval, status: subscription.status });
 
     // Send confirmation email for new active subscriptions
     if (subscription.status === 'active') {
@@ -302,14 +325,16 @@ class StripeService {
       const planName = tier?.charAt(0).toUpperCase() + tier?.slice(1) || 'Basic';
       const price = subscription.items.data[0]?.price.unit_amount / 100;
       const nextBillingDate = new Date(subscription.current_period_end * 1000).toLocaleDateString('fr-FR');
+      const tierInfo = TIER_LIMITS[tier] || TIER_LIMITS.basic;
 
       if (profile?.email) {
         // Send subscription welcome email to user
         await emailService.sendSubscriptionWelcome(profile.email, {
           planName,
           price,
+          interval,
           nextBillingDate,
-          features: SUBSCRIPTION_TIERS[tier]?.features || [],
+          features: tierInfo.features || [],
         }).catch(err => logger.error('Failed to send subscription welcome email', { error: err.message }));
 
         // Send admin notification for new subscription
@@ -318,8 +343,13 @@ class StripeService {
           userEmail: profile.email,
           planName,
           price,
+          interval,
         }).catch(err => logger.error('Failed to send admin subscription notification', { error: err.message }));
       }
+
+      // Process affiliate commission if user was referred
+      await affiliateService.processSubscriptionCommission(userId, tier || 'basic')
+        .catch(err => logger.error('Failed to process affiliate commission', { error: err.message }));
     }
   }
 
@@ -362,13 +392,38 @@ class StripeService {
       currency: invoice.currency,
     });
 
+    // Get user_id from subscription
+    let userId = null;
+    if (invoice.subscription) {
+      const sub = await subscriptionRepository.findByStripeSubscriptionId(invoice.subscription);
+      userId = sub?.user_id;
+    }
+
+    if (!userId) {
+      // Try to get from customer
+      const profile = await userRepository.findByStripeCustomerId(invoice.customer);
+      userId = profile?.id;
+    }
+
+    if (!userId) {
+      logger.warn('Could not find user for invoice', { invoiceId: invoice.id });
+      return;
+    }
+
     // Record payment in database
     await paymentRepository.create({
+      user_id: userId,
       stripe_invoice_id: invoice.id,
       stripe_subscription_id: invoice.subscription,
-      amount: invoice.amount_paid,
+      amount_due: invoice.amount_due,
+      amount_paid: invoice.amount_paid,
       currency: invoice.currency,
-      status: 'succeeded',
+      status: 'paid',
+      hosted_invoice_url: invoice.hosted_invoice_url,
+      invoice_pdf: invoice.invoice_pdf,
+      paid_at: invoice.status_transitions?.paid_at 
+        ? new Date(invoice.status_transitions.paid_at * 1000).toISOString() 
+        : new Date().toISOString(),
     });
   }
 
@@ -382,11 +437,31 @@ class StripeService {
       currency: invoice.currency,
     });
 
+    // Get user_id from subscription
+    let userId = null;
+    if (invoice.subscription) {
+      const sub = await subscriptionRepository.findByStripeSubscriptionId(invoice.subscription);
+      userId = sub?.user_id;
+    }
+
+    if (!userId) {
+      // Try to get from customer
+      const profile = await userRepository.findByStripeCustomerId(invoice.customer);
+      userId = profile?.id;
+    }
+
+    if (!userId) {
+      logger.warn('Could not find user for failed invoice', { invoiceId: invoice.id });
+      return;
+    }
+
     // Record failed payment
     await paymentRepository.create({
+      user_id: userId,
       stripe_invoice_id: invoice.id,
       stripe_subscription_id: invoice.subscription,
-      amount: invoice.amount_due,
+      amount_due: invoice.amount_due,
+      amount_paid: 0,
       currency: invoice.currency,
       status: 'failed',
     });

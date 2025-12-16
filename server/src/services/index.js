@@ -9,3 +9,4 @@ export { simulationService } from './simulation.service.js';
 export { housingService } from './housing.service.js';
 export { pdfExportService } from './pdfExport.service.js';
 export { schedulerService } from './scheduler.service.js';
+export { subscriptionService } from './subscription.service.js';

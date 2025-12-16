@@ -5,6 +5,7 @@
 
 import { contentRepository } from '../repositories/admin.repository.js';
 import { supabaseAdmin as supabase } from '../config/supabase.js';
+import { subscriptionService } from '../services/subscription.service.js';
 
 /**
  * Get published content with filters
@@ -107,6 +108,7 @@ export const getContentByType = async (req, res, next) => {
 export const getContentBySlug = async (req, res, next) => {
   try {
     const { slug } = req.params;
+    const userId = req.user?.id;
 
     const content = await contentRepository.findBySlug(slug);
 
@@ -123,6 +125,35 @@ export const getContentBySlug = async (req, res, next) => {
         success: false,
         error: 'Content not found',
       });
+    }
+
+    // Check content access limit for authenticated users
+    if (userId) {
+      const canAccess = await subscriptionService.canAccessContent(userId);
+      
+      if (!canAccess.allowed) {
+        return res.status(403).json({
+          success: false,
+          error: 'limit_exceeded',
+          allowed: false,
+          current: canAccess.current,
+          limit: canAccess.limit,
+          remaining: 0,
+          tier: canAccess.tier,
+          message: canAccess.message,
+          upgradeUrl: '/pricing',
+          // Still provide content preview
+          preview: {
+            title: content.title,
+            excerpt: content.excerpt,
+            content_type: content.content_type,
+            category: content.category,
+          }
+        });
+      }
+      
+      // Track content access for limit checking
+      await subscriptionService.trackContentAccess(userId, content.id);
     }
 
     res.json({

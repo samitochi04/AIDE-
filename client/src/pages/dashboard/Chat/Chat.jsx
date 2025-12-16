@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import DOMPurify from 'dompurify';
 import { Button, Card, Loading } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
@@ -20,6 +22,7 @@ export function Chat() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const toast = useToast();
+  const navigate = useNavigate();
   
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -29,6 +32,8 @@ export function Chat() {
   const [showHistory, setShowHistory] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeInfo, setUpgradeInfo] = useState(null);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -201,6 +206,21 @@ export function Chat() {
 
             try {
               const parsed = JSON.parse(data);
+              
+              // Handle limit exceeded error from stream
+              if (parsed.error === 'limit_exceeded') {
+                setUpgradeInfo({
+                  current: parsed.current,
+                  limit: parsed.limit,
+                  tier: parsed.tier,
+                });
+                setShowUpgradeModal(true);
+                // Remove the empty assistant message
+                setMessages(prev => prev.filter(msg => msg.id !== assistantMessageId));
+                setIsTyping(false);
+                return;
+              }
+              
               if (parsed.content) {
                 fullContent += parsed.content;
                 // Update the streaming message
@@ -285,7 +305,11 @@ export function Chat() {
     // Italic text
     result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
     
-    return result;
+    // Sanitize to prevent XSS attacks
+    return DOMPurify.sanitize(result, { 
+      ALLOWED_TAGS: ['a', 'strong', 'em', 'b', 'i'],
+      ALLOWED_ATTR: ['href', 'target', 'rel', 'class']
+    });
   };
 
   // Render markdown-like formatting
@@ -471,7 +495,15 @@ export function Chat() {
                     
                     <div className={styles.messageContent}>
                       <div className={styles.messageBubble}>
-                        {renderMessageContent(message.content)}
+                        {message.isStreaming && !message.content ? (
+                          <div className={styles.typingInline}>
+                            <span className={styles.typingDot} />
+                            <span className={styles.typingDot} />
+                            <span className={styles.typingDot} />
+                          </div>
+                        ) : (
+                          renderMessageContent(message.content)
+                        )}
                       </div>
                       {message.sources && message.sources.length > 0 && (
                         <div className={styles.messageSources}>
@@ -582,6 +614,62 @@ export function Chat() {
           </Card>
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      <AnimatePresence>
+        {showUpgradeModal && (
+          <motion.div
+            className={styles.modalOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowUpgradeModal(false)}
+          >
+            <motion.div
+              className={styles.modal}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                className={styles.modalClose}
+                onClick={() => setShowUpgradeModal(false)}
+              >
+                <i className="ri-close-line" />
+              </button>
+              <div className={styles.modalIcon}>
+                <i className="ri-vip-crown-fill" />
+              </div>
+              <h3>{t('dashboard.chat.limitReached')}</h3>
+              <p className={styles.modalSubtitle}>
+                {t('dashboard.chat.limitMessage', {
+                  current: upgradeInfo?.current || 0,
+                  limit: upgradeInfo?.limit || 0,
+                })}
+              </p>
+              <p className={styles.modalDescription}>
+                {t('dashboard.chat.upgradeDescription')}
+              </p>
+              <div className={styles.modalActions}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowUpgradeModal(false)}
+                >
+                  {t('common.close')}
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => navigate('/pricing')}
+                >
+                  <i className="ri-vip-crown-fill" />
+                  {t('common.upgrade')}
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

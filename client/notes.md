@@ -517,7 +517,7 @@ export function ThemeProvider({ children }) {
 │    Disallow: /dashboard                                     │
 │    Disallow: /profile                                       │
 │    Disallow: /checkout                                      │
-│    Sitemap: https://aideplus.fr/sitemap.xml                │
+│    Sitemap: https://aideplus.eu/sitemap.xml                │
 │                                                             │
 │  public/sitemap.xml:                                        │
 │    - Static pages (landing, pricing, blog, legal)           │
@@ -529,7 +529,7 @@ export function ThemeProvider({ children }) {
 │  <SEO                                                       │
 │    title="Aides en France | AIDE+"                         │
 │    description="Découvrez les aides..."                    │
-│    canonical="https://aideplus.fr/aides"                   │
+│    canonical="https://aideplus.eu/aides"                   │
 │    ogImage="/og-image.png"                                 │
 │  />                                                         │
 │                                                             │

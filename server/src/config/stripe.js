@@ -10,33 +10,37 @@ export const stripeConfig = {
   webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   productId: process.env.STRIPE_PRODUCT_ID,
   prices: {
-    basic: process.env.STRIPE_PRICE_BASIC_MONTHLY,
-    plus: process.env.STRIPE_PRICE_PLUS_MONTHLY,
-    premium: process.env.STRIPE_PRICE_PREMIUM_MONTHLY,
-  },
-};
-
-// Price IDs configuration
-export const STRIPE_PRICES = {
-  basic: {
-    monthly: process.env.STRIPE_PRICE_BASIC_MONTHLY,
-    yearly: process.env.STRIPE_PRICE_BASIC_YEARLY,
-  },
-  premium: {
-    monthly: process.env.STRIPE_PRICE_PREMIUM_MONTHLY,
-    yearly: process.env.STRIPE_PRICE_PREMIUM_YEARLY,
+    basic: {
+      monthly: process.env.STRIPE_PRICE_BASIC_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_BASIC_YEARLY,
+    },
+    premium: {
+      monthly: process.env.STRIPE_PRICE_PREMIUM_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_PREMIUM_YEARLY,
+    },
+    ultimate: {
+      monthly: process.env.STRIPE_PRICE_ULTIMATE_MONTHLY,
+      yearly: process.env.STRIPE_PRICE_ULTIMATE_YEARLY,
+    },
   },
 };
 
 // Map Stripe price IDs to subscription tiers
 export const getPriceToTier = (priceId) => {
   const priceToTier = {
-    [STRIPE_PRICES.basic.monthly]: 'basic',
-    [STRIPE_PRICES.basic.yearly]: 'basic',
-    [STRIPE_PRICES.premium.monthly]: 'premium',
-    [STRIPE_PRICES.premium.yearly]: 'premium',
+    [stripeConfig.prices.basic.monthly]: 'basic',
+    [stripeConfig.prices.basic.yearly]: 'basic',
+    [stripeConfig.prices.premium.monthly]: 'premium',
+    [stripeConfig.prices.premium.yearly]: 'premium',
+    [stripeConfig.prices.ultimate.monthly]: 'ultimate',
+    [stripeConfig.prices.ultimate.yearly]: 'ultimate',
   };
   return priceToTier[priceId] || 'free';
+};
+
+// Map tier + interval to Stripe price ID
+export const getTierToPrice = (tier, interval = 'monthly') => {
+  return stripeConfig.prices[tier]?.[interval] || null;
 };
 
 export default stripe;

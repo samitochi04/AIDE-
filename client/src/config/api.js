@@ -63,9 +63,23 @@ export const API_ENDPOINTS = {
   
   // Stripe
   STRIPE: {
-    CREATE_CHECKOUT: '/api/v1/stripe/checkout',
-    CREATE_PORTAL: '/api/v1/stripe/portal',
-    GET_SUBSCRIPTION: '/api/v1/stripe/subscription',
+    CREATE_CHECKOUT: '/api/v1/stripe/create-checkout-session',
+    CREATE_PORTAL: '/api/v1/stripe/create-portal-session',
+    GET_SUBSCRIPTION: '/api/v1/stripe/subscription-status',
+  },
+
+  // Subscription Management
+  SUBSCRIPTION: {
+    TIERS: '/api/v1/subscription/tiers',
+    STATUS: '/api/v1/subscription/status',
+    USAGE: '/api/v1/subscription/usage',
+    LIMITS: '/api/v1/subscription/limits',
+    CHECK: (feature) => `/api/v1/subscription/check/${feature}`,
+    RECOMMEND: '/api/v1/subscription/recommend',
+    CHECKOUT: '/api/v1/subscription/checkout',
+    PORTAL: '/api/v1/subscription/portal',
+    CANCEL: '/api/v1/subscription/cancel',
+    RESUME: '/api/v1/subscription/resume',
   },
   
   // Analytics
@@ -104,6 +118,18 @@ export const API_ENDPOINTS = {
     GET_EXPORTS: '/api/v1/profile/exports',
     GET_SESSIONS: '/api/v1/profile/sessions',
     SIGN_OUT_ALL: '/api/v1/profile/sign-out-all',
+  },
+
+  // Affiliate
+  AFFILIATE: {
+    REGISTER: '/api/v1/affiliate/register',
+    DASHBOARD: '/api/v1/affiliate/dashboard',
+    REFERRALS: '/api/v1/affiliate/referrals',
+    EARNINGS: '/api/v1/affiliate/earnings',
+    LINK: '/api/v1/affiliate/link',
+    REQUEST_PAYOUT: '/api/v1/affiliate/request-payout',
+    PAYOUTS: '/api/v1/affiliate/payouts',
+    SETTINGS: '/api/v1/affiliate/settings',
   },
 
   // Admin

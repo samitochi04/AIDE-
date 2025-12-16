@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Crown, Lock, ArrowRight } from 'lucide-react';
 import { Button, Card, Input, Badge, Loading, Modal } from '../../../components/ui';
 import { useToast } from '../../../context/ToastContext';
 import { api, API_ENDPOINTS } from '../../../config/api';
+import { ROUTES } from '../../../config/routes';
 import styles from './Housing.module.css';
 
 const containerVariants = {
@@ -54,15 +56,20 @@ export function Housing() {
   // State
   const [loading, setLoading] = useState(true);
   const [platforms, setPlatforms] = useState([]);
+  const [platformsMeta, setPlatformsMeta] = useState(null);
   const [categories, setCategories] = useState([]);
   const [savedPlatforms, setSavedPlatforms] = useState([]);
+  const [savedMeta, setSavedMeta] = useState(null);
   const [guarantors, setGuarantors] = useState([]);
+  const [guarantorsMeta, setGuarantorsMeta] = useState(null);
   const [tips, setTips] = useState({ general: [], forForeigners: [] });
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [showPlatformModal, setShowPlatformModal] = useState(false);
   const [savingPlatform, setSavingPlatform] = useState(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeInfo, setUpgradeInfo] = useState(null);
 
   // Fetch all housing data
   const fetchHousingData = useCallback(async () => {
@@ -76,15 +83,18 @@ export function Housing() {
         api.get(API_ENDPOINTS.HOUSING.TIPS)
       ]);
 
-      setPlatforms(platformsRes.data || []);
-      setCategories(categoriesRes.data || []);
-      setGuarantors(guarantorsRes.data || []);
-      setTips(tipsRes.data || { general: [], forForeigners: [] });
+      setPlatforms(platformsRes.data?.data || platformsRes.data || []);
+      setPlatformsMeta(platformsRes.data?.meta || null);
+      setCategories(categoriesRes.data?.data || categoriesRes.data || []);
+      setGuarantors(guarantorsRes.data?.data || guarantorsRes.data || []);
+      setGuarantorsMeta(guarantorsRes.data?.meta || null);
+      setTips(tipsRes.data?.data || tipsRes.data || { general: [], forForeigners: [] });
 
       // Fetch saved platforms (requires auth)
       try {
         const savedRes = await api.get(API_ENDPOINTS.HOUSING.SAVED);
-        setSavedPlatforms(savedRes.data || []);
+        setSavedPlatforms(savedRes.data?.data || savedRes.data || []);
+        setSavedMeta(savedRes.data?.usage || null);
       } catch (err) {
         // User not logged in or no saved platforms
         setSavedPlatforms([]);
@@ -162,7 +172,19 @@ export function Housing() {
       }
     } catch (error) {
       console.error('Error saving platform:', error);
-      toast.error(t('common.error'));
+      // Check for limit exceeded error - API wraps in { data: { error: ... } }
+      const errorData = error.data?.data || error.data;
+      if (error.status === 403 && errorData?.error === 'limit_exceeded') {
+        setUpgradeInfo({
+          current: errorData.current,
+          limit: errorData.limit,
+          tier: errorData.tier,
+          message: errorData.message || errorData.messageEn
+        });
+        setShowUpgradeModal(true);
+      } else {
+        toast.error(t('common.error'));
+      }
     } finally {
       setSavingPlatform(null);
     }
@@ -299,72 +321,98 @@ export function Housing() {
                   </div>
                 </Card>
               ) : (
-                filteredPlatforms.map(platform => (
-                  <Card
-                    key={`${platform.categoryId}-${platform.id}`}
-                    className={styles.platformCard}
-                    onClick={() => handleOpenPlatform(platform)}
-                  >
-                    <div className={styles.platformHeader}>
-                      <div className={styles.platformIcon}>
-                        <i className={CATEGORY_ICONS[platform.categoryId] || 'ri-home-line'} />
+<>
+                  {filteredPlatforms.map(platform => (
+                    <Card
+                      key={`${platform.categoryId}-${platform.id}`}
+                      className={styles.platformCard}
+                      onClick={() => handleOpenPlatform(platform)}
+                    >
+                      <div className={styles.platformHeader}>
+                        <div className={styles.platformIcon}>
+                          <i className={CATEGORY_ICONS[platform.categoryId] || 'ri-home-line'} />
+                        </div>
+                        <div className={styles.platformInfo}>
+                          <h3 className={styles.platformName}>{platform.name}</h3>
+                          <span className={styles.platformCategory}>
+                            {getCategoryName(platform.categoryName)}
+                          </span>
+                        </div>
+                        <button
+                          className={`${styles.saveBtn} ${isPlatformSaved(platform.id) ? styles.saved : ''}`}
+                          onClick={(e) => handleSavePlatform(platform, e)}
+                          disabled={savingPlatform === platform.id}
+                        >
+                          <i className={isPlatformSaved(platform.id) ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
+                        </button>
                       </div>
-                      <div className={styles.platformInfo}>
-                        <h3 className={styles.platformName}>{platform.name}</h3>
-                        <span className={styles.platformCategory}>
-                          {getCategoryName(platform.categoryName)}
-                        </span>
+
+                      <p className={styles.platformDescription}>
+                        {platform.description}
+                      </p>
+
+                      <div className={styles.platformMeta}>
+                        {platform.priceRange && PRICE_DISPLAY[platform.priceRange] && (
+                          <Badge variant={PRICE_DISPLAY[platform.priceRange].color} size="sm">
+                            {platform.priceRange}
+                          </Badge>
+                        )}
+                        {platform.languages?.length > 0 && (
+                          <Badge variant="default" size="sm">
+                            {platform.languages.join(', ')}
+                          </Badge>
+                        )}
+                        {platform.hasApp && (
+                          <Badge variant="primary" size="sm">
+                            <i className="ri-smartphone-line" /> App
+                          </Badge>
+                        )}
+                        {platform.agencyFees === false && (
+                          <Badge variant="success" size="sm">
+                            {t('dashboard.housing.noFees')}
+                          </Badge>
+                        )}
                       </div>
-                      <button
-                        className={`${styles.saveBtn} ${isPlatformSaved(platform.id) ? styles.saved : ''}`}
-                        onClick={(e) => handleSavePlatform(platform, e)}
-                        disabled={savingPlatform === platform.id}
-                      >
-                        <i className={isPlatformSaved(platform.id) ? 'ri-bookmark-fill' : 'ri-bookmark-line'} />
-                      </button>
-                    </div>
 
-                    <p className={styles.platformDescription}>
-                      {platform.description}
-                    </p>
-
-                    <div className={styles.platformMeta}>
-                      {platform.priceRange && PRICE_DISPLAY[platform.priceRange] && (
-                        <Badge variant={PRICE_DISPLAY[platform.priceRange].color} size="sm">
-                          {platform.priceRange}
-                        </Badge>
-                      )}
-                      {platform.languages?.length > 0 && (
-                        <Badge variant="default" size="sm">
-                          {platform.languages.join(', ')}
-                        </Badge>
-                      )}
-                      {platform.hasApp && (
-                        <Badge variant="primary" size="sm">
-                          <i className="ri-smartphone-line" /> App
-                        </Badge>
-                      )}
-                      {platform.agencyFees === false && (
-                        <Badge variant="success" size="sm">
-                          {t('dashboard.housing.noFees')}
-                        </Badge>
-                      )}
-                    </div>
-
-                    <div className={styles.platformActions}>
-                      {platform.url && (
+                      <div className={styles.platformActions}>
+                        {platform.url && (
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={(e) => handleVisitPlatform(platform.url, e)}
+                          >
+                            <i className="ri-external-link-line" />
+                            {t('dashboard.housing.visitSite')}
+                          </Button>
+                        )}
+                      </div>
+                    </Card>
+                  ))}
+                  
+                  {/* Upgrade Prompt for Platforms */}
+                  {platformsMeta?.isLimited && (
+                    <Card className={styles.upgradeCard}>
+                      <div className={styles.upgradeContent}>
+                        <div className={styles.upgradeIcon}>
+                          <Lock size={24} />
+                        </div>
+                        <div className={styles.upgradeText}>
+                          <h4>{t('dashboard.housing.moreAvailable', { count: platformsMeta.total - platformsMeta.showing })}</h4>
+                          <p>{t('dashboard.housing.upgradeToUnlock')}</p>
+                        </div>
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={(e) => handleVisitPlatform(platform.url, e)}
+                          onClick={() => navigate(ROUTES.PRICING)}
                         >
-                          <i className="ri-external-link-line" />
-                          {t('dashboard.housing.visitSite')}
+                          <Crown size={16} />
+                          {t('common.upgrade')}
+                          <ArrowRight size={16} />
                         </Button>
-                      )}
-                    </div>
-                  </Card>
-                ))
+                      </div>
+                    </Card>
+                  )}
+                </>
               )}
             </div>
           </motion.div>
@@ -384,7 +432,7 @@ export function Housing() {
               </p>
               
               <div className={styles.guarantorsList}>
-                {guarantors.slice(0, 4).map(guarantor => (
+                {guarantors.map(guarantor => (
                   <div 
                     key={guarantor.id} 
                     className={styles.guarantorItem}
@@ -404,6 +452,21 @@ export function Housing() {
                     <i className="ri-arrow-right-s-line" />
                   </div>
                 ))}
+                
+                {/* Upgrade Prompt for Guarantors */}
+                {guarantorsMeta?.isLimited && (
+                  <div className={styles.guarantorUpgrade}>
+                    <Lock size={16} />
+                    <span>{t('dashboard.housing.moreGuarantors', { count: guarantorsMeta.total - guarantorsMeta.showing })}</span>
+                    <Button
+                      variant="ghost"
+                      size="xs"
+                      onClick={() => navigate(ROUTES.PRICING)}
+                    >
+                      {t('common.upgrade')}
+                    </Button>
+                  </div>
+                )}
               </div>
             </Card>
           </motion.div>
@@ -644,6 +707,38 @@ export function Housing() {
             </div>
           </div>
         )}
+      </Modal>
+
+      {/* Upgrade Required Modal */}
+      <Modal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        title={t('dashboard.housing.saveLimitReached')}
+      >
+        <div className={styles.upgradeModalContent}>
+          <div className={styles.upgradeModalIcon}>
+            <Crown size={48} />
+          </div>
+          <h3>{t('dashboard.housing.upgradeToContinue')}</h3>
+          <p>
+            {upgradeInfo?.message || t('dashboard.housing.saveLimitMessage', { 
+              current: upgradeInfo?.current, 
+              limit: upgradeInfo?.limit 
+            })}
+          </p>
+          <div className={styles.upgradeModalActions}>
+            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
+              {t('common.close')}
+            </Button>
+            <Button 
+              variant="primary" 
+              onClick={() => navigate(ROUTES.PRICING)}
+            >
+              <Crown size={16} />
+              {t('common.upgrade')}
+            </Button>
+          </div>
+        </div>
       </Modal>
     </motion.div>
   );

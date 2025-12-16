@@ -277,6 +277,56 @@
 }
 
 /* Responsive */
+/* Upgrade Card */
+.upgradeCard {
+  background: linear-gradient(135deg, var(--primary-alpha) 0%, var(--accent-alpha) 100%);
+  border: 2px dashed var(--primary);
+  border-radius: var(--radius-lg);
+}
+
+.upgradeContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+}
+
+.upgradeIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.upgradeText {
+  flex: 1;
+}
+
+.upgradeText h4 {
+  margin: 0 0 var(--spacing-1) 0;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.upgradeText p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.upgradeContent a button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: var(--spacing-3) var(--spacing-4);
@@ -319,5 +369,14 @@
 
   .ctaButtons button {
     width: 100%;
+  }
+  
+  .upgradeContent {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .upgradeText {
+    text-align: center;
   }
 }

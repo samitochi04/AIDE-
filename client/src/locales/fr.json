@@ -122,6 +122,22 @@
       "title": "AIDE+ | Découvrez toutes les aides auxquelles vous avez droit en France",
       "description": "AIDE+ vous guide dans vos démarches administratives en France. Simulation gratuite, assistant IA personnalisé et guides étape par étape.",
       "keywords": "aides France, CAF, APL, RSA, démarches administratives, étrangers France, simulation aides"
+    },
+    "simulation": {
+      "title": "Simulation gratuite des aides | AIDE+",
+      "description": "Découvrez en 5 minutes toutes les aides financières auxquelles vous avez droit en France. Simulation 100% gratuite et personnalisée."
+    },
+    "pricing": {
+      "title": "Tarifs et Abonnements | AIDE+",
+      "description": "Découvrez nos offres d'abonnement AIDE+. Accédez à toutes les aides, assistant IA illimité et guides personnalisés."
+    },
+    "blog": {
+      "title": "Blog et Guides | AIDE+",
+      "description": "Conseils, tutoriels et guides pour vous aider dans vos démarches administratives en France."
+    },
+    "contact": {
+      "title": "Contactez-nous | AIDE+",
+      "description": "Une question ? Contactez l'équipe AIDE+ pour obtenir de l'aide sur vos démarches administratives."
     }
   },
   
@@ -266,8 +282,93 @@
       "simulation": "Simulation",
       "profile": "Profil",
       "settings": "Paramètres",
+      "affiliate": "Parrainage",
       "upgrade": "Passer Premium",
       "upgradeText": "Accès à toutes les fonctionnalités"
+    },
+    "affiliate": {
+      "title": "Programme de Parrainage",
+      "subtitle": "Partagez AIDE+ et gagnez des commissions sur chaque abonnement",
+      "dashboardSubtitle": "Suivez vos parrainages, vos gains et gérez vos paiements",
+      "joinProgram": "Rejoignez Notre Programme de Parrainage",
+      "programDescription": "Gagnez de l'argent en partageant AIDE+ avec vos amis, votre famille et votre réseau. Recevez une commission fixe pour chaque personne qui s'abonne avec votre lien de parrainage.",
+      "commissionRates": "Taux de Commission",
+      "perReferral": "par parrainage",
+      "benefit1": "Gagnez de l'argent réel pour chaque abonnement",
+      "benefit2": "Obtenez votre lien de parrainage unique",
+      "benefit3": "Suivez vos performances en temps réel",
+      "benefit4": "Paiements automatiques faciles",
+      "registerTitle": "Candidature au Programme d'Affiliation",
+      "companyName": "Nom de l'entreprise/blog (optionnel)",
+      "companyNamePlaceholder": "Nom de votre entreprise ou blog",
+      "website": "URL du site web (optionnel)",
+      "websitePlaceholder": "https://votresite.com",
+      "contactEmail": "Email de contact",
+      "contactEmailPlaceholder": "votre@email.com",
+      "description": "Comment allez-vous promouvoir AIDE+ ? (optionnel)",
+      "descriptionPlaceholder": "Parlez-nous de votre audience et comment vous comptez partager AIDE+...",
+      "registerBtn": "Postuler Maintenant",
+      "registerSuccess": "Votre candidature a été soumise ! Nous l'examinerons prochainement.",
+      "registerError": "Échec de la soumission. Veuillez réessayer.",
+      "pendingTitle": "Candidature en Attente",
+      "pendingText": "Votre candidature est en cours d'examen. Nous vous notifierons dès qu'elle sera approuvée.",
+      "rejectedTitle": "Candidature Non Approuvée",
+      "rejectedText": "Malheureusement, votre candidature n'a pas été approuvée. Veuillez contacter le support pour plus d'informations.",
+      "yourReferralLink": "Votre Lien de Parrainage",
+      "linkDescription": "Partagez ce lien avec votre audience. Quand quelqu'un s'inscrit et s'abonne, vous gagnez une commission !",
+      "copyLink": "Copier le Lien",
+      "linkCopied": "Lien copié dans le presse-papiers !",
+      "codeCopied": "Code copié dans le presse-papiers !",
+      "copyError": "Échec de la copie. Veuillez réessayer.",
+      "yourCode": "Votre Code :",
+      "totalClicks": "Clics Totaux",
+      "totalReferrals": "Inscriptions Totales",
+      "conversions": "Abonnements",
+      "conversionRate": "Taux de Conversion",
+      "earnings": "Vos Gains",
+      "totalEarnings": "Total Gagné",
+      "pendingEarnings": "En Attente",
+      "paidEarnings": "Versé",
+      "autoPayoutNote": "Le paiement automatique est déclenché après {{count}} abonnements réussis de vos parrainages.",
+      "minimumPayout": "Montant minimum de retrait : {{amount}}€",
+      "requestPayout": "Demander un Retrait",
+      "payoutRequested": "Demande de retrait soumise avec succès !",
+      "payoutError": "Échec de la demande de retrait. Veuillez réessayer.",
+      "payoutSettings": "Paramètres de Paiement",
+      "payoutMethod": "Méthode de Paiement",
+      "payoutMethods": {
+        "paypal": "PayPal",
+        "bankTransfer": "Virement Bancaire (SEPA)",
+        "stripe": "Stripe"
+      },
+      "paypalEmail": "Email PayPal",
+      "paypalEmailPlaceholder": "votre@paypal.com",
+      "accountHolder": "Nom du Titulaire du Compte",
+      "accountHolderPlaceholder": "Jean Dupont",
+      "iban": "IBAN",
+      "ibanPlaceholder": "FR76 1234 5678 9012 3456 7890 123",
+      "bankName": "Nom de la Banque",
+      "bankNamePlaceholder": "Nom de votre banque",
+      "settingsSaved": "Paramètres enregistrés avec succès !",
+      "settingsError": "Échec de l'enregistrement des paramètres. Veuillez réessayer.",
+      "payoutHistory": "Historique des Paiements",
+      "payoutStatus": {
+        "requested": "Demandé",
+        "processing": "En cours",
+        "completed": "Terminé",
+        "failed": "Échoué"
+      },
+      "howItWorks": "Comment Ça Marche",
+      "step1Title": "Partagez Votre Lien",
+      "step1Text": "Partagez votre lien de parrainage unique avec vos amis, votre famille ou votre audience.",
+      "step2Title": "Ils S'inscrivent",
+      "step2Text": "Quand quelqu'un clique sur votre lien et crée un compte, il est enregistré comme votre filleul.",
+      "step3Title": "Ils S'abonnent",
+      "step3Text": "Quand votre filleul s'abonne à un forfait payant, vous gagnez une commission.",
+      "step4Title": "Recevez Votre Paiement",
+      "step4Text": "Une fois le seuil minimum atteint, demandez un retrait vers votre méthode préférée.",
+      "subscriptionTier": "Niveau d'Abonnement",
+      "yourCommission": "Votre Commission"
     },
     "overview": {
       "title": "Tableau de bord",
@@ -425,7 +526,13 @@
       "pros": "Avantages",
       "cons": "Inconvénients",
       "tips": "Conseils",
-      "eligibility": "Éligibilité"
+      "eligibility": "Éligibilité",
+      "moreAvailable": "{{count}} autres plateformes disponibles",
+      "moreGuarantors": "{{count}} autres garants disponibles",
+      "upgradeToUnlock": "Passez à un abonnement supérieur pour débloquer toutes les plateformes",
+      "saveLimitReached": "Limite de sauvegardes atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "saveLimitMessage": "Vous avez sauvegardé {{current}} sur {{limit}} plateformes autorisées avec votre abonnement."
     },
     "procedures": {
       "title": "Mes Démarches",
@@ -506,7 +613,10 @@
       "statusUpdated": "Statut mis à jour",
       "stepUpdated": "Étape mise à jour",
       "deleted": "Démarche supprimée",
-      "nameRequired": "Le nom de la démarche est requis"
+      "nameRequired": "Le nom de la démarche est requis",
+      "limitReached": "Limite de démarches atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "limitMessage": "Vous avez créé {{current}} sur {{limit}} démarches autorisées avec votre abonnement."
     },
     "chat": {
       "title": "Assistant IA",
@@ -528,6 +638,9 @@
       "messages": "messages",
       "loadingMessages": "Chargement des messages...",
       "sources": "Sources",
+      "limitReached": "Limite quotidienne de messages atteinte",
+      "limitMessage": "Vous avez envoyé {{current}} sur {{limit}} messages IA autorisés aujourd'hui avec votre plan.",
+      "upgradeDescription": "Passez à un forfait supérieur pour plus de messages IA quotidiens et débloquer les fonctionnalités premium.",
       "suggestions": {
         "housing": "À quelles aides au logement suis-je éligible ?",
         "eligibility": "Vérifier mon éligibilité aux aides de la CAF",
@@ -655,6 +768,9 @@
         "requestExport": "Demander l'export",
         "exportRequested": "Export demandé ! Vous recevrez vos données par e-mail sous peu.",
         "exportRateLimit": "Vous ne pouvez demander qu'un export par jour. Veuillez réessayer demain.",
+        "exportPremiumOnly": "L'export de données est uniquement disponible avec le plan Ultimate.",
+        "upgradeRequired": "Fonctionnalité Premium",
+        "upgradeToContinue": "Passez au niveau supérieur",
         "signOut": "Déconnexion",
         "signOutDesc": "Se déconnecter de votre compte sur cet appareil",
         "dangerZone": "Zone Dangereuse",
@@ -757,7 +873,9 @@
       "createFreeAccount": "Créer un compte gratuit",
       "goToDashboard": "Aller au tableau de bord",
       "dashboardDescription": "Suivez vos aides et démarrez vos démarches depuis votre tableau de bord.",
-      "newSimulation": "Faire une nouvelle simulation"
+      "newSimulation": "Faire une nouvelle simulation",
+      "moreAidesAvailable": "{{count}} autres aides disponibles",
+      "upgradeToSeeAll": "Passez à un abonnement supérieur pour voir toutes les aides auxquelles vous êtes éligible"
     }
   },
   

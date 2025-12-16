@@ -149,7 +149,7 @@ export function Blog() {
         name: 'AIDE+',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://aideplus.fr/logo.png',
+          url: 'https://aideplus.eu/logo.png',
         },
       },
     }));
@@ -169,13 +169,13 @@ export function Blog() {
         <title>{t('blog.seo.title', 'Blog & Guides')} | AIDE+</title>
         <meta name="description" content={t('blog.seo.description', 'Discover guides, tutorials, and tips to help you navigate French administrative procedures and access government aid.')} />
         <meta name="keywords" content="French administration, CAF, APL, RSA, government aid, expatriate guide, student in France" />
-        <link rel="canonical" href="https://aideplus.fr/blog" />
+        <link rel="canonical" href="https://aideplus.eu/blog" />
         
         {/* Open Graph */}
         <meta property="og:title" content={`${t('blog.seo.title', 'Blog & Guides')} | AIDE+`} />
         <meta property="og:description" content={t('blog.seo.description')} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://aideplus.fr/blog" />
+        <meta property="og:url" content="https://aideplus.eu/blog" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />

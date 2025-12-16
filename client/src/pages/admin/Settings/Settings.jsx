@@ -25,7 +25,7 @@ const Settings = () => {
     },
     email: {
       from_name: 'AIDE+',
-      from_email: 'noreply@aideplus.fr',
+      from_email: 'noreply@aideplus.eu',
       reply_to: '',
       smtp_host: '',
       smtp_port: '',

@@ -28,9 +28,10 @@ import {
   TutorialView as DashboardTutorialView,
   Chat as DashboardChat,
   Profile as DashboardProfile,
-  Settings as DashboardSettings
+  Settings as DashboardSettings,
+  Affiliate as DashboardAffiliate
 } from './pages/dashboard'
-import { Login, Register, AuthCallback } from './pages/auth'
+import { Login, Register, AuthCallback, CheckoutSuccess, CheckoutCancel } from './pages/auth'
 import { Simulation, Results as SimulationResults } from './pages/simulation'
 import { Pricing, Contact, Blog, BlogPost } from './pages/public'
 
@@ -91,6 +92,8 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/auth/callback" element={<AuthCallback />} />
+                        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
                         
                         {/* Simulation Routes */}
                         <Route path="/simulation" element={<Simulation />} />
@@ -105,6 +108,7 @@ function App() {
                           <Route path="tutorials" element={<DashboardTutorials />} />
                           <Route path="tutorials/:slug" element={<DashboardTutorialView />} />
                           <Route path="chat" element={<DashboardChat />} />
+                          <Route path="affiliate" element={<DashboardAffiliate />} />
                           <Route path="profile" element={<DashboardProfile />} />
                           <Route path="settings" element={<DashboardSettings />} />
                         </Route>

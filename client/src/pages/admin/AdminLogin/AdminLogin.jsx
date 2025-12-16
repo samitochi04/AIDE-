@@ -81,7 +81,7 @@ export default function AdminLogin() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('admin.login.emailPlaceholder', 'admin@aideplus.fr')}
+                placeholder={t('admin.login.emailPlaceholder', 'admin@aideplus.eu')}
                 className={styles.input}
                 autoComplete="email"
                 disabled={loading}

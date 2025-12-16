@@ -13,19 +13,63 @@ const app = express();
 // ===========================================
 // Security Middlewares
 // ===========================================
-app.use(helmet());
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", "https://*.supabase.co", "wss://*.supabase.co", "https://api.stripe.com", "https://api.openai.com"],
+      frameSrc: ["'self'", "https://js.stripe.com", "https://hooks.stripe.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+    },
+  },
+  crossOriginEmbedderPolicy: false, // Allow embedding for Stripe
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }, // For OAuth popups
+  crossOriginResourcePolicy: { policy: "cross-origin" }, // For CDN resources
+  hsts: {
+    maxAge: 31536000, // 1 year
+    includeSubDomains: true,
+    preload: true,
+  },
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+}));
+
+// CORS configuration with stricter production settings
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      process.env.CLIENT_URL || 'http://localhost:5173',
+      'https://aideplus.eu',
+      'https://www.aideplus.eu',
+    ];
+    
+    // Allow requests with no origin (mobile apps, curl, etc.) in development
+    if (!origin && process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'stripe-signature'],
+  maxAge: 86400, // Cache preflight for 24 hours
+};
+app.use(cors(corsOptions));
 
 // ===========================================
 // Body Parsing
 // ===========================================
 // Raw body for Stripe webhooks (must be before express.json())
-app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
+app.use('/api/v1/stripe/webhook', express.raw({ type: 'application/json' }));
 
 // JSON parsing for all other routes
 app.use(express.json({ limit: '10mb' }));

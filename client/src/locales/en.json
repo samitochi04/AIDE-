@@ -122,6 +122,22 @@
       "title": "AIDE+ | Discover all the benefits you're entitled to in France",
       "description": "AIDE+ guides you through administrative procedures in France. Free simulation, personalized AI assistant and step-by-step guides.",
       "keywords": "France benefits, CAF, APL, RSA, administrative procedures, foreigners France, benefits simulation"
+    },
+    "simulation": {
+      "title": "Free Benefits Simulation | AIDE+",
+      "description": "Discover in 5 minutes all the financial benefits you're entitled to in France. 100% free and personalized simulation."
+    },
+    "pricing": {
+      "title": "Pricing and Plans | AIDE+",
+      "description": "Discover our AIDE+ subscription plans. Access all benefits, unlimited AI assistant and personalized guides."
+    },
+    "blog": {
+      "title": "Blog and Guides | AIDE+",
+      "description": "Tips, tutorials and guides to help you with your administrative procedures in France."
+    },
+    "contact": {
+      "title": "Contact Us | AIDE+",
+      "description": "Have a question? Contact the AIDE+ team for help with your administrative procedures."
     }
   },
   
@@ -266,8 +282,93 @@
       "simulation": "Simulation",
       "profile": "Profile",
       "settings": "Settings",
+      "affiliate": "Referral",
       "upgrade": "Go Premium",
       "upgradeText": "Access all features"
+    },
+    "affiliate": {
+      "title": "Referral Program",
+      "subtitle": "Share AIDE+ and earn commissions on every subscription",
+      "dashboardSubtitle": "Track your referrals, earnings, and manage your payouts",
+      "joinProgram": "Join Our Referral Program",
+      "programDescription": "Earn money by sharing AIDE+ with your friends, family, and network. Get a fixed commission for every person who subscribes using your referral link.",
+      "commissionRates": "Commission Rates",
+      "perReferral": "per referral",
+      "benefit1": "Earn real money for each subscription",
+      "benefit2": "Get your unique referral link",
+      "benefit3": "Track your performance in real-time",
+      "benefit4": "Easy automatic payouts",
+      "registerTitle": "Apply to Become an Affiliate",
+      "companyName": "Company/Blog Name (optional)",
+      "companyNamePlaceholder": "Your company or blog name",
+      "website": "Website URL (optional)",
+      "websitePlaceholder": "https://yourwebsite.com",
+      "contactEmail": "Contact Email",
+      "contactEmailPlaceholder": "your@email.com",
+      "description": "How will you promote AIDE+? (optional)",
+      "descriptionPlaceholder": "Tell us about your audience and how you plan to share AIDE+...",
+      "registerBtn": "Apply Now",
+      "registerSuccess": "Your application has been submitted! We'll review it shortly.",
+      "registerError": "Failed to submit application. Please try again.",
+      "pendingTitle": "Application Pending",
+      "pendingText": "Your affiliate application is being reviewed. We'll notify you once it's approved.",
+      "rejectedTitle": "Application Not Approved",
+      "rejectedText": "Unfortunately, your affiliate application was not approved. Please contact support for more information.",
+      "yourReferralLink": "Your Referral Link",
+      "linkDescription": "Share this link with your audience. When someone signs up and subscribes, you earn a commission!",
+      "copyLink": "Copy Link",
+      "linkCopied": "Link copied to clipboard!",
+      "codeCopied": "Code copied to clipboard!",
+      "copyError": "Failed to copy. Please try again.",
+      "yourCode": "Your Code:",
+      "totalClicks": "Total Clicks",
+      "totalReferrals": "Total Signups",
+      "conversions": "Subscriptions",
+      "conversionRate": "Conversion Rate",
+      "earnings": "Your Earnings",
+      "totalEarnings": "Total Earned",
+      "pendingEarnings": "Pending",
+      "paidEarnings": "Paid Out",
+      "autoPayoutNote": "Automatic payout is triggered after {{count}} successful subscriptions from your referrals.",
+      "minimumPayout": "Minimum payout amount: €{{amount}}",
+      "requestPayout": "Request Payout",
+      "payoutRequested": "Payout request submitted successfully!",
+      "payoutError": "Failed to request payout. Please try again.",
+      "payoutSettings": "Payout Settings",
+      "payoutMethod": "Payout Method",
+      "payoutMethods": {
+        "paypal": "PayPal",
+        "bankTransfer": "Bank Transfer (SEPA)",
+        "stripe": "Stripe"
+      },
+      "paypalEmail": "PayPal Email",
+      "paypalEmailPlaceholder": "your@paypal.com",
+      "accountHolder": "Account Holder Name",
+      "accountHolderPlaceholder": "John Doe",
+      "iban": "IBAN",
+      "ibanPlaceholder": "FR76 1234 5678 9012 3456 7890 123",
+      "bankName": "Bank Name",
+      "bankNamePlaceholder": "Your bank name",
+      "settingsSaved": "Settings saved successfully!",
+      "settingsError": "Failed to save settings. Please try again.",
+      "payoutHistory": "Payout History",
+      "payoutStatus": {
+        "requested": "Requested",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed"
+      },
+      "howItWorks": "How It Works",
+      "step1Title": "Share Your Link",
+      "step1Text": "Share your unique referral link with friends, family, or your audience.",
+      "step2Title": "They Sign Up",
+      "step2Text": "When someone clicks your link and creates an account, they're tracked as your referral.",
+      "step3Title": "They Subscribe",
+      "step3Text": "When your referral subscribes to any paid plan, you earn a commission.",
+      "step4Title": "Get Paid",
+      "step4Text": "Once you reach the minimum threshold, request a payout to your preferred method.",
+      "subscriptionTier": "Subscription Tier",
+      "yourCommission": "Your Commission"
     },
     "overview": {
       "title": "Dashboard",
@@ -425,7 +526,13 @@
       "pros": "Pros",
       "cons": "Cons",
       "tips": "Tips",
-      "eligibility": "Eligibility"
+      "eligibility": "Eligibility",
+      "moreAvailable": "{{count}} more platforms available",
+      "moreGuarantors": "{{count}} more guarantors available",
+      "upgradeToUnlock": "Upgrade your plan to unlock all housing platforms",
+      "saveLimitReached": "Save Limit Reached",
+      "upgradeToContinue": "Upgrade to Continue",
+      "saveLimitMessage": "You have saved {{current}} out of {{limit}} platforms allowed on your plan."
     },
     "procedures": {
       "title": "My Procedures",
@@ -506,7 +613,10 @@
       "statusUpdated": "Status updated",
       "stepUpdated": "Step updated",
       "deleted": "Procedure deleted",
-      "nameRequired": "Procedure name is required"
+      "nameRequired": "Procedure name is required",
+      "limitReached": "Procedure Limit Reached",
+      "upgradeToContinue": "Upgrade to Continue",
+      "limitMessage": "You have created {{current}} out of {{limit}} procedures allowed on your plan."
     },
     "chat": {
       "title": "AI Assistant",
@@ -528,6 +638,9 @@
       "messages": "messages",
       "loadingMessages": "Loading messages...",
       "sources": "Sources",
+      "limitReached": "Daily Message Limit Reached",
+      "limitMessage": "You have sent {{current}} out of {{limit}} AI messages allowed today on your plan.",
+      "upgradeDescription": "Upgrade your plan to get more daily AI messages and unlock premium features.",
       "suggestions": {
         "housing": "What housing benefits am I eligible for?",
         "eligibility": "Check my eligibility for CAF benefits",
@@ -655,6 +768,9 @@
         "requestExport": "Request Export",
         "exportRequested": "Export requested! You'll receive your data by email shortly.",
         "exportRateLimit": "You can only request one export per day. Please try again tomorrow.",
+        "exportPremiumOnly": "Data export is only available with the Ultimate plan.",
+        "upgradeRequired": "Premium Feature",
+        "upgradeToContinue": "Upgrade to Unlock",
         "signOut": "Sign out",
         "signOutDesc": "Sign out of your account on this device",
         "dangerZone": "Danger Zone",
@@ -757,7 +873,9 @@
       "createFreeAccount": "Create free account",
       "goToDashboard": "Go to your dashboard",
       "dashboardDescription": "Track your benefits and start your procedures from your dashboard.",
-      "newSimulation": "Start a new simulation"
+      "newSimulation": "Start a new simulation",
+      "moreAidesAvailable": "{{count}} more benefits available",
+      "upgradeToSeeAll": "Upgrade your plan to see all benefits you're eligible for"
     }
   },
   

@@ -234,7 +234,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/users" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/users" style="${buttonStyle}">
           Voir dans l'admin
         </a>
       </div>
@@ -254,7 +254,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/users" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/users" style="${buttonStyle}">
           Voir dans l'admin
         </a>
       </div>
@@ -524,6 +524,39 @@ const templates = {
     `),
   }),
 
+  adminAffiliateApplication: (data) => ({
+    subject: `Nouvelle demande d'affiliation - ${data.companyName || 'Nouvel affilié'}`,
+    html: wrapEmailContent(`
+      <h2 style="color: #1e293b; margin-top: 0;">Nouvelle demande d'affiliation</h2>
+      
+      <p>Un utilisateur souhaite rejoindre le programme d'affiliation AIDE+.</p>
+      
+      <div style="${cardStyle}">
+        <h3 style="margin-top: 0;">Informations du demandeur</h3>
+        <p style="margin: 5px 0;"><strong>Email utilisateur :</strong> ${data.userEmail || 'Non disponible'}</p>
+        <p style="margin: 5px 0;"><strong>Nom de l'entreprise :</strong> ${data.companyName}</p>
+        <p style="margin: 5px 0;"><strong>Email de contact :</strong> ${data.contactEmail}</p>
+        <p style="margin: 5px 0;"><strong>Site web :</strong> ${data.website}</p>
+      </div>
+      
+      <div style="${cardStyle}">
+        <h3 style="margin-top: 0;">Description / Motivation</h3>
+        <p style="margin: 5px 0; white-space: pre-wrap;">${data.description}</p>
+      </div>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/affiliates" style="${buttonStyle}">
+          Examiner la demande
+        </a>
+      </div>
+      
+      <p style="color: #64748b; font-size: 14px;">
+        ID affilié : ${data.affiliateId}<br>
+        Date de la demande : ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+      </p>
+    `),
+  }),
+
   // ========================================
   // CONTACT & SUPPORT EMAILS
   // ========================================
@@ -562,7 +595,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/support" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/support" style="${buttonStyle}">
           Répondre dans l'admin
         </a>
       </div>
@@ -1007,6 +1040,11 @@ class EmailService {
   async sendAdminNewUser(data) {
     const template = templates.adminNewUser(data);
     return this.send({ to: emailConfig.adminEmail || emailConfig.supportEmail, ...template, templateKey: 'admin_new_user' });
+  }
+
+  async sendAdminAffiliateApplication(data) {
+    const template = templates.adminAffiliateApplication(data);
+    return this.send({ to: emailConfig.adminEmail || emailConfig.supportEmail, ...template, templateKey: 'admin_affiliate_application' });
   }
 
   // ========================================

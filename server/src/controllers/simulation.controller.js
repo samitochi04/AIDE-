@@ -1,5 +1,7 @@
 import { simulationService } from '../services/simulation.service.js';
+import { subscriptionService } from '../services/subscription.service.js';
 import { formatResponse } from '../utils/helpers.js';
+import { TIER_LIMITS } from '../utils/constants.js';
 import logger from '../utils/logger.js';
 
 /**
@@ -18,12 +20,74 @@ export const runSimulation = async (req, res, next) => {
       });
     }
 
+    // Get user's tier and limits
+    let tier = 'free';
+    let limits = TIER_LIMITS.free;
+    
+    if (req.user?.id) {
+      const userLimits = await subscriptionService.getUserLimits(req.user.id);
+      tier = userLimits.tier;
+      limits = userLimits.limits;
+      
+      // Check simulation limit
+      const limitCheck = await subscriptionService.canRunSimulation(req.user.id);
+      if (!limitCheck.allowed) {
+        return res.status(403).json(formatResponse({
+          error: 'limit_exceeded',
+          ...limitCheck,
+          upgradeUrl: '/pricing',
+        }, limitCheck.message));
+      }
+    }
+
     // Run simulation
     const results = await simulationService.runSimulation(answers, language);
+
+    // Limit aides based on tier
+    const aidesLimit = limits.aides || 3;
+    const allAides = results.eligibleAides || [];
+    const totalAides = allAides.length;
+    
+    if (!limits.allAides && aidesLimit > 0 && totalAides > aidesLimit) {
+      // Limit the number of aides shown
+      results.eligibleAides = allAides.slice(0, aidesLimit);
+      results.aidesLimited = true;
+      results.totalAidesAvailable = totalAides;
+      results.aidesShown = aidesLimit;
+      
+      // Recalculate totals based on limited aides
+      results.totalMonthly = results.eligibleAides.reduce(
+        (sum, aide) => sum + (aide.monthlyAmount || 0),
+        0
+      );
+      results.totalAnnual = results.totalMonthly * 12;
+      
+      // Add info about hidden aides
+      const hiddenAides = allAides.slice(aidesLimit);
+      results.hiddenAidesMonthly = hiddenAides.reduce(
+        (sum, aide) => sum + (aide.monthlyAmount || 0),
+        0
+      );
+      results.upgradeMessage = language === 'fr'
+        ? `Il y a ${totalAides - aidesLimit} autres aides disponibles ! Passez à un forfait supérieur pour les découvrir.`
+        : `There are ${totalAides - aidesLimit} more benefits available! Upgrade to discover them.`;
+    }
 
     // Save for logged-in users
     if (req.user?.id) {
       await simulationService.saveSimulation(req.user.id, answers, results);
+    }
+
+    // Include usage info if user is logged in
+    if (req.user?.id) {
+      const limitCheck = await subscriptionService.canRunSimulation(req.user.id);
+      results.usage = {
+        remaining: limitCheck.remaining,
+        limit: limitCheck.limit,
+        tier: tier,
+        unlimited: limitCheck.limit === Infinity,
+        aidesLimit: limits.allAides ? 'unlimited' : aidesLimit,
+      };
     }
 
     res.json(formatResponse(results));
@@ -127,9 +191,28 @@ export const saveAide = async (req, res, next) => {
       });
     }
 
+    // Check if user can save more aides
+    const limitCheck = await subscriptionService.canSaveAide(userId);
+    if (!limitCheck.allowed) {
+      return res.status(403).json(formatResponse({
+        error: 'limit_exceeded',
+        ...limitCheck,
+        upgradeUrl: '/pricing',
+      }, limitCheck.message));
+    }
+
     const savedAide = await simulationService.saveAide(userId, aide, simulationId);
 
-    res.json(formatResponse(savedAide));
+    res.json(formatResponse({
+      ...savedAide,
+      usage: {
+        current: limitCheck.current + 1,
+        limit: limitCheck.limit,
+        remaining: limitCheck.remaining - 1,
+        tier: limitCheck.tier,
+        unlimited: limitCheck.limit === Infinity,
+      },
+    }));
   } catch (error) {
     // Handle duplicate error gracefully
     if (error.code === '23505') {
