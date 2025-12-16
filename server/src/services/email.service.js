@@ -234,7 +234,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/users" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/users" style="${buttonStyle}">
           Voir dans l'admin
         </a>
       </div>
@@ -254,7 +254,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/users" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/users" style="${buttonStyle}">
           Voir dans l'admin
         </a>
       </div>
@@ -525,7 +525,7 @@ const templates = {
   }),
 
   adminAffiliateApplication: (data) => ({
-    subject: `🆕 Nouvelle demande d'affiliation - ${data.companyName || 'Nouvel affilié'}`,
+    subject: `Nouvelle demande d'affiliation - ${data.companyName || 'Nouvel affilié'}`,
     html: wrapEmailContent(`
       <h2 style="color: #1e293b; margin-top: 0;">Nouvelle demande d'affiliation</h2>
       
@@ -545,7 +545,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/affiliates" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/affiliates" style="${buttonStyle}">
           Examiner la demande
         </a>
       </div>
@@ -595,7 +595,7 @@ const templates = {
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/admin/support" style="${buttonStyle}">
+        <a href="${APP_CONFIG.frontendUrl}/x-admin/support" style="${buttonStyle}">
           Répondre dans l'admin
         </a>
       </div>

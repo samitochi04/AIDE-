@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import DOMPurify from 'dompurify';
 import { Button, Card, Loading } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
@@ -304,7 +305,11 @@ export function Chat() {
     // Italic text
     result = result.replace(/\*(.*?)\*/g, '<em>$1</em>');
     
-    return result;
+    // Sanitize to prevent XSS attacks
+    return DOMPurify.sanitize(result, { 
+      ALLOWED_TAGS: ['a', 'strong', 'em', 'b', 'i'],
+      ALLOWED_ATTR: ['href', 'target', 'rel', 'class']
+    });
   };
 
   // Render markdown-like formatting

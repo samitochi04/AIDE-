@@ -122,6 +122,22 @@
       "title": "AIDE+ | Discover all the benefits you're entitled to in France",
       "description": "AIDE+ guides you through administrative procedures in France. Free simulation, personalized AI assistant and step-by-step guides.",
       "keywords": "France benefits, CAF, APL, RSA, administrative procedures, foreigners France, benefits simulation"
+    },
+    "simulation": {
+      "title": "Free Benefits Simulation | AIDE+",
+      "description": "Discover in 5 minutes all the financial benefits you're entitled to in France. 100% free and personalized simulation."
+    },
+    "pricing": {
+      "title": "Pricing and Plans | AIDE+",
+      "description": "Discover our AIDE+ subscription plans. Access all benefits, unlimited AI assistant and personalized guides."
+    },
+    "blog": {
+      "title": "Blog and Guides | AIDE+",
+      "description": "Tips, tutorials and guides to help you with your administrative procedures in France."
+    },
+    "contact": {
+      "title": "Contact Us | AIDE+",
+      "description": "Have a question? Contact the AIDE+ team for help with your administrative procedures."
     }
   },
   

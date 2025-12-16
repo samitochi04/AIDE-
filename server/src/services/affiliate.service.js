@@ -321,7 +321,7 @@ class AffiliateService {
       throw new NotFoundError('Active affiliate');
     }
 
-    const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.fr';
+    const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.eu';
     return {
       code: affiliate.affiliate_code, // Database uses affiliate_code column
       link: `${baseUrl}/?ref=${affiliate.affiliate_code}`,
@@ -479,7 +479,7 @@ class AffiliateService {
       if (updates.status === 'approved' && affiliateBefore?.status !== 'approved') {
         const user = await userRepository.findById(affiliateBefore.user_id);
         if (user?.email) {
-          const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.fr';
+          const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.eu';
           await emailService.sendAffiliateWelcome(user.email, {
             affiliateLink: `${baseUrl}/?ref=${affiliateBefore.affiliate_code}`, // Database uses affiliate_code column
             commissionRate: (affiliateBefore.commission_rate * 100).toFixed(0),

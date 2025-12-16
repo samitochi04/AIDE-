@@ -122,6 +122,22 @@
       "title": "AIDE+ | Découvrez toutes les aides auxquelles vous avez droit en France",
       "description": "AIDE+ vous guide dans vos démarches administratives en France. Simulation gratuite, assistant IA personnalisé et guides étape par étape.",
       "keywords": "aides France, CAF, APL, RSA, démarches administratives, étrangers France, simulation aides"
+    },
+    "simulation": {
+      "title": "Simulation gratuite des aides | AIDE+",
+      "description": "Découvrez en 5 minutes toutes les aides financières auxquelles vous avez droit en France. Simulation 100% gratuite et personnalisée."
+    },
+    "pricing": {
+      "title": "Tarifs et Abonnements | AIDE+",
+      "description": "Découvrez nos offres d'abonnement AIDE+. Accédez à toutes les aides, assistant IA illimité et guides personnalisés."
+    },
+    "blog": {
+      "title": "Blog et Guides | AIDE+",
+      "description": "Conseils, tutoriels et guides pour vous aider dans vos démarches administratives en France."
+    },
+    "contact": {
+      "title": "Contactez-nous | AIDE+",
+      "description": "Une question ? Contactez l'équipe AIDE+ pour obtenir de l'aide sur vos démarches administratives."
     }
   },
   

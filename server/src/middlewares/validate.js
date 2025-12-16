@@ -151,11 +151,19 @@ export const schemas = {
   affiliateRegistration: Joi.object({
     companyName: Joi.string().max(255).allow('', null),
     website: Joi.string().max(500).allow('', null).custom((value, helpers) => {
-      // Allow empty string or valid URI
+      // Allow empty string or null
       if (!value || value === '') return value;
+      
+      // Auto-prefix with https:// if no protocol
+      let url = value.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      
+      // Validate as URL
       try {
-        new URL(value);
-        return value;
+        new URL(url);
+        return url; // Return the normalized URL with protocol
       } catch {
         return helpers.error('string.uri');
       }
