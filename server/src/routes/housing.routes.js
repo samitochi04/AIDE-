@@ -10,20 +10,20 @@ import { authenticate, optionalAuth } from '../middlewares/auth.js';
 const router = Router();
 
 // ===========================================
-// Public Routes (no auth required)
+// Public Routes (with optional auth for limit enforcement)
 // ===========================================
 
 /**
  * GET /platforms
- * Get all rental platforms by category
+ * Get all rental platforms by category (limited by tier)
  */
-router.get('/platforms', housingController.getPlatforms);
+router.get('/platforms', optionalAuth, housingController.getPlatforms);
 
 /**
  * GET /platforms/:category
  * Get platforms by specific category
  */
-router.get('/platforms/:category', housingController.getPlatformsByCategory);
+router.get('/platforms/:category', optionalAuth, housingController.getPlatformsByCategory);
 
 /**
  * GET /platform/:id
@@ -45,9 +45,9 @@ router.get('/resources', housingController.getResources);
 
 /**
  * GET /guarantors
- * Get guarantor services (Visale, GarantMe, etc.)
+ * Get guarantor services (limited by tier)
  */
-router.get('/guarantors', housingController.getGuarantorServices);
+router.get('/guarantors', optionalAuth, housingController.getGuarantorServices);
 
 /**
  * GET /tips

@@ -1,10 +1,13 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Crown } from 'lucide-react';
 import { Button, Card, Badge, Loading, Modal } from '../../../components/ui';
 import { useToast } from '../../../context/ToastContext';
 import api from '../../../config/api';
 import { API_ENDPOINTS } from '../../../config/api';
+import { ROUTES } from '../../../config/routes';
 import styles from './Procedures.module.css';
 
 const containerVariants = {
@@ -84,6 +87,7 @@ const DEFAULT_STEPS = {
 export function Procedures() {
   const { t } = useTranslation();
   const toast = useToast();
+  const navigate = useNavigate();
   const [procedures, setProcedures] = useState([]);
   const [savedAides, setSavedAides] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -92,6 +96,8 @@ export function Procedures() {
   const [expandedProcedure, setExpandedProcedure] = useState(null);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeInfo, setUpgradeInfo] = useState(null);
   
   // New procedure form state
   const [newProcedure, setNewProcedure] = useState({
@@ -108,7 +114,10 @@ export function Procedures() {
     try {
       setLoading(true);
       const response = await api.get(API_ENDPOINTS.PROCEDURES.LIST);
-      setProcedures(response.data || []);
+      // Handle both old format (array) and new format (object with procedures array)
+      const data = response.data;
+      const proceduresArray = Array.isArray(data) ? data : (data?.procedures || []);
+      setProcedures(proceduresArray);
     } catch (error) {
       console.error('Error fetching procedures:', error);
       // Don't use toast here to avoid dependency issues
@@ -197,7 +206,20 @@ export function Procedures() {
       });
     } catch (error) {
       console.error('Error creating procedure:', error);
-      toast.error(t('dashboard.procedures.errorCreating'));
+      // Check for limit exceeded error - API wraps in { data: { error: ... } }
+      const errorData = error.data?.data || error.data;
+      if (error.status === 403 && errorData?.error === 'limit_exceeded') {
+        setUpgradeInfo({
+          current: errorData.current,
+          limit: errorData.limit,
+          tier: errorData.tier,
+          message: errorData.message || errorData.messageEn
+        });
+        setShowUpgradeModal(true);
+        setShowNewModal(false);
+      } else {
+        toast.error(t('dashboard.procedures.errorCreating'));
+      }
     } finally {
       setActionLoading(null);
     }
@@ -752,6 +774,38 @@ export function Procedures() {
                   {t('common.delete')}
                 </>
               )}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Upgrade Required Modal */}
+      <Modal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        title={t('dashboard.procedures.limitReached')}
+      >
+        <div className={styles.upgradeModal}>
+          <div className={styles.upgradeIcon}>
+            <Crown size={48} />
+          </div>
+          <h3>{t('dashboard.procedures.upgradeToContinue')}</h3>
+          <p>
+            {upgradeInfo?.message || t('dashboard.procedures.limitMessage', { 
+              current: upgradeInfo?.current, 
+              limit: upgradeInfo?.limit 
+            })}
+          </p>
+          <div className={styles.upgradeActions}>
+            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
+              {t('common.close')}
+            </Button>
+            <Button 
+              variant="primary" 
+              onClick={() => navigate(ROUTES.PRICING)}
+            >
+              <Crown size={16} />
+              {t('common.upgrade')}
             </Button>
           </div>
         </div>

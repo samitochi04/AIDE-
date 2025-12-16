@@ -144,9 +144,9 @@ class SubscriptionRepository extends BaseRepository {
         .eq('status', 'active'),
       this.count({ status: 'cancelled' }),
       this.db
-        .from('payments')
-        .select('amount')
-        .eq('status', 'succeeded'),
+        .from('stripe_invoices')
+        .select('amount_paid')
+        .eq('status', 'paid'),
     ]);
 
     const tierCounts = {};
@@ -154,7 +154,7 @@ class SubscriptionRepository extends BaseRepository {
       tierCounts[s.tier] = (tierCounts[s.tier] || 0) + 1;
     });
 
-    const totalRevenue = revenue.data?.reduce((sum, p) => sum + p.amount, 0) || 0;
+    const totalRevenue = revenue.data?.reduce((sum, p) => sum + p.amount_paid, 0) || 0;
 
     return {
       active,
@@ -249,7 +249,7 @@ class SubscriptionRepository extends BaseRepository {
  */
 class PaymentRepository extends BaseRepository {
   constructor() {
-    super('payments');
+    super('stripe_invoices');
   }
 
   /**
@@ -275,14 +275,14 @@ class PaymentRepository extends BaseRepository {
   async getRevenueByPeriod(startDate, endDate) {
     const { data, error } = await this.db
       .from(this.tableName)
-      .select('amount, currency, created_at')
-      .eq('status', 'succeeded')
+      .select('amount_paid, currency, created_at')
+      .eq('status', 'paid')
       .gte('created_at', startDate.toISOString())
       .lte('created_at', endDate.toISOString());
 
     if (error) throw error;
 
-    const total = data?.reduce((sum, p) => sum + p.amount, 0) || 0;
+    const total = data?.reduce((sum, p) => sum + p.amount_paid, 0) || 0;
     return {
       total: total / 100,
       count: data?.length || 0,

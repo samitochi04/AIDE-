@@ -14,6 +14,7 @@ import proceduresRoutes from './procedures.routes.js';
 import housingRoutes from './housing.routes.js';
 import profileRoutes from './profile.routes.js';
 import contentRoutes from './content.routes.js';
+import subscriptionRoutes from './subscription.routes.js';
 
 const router = Router();
 
@@ -40,6 +41,7 @@ export const mountRoutes = (app) => {
   app.use(`${API_VERSION}/housing`, housingRoutes);
   app.use(`${API_VERSION}/profile`, profileRoutes);
   app.use(`${API_VERSION}/content`, contentRoutes);
+  app.use(`${API_VERSION}/subscription`, subscriptionRoutes);
 
   return app;
 };

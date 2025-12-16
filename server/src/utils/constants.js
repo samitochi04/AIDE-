@@ -7,37 +7,185 @@ export const SUBSCRIPTION_TIERS = {
   FREE: 'free',
   BASIC: 'basic',
   PREMIUM: 'premium',
-  ENTERPRISE: 'enterprise',
+  ULTIMATE: 'ultimate',
 };
 
-// Daily AI message limits by tier
+// Subscription pricing (EUR)
+export const SUBSCRIPTION_PRICING = {
+  free: { monthly: 0, yearly: 0 },
+  basic: { monthly: 4.99, yearly: 49.99 },
+  premium: { monthly: 9.99, yearly: 99.99 },
+  ultimate: { monthly: 14.99, yearly: 149.99 },
+};
+
+// ===========================================
+// TIER LIMITS - Complete feature limits per tier
+// ===========================================
+export const TIER_LIMITS = {
+  free: {
+    // Benefits/Aides
+    aides: 3,                    // Number of aides visible
+    allAides: false,             // Access to all aides
+    
+    // Simulation
+    simulationsPerDay: 5,        // Simulations per day
+    unlimitedSimulations: false,
+    
+    // Housing
+    guarantorServices: 1,        // Guarantor services available
+    housingSites: 5,             // Housing sites/platforms visible
+    allHousingSites: false,
+    
+    // Favorites/Saves
+    savedAides: 4,               // Max saved/favorite aides
+    savedHousing: 4,             // Max saved housing platforms
+    unlimitedSaves: false,
+    
+    // Procedures
+    procedures: 2,               // Tracked procedures
+    unlimitedProcedures: false,
+    
+    // Content (Tutorials, etc.)
+    contentsAccess: 5,           // Number of tutorials/content accessible
+    allContents: false,
+    
+    // AI Assistant
+    aiMessagesPerDay: 3,         // AI messages per day
+    
+    // Export
+    dataExport: false,           // Can export data
+    
+    // Support
+    supportLevel: 'community',   // community | priority
+    
+    // Labels for UI
+    label: 'Gratuit',
+    labelEn: 'Free',
+  },
+  
+  basic: {
+    aides: Infinity,
+    allAides: true,
+    
+    simulationsPerDay: Infinity,
+    unlimitedSimulations: true,
+    
+    guarantorServices: Infinity,
+    housingSites: 15,
+    allHousingSites: false,
+    
+    savedAides: 10,
+    savedHousing: 10,
+    unlimitedSaves: false,
+    
+    procedures: 10,
+    unlimitedProcedures: false,
+    
+    contentsAccess: 15,
+    allContents: false,
+    
+    aiMessagesPerDay: 20,
+    
+    dataExport: false,
+    
+    supportLevel: 'community',
+    
+    label: 'Basic',
+    labelEn: 'Basic',
+  },
+  
+  premium: {
+    aides: Infinity,
+    allAides: true,
+    
+    simulationsPerDay: Infinity,
+    unlimitedSimulations: true,
+    
+    guarantorServices: Infinity,
+    housingSites: Infinity,
+    allHousingSites: true,
+    
+    savedAides: Infinity,
+    savedHousing: Infinity,
+    unlimitedSaves: true,
+    
+    procedures: Infinity,
+    unlimitedProcedures: true,
+    
+    contentsAccess: Infinity,
+    allContents: true,
+    
+    aiMessagesPerDay: 60,
+    
+    dataExport: false,
+    
+    supportLevel: 'priority',
+    
+    label: 'Premium',
+    labelEn: 'Premium',
+    popular: true,
+  },
+  
+  ultimate: {
+    aides: Infinity,
+    allAides: true,
+    
+    simulationsPerDay: Infinity,
+    unlimitedSimulations: true,
+    
+    guarantorServices: Infinity,
+    housingSites: Infinity,
+    allHousingSites: true,
+    
+    savedAides: Infinity,
+    savedHousing: Infinity,
+    unlimitedSaves: true,
+    
+    procedures: Infinity,
+    unlimitedProcedures: true,
+    
+    contentsAccess: Infinity,
+    allContents: true,
+    
+    aiMessagesPerDay: 300,
+    
+    dataExport: true,
+    
+    supportLevel: 'priority',
+    
+    label: 'Ultimate',
+    labelEn: 'Ultimate',
+  },
+};
+
+// Legacy AI limits (kept for backward compatibility)
 export const AI_MESSAGE_LIMITS = {
-  [SUBSCRIPTION_TIERS.FREE]: 10,
-  [SUBSCRIPTION_TIERS.BASIC]: 50,
-  [SUBSCRIPTION_TIERS.PREMIUM]: 200,
-  [SUBSCRIPTION_TIERS.ENTERPRISE]: Infinity,
+  [SUBSCRIPTION_TIERS.FREE]: TIER_LIMITS.free.aiMessagesPerDay,
+  [SUBSCRIPTION_TIERS.BASIC]: TIER_LIMITS.basic.aiMessagesPerDay,
+  [SUBSCRIPTION_TIERS.PREMIUM]: TIER_LIMITS.premium.aiMessagesPerDay,
+  [SUBSCRIPTION_TIERS.ULTIMATE]: TIER_LIMITS.ultimate.aiMessagesPerDay,
 };
 
 // AI limits configuration (used by ai.service.js)
 export const AI_LIMITS = {
   free: {
-    messagesPerMonth: 30,
-    messagesPerDay: 10,
+    messagesPerMonth: TIER_LIMITS.free.aiMessagesPerDay * 30,
+    messagesPerDay: TIER_LIMITS.free.aiMessagesPerDay,
     maxTokens: 1000,
   },
   basic: {
-    messagesPerMonth: 150,
-    messagesPerDay: 50,
+    messagesPerMonth: TIER_LIMITS.basic.aiMessagesPerDay * 30,
+    messagesPerDay: TIER_LIMITS.basic.aiMessagesPerDay,
     maxTokens: 2000,
   },
   premium: {
-    messagesPerMonth: 500,
-    messagesPerDay: 200,
+    messagesPerMonth: TIER_LIMITS.premium.aiMessagesPerDay * 30,
+    messagesPerDay: TIER_LIMITS.premium.aiMessagesPerDay,
     maxTokens: 4000,
   },
-  enterprise: {
-    messagesPerMonth: Infinity,
-    messagesPerDay: Infinity,
+  ultimate: {
+    messagesPerMonth: TIER_LIMITS.ultimate.aiMessagesPerDay * 30,
+    messagesPerDay: TIER_LIMITS.ultimate.aiMessagesPerDay,
     maxTokens: 8000,
   },
 };

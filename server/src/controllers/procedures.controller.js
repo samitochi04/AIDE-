@@ -1,4 +1,5 @@
 import { proceduresService } from '../services/procedures.service.js';
+import { subscriptionService } from '../services/subscription.service.js';
 import { formatResponse } from '../utils/helpers.js';
 
 /**
@@ -11,7 +12,20 @@ export const getUserProcedures = async (req, res, next) => {
     const { status, category } = req.query;
     
     const procedures = await proceduresService.getUserProcedures(userId, { status, category });
-    res.json(formatResponse(procedures));
+    
+    // Include limit info
+    const limitCheck = await subscriptionService.canTrackProcedure(userId);
+    
+    res.json(formatResponse({
+      procedures,
+      usage: {
+        current: limitCheck.current,
+        limit: limitCheck.limit,
+        remaining: limitCheck.remaining,
+        tier: limitCheck.tier,
+        unlimited: limitCheck.limit === Infinity,
+      },
+    }));
   } catch (error) {
     next(error);
   }
@@ -55,6 +69,16 @@ export const createProcedure = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const procedureData = req.body;
+    
+    // Check if user can track more procedures
+    const limitCheck = await subscriptionService.canTrackProcedure(userId);
+    if (!limitCheck.allowed) {
+      return res.status(403).json(formatResponse({
+        error: 'limit_exceeded',
+        ...limitCheck,
+        upgradeUrl: '/pricing',
+      }, limitCheck.message));
+    }
     
     const procedure = await proceduresService.createProcedure(userId, procedureData);
     res.status(201).json(formatResponse(procedure));

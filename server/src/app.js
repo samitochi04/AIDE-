@@ -25,7 +25,7 @@ app.use(cors({
 // Body Parsing
 // ===========================================
 // Raw body for Stripe webhooks (must be before express.json())
-app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
+app.use('/api/v1/stripe/webhook', express.raw({ type: 'application/json' }));
 
 // JSON parsing for all other routes
 app.use(express.json({ limit: '10mb' }));

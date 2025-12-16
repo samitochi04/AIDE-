@@ -30,7 +30,7 @@ import {
   Profile as DashboardProfile,
   Settings as DashboardSettings
 } from './pages/dashboard'
-import { Login, Register, AuthCallback } from './pages/auth'
+import { Login, Register, AuthCallback, CheckoutSuccess, CheckoutCancel } from './pages/auth'
 import { Simulation, Results as SimulationResults } from './pages/simulation'
 import { Pricing, Contact, Blog, BlogPost } from './pages/public'
 
@@ -91,6 +91,8 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/auth/callback" element={<AuthCallback />} />
+                        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
                         
                         {/* Simulation Routes */}
                         <Route path="/simulation" element={<Simulation />} />

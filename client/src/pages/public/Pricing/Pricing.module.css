@@ -15,7 +15,7 @@
 }
 
 .heroContent {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -84,32 +84,51 @@
 /* Plans Section */
 .plansSection {
   padding: var(--spacing-8) var(--spacing-4);
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .plansGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-6);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+  align-items: stretch;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+  .plansGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+  }
+}
+
+@media (max-width: 640px) {
   .plansGrid {
     grid-template-columns: 1fr;
   }
 }
 
+.planWrapper {
+  height: 100%;
+}
+
 .planCard {
-  padding: var(--spacing-8);
+  padding: var(--spacing-6);
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .planCard.popular {
   border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
 }
 
 .popularBadge {
@@ -127,14 +146,31 @@
 }
 
 .planHeader {
-  margin-bottom: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
+  text-align: center;
+}
+
+.planIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-3);
 }
 
 .planName {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 var(--spacing-2);
+  margin: 0 0 var(--spacing-1);
+}
+
+.planTagline {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
 }
 
 .planDescription {
@@ -146,18 +182,19 @@
 .planPrice {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: var(--spacing-1);
-  margin-bottom: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
 }
 
 .currency {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .amount {
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-4xl);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1;
@@ -170,38 +207,66 @@
 
 .yearlyNote {
   font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  margin: 0 0 var(--spacing-6);
+  color: var(--color-success);
+  text-align: center;
+  margin: 0 0 var(--spacing-4);
+  font-weight: 500;
+}
+
+/* Features Container */
+.featuresContainer {
+  flex: 1;
+  margin-bottom: var(--spacing-4);
+}
+
+.featureCategory {
+  margin-bottom: var(--spacing-3);
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--spacing-2);
+}
+
+.categoryName {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .featuresList {
   list-style: none;
   padding: 0;
-  margin: 0 0 var(--spacing-8);
-  flex: 1;
+  margin: 0;
 }
 
 .feature {
   display: flex;
   align-items: center;
-  gap: var(--spacing-3);
-  padding: var(--spacing-3) 0;
-  font-size: var(--font-size-sm);
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) 0;
+  font-size: var(--font-size-xs);
   color: var(--color-text);
-  border-bottom: 1px solid var(--color-border-light);
 }
 
-.feature:last-child {
-  border-bottom: none;
-}
-
-.feature i {
-  font-size: var(--font-size-lg);
-  color: var(--color-success);
+.feature.highlight {
+  color: var(--color-primary);
+  font-weight: 500;
 }
 
 .feature.disabled {
   color: var(--color-text-tertiary);
+}
+
+.feature i {
+  font-size: var(--font-size-base);
+  color: var(--color-success);
 }
 
 .feature.disabled i {
@@ -210,12 +275,37 @@
 
 .planCta {
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Trust Section */
+.trustSection {
+  padding: var(--spacing-8) var(--spacing-4);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.trustBadges {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.trustBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
 }
 
 /* Comparison Section */
 .comparisonSection {
   padding: var(--spacing-16) var(--spacing-4);
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -227,17 +317,62 @@
   margin: 0 0 var(--spacing-8);
 }
 
+.comparisonTableWrapper {
+  overflow-x: auto;
+}
+
 .comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border);
 }
 
+.comparisonTable th,
+.comparisonTable td {
+  padding: var(--spacing-3) var(--spacing-4);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.comparisonTable th {
+  background: var(--color-surface-elevated);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.comparisonTable th:first-child,
+.comparisonTable td:first-child {
+  text-align: left;
+}
+
+.comparisonTable td {
+  color: var(--color-text-secondary);
+}
+
+.comparisonTable tbody tr:hover {
+  background: var(--color-surface-elevated);
+}
+
+.popularColumn {
+  background: var(--color-primary-light) !important;
+}
+
+.priceRow {
+  font-weight: 600;
+}
+
+.priceRow td {
+  color: var(--color-text);
+}
+
 .tableHeader,
 .tableRow {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr repeat(4, 1fr);
   gap: var(--spacing-4);
 }
 
@@ -372,13 +507,20 @@
   }
   
   .amount {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-3xl);
   }
   
-  .tableHeader,
-  .tableRow {
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: var(--spacing-2);
+  .comparisonTable th,
+  .comparisonTable td {
+    padding: var(--spacing-2);
+    font-size: var(--font-size-xs);
+  }
+  
+  .trustBadges {
+    gap: var(--spacing-4);
+  }
+  
+  .trustBadge {
     font-size: var(--font-size-xs);
   }
 }

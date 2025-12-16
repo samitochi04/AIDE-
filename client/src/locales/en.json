@@ -425,7 +425,13 @@
       "pros": "Pros",
       "cons": "Cons",
       "tips": "Tips",
-      "eligibility": "Eligibility"
+      "eligibility": "Eligibility",
+      "moreAvailable": "{{count}} more platforms available",
+      "moreGuarantors": "{{count}} more guarantors available",
+      "upgradeToUnlock": "Upgrade your plan to unlock all housing platforms",
+      "saveLimitReached": "Save Limit Reached",
+      "upgradeToContinue": "Upgrade to Continue",
+      "saveLimitMessage": "You have saved {{current}} out of {{limit}} platforms allowed on your plan."
     },
     "procedures": {
       "title": "My Procedures",
@@ -506,7 +512,10 @@
       "statusUpdated": "Status updated",
       "stepUpdated": "Step updated",
       "deleted": "Procedure deleted",
-      "nameRequired": "Procedure name is required"
+      "nameRequired": "Procedure name is required",
+      "limitReached": "Procedure Limit Reached",
+      "upgradeToContinue": "Upgrade to Continue",
+      "limitMessage": "You have created {{current}} out of {{limit}} procedures allowed on your plan."
     },
     "chat": {
       "title": "AI Assistant",
@@ -528,6 +537,9 @@
       "messages": "messages",
       "loadingMessages": "Loading messages...",
       "sources": "Sources",
+      "limitReached": "Daily Message Limit Reached",
+      "limitMessage": "You have sent {{current}} out of {{limit}} AI messages allowed today on your plan.",
+      "upgradeDescription": "Upgrade your plan to get more daily AI messages and unlock premium features.",
       "suggestions": {
         "housing": "What housing benefits am I eligible for?",
         "eligibility": "Check my eligibility for CAF benefits",
@@ -655,6 +667,9 @@
         "requestExport": "Request Export",
         "exportRequested": "Export requested! You'll receive your data by email shortly.",
         "exportRateLimit": "You can only request one export per day. Please try again tomorrow.",
+        "exportPremiumOnly": "Data export is only available with the Ultimate plan.",
+        "upgradeRequired": "Premium Feature",
+        "upgradeToContinue": "Upgrade to Unlock",
         "signOut": "Sign out",
         "signOutDesc": "Sign out of your account on this device",
         "dangerZone": "Danger Zone",
@@ -757,7 +772,9 @@
       "createFreeAccount": "Create free account",
       "goToDashboard": "Go to your dashboard",
       "dashboardDescription": "Track your benefits and start your procedures from your dashboard.",
-      "newSimulation": "Start a new simulation"
+      "newSimulation": "Start a new simulation",
+      "moreAidesAvailable": "{{count}} more benefits available",
+      "upgradeToSeeAll": "Upgrade your plan to see all benefits you're eligible for"
     }
   },
   

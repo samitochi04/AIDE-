@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '../../ui';
 import { ROUTES } from '../../../config/routes';
+import { useAuth } from '../../../context';
 import styles from './Sidebar.module.css';
 
 const navItems = [
@@ -60,6 +61,10 @@ const bottomNavItems = [
 export function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse }) {
   const { t } = useTranslation();
   const location = useLocation();
+  const { profile } = useAuth();
+  
+  // Only show upgrade card for free tier users
+  const isFreeTier = !profile?.subscription_tier || profile.subscription_tier === 'free';
 
   const sidebarVariants = {
     open: {
@@ -135,7 +140,7 @@ export function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse }) {
       </nav>
 
       <div className={styles.footer}>
-        {!isCollapsed && (
+        {!isCollapsed && isFreeTier && (
           <div className={styles.upgradeCard}>
             <i className="ri-vip-crown-line" />
             <div className={styles.upgradeContent}>

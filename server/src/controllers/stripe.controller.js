@@ -20,11 +20,29 @@ export const handleWebhook = async (req, res, next) => {
  */
 export const createCheckoutSession = async (req, res, next) => {
   try {
-    const { tier } = req.body;
+    const { tier, interval = 'monthly' } = req.body;
     const { id: userId, email, user_metadata } = req.user;
     const name = user_metadata?.full_name || user_metadata?.name || email;
 
-    const session = await stripeService.createCheckoutSession(userId, email, name, tier);
+    // Validate tier and interval
+    const validTiers = ['basic', 'premium', 'ultimate'];
+    const validIntervals = ['monthly', 'yearly'];
+    
+    if (!validTiers.includes(tier)) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid tier. Must be one of: ${validTiers.join(', ')}`,
+      });
+    }
+    
+    if (!validIntervals.includes(interval)) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid interval. Must be one of: ${validIntervals.join(', ')}`,
+      });
+    }
+
+    const session = await stripeService.createCheckoutSession(userId, email, name, tier, interval);
 
     res.json(formatResponse({ sessionId: session.id, url: session.url }));
   } catch (error) {

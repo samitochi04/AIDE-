@@ -1,5 +1,7 @@
 import { aiService } from '../services/ai.service.js';
+import { subscriptionService } from '../services/subscription.service.js';
 import { formatResponse } from '../utils/helpers.js';
+import { AppError } from '../utils/errors.js';
 
 /**
  * Chat with AI assistant
@@ -8,7 +10,18 @@ export const chat = async (req, res, next) => {
   try {
     const { message, conversationId, context } = req.body;
     const userId = req.user.id;
-    const tier = req.subscription?.tier || 'free';
+
+    // Check if user can send AI message
+    const limitCheck = await subscriptionService.canSendAIMessage(userId);
+    if (!limitCheck.allowed) {
+      return res.status(403).json(formatResponse({
+        error: 'limit_exceeded',
+        ...limitCheck,
+        upgradeUrl: '/pricing',
+      }, limitCheck.message));
+    }
+
+    const tier = limitCheck.tier;
 
     const result = await aiService.chat(userId, message, {
       conversationId,
@@ -16,7 +29,15 @@ export const chat = async (req, res, next) => {
       tier,
     });
 
-    res.json(formatResponse(result));
+    // Include remaining messages in response
+    res.json(formatResponse({
+      ...result,
+      usage: {
+        remaining: limitCheck.remaining - 1,
+        limit: limitCheck.limit,
+        tier,
+      },
+    }));
   } catch (error) {
     next(error);
   }
@@ -29,7 +50,21 @@ export const chatStream = async (req, res, next) => {
   try {
     const { message, conversationId, context } = req.body;
     const userId = req.user.id;
-    const tier = req.subscription?.tier || 'basic';
+
+    // Check if user can send AI message
+    const limitCheck = await subscriptionService.canSendAIMessage(userId);
+    if (!limitCheck.allowed) {
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.write(`data: ${JSON.stringify({ 
+        error: 'limit_exceeded',
+        ...limitCheck,
+        upgradeUrl: '/pricing',
+      })}\n\n`);
+      res.write('data: [DONE]\n\n');
+      return res.end();
+    }
+
+    const tier = limitCheck.tier;
 
     const { stream, conversationId: convId, onComplete } = await aiService.chatStream(
       userId,
@@ -56,7 +91,14 @@ export const chatStream = async (req, res, next) => {
     // Save complete response
     await onComplete(fullResponse);
 
-    // Send end signal
+    // Send usage info and end signal
+    res.write(`data: ${JSON.stringify({ 
+      usage: { 
+        remaining: limitCheck.remaining - 1, 
+        limit: limitCheck.limit,
+        tier 
+      } 
+    })}\n\n`);
     res.write('data: [DONE]\n\n');
     res.end();
   } catch (error) {

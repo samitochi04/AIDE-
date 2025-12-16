@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS profiles (
     
     -- Subscription
     subscription_tier subscription_tier DEFAULT 'free',
+    stripe_customer_id TEXT UNIQUE,
     
     -- Referral tracking
     referred_by UUID REFERENCES profiles(id),
@@ -174,6 +175,7 @@ CREATE INDEX IF NOT EXISTS idx_profiles_referred_by ON profiles(referred_by);
 CREATE INDEX IF NOT EXISTS idx_profiles_region ON profiles(region);
 CREATE INDEX IF NOT EXISTS idx_profiles_status ON profiles(status);
 CREATE INDEX IF NOT EXISTS idx_profiles_subscription ON profiles(subscription_tier);
+CREATE INDEX IF NOT EXISTS idx_profiles_stripe_customer ON profiles(stripe_customer_id) WHERE stripe_customer_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_profiles_created_at ON profiles(created_at);
 
 -- ============================================

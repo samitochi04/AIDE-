@@ -425,7 +425,13 @@
       "pros": "Avantages",
       "cons": "Inconvénients",
       "tips": "Conseils",
-      "eligibility": "Éligibilité"
+      "eligibility": "Éligibilité",
+      "moreAvailable": "{{count}} autres plateformes disponibles",
+      "moreGuarantors": "{{count}} autres garants disponibles",
+      "upgradeToUnlock": "Passez à un abonnement supérieur pour débloquer toutes les plateformes",
+      "saveLimitReached": "Limite de sauvegardes atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "saveLimitMessage": "Vous avez sauvegardé {{current}} sur {{limit}} plateformes autorisées avec votre abonnement."
     },
     "procedures": {
       "title": "Mes Démarches",
@@ -506,7 +512,10 @@
       "statusUpdated": "Statut mis à jour",
       "stepUpdated": "Étape mise à jour",
       "deleted": "Démarche supprimée",
-      "nameRequired": "Le nom de la démarche est requis"
+      "nameRequired": "Le nom de la démarche est requis",
+      "limitReached": "Limite de démarches atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "limitMessage": "Vous avez créé {{current}} sur {{limit}} démarches autorisées avec votre abonnement."
     },
     "chat": {
       "title": "Assistant IA",
@@ -528,6 +537,9 @@
       "messages": "messages",
       "loadingMessages": "Chargement des messages...",
       "sources": "Sources",
+      "limitReached": "Limite quotidienne de messages atteinte",
+      "limitMessage": "Vous avez envoyé {{current}} sur {{limit}} messages IA autorisés aujourd'hui avec votre plan.",
+      "upgradeDescription": "Passez à un forfait supérieur pour plus de messages IA quotidiens et débloquer les fonctionnalités premium.",
       "suggestions": {
         "housing": "À quelles aides au logement suis-je éligible ?",
         "eligibility": "Vérifier mon éligibilité aux aides de la CAF",
@@ -655,6 +667,9 @@
         "requestExport": "Demander l'export",
         "exportRequested": "Export demandé ! Vous recevrez vos données par e-mail sous peu.",
         "exportRateLimit": "Vous ne pouvez demander qu'un export par jour. Veuillez réessayer demain.",
+        "exportPremiumOnly": "L'export de données est uniquement disponible avec le plan Ultimate.",
+        "upgradeRequired": "Fonctionnalité Premium",
+        "upgradeToContinue": "Passez au niveau supérieur",
         "signOut": "Déconnexion",
         "signOutDesc": "Se déconnecter de votre compte sur cet appareil",
         "dangerZone": "Zone Dangereuse",
@@ -757,7 +772,9 @@
       "createFreeAccount": "Créer un compte gratuit",
       "goToDashboard": "Aller au tableau de bord",
       "dashboardDescription": "Suivez vos aides et démarrez vos démarches depuis votre tableau de bord.",
-      "newSimulation": "Faire une nouvelle simulation"
+      "newSimulation": "Faire une nouvelle simulation",
+      "moreAidesAvailable": "{{count}} autres aides disponibles",
+      "upgradeToSeeAll": "Passez à un abonnement supérieur pour voir toutes les aides auxquelles vous êtes éligible"
     }
   },
   

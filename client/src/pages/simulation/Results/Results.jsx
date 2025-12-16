@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { Crown, Lock, ArrowRight } from 'lucide-react';
 import { useSimulation } from '../../../context/SimulationContext';
 import { useAuth } from '../../../context/AuthContext';
 import { Button, Card, Loading, Logo } from '../../../components/ui';
@@ -64,6 +65,11 @@ export function Results() {
   const eligibleAides = Array.isArray(simulationResults) 
     ? simulationResults 
     : simulationResults.eligibleAides || [];
+
+  // Check if results are limited (based on server response)
+  const isLimited = simulationResults?.aidesLimited || false;
+  const totalAidesAvailable = simulationResults?.totalAidesAvailable || eligibleAides.length;
+  const aidesShown = simulationResults?.aidesShown || eligibleAides.length;
 
   const totalMonthly = eligibleAides.reduce(
     (sum, aide) => sum + (aide.monthlyAmount || 0), 
@@ -190,6 +196,30 @@ export function Results() {
                 </Card>
               </motion.div>
             ))}
+            
+            {/* Upgrade Prompt when aides are limited */}
+            {isLimited && (
+              <motion.div variants={itemVariants}>
+                <Card className={styles.upgradeCard}>
+                  <div className={styles.upgradeContent}>
+                    <div className={styles.upgradeIcon}>
+                      <Lock size={24} />
+                    </div>
+                    <div className={styles.upgradeText}>
+                      <h4>{t('simulation.results.moreAidesAvailable', { count: totalAidesAvailable - aidesShown })}</h4>
+                      <p>{t('simulation.results.upgradeToSeeAll')}</p>
+                    </div>
+                    <Link to={ROUTES.PRICING}>
+                      <Button variant="primary" size="sm">
+                        <Crown size={16} />
+                        {t('common.upgrade')}
+                        <ArrowRight size={16} />
+                      </Button>
+                    </Link>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
           </div>
         </motion.div>
 

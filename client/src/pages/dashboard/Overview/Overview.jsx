@@ -106,7 +106,9 @@ export function Overview() {
 
         // Process procedures
         if (proceduresRes.status === 'fulfilled' && proceduresRes.value?.data) {
-          const procedures = proceduresRes.value.data || [];
+          // Handle both old format (array) and new format (object with procedures array)
+          const data = proceduresRes.value.data;
+          const procedures = Array.isArray(data) ? data : (data?.procedures || []);
           const completed = procedures.filter(p => p.status === 'completed').length;
           
           // Get upcoming/in-progress tasks

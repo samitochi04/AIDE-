@@ -1,6 +1,7 @@
 import { profileService } from '../services/profile.service.js';
 import { pdfExportService } from '../services/pdfExport.service.js';
 import { emailService } from '../services/email.service.js';
+import { subscriptionService } from '../services/subscription.service.js';
 import { supabaseAdmin } from '../config/supabase.js';
 import { formatResponse } from '../utils/helpers.js';
 import { AppError } from '../utils/errors.js';
@@ -193,6 +194,16 @@ export const changePassword = async (req, res, next) => {
 export const requestDataExport = async (req, res, next) => {
   try {
     const userId = req.user.id;
+
+    // Check if user can export data (subscription check)
+    const canExport = await subscriptionService.canExportData(userId);
+    if (!canExport.allowed) {
+      return res.status(403).json(formatResponse({
+        error: 'feature_unavailable',
+        ...canExport,
+        upgradeUrl: '/pricing',
+      }, canExport.message));
+    }
 
     // Check for recent export (rate limit - 1 per day)
     // Can be bypassed in development with BYPASS_EXPORT_RATE_LIMIT=true

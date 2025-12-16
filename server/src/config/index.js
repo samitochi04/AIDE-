@@ -3,7 +3,7 @@
 // ===========================================
 
 export { supabaseAdmin, createSupabaseClient } from './supabase.js';
-export { stripe, STRIPE_PRICES, getPriceToTier } from './stripe.js';
+export { stripe, stripeConfig, getPriceToTier } from './stripe.js';
 export { openai, AI_CONFIG, SYSTEM_PROMPT } from './openai.js';
 export { transporter, EMAIL_CONFIG } from './email.js';
 
@@ -13,6 +13,7 @@ export const APP_CONFIG = {
   port: process.env.PORT || 3001,
   apiUrl: process.env.API_URL || 'http://localhost:3001',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
+  frontendUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   
   // Rate limiting
   rateLimit: {
