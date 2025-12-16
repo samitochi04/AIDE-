@@ -34,6 +34,7 @@ export const ROUTES = {
   TUTORIAL_VIEW: '/dashboard/tutorials/:slug',
   CHAT: '/dashboard/chat',
   CHAT_CONVERSATION: '/dashboard/chat/:conversationId',
+  AFFILIATE: '/dashboard/affiliate',
   PROFILE: '/dashboard/profile',
   SETTINGS: '/dashboard/settings',
   

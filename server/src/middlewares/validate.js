@@ -149,10 +149,19 @@ export const schemas = {
 
   // Affiliate registration
   affiliateRegistration: Joi.object({
-    company_name: Joi.string().max(255),
-    website: Joi.string().uri().max(500),
-    contact_email: Joi.string().email().required(),
-    description: Joi.string().max(1000),
+    companyName: Joi.string().max(255).allow('', null),
+    website: Joi.string().max(500).allow('', null).custom((value, helpers) => {
+      // Allow empty string or valid URI
+      if (!value || value === '') return value;
+      try {
+        new URL(value);
+        return value;
+      } catch {
+        return helpers.error('string.uri');
+      }
+    }),
+    contactEmail: Joi.string().email().required(),
+    description: Joi.string().max(1000).allow('', null),
   }),
 
   // Admin - user management

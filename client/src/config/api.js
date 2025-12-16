@@ -120,6 +120,18 @@ export const API_ENDPOINTS = {
     SIGN_OUT_ALL: '/api/v1/profile/sign-out-all',
   },
 
+  // Affiliate
+  AFFILIATE: {
+    REGISTER: '/api/v1/affiliate/register',
+    DASHBOARD: '/api/v1/affiliate/dashboard',
+    REFERRALS: '/api/v1/affiliate/referrals',
+    EARNINGS: '/api/v1/affiliate/earnings',
+    LINK: '/api/v1/affiliate/link',
+    REQUEST_PAYOUT: '/api/v1/affiliate/request-payout',
+    PAYOUTS: '/api/v1/affiliate/payouts',
+    SETTINGS: '/api/v1/affiliate/settings',
+  },
+
   // Admin
   ADMIN: {
     // Dashboard & Analytics

@@ -40,12 +40,24 @@ class AffiliateService {
         website,
         contact_email: contactEmail,
         description,
-        referral_code: referralCode,
+        affiliate_code: referralCode, // Database uses affiliate_code column
         status: 'pending',
         commission_rate: 0.1,
       });
 
       logger.info('New affiliate registered', { userId, affiliateId: affiliate.id });
+
+      // Notify admin about new affiliate application
+      const user = await userRepository.findById(userId);
+      await emailService.sendAdminAffiliateApplication({
+        affiliateId: affiliate.id,
+        companyName: companyName || 'Non spécifié',
+        contactEmail: contactEmail || user?.email,
+        website: website || 'Non spécifié',
+        description: description || 'Aucune description',
+        userEmail: user?.email,
+      }).catch(err => logger.error('Failed to send admin affiliate notification', { error: err.message }));
+
       return affiliate;
     } catch (error) {
       logger.error('Failed to create affiliate', { userId, error: error.message });
@@ -82,7 +94,7 @@ class AffiliateService {
     const affiliate = await this.getByUserId(userId);
 
     if (!affiliate) {
-      throw new NotFoundError('Affiliate not found');
+      throw new NotFoundError('Affiliate');
     }
 
     if (affiliate.status !== 'approved') {
@@ -106,7 +118,7 @@ class AffiliateService {
 
     return {
       status: affiliate.status,
-      referralCode: affiliate.referral_code,
+      referralCode: affiliate.affiliate_code, // Database uses affiliate_code column
       commissionRate: affiliate.commission_rate,
       stats: {
         totalClicks: clicks,
@@ -132,9 +144,11 @@ class AffiliateService {
    * Get total referrals
    */
   async getTotalReferrals(affiliateId) {
-    const referrals = await affiliateReferralRepository.findByAffiliate(affiliateId);
-    const total = referrals?.length || 0;
-    const converted = referrals?.filter(r => r.status === 'converted').length || 0;
+    const result = await affiliateReferralRepository.findByAffiliate(affiliateId);
+    // findByAffiliate returns { data, pagination } from findAll
+    const referrals = result?.data || [];
+    const total = referrals.length;
+    const converted = referrals.filter(r => r.status === 'converted').length;
     return { total, converted };
   }
 
@@ -163,7 +177,7 @@ class AffiliateService {
   async getReferrals(userId, page = 1, limit = 20) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate) {
-      throw new NotFoundError('Affiliate not found');
+      throw new NotFoundError('Affiliate');
     }
 
     try {
@@ -184,7 +198,7 @@ class AffiliateService {
   async getEarnings(userId, page = 1, limit = 20) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate) {
-      throw new NotFoundError('Affiliate not found');
+      throw new NotFoundError('Affiliate');
     }
 
     try {
@@ -199,19 +213,118 @@ class AffiliateService {
     }
   }
 
+  // ============================================
+  // Fixed commission rates per tier
+  // ============================================
+  static COMMISSION_RATES = {
+    basic: 0.99,
+    premium: 1.99,
+    ultimate: 2.99
+  };
+
+  /**
+   * Process affiliate commission when a referred user subscribes
+   * Called from stripe webhook when subscription becomes active
+   */
+  async processSubscriptionCommission(subscribedUserId, tier) {
+    try {
+      // Get the user who subscribed
+      const subscriber = await userRepository.findById(subscribedUserId);
+      if (!subscriber || !subscriber.referred_by) {
+        logger.info('No referrer for subscription', { subscribedUserId });
+        return null;
+      }
+
+      // Get the affiliate (referrer)
+      const affiliate = await affiliateRepository.findByUser(subscriber.referred_by);
+      if (!affiliate || affiliate.status !== 'approved') {
+        logger.info('Referrer is not an active affiliate', { referrerId: subscriber.referred_by });
+        return null;
+      }
+
+      // Check if we already have a referral record for this user
+      const existingReferral = await affiliateReferralRepository.findByReferredUser(subscribedUserId);
+      
+      // Get commission amount based on tier
+      const commission = AffiliateService.COMMISSION_RATES[tier] || AffiliateService.COMMISSION_RATES.basic;
+
+      // Create or update referral record
+      let referral;
+      if (existingReferral) {
+        // Only process if not already converted (first subscription only)
+        if (existingReferral.status === 'converted') {
+          logger.info('Referral already converted', { referralId: existingReferral.id });
+          return null;
+        }
+        referral = await affiliateReferralRepository.markConverted(existingReferral.id);
+      } else {
+        // Create new referral record and mark as converted
+        referral = await affiliateReferralRepository.create({
+          affiliate_id: affiliate.id,
+          referred_user_id: subscribedUserId,
+          status: 'converted',
+          converted_at: new Date().toISOString(),
+        });
+      }
+
+      // Create earning record
+      const earning = await affiliateEarningRepository.create({
+        affiliate_id: affiliate.id,
+        referral_id: referral.id,
+        amount: commission,
+        tier: tier,
+        status: 'pending',
+      });
+
+      // Update affiliate stats
+      await affiliateRepository.update(affiliate.id, {
+        successful_conversions: (affiliate.successful_conversions || 0) + 1,
+        total_earnings: (parseFloat(affiliate.total_earnings) || 0) + commission,
+        pending_earnings: (parseFloat(affiliate.pending_earnings) || 0) + commission,
+      });
+
+      // Send commission notification email to affiliate
+      const referrer = await userRepository.findById(subscriber.referred_by);
+      if (referrer?.email) {
+        await emailService.sendAffiliateConversion(referrer.email, {
+          commission: commission.toFixed(2),
+          tier: tier,
+          totalEarnings: ((parseFloat(affiliate.total_earnings) || 0) + commission).toFixed(2),
+          referredUser: subscriber.email?.split('@')[0] || 'user',
+        }).catch(err => logger.error('Failed to send affiliate commission email', { error: err.message }));
+      }
+
+      logger.info('Affiliate commission processed', { 
+        affiliateId: affiliate.id, 
+        subscribedUserId, 
+        tier, 
+        commission 
+      });
+
+      return { affiliate, earning, commission };
+    } catch (error) {
+      logger.error('Failed to process affiliate commission', { 
+        subscribedUserId, 
+        tier, 
+        error: error.message 
+      });
+      return null;
+    }
+  }
+
   /**
    * Get referral link
    */
   async getReferralLink(userId) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate || affiliate.status !== 'approved') {
-      throw new NotFoundError('Active affiliate not found');
+      throw new NotFoundError('Active affiliate');
     }
 
     const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.fr';
     return {
-      code: affiliate.referral_code,
-      link: `${baseUrl}/?ref=${affiliate.referral_code}`,
+      code: affiliate.affiliate_code, // Database uses affiliate_code column
+      link: `${baseUrl}/?ref=${affiliate.affiliate_code}`,
     };
   }
 
@@ -241,14 +354,14 @@ class AffiliateService {
   async requestPayout(userId) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate || affiliate.status !== 'approved') {
-      throw new NotFoundError('Active affiliate not found');
+      throw new NotFoundError('Active affiliate');
     }
 
     // Get pending earnings
     const { pending } = await this.getTotalEarnings(affiliate.id);
 
-    if (pending < 50) {
-      throw new AppError('Minimum payout amount is €50', 400);
+    if (pending < 9.90) {
+      throw new AppError('Minimum payout amount is €9.90 (10 Basic referrals)', 400);
     }
 
     // Create payout request
@@ -282,7 +395,7 @@ class AffiliateService {
   async getPayouts(userId, page = 1, limit = 20) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate) {
-      throw new NotFoundError('Affiliate not found');
+      throw new NotFoundError('Affiliate');
     }
 
     try {
@@ -303,7 +416,7 @@ class AffiliateService {
   async updateSettings(userId, settings) {
     const affiliate = await this.getByUserId(userId);
     if (!affiliate) {
-      throw new NotFoundError('Affiliate not found');
+      throw new NotFoundError('Affiliate');
     }
 
     try {
@@ -343,8 +456,24 @@ class AffiliateService {
       // Get affiliate before update to check status change
       const affiliateBefore = await affiliateRepository.findById(affiliateId);
       
-      await affiliateRepository.update(affiliateId, updates);
-      logger.info('Affiliate updated', { affiliateId, updates });
+      // Transform updates to match database schema
+      const dbUpdates = { ...updates };
+      
+      // Handle is_verified -> verified_at transformation
+      if ('is_verified' in dbUpdates) {
+        dbUpdates.verified_at = dbUpdates.is_verified ? new Date().toISOString() : null;
+        delete dbUpdates.is_verified;
+      }
+      
+      // Handle is_active if present
+      if (updates.status === 'approved') {
+        dbUpdates.is_active = true;
+      } else if (updates.status === 'suspended' || updates.status === 'rejected') {
+        dbUpdates.is_active = false;
+      }
+      
+      await affiliateRepository.update(affiliateId, dbUpdates);
+      logger.info('Affiliate updated', { affiliateId, updates: dbUpdates });
 
       // Send welcome email if affiliate was just approved
       if (updates.status === 'approved' && affiliateBefore?.status !== 'approved') {
@@ -352,7 +481,7 @@ class AffiliateService {
         if (user?.email) {
           const baseUrl = process.env.FRONTEND_URL || 'https://aideplus.fr';
           await emailService.sendAffiliateWelcome(user.email, {
-            affiliateLink: `${baseUrl}/?ref=${affiliateBefore.referral_code}`,
+            affiliateLink: `${baseUrl}/?ref=${affiliateBefore.affiliate_code}`, // Database uses affiliate_code column
             commissionRate: (affiliateBefore.commission_rate * 100).toFixed(0),
           }).catch(err => logger.error('Failed to send affiliate welcome email', { error: err.message }));
         }

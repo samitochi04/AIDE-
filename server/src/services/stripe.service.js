@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 import { stripeConfig, getPriceToTier, getTierToPrice } from '../config/stripe.js';
 import { userRepository, subscriptionRepository, paymentRepository } from '../repositories/index.js';
 import { emailService } from './email.service.js';
+import { affiliateService } from './affiliate.service.js';
 import logger from '../utils/logger.js';
 import { AppError } from '../utils/errors.js';
 import { SUBSCRIPTION_TIERS, TIER_LIMITS, SUBSCRIPTION_PRICING } from '../utils/constants.js';
@@ -345,6 +346,10 @@ class StripeService {
           interval,
         }).catch(err => logger.error('Failed to send admin subscription notification', { error: err.message }));
       }
+
+      // Process affiliate commission if user was referred
+      await affiliateService.processSubscriptionCommission(userId, tier || 'basic')
+        .catch(err => logger.error('Failed to process affiliate commission', { error: err.message }));
     }
   }
 

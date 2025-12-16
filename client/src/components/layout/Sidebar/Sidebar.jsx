@@ -52,6 +52,11 @@ const bottomNavItems = [
     path: ROUTES.PROFILE
   },
   {
+    key: 'affiliate',
+    icon: 'ri-gift-2-line',
+    path: ROUTES.AFFILIATE
+  },
+  {
     key: 'settings',
     icon: 'ri-settings-3-line',
     path: ROUTES.SETTINGS

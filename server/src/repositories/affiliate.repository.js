@@ -19,7 +19,8 @@ class AffiliateRepository extends BaseRepository {
    * Find affiliate by referral code
    */
   async findByCode(referralCode) {
-    return this.findOne({ referral_code: referralCode });
+    // Database uses affiliate_code column
+    return this.findOne({ affiliate_code: referralCode });
   }
 
   /**
@@ -46,7 +47,8 @@ class AffiliateRepository extends BaseRepository {
    * Check if referral code is unique
    */
   async isCodeUnique(code) {
-    const exists = await this.exists({ referral_code: code });
+    // Database uses affiliate_code column
+    const exists = await this.exists({ affiliate_code: code });
     return !exists;
   }
 
