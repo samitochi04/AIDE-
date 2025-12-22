@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { checkMaintenance, getPublicSettings } from './middlewares/maintenance.js';
 import { mountRoutes } from './routes/index.js';
 import logger from './utils/logger.js';
 import { schedulerService } from './services/scheduler.service.js';
@@ -111,6 +112,16 @@ app.get('/health', (req, res) => {
     environment: process.env.NODE_ENV,
   });
 });
+
+// ===========================================
+// Public Settings (for maintenance page check)
+// ===========================================
+app.get('/api/v1/settings/public', getPublicSettings);
+
+// ===========================================
+// Maintenance Mode Check (before API routes)
+// ===========================================
+app.use(checkMaintenance);
 
 // ===========================================
 // API Routes

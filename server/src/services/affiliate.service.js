@@ -438,9 +438,14 @@ class AffiliateService {
   /**
    * Get all affiliates (admin)
    */
-  async getAllAffiliates(page = 1, limit = 20, status = null) {
+  async getAllAffiliates(page = 1, limit = 20, filters = {}) {
     try {
-      const result = await affiliateRepository.findAllPaginated({ page, limit, status });
+      const result = await affiliateRepository.findAllPaginated({ 
+        page, 
+        limit, 
+        status: filters.status,
+        search: filters.search,
+      });
       return result;
     } catch (error) {
       logger.error('Failed to get affiliates', { error: error.message });

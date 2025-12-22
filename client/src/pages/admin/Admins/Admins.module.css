@@ -137,6 +137,13 @@
 }
 
 /* Table */
+.tableWrapper {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 .tableContainer {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
@@ -147,6 +154,12 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.emptyCell {
+  text-align: center;
+  padding: 3rem 1rem !important;
+  color: var(--text-tertiary);
 }
 
 .table th,
@@ -179,6 +192,12 @@
   gap: 0.75rem;
 }
 
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .userAvatar {
   width: 40px;
   height: 40px;
@@ -190,6 +209,14 @@
   color: var(--color-primary);
   font-weight: 600;
   font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.userAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .userDetails {
@@ -301,7 +328,7 @@
 }
 
 /* Modal */
-.modalOverlay {
+.modal {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -310,9 +337,10 @@
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
+  backdrop-filter: blur(4px);
 }
 
-.modal {
+.modalContent {
   background: var(--bg-primary);
   border-radius: 16px;
   max-width: 500px;
@@ -321,6 +349,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .modalHeader {
@@ -331,14 +360,14 @@
   border-bottom: 1px solid var(--border-color);
 }
 
-.modalHeader h2 {
+.modalHeader h3 {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
 }
 
-.closeButton {
+.closeBtn {
   background: none;
   border: none;
   padding: 0.5rem;
@@ -350,7 +379,7 @@
   transition: all 0.2s;
 }
 
-.closeButton:hover {
+.closeBtn:hover {
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
@@ -476,6 +505,149 @@
   background: var(--color-error-dark);
 }
 
+/* Save/Cancel/Delete buttons (aliases) */
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.cancelBtn:hover {
+  background: var(--bg-tertiary);
+}
+
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: var(--color-error);
+  color: white;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+.deleteBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Page buttons */
+.pageBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* Checkbox label */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.checkboxLabel:hover {
+  background: var(--bg-secondary);
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.checkboxLabel span {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
 /* Confirm Modal */
 .confirmModal {
   background: var(--bg-primary);
@@ -541,6 +713,167 @@
 }
 
 /* View modal admin details */
+.adminDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.adminHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.adminAvatarLarge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.adminAvatarLarge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adminHeaderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adminHeaderInfo h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.adminHeaderInfo p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.adminHeaderInfo .roleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: capitalize;
+  width: fit-content;
+  margin-top: 0.5rem;
+}
+
+.adminSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.adminSection h5 {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.adminInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.adminInfoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.adminInfoLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.adminInfoLabel i {
+  font-size: 0.875rem;
+}
+
+.adminInfoValue {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding-left: 1.375rem;
+}
+
+.superAdminBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+  color: #8b5cf6;
+  font-weight: 500;
+}
+
+.superAdminBadge i {
+  font-size: 1.25rem;
+}
+
+.permissionsViewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.permissionViewItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  transition: all 0.2s;
+}
+
+.permissionViewItem i {
+  font-size: 1rem;
+}
+
+.permissionViewItem.permissionActive {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.permissionViewItem.permissionActive i {
+  color: #22c55e;
+}
+
 .adminDetailSection {
   margin-bottom: 1.5rem;
 }

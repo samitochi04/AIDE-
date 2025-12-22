@@ -898,8 +898,8 @@ class AdminService {
       const { 
         all, 
         subscribers_only, 
-        profile_type, 
-        nationality, 
+        profile_type,  // Actually maps to "status" column (student, worker, job_seeker, retiree, tourist, other)
+        nationality,   // 'french', 'eu', 'non-eu' - maps to nationality column
         has_subscription, 
         region, 
         saved_aide_id,
@@ -912,33 +912,40 @@ class AdminService {
         if (emailList.length > 0) {
           const { data, error } = await userRepository.db
             .from('profiles')
-            .select('id, email, full_name, status, nationality, region, subscription_tier')
-            .in('email', emailList);
+            .select('id, email, full_name, status, nationality, region, subscription_tier');
+          
           if (error) throw error;
-          return data || [];
+          
+          // Filter by email list (case-insensitive)
+          const emailSet = new Set(emailList.map(e => e.toLowerCase()));
+          return (data || []).filter(u => emailSet.has(u.email?.toLowerCase()));
         }
       }
 
       let query = userRepository.db
         .from('profiles')
-        .select('id, email, full_name, status, nationality, region, subscription_tier');
+        .select('id, email, full_name, status, nationality, region, subscription_tier')
+        .eq('is_active', true);
 
-      // Note: email_preferences column doesn't exist yet, so we skip the subscribers_only filter for now
-      // When the column is added, uncomment the filter below:
-      // if (!all && subscribers_only) {
-      //   query = query.or('email_preferences.is.null,email_preferences->>marketing.neq.false');
-      // }
-
-      // Profile type filter
-      if (profile_type) {
-        query = query.eq('profile_type', profile_type);
+      // Subscribers filter - users who haven't opted out of marketing
+      if (!all && subscribers_only) {
+        query = query.or('weekly_digest_enabled.is.null,weekly_digest_enabled.eq.true');
       }
 
-      // Nationality filter
-      if (nationality === 'eu') {
-        query = query.eq('is_eu_citizen', true);
+      // Profile type filter (maps to "status" column in database)
+      // Values: student, worker, job_seeker, retiree, tourist, other
+      if (profile_type) {
+        query = query.eq('status', profile_type);
+      }
+
+      // Nationality filter (maps to "nationality" column)
+      // Database values: french, eu_eea, non_eu, other
+      if (nationality === 'french') {
+        query = query.eq('nationality', 'french');
+      } else if (nationality === 'eu') {
+        query = query.eq('nationality', 'eu_eea');
       } else if (nationality === 'non-eu') {
-        query = query.eq('is_eu_citizen', false);
+        query = query.eq('nationality', 'non_eu');
       }
 
       // Subscription filter
@@ -1041,9 +1048,15 @@ class AdminService {
       for (const recipient of recipients) {
         try {
           // Personalize the email content
-          const personalizedHtml = bodyHtml
+          let personalizedHtml = bodyHtml
             .replace(/\{\{name\}\}/g, recipient.full_name || 'there')
-            .replace(/\{\{email\}\}/g, recipient.email || '');
+            .replace(/\{\{email\}\}/g, recipient.email || '')
+            .replace(/\{\{profile_type\}\}/g, recipient.status || '');
+
+          // Wrap in professional template if not already wrapped
+          if (!personalizedHtml.includes('<!DOCTYPE html>')) {
+            personalizedHtml = emailService.createBulkEmailHtml(personalizedHtml, subject);
+          }
 
           // Send the email
           await emailService.send({

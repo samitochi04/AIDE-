@@ -198,7 +198,7 @@ class AnalyticsService {
           return this.getAIAnalytics(start, end);
         default:
           // Return comprehensive dashboard metrics
-          const [users, subscriptions, engagement, ai, simulations, revenue, usersByProfile] = await Promise.all([
+          const [users, subscriptions, engagement, ai, simulations, revenue, usersByProfile, conversions, geography] = await Promise.all([
             this.getUserAnalytics(start, end),
             this.getSubscriptionAnalytics(start, end),
             this.getEngagementAnalytics(start, end),
@@ -206,8 +206,10 @@ class AnalyticsService {
             this.getSimulationAnalytics(start, end),
             this.getRevenueAnalytics(start, end),
             this.getUsersByProfileType(),
+            this.getConversionRates(start, end),
+            this.getGeographyStats(),
           ]);
-          return { users, subscriptions, engagement, ai, simulations, revenue, usersByProfile };
+          return { users, subscriptions, engagement, ai, simulations, revenue, usersByProfile, conversions, geography };
       }
     } catch (error) {
       logger.error('Failed to get detailed analytics', { error: error.message });
@@ -257,15 +259,15 @@ class AnalyticsService {
    */
   async getSubscriptionAnalytics(startDate, endDate) {
     try {
-      // Get active subscriptions
+      // Get active subscriptions from stripe_subscriptions table
       const { count: active } = await this.db
-        .from('subscriptions')
+        .from('stripe_subscriptions')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'active');
 
       // Get subscriptions by tier
       const { data: byTierData } = await this.db
-        .from('subscriptions')
+        .from('stripe_subscriptions')
         .select('tier')
         .eq('status', 'active');
 
@@ -276,7 +278,7 @@ class AnalyticsService {
 
       // Get new subscriptions in period
       const { count: newSubs } = await this.db
-        .from('subscriptions')
+        .from('stripe_subscriptions')
         .select('*', { count: 'exact', head: true })
         .gte('created_at', startDate.toISOString())
         .lte('created_at', endDate.toISOString());
@@ -324,9 +326,9 @@ class AnalyticsService {
    */
   async getRevenueAnalytics(startDate, endDate) {
     try {
-      // Get total revenue from subscriptions
+      // Get total revenue from stripe_subscriptions and stripe_invoices
       const { data: subs } = await this.db
-        .from('subscriptions')
+        .from('stripe_subscriptions')
         .select('tier, status, current_period_start, current_period_end');
 
       // Calculate MRR (Monthly Recurring Revenue)
@@ -334,11 +336,19 @@ class AnalyticsService {
       const activeSubs = (subs || []).filter(s => s.status === 'active');
       const monthly = activeSubs.reduce((sum, sub) => sum + (tierPrices[sub.tier] || 0), 0);
       
-      // Estimate total revenue (simplified calculation)
-      const total = monthly * 12; // Annualized
+      // Get actual revenue from invoices in period
+      const { data: invoices } = await this.db
+        .from('stripe_invoices')
+        .select('amount_paid')
+        .eq('status', 'paid')
+        .gte('created_at', startDate.toISOString())
+        .lte('created_at', endDate.toISOString());
+      
+      // Sum paid invoices (amount is in cents)
+      const totalRevenue = (invoices || []).reduce((sum, inv) => sum + (inv.amount_paid || 0), 0) / 100;
 
       return {
-        total: Math.round(total * 100) / 100,
+        total: Math.round(totalRevenue * 100) / 100,
         monthly: Math.round(monthly * 100) / 100,
       };
     } catch (error) {
@@ -349,34 +359,51 @@ class AnalyticsService {
 
   /**
    * Get users by profile type
+   * Uses 'status' column which is user_status enum: student, worker, job_seeker, retiree, tourist, other
    */
   async getUsersByProfileType() {
     try {
       const { data: profiles } = await this.db
         .from('profiles')
-        .select('profile_type');
+        .select('status')
+        .eq('is_active', true);
 
       const byProfile = {
         students: 0,
         workers: 0,
-        families: 0,
-        entrepreneurs: 0,
+        jobSeekers: 0,
+        retirees: 0,
+        tourists: 0,
         other: 0,
       };
 
       (profiles || []).forEach((p) => {
-        const type = p.profile_type || 'other';
-        if (type === 'student') byProfile.students++;
-        else if (type === 'worker' || type === 'employee') byProfile.workers++;
-        else if (type === 'family' || type === 'parent') byProfile.families++;
-        else if (type === 'entrepreneur' || type === 'business') byProfile.entrepreneurs++;
-        else byProfile.other++;
+        const status = p.status || 'other';
+        switch (status) {
+          case 'student':
+            byProfile.students++;
+            break;
+          case 'worker':
+            byProfile.workers++;
+            break;
+          case 'job_seeker':
+            byProfile.jobSeekers++;
+            break;
+          case 'retiree':
+            byProfile.retirees++;
+            break;
+          case 'tourist':
+            byProfile.tourists++;
+            break;
+          default:
+            byProfile.other++;
+        }
       });
 
       return byProfile;
     } catch (error) {
       logger.error('Failed to get users by profile type', { error: error.message });
-      return { students: 0, workers: 0, families: 0, entrepreneurs: 0, other: 0 };
+      return { students: 0, workers: 0, jobSeekers: 0, retirees: 0, tourists: 0, other: 0 };
     }
   }
 
@@ -385,20 +412,152 @@ class AnalyticsService {
    */
   async getEngagementAnalytics(startDate, endDate) {
     try {
-      const [views, clicks, searches] = await Promise.all([
-        aideViewRepository.countInPeriod(startDate, endDate).catch(() => 0),
-        aideClickRepository.countInPeriod(startDate, endDate).catch(() => 0),
-        searchAnalyticsRepository.countInPeriod(startDate, endDate).catch(() => 0),
-      ]);
+      // Get saved aides count
+      const { count: savedAides } = await this.db
+        .from('saved_aides')
+        .select('*', { count: 'exact', head: true });
+
+      // Get procedures started
+      const { count: proceduresStarted } = await this.db
+        .from('user_procedures')
+        .select('*', { count: 'exact', head: true });
+
+      // Get chat messages (table may not exist)
+      let chatMessages = 0;
+      try {
+        const { count } = await this.db
+          .from('chat_messages')
+          .select('*', { count: 'exact', head: true });
+        chatMessages = count || 0;
+      } catch {
+        // chat_messages table may not exist
+      }
+
+      // Calculate average session time (simplified - from sessions table if exists)
+      let avgSessionTime = '0m';
+      try {
+        const { data: sessions } = await this.db
+          .from('user_sessions')
+          .select('duration_seconds')
+          .not('duration_seconds', 'is', null)
+          .limit(1000);
+        
+        if (sessions && sessions.length > 0) {
+          const avgSeconds = sessions.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / sessions.length;
+          const avgMinutes = Math.round(avgSeconds / 60);
+          avgSessionTime = `${avgMinutes}m`;
+        }
+      } catch {
+        // user_sessions table may not exist
+      }
 
       return {
-        aideViews: views || 0,
-        aideClicks: clicks || 0,
-        searches: searches || 0,
+        savedAides: savedAides || 0,
+        proceduresStarted: proceduresStarted || 0,
+        chatMessages,
+        avgSessionTime,
       };
     } catch (error) {
       logger.error('Failed to get engagement analytics', { error: error.message });
-      return { aideViews: 0, aideClicks: 0, searches: 0 };
+      return { savedAides: 0, proceduresStarted: 0, chatMessages: 0, avgSessionTime: '0m' };
+    }
+  }
+
+  /**
+   * Get conversion rates
+   */
+  async getConversionRates(startDate, endDate) {
+    try {
+      // Total users
+      const { count: totalUsers } = await this.db
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_active', true);
+
+      // Users who ran at least one simulation
+      const { data: usersWithSimulations } = await this.db
+        .from('simulations')
+        .select('user_id')
+        .not('user_id', 'is', null);
+      
+      const uniqueUsersWithSim = new Set((usersWithSimulations || []).map(s => s.user_id)).size;
+
+      // Premium users (non-free subscription)
+      const { count: premiumUsers } = await this.db
+        .from('stripe_subscriptions')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active');
+
+      // 30-day retention: users who signed up 30+ days ago and were active in last 7 days
+      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      
+      const { count: oldUsers } = await this.db
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .lte('created_at', thirtyDaysAgo.toISOString())
+        .eq('is_active', true);
+      
+      const { count: retainedUsers } = await this.db
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .lte('created_at', thirtyDaysAgo.toISOString())
+        .gte('last_seen_at', sevenDaysAgo.toISOString())
+        .eq('is_active', true);
+
+      // Calculate percentages
+      const signupToSimulation = totalUsers > 0 ? Math.round((uniqueUsersWithSim / totalUsers) * 100) : 0;
+      const freeToPremium = totalUsers > 0 ? Math.round((premiumUsers / totalUsers) * 100) : 0;
+      const retention30Day = oldUsers > 0 ? Math.round((retainedUsers / oldUsers) * 100) : 0;
+
+      return {
+        signupToSimulation,
+        freeToPremium,
+        retention30Day,
+      };
+    } catch (error) {
+      logger.error('Failed to get conversion rates', { error: error.message });
+      return { signupToSimulation: 0, freeToPremium: 0, retention30Day: 0 };
+    }
+  }
+
+  /**
+   * Get geography stats by user nationality
+   */
+  async getGeographyStats() {
+    try {
+      const { data: profiles } = await this.db
+        .from('profiles')
+        .select('nationality, country_of_origin')
+        .eq('is_active', true);
+
+      // Count by nationality
+      const nationalityCounts = {};
+      (profiles || []).forEach((p) => {
+        const nat = p.nationality || 'other';
+        nationalityCounts[nat] = (nationalityCounts[nat] || 0) + 1;
+      });
+
+      // Map nationalities to display format
+      const nationalityMap = {
+        french: { country: 'France', flag: '🇫🇷' },
+        eu_eea: { country: 'EU/EEA', flag: '🇪🇺' },
+        non_eu: { country: 'Non-EU', flag: '🌍' },
+        other: { country: 'Other', flag: '🏳️' },
+      };
+
+      const geography = Object.entries(nationalityCounts)
+        .map(([key, count]) => ({
+          country: nationalityMap[key]?.country || key,
+          flag: nationalityMap[key]?.flag || '🏳️',
+          count,
+        }))
+        .sort((a, b) => b.count - a.count);
+
+      return geography;
+    } catch (error) {
+      logger.error('Failed to get geography stats', { error: error.message });
+      return [];
     }
   }
 

@@ -135,7 +135,7 @@ export default function AdminContent() {
     setSelectedContent({
       title: '',
       description: '',
-      content_type: '',
+      content_type: 'article', // Default to article
       media_url: '',
       thumbnail_url: '',
       duration_seconds: null,
@@ -325,11 +325,16 @@ export default function AdminContent() {
         setSaving(false)
         return
       }
+      if (!selectedContent.content_type) {
+        setError(t('admin.content.errors.typeRequired', 'Content type is required'))
+        setSaving(false)
+        return
+      }
       
       const payload = {
         title: selectedContent.title,
         description: selectedContent.description || null,
-        content_type: selectedContent.content_type,
+        content_type: selectedContent.content_type || 'article',
         media_url: selectedContent.media_url,
         thumbnail_url: selectedContent.thumbnail_url || null,
         duration_seconds: selectedContent.content_type === 'video' ? (selectedContent.duration_seconds || null) : null,

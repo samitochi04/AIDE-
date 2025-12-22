@@ -85,6 +85,23 @@ export const schemas = {
     sortOrder: Joi.string().valid('asc', 'desc').default('desc'),
   }),
 
+  // User filters (for admin user management)
+  userFilters: Joi.object({
+    page: Joi.number().integer().min(1).default(1),
+    limit: Joi.number().integer().min(1).max(100).default(20),
+    search: Joi.string().allow('').max(100),
+    tier: Joi.string().valid('free', 'basic', 'premium', 'ultimate', '').allow(''),
+    status: Joi.string().valid('student', 'worker', 'job_seeker', 'retiree', 'tourist', 'other', '').allow(''),
+  }),
+
+  // Affiliate filters (for admin affiliate management)
+  affiliateFilters: Joi.object({
+    page: Joi.number().integer().min(1).default(1),
+    limit: Joi.number().integer().min(1).max(100).default(20),
+    search: Joi.string().allow('').max(100),
+    status: Joi.string().valid('pending', 'approved', 'rejected', 'suspended', '').allow(''),
+  }),
+
   // Email
   email: Joi.string().email().lowercase().trim(),
 

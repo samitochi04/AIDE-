@@ -5,37 +5,198 @@ import logger from '../utils/logger.js';
 import { APP_CONFIG } from '../config/index.js';
 
 /**
- * Base email wrapper function for consistent styling
+ * Professional email wrapper function - Clean modern design like Back Market
  */
-const wrapEmailContent = (content) => `
+const wrapEmailContent = (content, options = {}) => {
+  const { title = '', showHeader = true } = options;
+  
+  return `
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${title || 'AIDE+'}</title>
+    <!--[if mso]>
+    <style type="text/css">
+      table { border-collapse: collapse; }
+      .content { width: 600px !important; }
+    </style>
+    <![endif]-->
   </head>
-  <body style="font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
-    <div style="background-color: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-      <div style="text-align: center; margin-bottom: 30px;">
-        <h1 style="color: #2563eb; margin: 0; font-size: 28px;">AIDE+</h1>
-        <p style="color: #64748b; margin: 5px 0 0;">Votre assistant administratif</p>
-      </div>
-      ${content}
-      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-      <p style="font-size: 12px; color: #94a3b8; text-align: center; margin: 0;">
-        © ${new Date().getFullYear()} AIDE+ - Tous droits réservés<br>
-        <a href="${APP_CONFIG.frontendUrl}/unsubscribe" style="color: #94a3b8;">Se désabonner des emails</a>
-      </p>
-    </div>
+  <body style="margin: 0; padding: 0; background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f6f9;">
+      <tr>
+        <td align="center" style="padding: 40px 20px;">
+          <!-- Main Container -->
+          <table role="presentation" class="content" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);">
+            ${showHeader ? `
+            <!-- Header -->
+            <tr>
+              <td align="center" style="padding: 32px 40px 24px; border-bottom: 1px solid #eef2f6;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td align="center">
+                      <span style="font-size: 32px; font-weight: 700; color: #2563eb; letter-spacing: -0.5px;">AIDE+</span>
+                      <p style="margin: 8px 0 0; font-size: 14px; color: #64748b; letter-spacing: 0.5px;">Votre assistant administratif</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            ` : ''}
+            
+            <!-- Content -->
+            <tr>
+              <td style="padding: 40px;">
+                ${content}
+              </td>
+            </tr>
+            
+            <!-- Footer -->
+            <tr>
+              <td style="padding: 24px 40px 32px; background-color: #f8fafc; border-top: 1px solid #eef2f6;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <!-- Social Links -->
+                  <tr>
+                    <td align="center" style="padding-bottom: 16px;">
+                      <a href="https://twitter.com/aideplus" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                        <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="display: block;">
+                      </a>
+                      <a href="https://linkedin.com/company/aideplus" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                        <img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" alt="LinkedIn" width="24" height="24" style="display: block;">
+                      </a>
+                      <a href="https://instagram.com/aideplus" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                        <img src="https://cdn-icons-png.flaticon.com/32/174/174855.png" alt="Instagram" width="24" height="24" style="display: block;">
+                      </a>
+                    </td>
+                  </tr>
+                  <!-- Links -->
+                  <tr>
+                    <td align="center" style="padding-bottom: 12px;">
+                      <a href="${APP_CONFIG.frontendUrl}" style="color: #64748b; text-decoration: none; font-size: 13px; margin: 0 12px;">Accueil</a>
+                      <span style="color: #cbd5e1;">|</span>
+                      <a href="${APP_CONFIG.frontendUrl}/pricing" style="color: #64748b; text-decoration: none; font-size: 13px; margin: 0 12px;">Tarifs</a>
+                      <span style="color: #cbd5e1;">|</span>
+                      <a href="${APP_CONFIG.frontendUrl}/contact" style="color: #64748b; text-decoration: none; font-size: 13px; margin: 0 12px;">Contact</a>
+                    </td>
+                  </tr>
+                  <!-- Copyright -->
+                  <tr>
+                    <td align="center" style="padding-top: 8px;">
+                      <p style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.6;">
+                        © ${new Date().getFullYear()} AIDE+ - Tous droits réservés
+                      </p>
+                      <p style="margin: 8px 0 0; font-size: 11px; color: #94a3b8;">
+                        <a href="${APP_CONFIG.frontendUrl}/unsubscribe" style="color: #94a3b8; text-decoration: underline;">Se désabonner des emails</a>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
 `;
+};
 
-const buttonStyle = 'background-color: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600;';
-const secondaryButtonStyle = 'background-color: #f1f5f9; color: #475569; padding: 14px 28px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600;';
-const cardStyle = 'background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2563eb;';
-const warningCardStyle = 'background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;';
-const successCardStyle = 'background-color: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #22c55e;';
+/**
+ * Convert plain text with line breaks to HTML paragraphs
+ * Preserves formatting from admin email compose
+ */
+const formatContentToHtml = (content) => {
+  if (!content) return '';
+  
+  // If content already contains HTML tags, return as is
+  if (/<[a-z][\s\S]*>/i.test(content)) {
+    // But still convert double line breaks to paragraphs if not already wrapped
+    return content
+      .replace(/\n\n+/g, '</p><p style="margin: 0 0 16px; color: #334155; font-size: 15px; line-height: 1.7;">')
+      .replace(/\n/g, '<br>');
+  }
+  
+  // Convert plain text to formatted HTML
+  const paragraphs = content.split(/\n\n+/);
+  return paragraphs
+    .map(p => {
+      const lines = p.split('\n').join('<br>');
+      return `<p style="margin: 0 0 16px; color: #334155; font-size: 15px; line-height: 1.7;">${lines}</p>`;
+    })
+    .join('');
+};
+
+// Styled components for emails
+const buttonStyle = `
+  display: inline-block;
+  background-color: #2563eb;
+  color: #ffffff;
+  padding: 14px 32px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  mso-padding-alt: 0;
+  <!--[if mso]>
+  <i style="letter-spacing: 32px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i>
+  <![endif]-->
+`.trim();
+
+const secondaryButtonStyle = `
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 14px 32px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+`.trim();
+
+const cardStyle = `
+  background-color: #f8fafc;
+  padding: 24px;
+  border-radius: 12px;
+  margin: 24px 0;
+  border-left: 4px solid #2563eb;
+`.trim();
+
+const warningCardStyle = `
+  background-color: #fffbeb;
+  padding: 24px;
+  border-radius: 12px;
+  margin: 24px 0;
+  border-left: 4px solid #f59e0b;
+`.trim();
+
+const successCardStyle = `
+  background-color: #f0fdf4;
+  padding: 24px;
+  border-radius: 12px;
+  margin: 24px 0;
+  border-left: 4px solid #22c55e;
+`.trim();
+
+const headingStyle = `
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.3;
+`.trim();
+
+const textStyle = `
+  margin: 0 0 16px;
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.7;
+`.trim();
 
 /**
  * Email templates
@@ -48,46 +209,56 @@ const templates = {
   welcome: (data) => ({
     subject: 'Bienvenue sur AIDE+ ! 🎉',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue ${data.name || ''} !</h2>
+      <h2 style="${headingStyle}">Bienvenue ${data.name || ''} ! 👋</h2>
       
-      <p>Merci de vous être inscrit sur AIDE+, votre assistant pour naviguer dans les aides et démarches administratives en France.</p>
+      <p style="${textStyle}">Merci de vous être inscrit sur AIDE+, votre assistant pour naviguer dans les aides et démarches administratives en France.</p>
       
-      <p>Avec AIDE+, vous pouvez :</p>
-      <ul style="padding-left: 20px;">
-        <li>Découvrir les aides auxquelles vous avez droit</li>
-        <li>Suivre vos démarches administratives</li>
-        <li>Poser vos questions à notre assistant IA</li>
-        <li>Accéder à des guides personnalisés</li>
+      <p style="${textStyle}">Avec AIDE+, vous pouvez :</p>
+      <ul style="padding-left: 24px; margin: 0 0 20px; color: #334155;">
+        <li style="margin-bottom: 8px;">Découvrir les aides auxquelles vous avez droit</li>
+        <li style="margin-bottom: 8px;">Suivre vos démarches administratives</li>
+        <li style="margin-bottom: 8px;">Poser vos questions à notre assistant IA</li>
+        <li style="margin-bottom: 8px;">Accéder à des guides personnalisés</li>
       </ul>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/dashboard" style="${buttonStyle}">
-          Commencer maintenant
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/dashboard" style="${buttonStyle}">
+              Commencer maintenant
+            </a>
+          </td>
+        </tr>
+      </table>
       
-      <p style="color: #64748b; font-size: 14px;">
-        <strong>Conseil :</strong> Commencez par faire une simulation pour découvrir les aides auxquelles vous avez droit !
-      </p>
+      <div style="${cardStyle}">
+        <p style="margin: 0; font-size: 14px; color: #475569;">
+          💡 <strong>Conseil :</strong> Commencez par faire une simulation pour découvrir les aides auxquelles vous avez droit !
+        </p>
+      </div>
     `),
   }),
 
   magicLink: (data) => ({
     subject: 'Votre lien de connexion AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Connexion à votre compte</h2>
+      <h2 style="${headingStyle}">Connexion à votre compte 🔐</h2>
       
-      <p>Cliquez sur le bouton ci-dessous pour vous connecter à votre compte AIDE+ :</p>
+      <p style="${textStyle}">Cliquez sur le bouton ci-dessous pour vous connecter à votre compte AIDE+ :</p>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${data.link}" style="${buttonStyle}">
-          Se connecter
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${data.link}" style="${buttonStyle}">
+              Se connecter
+            </a>
+          </td>
+        </tr>
+      </table>
       
       <div style="${warningCardStyle}">
-        <p style="margin: 0; font-size: 14px;">
-          Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet email.
+        <p style="margin: 0; font-size: 14px; color: #92400e;">
+          ⏰ Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet email.
         </p>
       </div>
     `),
@@ -96,19 +267,23 @@ const templates = {
   passwordReset: (data) => ({
     subject: 'Réinitialisation de votre mot de passe AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Réinitialisation du mot de passe 🔑</h2>
+      <h2 style="${headingStyle}">Réinitialisation du mot de passe 🔑</h2>
       
-      <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous :</p>
+      <p style="${textStyle}">Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous :</p>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${data.link}" style="${buttonStyle}">
-          Réinitialiser le mot de passe
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${data.link}" style="${buttonStyle}">
+              Réinitialiser le mot de passe
+            </a>
+          </td>
+        </tr>
+      </table>
       
       <div style="${warningCardStyle}">
-        <p style="margin: 0; font-size: 14px;">
-          Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez cet email.
+        <p style="margin: 0; font-size: 14px; color: #92400e;">
+          ⏰ Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez cet email.
         </p>
       </div>
     `),
@@ -121,88 +296,105 @@ const templates = {
   subscriptionWelcome: (data) => ({
     subject: `Bienvenue dans AIDE+ ${data.planName} ! 🎉`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Votre abonnement est actif ! 🎉</h2>
+      <h2 style="${headingStyle}">Votre abonnement est actif ! 🎉</h2>
       
-      <p>Merci d'avoir souscrit à <strong>AIDE+ ${data.planName}</strong>.</p>
+      <p style="${textStyle}">Merci d'avoir souscrit à <strong>AIDE+ ${data.planName}</strong>.</p>
       
       <div style="${successCardStyle}">
-        <h3 style="margin-top: 0; color: #166534;">Détails de votre abonnement</h3>
-        <p style="margin: 5px 0;"><strong>Plan :</strong> ${data.planName}</p>
-        <p style="margin: 5px 0;"><strong>Prix :</strong> ${data.price}€/mois</p>
-        <p style="margin: 5px 0;"><strong>Prochaine facturation :</strong> ${data.nextBillingDate}</p>
+        <p style="margin: 0 0 8px; font-size: 14px; color: #166534;"><strong>Détails de votre abonnement</strong></p>
+        <table role="presentation" cellspacing="0" cellpadding="4" border="0" style="font-size: 14px; color: #166534;">
+          <tr><td>📋 Plan :</td><td><strong>${data.planName}</strong></td></tr>
+          <tr><td>💰 Prix :</td><td><strong>${data.price}€/mois</strong></td></tr>
+          <tr><td>📅 Prochaine facturation :</td><td><strong>${data.nextBillingDate}</strong></td></tr>
+        </table>
       </div>
       
-      <p>Vous avez maintenant accès à :</p>
-      <ul style="padding-left: 20px;">
-        ${(data.features || []).map(f => `<li>${f}</li>`).join('')}
+      <p style="${textStyle}">Vous avez maintenant accès à :</p>
+      <ul style="padding-left: 24px; margin: 0 0 20px; color: #334155;">
+        ${(data.features || ['Conversations illimitées', 'Aides personnalisées', 'Support prioritaire']).map(f => `<li style="margin-bottom: 8px;">${f}</li>`).join('')}
       </ul>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/dashboard" style="${buttonStyle}">
-          Accéder à mon compte
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/dashboard" style="${buttonStyle}">
+              Accéder à mon compte
+            </a>
+          </td>
+        </tr>
+      </table>
     `),
   }),
 
   subscriptionConfirmation: (data) => ({
     subject: `Confirmation de paiement - AIDE+ ${data.planName}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement reçu</h2>
+      <h2 style="${headingStyle}">Paiement reçu ✅</h2>
       
-      <p>Votre paiement pour AIDE+ ${data.planName} a été traité avec succès.</p>
+      <p style="${textStyle}">Votre paiement pour AIDE+ ${data.planName} a été traité avec succès.</p>
       
       <div style="${cardStyle}">
-        <h3 style="margin-top: 0;">Détails du paiement</h3>
-        <p style="margin: 5px 0;"><strong>Montant :</strong> ${data.price}€</p>
-        <p style="margin: 5px 0;"><strong>Date :</strong> ${new Date().toLocaleDateString('fr-FR')}</p>
-        <p style="margin: 5px 0;"><strong>Prochaine facturation :</strong> ${data.nextBillingDate}</p>
+        <p style="margin: 0 0 12px; font-size: 14px; color: #1e40af;"><strong>Détails du paiement</strong></p>
+        <table role="presentation" cellspacing="0" cellpadding="4" border="0" style="font-size: 14px; color: #475569;">
+          <tr><td>💰 Montant :</td><td><strong>${data.price}€</strong></td></tr>
+          <tr><td>📅 Date :</td><td><strong>${new Date().toLocaleDateString('fr-FR')}</strong></td></tr>
+          <tr><td>🔄 Prochaine facturation :</td><td><strong>${data.nextBillingDate}</strong></td></tr>
+        </table>
       </div>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/dashboard/subscription" style="${secondaryButtonStyle}">
-          Gérer mon abonnement
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #f1f5f9;">
+            <a href="${APP_CONFIG.frontendUrl}/dashboard/subscription" style="${secondaryButtonStyle}">
+              Gérer mon abonnement
+            </a>
+          </td>
+        </tr>
+      </table>
     `),
   }),
 
   subscriptionCancelled: (data) => ({
     subject: 'Confirmation d\'annulation - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Abonnement annulé</h2>
+      <h2 style="${headingStyle}">Abonnement annulé</h2>
       
-      <p>Nous confirmons l'annulation de votre abonnement AIDE+ ${data.planName}.</p>
+      <p style="${textStyle}">Nous confirmons l'annulation de votre abonnement AIDE+ ${data.planName}.</p>
       
       <div style="${warningCardStyle}">
-        <p style="margin: 0;">
-          Vous conservez l'accès à toutes les fonctionnalités jusqu'au <strong>${data.endDate}</strong>.
+        <p style="margin: 0; font-size: 14px; color: #92400e;">
+          ⚠️ Vous conservez l'accès à toutes les fonctionnalités jusqu'au <strong>${data.endDate}</strong>.
         </p>
       </div>
       
-      <p>Nous sommes désolés de vous voir partir. Si vous avez des suggestions pour améliorer notre service, n'hésitez pas à nous contacter.</p>
+      <p style="${textStyle}">Nous sommes désolés de vous voir partir. Si vous avez des suggestions pour améliorer notre service, n'hésitez pas à nous contacter.</p>
       
-      <p>Vous pouvez vous réabonner à tout moment :</p>
+      <p style="${textStyle}">Vous pouvez vous réabonner à tout moment :</p>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/pricing" style="${buttonStyle}">
-          Voir les offres
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/pricing" style="${buttonStyle}">
+              Voir les offres
+            </a>
+          </td>
+        </tr>
+      </table>
     `),
   }),
 
   paymentFailed: (data) => ({
-    subject: 'Échec de paiement - AIDE+',
+    subject: 'Échec de paiement - AIDE+ ⚠️',
     html: wrapEmailContent(`
-      <h2 style="color: #dc2626; margin-top: 0;">Problème de paiement</h2>
+      <h2 style="margin: 0 0 20px; font-size: 24px; font-weight: 700; color: #dc2626; line-height: 1.3;">Problème de paiement ⚠️</h2>
       
-      <p>Nous n'avons pas pu traiter votre paiement pour AIDE+ ${data.planName}.</p>
+      <p style="${textStyle}">Nous n'avons pas pu traiter votre paiement pour AIDE+ ${data.planName}.</p>
       
       <div style="${warningCardStyle}">
-        <p style="margin: 0;">
-          <strong>Raison :</strong> ${data.reason || 'Carte refusée'}<br>
-          <strong>Prochaine tentative :</strong> ${data.retryDate || 'Dans 3 jours'}
+        <table role="presentation" cellspacing="0" cellpadding="4" border="0" style="font-size: 14px; color: #92400e;">
+          <tr><td>❌ Raison :</td><td><strong>${data.reason || 'Carte refusée'}</strong></td></tr>
+          <tr><td>🔄 Prochaine tentative :</td><td><strong>${data.retryDate || 'Dans 3 jours'}</strong></td></tr>
+        </table>
         </p>
       </div>
       
@@ -425,132 +617,152 @@ const templates = {
   // ========================================
   
   affiliateWelcome: (data) => ({
-    subject: 'Bienvenue dans le programme d\'affiliation AIDE+ !',
+    subject: 'Bienvenue dans le programme d\'affiliation AIDE+ ! 🎉',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Bienvenue parmi nos affiliés !</h2>
+      <h2 style="${headingStyle}">Bienvenue parmi nos affiliés ! 🤝</h2>
       
-      <p>Votre demande d'affiliation a été approuvée. Vous pouvez maintenant commencer à gagner des commissions !</p>
+      <p style="${textStyle}">Votre demande d'affiliation a été approuvée. Vous pouvez maintenant commencer à gagner des commissions !</p>
       
       <div style="${successCardStyle}">
-        <h3 style="margin-top: 0; color: #166534;">Votre lien d'affiliation</h3>
-        <p style="word-break: break-all; background: white; padding: 10px; border-radius: 4px; font-family: monospace;">
+        <p style="margin: 0 0 12px; font-size: 14px; color: #166534;"><strong>🔗 Votre lien d'affiliation</strong></p>
+        <p style="word-break: break-all; background: white; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; margin: 0; color: #1e293b;">
           ${data.affiliateLink}
         </p>
       </div>
       
       <div style="${cardStyle}">
-        <h3 style="margin-top: 0;">Comment ça marche ?</h3>
-        <ul style="padding-left: 20px; margin: 10px 0;">
-          <li>Partagez votre lien unique</li>
-          <li>Gagnez <strong>${data.commissionRate}%</strong> sur chaque abonnement</li>
+        <p style="margin: 0 0 12px; font-size: 14px; color: #1e40af;"><strong>Comment ça marche ?</strong></p>
+        <ul style="padding-left: 20px; margin: 0; color: #475569;">
+          <li style="margin-bottom: 8px;">Partagez votre lien unique</li>
+          <li style="margin-bottom: 8px;">Gagnez <strong>${data.commissionRate}%</strong> sur chaque abonnement</li>
           <li>Recevez vos paiements mensuellement</li>
         </ul>
       </div>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/dashboard/affiliate" style="${buttonStyle}">
-          Accéder à mon espace affilié
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/dashboard/affiliate" style="${buttonStyle}">
+              Accéder à mon espace affilié
+            </a>
+          </td>
+        </tr>
+      </table>
     `),
   }),
 
   affiliateNewReferral: (data) => ({
-    subject: `Nouvelle conversion ! +${data.commission}€`,
+    subject: `🎉 Nouvelle conversion ! +${data.commission}€`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Félicitations !</h2>
+      <h2 style="${headingStyle}">Félicitations ! 🎉</h2>
       
-      <p>Un utilisateur s'est abonné grâce à votre lien d'affiliation !</p>
+      <p style="${textStyle}">Un utilisateur s'est abonné grâce à votre lien d'affiliation !</p>
       
       <div style="${successCardStyle}">
-        <h3 style="margin-top: 0; color: #166534;">Commission gagnée</h3>
-        <p style="font-size: 32px; font-weight: bold; margin: 10px 0;">+${data.commission}€</p>
-        <p style="margin: 0; color: #166534;">Plan ${data.planName}</p>
+        <p style="margin: 0; font-size: 14px; color: #166534;"><strong>Commission gagnée</strong></p>
+        <p style="font-size: 40px; font-weight: 700; margin: 12px 0; color: #166534;">+${data.commission}€</p>
+        <p style="margin: 0; color: #166534; font-size: 14px;">Plan ${data.planName}</p>
       </div>
       
       <div style="${cardStyle}">
-        <p style="margin: 5px 0;"><strong>Total du mois :</strong> ${data.monthlyTotal}€</p>
-        <p style="margin: 5px 0;"><strong>Total des conversions :</strong> ${data.totalReferrals}</p>
+        <table role="presentation" cellspacing="0" cellpadding="6" border="0" style="font-size: 14px; color: #475569; width: 100%;">
+          <tr><td>📊 Total du mois :</td><td><strong>${data.monthlyTotal}€</strong></td></tr>
+          <tr><td>👥 Total des conversions :</td><td><strong>${data.totalReferrals}</strong></td></tr>
+        </table>
       </div>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/dashboard/affiliate" style="${buttonStyle}">
-          Voir mes statistiques
-        </a>
-      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/dashboard/affiliate" style="${buttonStyle}">
+              Voir mes statistiques
+            </a>
+          </td>
+        </tr>
+      </table>
     `),
   }),
 
   affiliatePayout: (data) => ({
-    subject: `Paiement de ${data.amount}€ envoyé !`,
+    subject: `💰 Paiement de ${data.amount}€ envoyé !`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement envoyé !</h2>
+      <h2 style="${headingStyle}">Paiement envoyé ! 💸</h2>
       
-      <p>Votre paiement d'affiliation a été effectué.</p>
+      <p style="${textStyle}">Votre paiement d'affiliation a été effectué.</p>
       
       <div style="${successCardStyle}">
-        <h3 style="margin-top: 0; color: #166534;">Montant</h3>
-        <p style="font-size: 32px; font-weight: bold; margin: 10px 0;">${data.amount}€</p>
-        <p style="margin: 0;">Envoyé le ${new Date().toLocaleDateString('fr-FR')}</p>
+        <p style="margin: 0; font-size: 14px; color: #166534;"><strong>Montant</strong></p>
+        <p style="font-size: 40px; font-weight: 700; margin: 12px 0; color: #166534;">${data.amount}€</p>
+        <p style="margin: 0; color: #166534; font-size: 14px;">Envoyé le ${new Date().toLocaleDateString('fr-FR')}</p>
       </div>
       
       <div style="${cardStyle}">
-        <p style="margin: 5px 0;"><strong>Méthode :</strong> ${data.paymentMethod}</p>
-        <p style="margin: 5px 0;"><strong>Référence :</strong> ${data.reference}</p>
+        <table role="presentation" cellspacing="0" cellpadding="6" border="0" style="font-size: 14px; color: #475569; width: 100%;">
+          <tr><td>💳 Méthode :</td><td><strong>${data.paymentMethod}</strong></td></tr>
+          <tr><td>🔖 Référence :</td><td><strong>${data.reference}</strong></td></tr>
+        </table>
       </div>
       
-      <p style="color: #64748b; font-size: 14px;">
+      <p style="font-size: 13px; color: #64748b; text-align: center;">
         Le virement devrait apparaître sur votre compte sous 2-3 jours ouvrés.
       </p>
     `),
   }),
 
   affiliatePayoutPending: (data) => ({
-    subject: `Paiement de ${data.amount}€ en cours de traitement`,
+    subject: `⏳ Paiement de ${data.amount}€ en cours de traitement`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Paiement en attente </h2>
+      <h2 style="${headingStyle}">Paiement en attente ⏳</h2>
       
-      <p>Votre demande de paiement est en cours de traitement.</p>
+      <p style="${textStyle}">Votre demande de paiement est en cours de traitement.</p>
       
       <div style="${cardStyle}">
-        <p style="margin: 5px 0;"><strong>Montant :</strong> ${data.amount}€</p>
-        <p style="margin: 5px 0;"><strong>Date de demande :</strong> ${data.requestDate}</p>
-        <p style="margin: 5px 0;"><strong>Délai estimé :</strong> 5-7 jours ouvrés</p>
+        <table role="presentation" cellspacing="0" cellpadding="6" border="0" style="font-size: 14px; color: #475569; width: 100%;">
+          <tr><td>💰 Montant :</td><td><strong>${data.amount}€</strong></td></tr>
+          <tr><td>📅 Date de demande :</td><td><strong>${data.requestDate}</strong></td></tr>
+          <tr><td>⏱️ Délai estimé :</td><td><strong>5-7 jours ouvrés</strong></td></tr>
+        </table>
       </div>
       
-      <p style="color: #64748b; font-size: 14px;">
+      <p style="font-size: 13px; color: #64748b; text-align: center;">
         Vous recevrez un email de confirmation une fois le paiement effectué.
       </p>
     `),
   }),
 
   adminAffiliateApplication: (data) => ({
-    subject: `Nouvelle demande d'affiliation - ${data.companyName || 'Nouvel affilié'}`,
+    subject: `🤝 Nouvelle demande d'affiliation - ${data.companyName || 'Nouvel affilié'}`,
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Nouvelle demande d'affiliation</h2>
+      <h2 style="${headingStyle}">Nouvelle demande d'affiliation</h2>
       
-      <p>Un utilisateur souhaite rejoindre le programme d'affiliation AIDE+.</p>
-      
-      <div style="${cardStyle}">
-        <h3 style="margin-top: 0;">Informations du demandeur</h3>
-        <p style="margin: 5px 0;"><strong>Email utilisateur :</strong> ${data.userEmail || 'Non disponible'}</p>
-        <p style="margin: 5px 0;"><strong>Nom de l'entreprise :</strong> ${data.companyName}</p>
-        <p style="margin: 5px 0;"><strong>Email de contact :</strong> ${data.contactEmail}</p>
-        <p style="margin: 5px 0;"><strong>Site web :</strong> ${data.website}</p>
-      </div>
+      <p style="${textStyle}">Un utilisateur souhaite rejoindre le programme d'affiliation AIDE+.</p>
       
       <div style="${cardStyle}">
-        <h3 style="margin-top: 0;">Description / Motivation</h3>
-        <p style="margin: 5px 0; white-space: pre-wrap;">${data.description}</p>
+        <p style="margin: 0 0 12px; font-size: 14px; color: #1e40af;"><strong>Informations du demandeur</strong></p>
+        <table role="presentation" cellspacing="0" cellpadding="6" border="0" style="font-size: 14px; color: #475569; width: 100%;">
+          <tr><td style="width: 140px;">📧 Email utilisateur :</td><td><strong>${data.userEmail || 'Non disponible'}</strong></td></tr>
+          <tr><td>🏢 Nom de l'entreprise :</td><td><strong>${data.companyName || 'Non spécifié'}</strong></td></tr>
+          <tr><td>📬 Email de contact :</td><td><strong>${data.contactEmail}</strong></td></tr>
+          <tr><td>🌐 Site web :</td><td><a href="${data.website}" style="color: #2563eb;">${data.website || 'Non spécifié'}</a></td></tr>
+        </table>
       </div>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${APP_CONFIG.frontendUrl}/x-admin/affiliates" style="${buttonStyle}">
-          Examiner la demande
-        </a>
+      <div style="${cardStyle}">
+        <p style="margin: 0 0 12px; font-size: 14px; color: #1e40af;"><strong>Description / Motivation</strong></p>
+        <p style="margin: 0; font-size: 14px; color: #475569; white-space: pre-wrap;">${data.description || 'Aucune description fournie'}</p>
       </div>
       
-      <p style="color: #64748b; font-size: 14px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+        <tr>
+          <td align="center" style="border-radius: 8px; background-color: #2563eb;">
+            <a href="${APP_CONFIG.frontendUrl}/x-admin/affiliates" style="${buttonStyle}">
+              Examiner la demande
+            </a>
+          </td>
+        </tr>
+      </table>
+      
+      <p style="font-size: 12px; color: #94a3b8; text-align: center;">
         ID affilié : ${data.affiliateId}<br>
         Date de la demande : ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
       </p>
@@ -564,8 +776,7 @@ const templates = {
   contactConfirmation: (data) => ({
     subject: 'Nous avons bien reçu votre message - AIDE+',
     html: wrapEmailContent(`
-      <h2 style="color: #1e293b; margin-top: 0;">Message reçu !</h2>
-      
+      <h2 style="${headingStyle}">Message reçu ! 📬</h2>
       <p>Bonjour ${data.name},</p>
       
       <p>Nous avons bien reçu votre message et nous vous répondrons dans les plus brefs délais (généralement sous 24-48h).</p>
@@ -1111,6 +1322,33 @@ class EmailService {
   async sendAffiliatePayoutPending(to, data) {
     const template = templates.affiliatePayoutPending(data);
     return this.send({ to, ...template, templateKey: 'affiliate_payout_pending' });
+  }
+
+  // ========================================
+  // ADMIN BULK EMAIL
+  // ========================================
+
+  /**
+   * Create HTML for admin bulk email with professional template
+   * Converts plain text to formatted HTML with proper styling
+   */
+  createBulkEmailHtml(content, title = '') {
+    const formattedContent = formatContentToHtml(content);
+    return wrapEmailContent(formattedContent, { title, showHeader: true });
+  }
+
+  /**
+   * Get the email wrapper function and format helper for external use
+   */
+  getEmailHelpers() {
+    return {
+      wrapEmailContent,
+      formatContentToHtml,
+      buttonStyle,
+      cardStyle,
+      headingStyle,
+      textStyle,
+    };
   }
 
   // ========================================

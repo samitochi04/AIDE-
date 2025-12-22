@@ -2,6 +2,9 @@
 export { authenticate, optionalAuth, requireSubscription } from './auth.js';
 export { requireAdmin, requireRole, requirePermission, requireSuperAdmin } from './admin.js';
 
+// Maintenance
+export { checkMaintenance, getPublicSettings } from './maintenance.js';
+
 // Rate Limiting
 export {
   defaultLimiter,

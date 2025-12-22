@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { api, API_ENDPOINTS } from '../../../config/api'
 import { useAdmin } from '../../../context/AdminContext'
@@ -13,6 +13,8 @@ export default function AdminAffiliates() {
   const [error, setError] = useState(null)
   const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0, totalPages: 0 })
   const [filters, setFilters] = useState({ search: '', status: '' })
+  const [searchInput, setSearchInput] = useState('')
+  const debounceRef = useRef(null)
   const [selectedAffiliate, setSelectedAffiliate] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [modalMode, setModalMode] = useState('view')
@@ -45,6 +47,30 @@ export default function AdminAffiliates() {
   useEffect(() => {
     fetchAffiliates()
   }, [fetchAffiliates])
+
+  // Debounced search handler
+  const handleSearch = (e) => {
+    const value = e.target.value
+    setSearchInput(value)
+    
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+    
+    debounceRef.current = setTimeout(() => {
+      setFilters(prev => ({ ...prev, search: value }))
+      setPagination(prev => ({ ...prev, page: 1 }))
+    }, 300)
+  }
+
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current)
+      }
+    }
+  }, [])
 
   const handleView = async (affiliate) => {
     try {
@@ -131,11 +157,8 @@ export default function AdminAffiliates() {
           <input
             type="text"
             placeholder={t('admin.affiliates.searchPlaceholder', 'Search affiliates...')}
-            value={filters.search}
-            onChange={(e) => {
-              setFilters(prev => ({ ...prev, search: e.target.value }))
-              setPagination(prev => ({ ...prev, page: 1 }))
-            }}
+            value={searchInput}
+            onChange={handleSearch}
             className={styles.searchInput}
           />
         </div>
@@ -202,7 +225,7 @@ export default function AdminAffiliates() {
                     </td>
                     <td>
                       <code style={{ background: 'var(--color-bg-tertiary)', padding: '0.25rem 0.5rem', borderRadius: '0.25rem', fontSize: '0.75rem' }}>
-                        {affiliate.referral_code}
+                        {affiliate.affiliate_code || '-'}
                       </code>
                     </td>
                     <td>{affiliate.commission_rate || 10}%</td>
@@ -287,8 +310,8 @@ export default function AdminAffiliates() {
                       <p>{selectedAffiliate.user?.email || selectedAffiliate.email}</p>
                     </div>
                     <div className={styles.detailItem}>
-                      <label>Referral Code</label>
-                      <p><code>{selectedAffiliate.referral_code}</code></p>
+                      <label>Affiliate Code</label>
+                      <p><code>{selectedAffiliate.affiliate_code || '-'}</code></p>
                     </div>
                     <div className={styles.detailItem}>
                       <label>Commission Rate</label>

@@ -661,6 +661,101 @@
   flex: 1;
 }
 
+/* Large Modal for Template Editing */
+.modalLarge {
+  max-width: 900px;
+  width: 95%;
+}
+
+.templateInfo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.templateInfo .templateDesc {
+  width: 100%;
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.templateMeta {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 999px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.badgeSecondary {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* Content Editor Improvements */
+.contentEditor {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  resize: vertical;
+  min-height: 200px;
+}
+
+.contentEditor::placeholder {
+  color: var(--text-tertiary);
+  white-space: pre-wrap;
+}
+
+/* Help Text Improvements */
+.helpText {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.helpText i {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.helpText p {
+  margin: 0;
+}
+
+.helpText code {
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  word-break: break-all;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .statsGrid {
@@ -688,6 +783,10 @@
     grid-template-columns: 1fr;
   }
   
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
   .modalFooter,
   .confirmActions {
     flex-direction: column;
@@ -695,5 +794,9 @@
   
   .confirmActions button {
     width: 100%;
+  }
+  
+  .modalLarge {
+    max-height: 95vh;
   }
 }

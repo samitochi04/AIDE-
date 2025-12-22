@@ -182,7 +182,7 @@ class SubscriptionRepository extends BaseRepository {
 
     if (error) throw error;
 
-    const tierBreakdown = { basic: 0, plus: 0, premium: 0 };
+    const tierBreakdown = { free: 0, basic: 0, premium: 0, ultimate: 0 };
     data?.forEach(sub => {
       if (tierBreakdown.hasOwnProperty(sub.tier)) {
         tierBreakdown[sub.tier]++;
