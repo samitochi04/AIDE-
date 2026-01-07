@@ -1,0 +1,281 @@
+/* Cookie Consent Banner */
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.banner {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  background: var(--color-background-elevated, #ffffff);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-border, #e5e7eb);
+  pointer-events: all;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .banner {
+  background: #1f2937;
+  background: var(--color-background-elevated, #1f2937);
+  border-color: var(--color-border, #374151);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--color-primary-light);
+  border-radius: 0.75rem;
+  color: var(--color-primary);
+  font-size: 1.25rem;
+}
+
+[data-theme='dark'] .iconWrapper {
+  background: var(--color-primary-dark);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* Preferences Section */
+.preferences {
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.preferenceItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.preferenceItem:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.preferenceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.preferenceName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.preferenceDescription {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  line-height: 1.4;
+}
+
+/* Toggle Switch */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.toggle.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-background-tertiary);
+  border-radius: 24px;
+  transition: 0.3s ease;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle input:checked + .slider {
+  background-color: var(--color-primary);
+}
+
+.toggle input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+.toggle.disabled .slider {
+  background-color: var(--color-primary);
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.customizeButton,
+.rejectButton,
+.acceptButton {
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.customizeButton {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.customizeButton:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+.rejectButton {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  margin-left: auto;
+}
+
+.rejectButton:hover {
+  background: var(--color-background-tertiary);
+}
+
+.acceptButton {
+  background: var(--color-primary);
+  color: white;
+}
+
+.acceptButton:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .overlay {
+    padding: 0.75rem;
+  }
+
+  .content {
+    padding: 1.25rem;
+  }
+
+  .header {
+    gap: 0.5rem;
+  }
+
+  .iconWrapper {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.8125rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .customizeButton,
+  .rejectButton,
+  .acceptButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .rejectButton {
+    margin-left: 0;
+    order: 1;
+  }
+
+  .acceptButton {
+    order: 0;
+  }
+
+  .customizeButton {
+    order: 2;
+  }
+}

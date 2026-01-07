@@ -580,6 +580,289 @@ class AnalyticsService {
       return { totalMessages: 0, totalConversations: 0 };
     }
   }
+
+  /**
+   * Track anonymous visitor
+   */
+  async trackAnonymousVisitor(data) {
+    const {
+      deviceFingerprint,
+      ip,
+      userAgent,
+      deviceType,
+      browser,
+      os,
+      source,
+      medium,
+      campaign,
+      referrer,
+      landingPage,
+    } = data;
+
+    try {
+      // Check if visitor already exists
+      const { data: existing } = await this.db
+        .from('anonymous_visitors')
+        .select('id, total_page_views, total_sessions')
+        .eq('device_fingerprint', deviceFingerprint)
+        .single();
+
+      if (existing) {
+        // Update existing visitor
+        const { error } = await this.db
+          .from('anonymous_visitors')
+          .update({
+            current_ip: ip,
+            last_seen_at: new Date().toISOString(),
+            total_page_views: (existing.total_page_views || 0) + 1,
+            total_sessions: (existing.total_sessions || 0) + 1,
+          })
+          .eq('id', existing.id);
+
+        if (error) throw error;
+        return { success: true, visitorId: existing.id, isNew: false };
+      }
+
+      // Create new visitor
+      const { data: newVisitor, error } = await this.db
+        .from('anonymous_visitors')
+        .insert({
+          device_fingerprint: deviceFingerprint,
+          first_ip: ip,
+          current_ip: ip,
+          user_agent: userAgent,
+          device_type: deviceType,
+          browser,
+          os,
+          first_source: source,
+          first_medium: medium,
+          first_campaign: campaign,
+          first_referrer: referrer,
+          landing_page: landingPage,
+          total_page_views: 1,
+          total_sessions: 1,
+        })
+        .select('id')
+        .single();
+
+      if (error) throw error;
+      return { success: true, visitorId: newVisitor.id, isNew: true };
+    } catch (error) {
+      logger.error('Failed to track anonymous visitor', { error: error.message });
+      return { success: false };
+    }
+  }
+
+  /**
+   * Update visitor page view
+   */
+  async updateVisitorPageView(data) {
+    const { deviceFingerprint, pageUrl, timeOnPage } = data;
+
+    try {
+      const { data: visitor } = await this.db
+        .from('anonymous_visitors')
+        .select('id, total_page_views, total_time_seconds')
+        .eq('device_fingerprint', deviceFingerprint)
+        .single();
+
+      if (!visitor) {
+        return { success: false, error: 'Visitor not found' };
+      }
+
+      const { error } = await this.db
+        .from('anonymous_visitors')
+        .update({
+          last_seen_at: new Date().toISOString(),
+          total_page_views: (visitor.total_page_views || 0) + 1,
+          total_time_seconds: (visitor.total_time_seconds || 0) + (timeOnPage || 0),
+        })
+        .eq('id', visitor.id);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      logger.error('Failed to update visitor page view', { error: error.message });
+      return { success: false };
+    }
+  }
+
+  /**
+   * Convert anonymous visitor to user
+   */
+  async convertVisitorToUser(deviceFingerprint, userId) {
+    try {
+      const { data: visitor } = await this.db
+        .from('anonymous_visitors')
+        .select('id')
+        .eq('device_fingerprint', deviceFingerprint)
+        .single();
+
+      if (!visitor) {
+        return { success: false, error: 'Visitor not found' };
+      }
+
+      const { error } = await this.db
+        .from('anonymous_visitors')
+        .update({
+          converted_to_user_id: userId,
+          converted_at: new Date().toISOString(),
+        })
+        .eq('id', visitor.id);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      logger.error('Failed to convert visitor to user', { error: error.message });
+      return { success: false };
+    }
+  }
+
+  /**
+   * Get anonymous visitor stats (for admin)
+   */
+  async getAnonymousVisitorStats() {
+    try {
+      const now = new Date();
+      const today = new Date(now);
+      today.setHours(0, 0, 0, 0);
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const thisWeek = new Date(today);
+      thisWeek.setDate(thisWeek.getDate() - 7);
+      const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+      // Get total visitors
+      const { count: totalVisitors } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact', head: true });
+
+      // Get today's visitors
+      const { count: todayVisitors } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact', head: true })
+        .gte('first_seen_at', today.toISOString());
+
+      // Get this week's visitors
+      const { count: weekVisitors } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact', head: true })
+        .gte('first_seen_at', thisWeek.toISOString());
+
+      // Get this month's visitors
+      const { count: monthVisitors } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact', head: true })
+        .gte('first_seen_at', thisMonth.toISOString());
+
+      // Get converted visitors
+      const { count: convertedVisitors } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact', head: true })
+        .not('converted_to_user_id', 'is', null);
+
+      // Get device breakdown
+      const { data: deviceData } = await this.db
+        .from('anonymous_visitors')
+        .select('device_type');
+
+      const deviceBreakdown = {};
+      deviceData?.forEach((v) => {
+        const type = v.device_type || 'unknown';
+        deviceBreakdown[type] = (deviceBreakdown[type] || 0) + 1;
+      });
+
+      // Get top landing pages
+      const { data: landingData } = await this.db
+        .from('anonymous_visitors')
+        .select('landing_page')
+        .not('landing_page', 'is', null);
+
+      const landingPages = {};
+      landingData?.forEach((v) => {
+        const page = v.landing_page;
+        if (page) {
+          landingPages[page] = (landingPages[page] || 0) + 1;
+        }
+      });
+
+      const topLandingPages = Object.entries(landingPages)
+        .map(([page, count]) => ({ page, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10);
+
+      // Get traffic sources
+      const { data: sourceData } = await this.db
+        .from('anonymous_visitors')
+        .select('first_source, first_medium');
+
+      const sources = {};
+      sourceData?.forEach((v) => {
+        const source = v.first_source || 'direct';
+        sources[source] = (sources[source] || 0) + 1;
+      });
+
+      const trafficSources = Object.entries(sources)
+        .map(([source, count]) => ({ source, count }))
+        .sort((a, b) => b.count - a.count);
+
+      return {
+        total: totalVisitors || 0,
+        today: todayVisitors || 0,
+        thisWeek: weekVisitors || 0,
+        thisMonth: monthVisitors || 0,
+        converted: convertedVisitors || 0,
+        conversionRate: totalVisitors ? ((convertedVisitors || 0) / totalVisitors * 100).toFixed(1) : 0,
+        deviceBreakdown,
+        topLandingPages,
+        trafficSources,
+      };
+    } catch (error) {
+      logger.error('Failed to get anonymous visitor stats', { error: error.message });
+      return {
+        total: 0,
+        today: 0,
+        thisWeek: 0,
+        thisMonth: 0,
+        converted: 0,
+        conversionRate: 0,
+        deviceBreakdown: {},
+        topLandingPages: [],
+        trafficSources: [],
+      };
+    }
+  }
+
+  /**
+   * Get recent anonymous visitors (for admin)
+   */
+  async getRecentVisitors(options = {}) {
+    const { page = 1, limit = 20 } = options;
+    const offset = (page - 1) * limit;
+
+    try {
+      const { data, count, error } = await this.db
+        .from('anonymous_visitors')
+        .select('*', { count: 'exact' })
+        .order('last_seen_at', { ascending: false })
+        .range(offset, offset + limit - 1);
+
+      if (error) throw error;
+
+      return {
+        visitors: data || [],
+        pagination: {
+          page,
+          limit,
+          total: count || 0,
+          totalPages: Math.ceil((count || 0) / limit),
+        },
+      };
+    } catch (error) {
+      logger.error('Failed to get recent visitors', { error: error.message });
+      return { visitors: [], pagination: { page, limit, total: 0, totalPages: 0 } };
+    }
+  }
 }
 
 export const analyticsService = new AnalyticsService();

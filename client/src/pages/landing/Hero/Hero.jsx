@@ -43,11 +43,6 @@ const Hero = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.div className={styles.badge} variants={itemVariants}>
-          <span className={styles.badgeIcon}>🇫🇷</span>
-          <span>{t('landing.hero.badge')}</span>
-        </motion.div>
-
         <motion.h1 className={styles.title} variants={itemVariants}>
           {t('landing.hero.title')}
           <span className={styles.highlight}> {t('landing.hero.titleHighlight')}</span>

@@ -50,4 +50,10 @@ router.post('/:id/view', optionalAuth, contentController.trackView);
  */
 router.post('/:id/like', optionalAuth, contentController.likeContent);
 
+/**
+ * GET /:id/like-status
+ * Check if user has liked content
+ */
+router.get('/:id/like-status', optionalAuth, contentController.getLikeStatus);
+
 export default router;

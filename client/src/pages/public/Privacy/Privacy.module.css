@@ -1,0 +1,70 @@
+.container {
+  min-height: calc(100vh - 200px);
+  padding: 4rem 1.5rem;
+  background: var(--background);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.lastUpdated {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  margin-bottom: 3rem;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.section ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.section ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.email {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.25rem;
+  }
+}

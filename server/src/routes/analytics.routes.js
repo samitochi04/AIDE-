@@ -73,4 +73,25 @@ router.post('/session-start', analyticsLimiter, analyticsController.trackSession
  */
 router.post('/session-end', analyticsLimiter, analyticsController.trackSessionEnd);
 
+/**
+ * @route   POST /analytics/visitor
+ * @desc    Track anonymous visitor
+ * @access  Public
+ */
+router.post('/visitor', analyticsLimiter, analyticsController.trackAnonymousVisitor);
+
+/**
+ * @route   POST /analytics/visitor/pageview
+ * @desc    Track anonymous visitor page view
+ * @access  Public
+ */
+router.post('/visitor/pageview', analyticsLimiter, analyticsController.trackVisitorPageView);
+
+/**
+ * @route   POST /analytics/visitor/convert
+ * @desc    Convert anonymous visitor to registered user
+ * @access  Private (requires auth)
+ */
+router.post('/visitor/convert', authenticate, analyticsController.convertVisitorToUser);
+
 export default router;

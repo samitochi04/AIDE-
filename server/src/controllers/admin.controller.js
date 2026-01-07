@@ -713,3 +713,29 @@ export const bulkUpdateSettings = async (req, res, next) => {
     next(error);
   }
 };
+
+// ============================================
+// Anonymous Visitors
+// ============================================
+
+export const getVisitorStats = async (req, res, next) => {
+  try {
+    const stats = await analyticsService.getAnonymousVisitorStats();
+    res.json(formatResponse(stats));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRecentVisitors = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const data = await analyticsService.getRecentVisitors({
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+    res.json(formatResponse(data));
+  } catch (error) {
+    next(error);
+  }
+};

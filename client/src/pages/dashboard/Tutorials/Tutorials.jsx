@@ -23,7 +23,8 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-const CONTENT_TYPES = ['all', 'tutorial', 'video', 'guide', 'article'];
+// Tutorial section excludes articles (articles are for blog/SEO)
+const CONTENT_TYPES = ['all', 'tutorial', 'video', 'guide'];
 
 export function Tutorials() {
   const { t, i18n } = useTranslation();
@@ -62,11 +63,15 @@ export function Tutorials() {
         const response = await apiFetch(`${API_ENDPOINTS.CONTENT.LIST}?${params}`);
 
         if (response?.data) {
-          setContents(response.data.contents || []);
+          // Filter out articles - they belong in the blog section
+          const filteredContents = (response.data.contents || []).filter(
+            content => content.content_type !== 'article'
+          );
+          setContents(filteredContents);
           setPagination(prev => ({
             ...prev,
-            total: response.data.pagination?.total || 0,
-            totalPages: response.data.pagination?.totalPages || 1
+            total: filteredContents.length,
+            totalPages: Math.ceil(filteredContents.length / pagination.limit) || 1
           }));
         }
       } catch (error) {
@@ -118,16 +123,7 @@ export function Tutorials() {
       )
     : contents;
 
-  const handleContentClick = async (content) => {
-    // Track view
-    try {
-      await apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(content.id), {
-        method: 'POST'
-      });
-    } catch (error) {
-      console.error('Failed to track view:', error);
-    }
-
+  const handleContentClick = (content) => {
     // Navigate to tutorial detail page
     if (content.slug) {
       navigate(generatePath(ROUTES.TUTORIAL_VIEW, { slug: content.slug }));
@@ -248,10 +244,6 @@ export function Tutorials() {
                   )}
                   
                   <div className={styles.contentMeta}>
-                    <span className={styles.views}>
-                      <i className="ri-eye-line" />
-                      {content.view_count || 0} {t('dashboard.tutorials.views', 'views')}
-                    </span>
                     <span className={styles.language}>
                       {content.language === 'fr' ? '🇫🇷' : '🇬🇧'}
                     </span>

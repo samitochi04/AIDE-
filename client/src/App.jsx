@@ -12,6 +12,9 @@ import { SimulationProvider } from './context/SimulationContext'
 import { NotificationProvider } from './context/NotificationContext'
 import { AdminProvider } from './context/AdminContext'
 
+// Visitor Tracking
+import { initVisitorTracking } from './lib/visitorTracking'
+
 // i18n initialization
 import './i18n'
 
@@ -20,6 +23,9 @@ import api from './config/api'
 
 // Layouts
 import { PublicLayout, DashboardLayout, AdminLayout } from './components/layout'
+
+// UI Components
+import { CookieConsent } from './components/ui'
 
 // Pages
 import LandingPage from './pages/landing'
@@ -37,7 +43,7 @@ import {
 } from './pages/dashboard'
 import { Login, Register, AuthCallback, CheckoutSuccess, CheckoutCancel } from './pages/auth'
 import { Simulation, Results as SimulationResults } from './pages/simulation'
-import { Pricing, Contact, Blog, BlogPost, Maintenance } from './pages/public'
+import { Pricing, Contact, Blog, BlogPost, Maintenance, Privacy, Terms, Cookies } from './pages/public'
 
 // Admin Pages
 import {
@@ -52,6 +58,7 @@ import {
   AdminContent,
   AdminEmails,
   AdminAnalytics,
+  AdminVisitors,
   AdminSettings,
   AdminAdmins
 } from './pages/admin'
@@ -75,6 +82,11 @@ function MaintenanceChecker({ children }) {
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const location = useLocation()
+
+  // Initialize visitor tracking on first render
+  useEffect(() => {
+    initVisitorTracking()
+  }, [])
 
   useEffect(() => {
     const checkMaintenance = async () => {
@@ -129,9 +141,12 @@ function App() {
                             <Route path="/" element={<LandingPage />} />
                             <Route path="/pricing" element={<Pricing />} />
                             <Route path="/contact" element={<Contact />} />
-                          <Route path="/blog" element={<Blog />} />
-                          <Route path="/blog/:slug" element={<BlogPost />} />
-                        </Route>
+                            <Route path="/blog" element={<Blog />} />
+                            <Route path="/blog/:slug" element={<BlogPost />} />
+                            <Route path="/privacy" element={<Privacy />} />
+                            <Route path="/terms" element={<Terms />} />
+                            <Route path="/cookies" element={<Cookies />} />
+                          </Route>
                         
                         {/* Auth Routes */}
                         <Route path="/login" element={<Login />} />
@@ -161,6 +176,7 @@ function App() {
                         {/* Admin Routes (single AdminProvider wrapper) */}
                         <Route path="/x-admin/*" element={<AdminProvider><AdminRoutes /></AdminProvider>} />
                       </Routes>
+                      <CookieConsent />
                       </MaintenanceChecker>
                     </SimulationProvider>
                   </NotificationProvider>
@@ -190,6 +206,7 @@ function AdminRoutes() {
         <Route path="content" element={<AdminContent />} />
         <Route path="emails" element={<AdminEmails />} />
         <Route path="analytics" element={<AdminAnalytics />} />
+        <Route path="visitors" element={<AdminVisitors />} />
         <Route path="admins" element={<AdminAdmins />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>

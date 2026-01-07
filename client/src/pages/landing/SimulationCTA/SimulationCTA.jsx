@@ -1,24 +1,30 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button, Select, Card } from '../../../components/ui'
 import { ROUTES } from '../../../config/routes'
 import { REGIONS } from '../../../config/constants'
+import { useSimulation } from '../../../context/SimulationContext'
 import styles from './SimulationCTA.module.css'
 
 const SimulationCTA = () => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [selectedRegion, setSelectedRegion] = useState('')
+  const { setAnswers } = useSimulation()
 
   const regionOptions = REGIONS.map(region => ({
-    value: region.id,
-    label: i18n.language === 'fr' ? region.nameFr : region.nameEn,
+    value: region.value,
+    label: region.label,
   }))
 
   const handleStartSimulation = () => {
-    navigate(ROUTES.SIMULATION, { state: { region: selectedRegion } })
+    // Set the region in the simulation context if selected
+    if (selectedRegion) {
+      setAnswers({ region: selectedRegion })
+    }
+    navigate(ROUTES.SIMULATION)
   }
 
   return (

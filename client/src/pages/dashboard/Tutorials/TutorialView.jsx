@@ -20,6 +20,10 @@ export function TutorialView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [viewTracked, setViewTracked] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -31,14 +35,8 @@ export function TutorialView() {
         
         if (response.data) {
           setContent(response.data);
-          // Track view
-          try {
-            await apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(response.data.id), {
-              method: 'POST'
-            });
-          } catch (e) {
-            console.error('Failed to track view:', e);
-          }
+          setLiked(response.data.user_has_liked || false);
+          setLikeCount(response.data.like_count || 0);
         }
       } catch (err) {
         console.error('Failed to fetch content:', err);
@@ -52,6 +50,37 @@ export function TutorialView() {
       fetchContent();
     }
   }, [slug]);
+
+  // Track view separately to prevent double tracking in StrictMode
+  useEffect(() => {
+    if (content?.id && !viewTracked) {
+      setViewTracked(true);
+      apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(content.id), {
+        method: 'POST'
+      }).catch(e => console.error('Failed to track view:', e));
+    }
+  }, [content?.id, viewTracked]);
+
+  // Handle like/unlike
+  const handleLike = async () => {
+    if (!content || likeLoading) return;
+    
+    setLikeLoading(true);
+    try {
+      const response = await apiFetch(API_ENDPOINTS.CONTENT.LIKE(content.id), {
+        method: 'POST',
+      });
+      
+      if (response.success) {
+        setLiked(response.data.liked);
+        setLikeCount(response.data.like_count);
+      }
+    } catch (err) {
+      console.error('Failed to like content:', err);
+    } finally {
+      setLikeLoading(false);
+    }
+  };
 
   // Format date
   const formatDate = (dateStr) => {
@@ -275,6 +304,15 @@ export function TutorialView() {
                     <span>{content.reading_time_minutes} min</span>
                   </div>
                 )}
+                <button
+                  className={`${styles.likeButton} ${liked ? styles.liked : ''}`}
+                  onClick={handleLike}
+                  disabled={likeLoading}
+                  aria-label={liked ? t('tutorials.unlike', 'Unlike') : t('tutorials.like', 'Like')}
+                >
+                  <i className={liked ? 'ri-heart-fill' : 'ri-heart-line'} />
+                  <span>{likeCount}</span>
+                </button>
               </div>
 
               {/* Description */}

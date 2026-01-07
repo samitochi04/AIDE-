@@ -107,7 +107,7 @@ const Footer = () => {
             © {currentYear} AIDE+. {t('footer.allRightsReserved')}
           </p>
           <p className={styles.madeWith}>
-            {t('footer.madeWith')} <span className={styles.heart}>❤</span> {t('footer.inFrance')}
+            AIDE+
           </p>
         </div>
       </div>

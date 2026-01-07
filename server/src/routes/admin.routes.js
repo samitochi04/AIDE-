@@ -541,4 +541,22 @@ router.patch(
   adminController.updateSetting
 );
 
+// ============================================
+// Anonymous Visitors
+// ============================================
+
+/**
+ * @route   GET /admin/visitors/stats
+ * @desc    Get anonymous visitor statistics
+ * @access  Admin
+ */
+router.get('/visitors/stats', adminController.getVisitorStats);
+
+/**
+ * @route   GET /admin/visitors
+ * @desc    Get recent anonymous visitors
+ * @access  Admin
+ */
+router.get('/visitors', adminController.getRecentVisitors);
+
 export default router;
