@@ -1,42 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import prerender from '@prerenderer/rollup-plugin'
-import puppeteerRenderer from '@prerenderer/renderer-puppeteer'
-
-// Routes to prerender for SEO
-const routesToPrerender = [
-  '/',
-  '/pricing',
-  '/contact',
-  '/blog',
-  '/privacy',
-  '/terms',
-  '/cookies',
-]
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    // Prerender static pages for SEO (only in production build)
-    process.env.NODE_ENV === 'production' && prerender({
-      routes: routesToPrerender,
-      renderer: puppeteerRenderer,
-      rendererOptions: {
-        maxConcurrentRoutes: 4,
-        renderAfterDocumentEvent: 'render-event',
-        headless: true,
-      },
-      postProcess(renderedRoute) {
-        // Add prerendered attribute for debugging
-        renderedRoute.html = renderedRoute.html.replace(
-          '</head>',
-          '<meta name="prerendered" content="true"></head>'
-        )
-        return renderedRoute
-      },
-    }),
-  ].filter(Boolean),
+  ],
   build: {
     // Generate source maps for production debugging (optional)
     sourcemap: false,
