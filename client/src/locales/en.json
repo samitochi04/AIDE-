@@ -1067,6 +1067,7 @@
       "content": "Content",
       "emails": "Emails",
       "analytics": "Analytics",
+      "visitors": "Visitors",
       "admins": "Admins",
       "settings": "Settings",
       "sections": {
@@ -1197,6 +1198,186 @@
       "showing": "Showing",
       "to": "to",
       "entries": "entries"
+    }
+  },
+  
+  "privacy": {
+    "seo": {
+      "title": "Privacy Policy | AIDE+",
+      "description": "Learn how AIDE+ protects and handles your personal data."
+    },
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "intro": {
+        "title": "Introduction",
+        "content": "AIDE+ (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform."
+      },
+      "dataCollected": {
+        "title": "Information We Collect",
+        "intro": "We collect information that you provide directly to us:",
+        "item1": "Account information (email address, name)",
+        "item2": "Profile information (nationality, residence status, family situation)",
+        "item3": "Simulation data (income, housing status, region)",
+        "item4": "Communication data (messages with our AI assistant, support requests)"
+      },
+      "dataUse": {
+        "title": "How We Use Your Information",
+        "intro": "We use the information we collect to:",
+        "item1": "Provide, maintain, and improve our services",
+        "item2": "Personalize your experience and recommendations",
+        "item3": "Process transactions and send related information",
+        "item4": "Send technical notices, updates, and support messages"
+      },
+      "dataProtection": {
+        "title": "Data Security",
+        "content": "We implement appropriate technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. Your data is encrypted in transit and at rest."
+      },
+      "dataSharing": {
+        "title": "Information Sharing",
+        "content": "We do not sell, trade, or otherwise transfer your personal information to third parties. We may share data with service providers who assist us in operating our platform, subject to strict confidentiality obligations."
+      },
+      "userRights": {
+        "title": "Your Rights",
+        "intro": "Under GDPR, you have the following rights:",
+        "item1": "Right to access your personal data",
+        "item2": "Right to rectification of inaccurate data",
+        "item3": "Right to erasure (\"right to be forgotten\")",
+        "item4": "Right to restrict processing",
+        "item5": "Right to data portability"
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have questions about this Privacy Policy or wish to exercise your rights, please contact us at:"
+      }
+    }
+  },
+  
+  "terms": {
+    "seo": {
+      "title": "Terms of Service | AIDE+",
+      "description": "Read the terms and conditions for using the AIDE+ platform."
+    },
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "content": "By accessing or using AIDE+, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services."
+      },
+      "services": {
+        "title": "Description of Services",
+        "content": "AIDE+ provides information and tools to help users in France identify government benefits they may be eligible for. Our services include benefit simulations, an AI assistant, and procedural guides. Our platform is for informational purposes only and does not constitute legal or financial advice."
+      },
+      "accounts": {
+        "title": "User Accounts",
+        "intro": "When creating an account, you agree to:",
+        "item1": "Provide accurate and complete information",
+        "item2": "Maintain the security of your account credentials",
+        "item3": "Notify us immediately of any unauthorized use"
+      },
+      "subscriptions": {
+        "title": "Subscriptions and Payments",
+        "content": "Certain features require a paid subscription. Subscription fees are billed in advance on a monthly basis. You may cancel your subscription at any time, and cancellation will take effect at the end of the current billing period."
+      },
+      "prohibitedUse": {
+        "title": "Prohibited Uses",
+        "intro": "You agree not to:",
+        "item1": "Use our services for any unlawful purpose",
+        "item2": "Attempt to gain unauthorized access to our systems",
+        "item3": "Interfere with or disrupt the integrity of our services",
+        "item4": "Share your account credentials with others"
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "content": "All content, features, and functionality of AIDE+ are owned by us and are protected by international copyright, trademark, and other intellectual property laws."
+      },
+      "disclaimer": {
+        "title": "Disclaimer",
+        "content": "AIDE+ provides general information about government benefits and administrative procedures. We do not guarantee the accuracy or completeness of this information. Always verify with official government sources before making decisions based on our content."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "content": "To the fullest extent permitted by law, AIDE+ shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services."
+      },
+      "modifications": {
+        "title": "Modifications",
+        "content": "We reserve the right to modify these Terms at any time. We will notify users of any material changes via email or through our platform."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For questions about these Terms, please contact us at:"
+      }
+    }
+  },
+
+  "cookieConsent": {
+    "title": "We use cookies",
+    "description": "We use cookies to enhance your browsing experience, provide personalized content, and analyze our traffic. By clicking \"Accept All\", you consent to our use of cookies.",
+    "learnMore": "Learn more about our cookie policy",
+    "acceptAll": "Accept All",
+    "rejectAll": "Reject All",
+    "customize": "Customize",
+    "savePreferences": "Save Preferences",
+    "categories": {
+      "essential": {
+        "name": "Essential Cookies",
+        "description": "Required for the website to function properly. Cannot be disabled."
+      },
+      "analytics": {
+        "name": "Analytics Cookies",
+        "description": "Help us understand how visitors interact with our website."
+      },
+      "preferences": {
+        "name": "Preference Cookies",
+        "description": "Remember your settings and preferences like language and theme."
+      }
+    }
+  },
+  
+  "cookies": {
+    "seo": {
+      "title": "Cookie Policy | AIDE+",
+      "description": "Learn about how AIDE+ uses cookies and similar technologies."
+    },
+    "title": "Cookie Policy",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "whatAreCookies": {
+        "title": "What Are Cookies",
+        "content": "Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and understanding how you use our platform."
+      },
+      "howWeUse": {
+        "title": "How We Use Cookies",
+        "intro": "We use different types of cookies for various purposes to enhance your experience on AIDE+."
+      },
+      "essential": {
+        "title": "Essential Cookies",
+        "content": "These cookies are necessary for the website to function properly and cannot be disabled.",
+        "item1": "Authentication and session management",
+        "item2": "Security features",
+        "item3": "Load balancing"
+      },
+      "analytics": {
+        "title": "Analytics Cookies",
+        "content": "These cookies help us understand how visitors interact with our website:",
+        "item1": "Pages visited and time spent",
+        "item2": "Features used and user flows"
+      },
+      "preferences": {
+        "title": "Preference Cookies",
+        "content": "These cookies remember your choices and preferences:",
+        "item1": "Language preference",
+        "item2": "Theme preference (light/dark mode)"
+      },
+      "manageCookies": {
+        "title": "Managing Cookies",
+        "content": "You can control and manage cookies through your browser settings. Please note that disabling certain cookies may affect the functionality of our website."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have questions about our use of cookies, please contact us at:"
+      }
     }
   }
 }

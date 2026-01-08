@@ -127,33 +127,20 @@ export const getContentBySlug = async (req, res, next) => {
       });
     }
 
-    // Check content access limit for authenticated users
+    // Track content access for authenticated users (no limit check - all content is free)
     if (userId) {
-      const canAccess = await subscriptionService.canAccessContent(userId);
-      
-      if (!canAccess.allowed) {
-        return res.status(403).json({
-          success: false,
-          error: 'limit_exceeded',
-          allowed: false,
-          current: canAccess.current,
-          limit: canAccess.limit,
-          remaining: 0,
-          tier: canAccess.tier,
-          message: canAccess.message,
-          upgradeUrl: '/pricing',
-          // Still provide content preview
-          preview: {
-            title: content.title,
-            excerpt: content.excerpt,
-            content_type: content.content_type,
-            category: content.category,
-          }
-        });
-      }
-      
-      // Track content access for limit checking
+      // Track content access for analytics (not for limiting)
       await subscriptionService.trackContentAccess(userId, content.id);
+      
+      // Check if user has liked this content
+      const { data: userLike } = await supabase
+        .from('content_likes')
+        .select('id')
+        .eq('content_id', content.id)
+        .eq('user_id', userId)
+        .single();
+      
+      content.user_has_liked = !!userLike;
     }
 
     res.json({
@@ -173,8 +160,38 @@ export const getContentBySlug = async (req, res, next) => {
 export const trackView = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const userId = req.user?.id || null;
 
-    await contentRepository.incrementViews(id);
+    // Call RPC to increment views (handles both contents.view_count and content_views table)
+    const { error } = await supabase.rpc('increment_content_views', {
+      p_content_id: id,
+      p_user_id: userId,
+    });
+
+    if (error) {
+      console.warn('RPC increment_content_views failed, using fallback:', error.message);
+      // Fallback: just update the view_count directly using SQL increment
+      const { error: updateError } = await supabase
+        .from('contents')
+        .update({ view_count: supabase.raw ? supabase.raw('COALESCE(view_count, 0) + 1') : 1 })
+        .eq('id', id);
+      
+      if (updateError) {
+        // Final fallback - fetch and increment
+        const { data: content } = await supabase
+          .from('contents')
+          .select('view_count')
+          .eq('id', id)
+          .single();
+        
+        if (content) {
+          await supabase
+            .from('contents')
+            .update({ view_count: (content.view_count || 0) + 1 })
+            .eq('id', id);
+        }
+      }
+    }
 
     res.json({
       success: true,
@@ -215,43 +232,79 @@ export const likeContent = async (req, res, next) => {
       .single();
 
     if (existingLike) {
-      // Unlike
+      // Unlike - the trigger will handle decrementing like_count
       await supabase
         .from('content_likes')
         .delete()
         .eq('content_id', id)
         .eq('user_id', userId);
 
-      // Decrement like count
+      // Get updated like count
       const { data: content } = await contentRepository.findById(id);
-      if (content) {
-        await contentRepository.update(id, { like_count: Math.max(0, (content.like_count || 1) - 1) });
-      }
 
       res.json({
         success: true,
-        data: { liked: false },
+        data: { 
+          liked: false,
+          like_count: content?.like_count || 0,
+        },
       });
     } else {
-      // Like
+      // Like - the trigger will handle incrementing like_count
       await supabase
         .from('content_likes')
         .insert({ content_id: id, user_id: userId });
 
-      // Increment like count
+      // Get updated like count
       const { data: content } = await contentRepository.findById(id);
-      if (content) {
-        await contentRepository.update(id, { like_count: (content.like_count || 0) + 1 });
-      }
 
       res.json({
         success: true,
-        data: { liked: true },
+        data: { 
+          liked: true,
+          like_count: content?.like_count || 0,
+        },
       });
     }
   } catch (error) {
     console.error('Failed to like content:', req.params.id, error.message);
     next(error);
+  }
+};
+
+/**
+ * Check if user has liked content
+ * GET /content/:id/like-status
+ */
+export const getLikeStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.json({
+        success: true,
+        data: { liked: false },
+      });
+    }
+
+    const { data: existingLike } = await supabase
+      .from('content_likes')
+      .select('id')
+      .eq('content_id', id)
+      .eq('user_id', userId)
+      .single();
+
+    res.json({
+      success: true,
+      data: { liked: !!existingLike },
+    });
+  } catch (error) {
+    console.error('Failed to check like status:', req.params.id, error.message);
+    res.json({
+      success: true,
+      data: { liked: false },
+    });
   }
 };
 
@@ -262,4 +315,5 @@ export const contentController = {
   getContentBySlug,
   trackView,
   likeContent,
+  getLikeStatus,
 };

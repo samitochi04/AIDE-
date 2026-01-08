@@ -69,10 +69,10 @@ router.get('/activity-logs', requireSuperAdmin, adminController.getActivityLogs)
 
 /**
  * @route   GET /admin/users
- * @desc    Get all users (paginated)
+ * @desc    Get all users (paginated with filters)
  * @access  Admin
  */
-router.get('/users', validateQuery(schemas.pagination), adminController.getUsers);
+router.get('/users', validateQuery(schemas.userFilters), adminController.getUsers);
 
 /**
  * @route   GET /admin/users/:userId
@@ -356,7 +356,7 @@ router.patch('/admins/:adminId', requireSuperAdmin, adminController.updateAdmin)
  * @desc    Get all affiliates
  * @access  Admin
  */
-router.get('/affiliates', adminController.getAffiliates);
+router.get('/affiliates', validateQuery(schemas.affiliateFilters), adminController.getAffiliates);
 
 /**
  * @route   PATCH /admin/affiliates/:affiliateId
@@ -540,5 +540,23 @@ router.patch(
   ),
   adminController.updateSetting
 );
+
+// ============================================
+// Anonymous Visitors
+// ============================================
+
+/**
+ * @route   GET /admin/visitors/stats
+ * @desc    Get anonymous visitor statistics
+ * @access  Admin
+ */
+router.get('/visitors/stats', adminController.getVisitorStats);
+
+/**
+ * @route   GET /admin/visitors
+ * @desc    Get recent anonymous visitors
+ * @access  Admin
+ */
+router.get('/visitors', adminController.getRecentVisitors);
 
 export default router;

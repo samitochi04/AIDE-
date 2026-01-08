@@ -101,7 +101,10 @@ export function Overview() {
             potentialSavings: Math.round(totalMonthly)
           }));
         } else if (simulationRes.status === 'rejected') {
-          console.error('Simulation API error:', simulationRes.reason);
+          // 404 is expected when user hasn't run a simulation yet - don't log as error
+          if (simulationRes.reason?.status !== 404) {
+            console.error('Simulation API error:', simulationRes.reason);
+          }
         }
 
         // Process procedures

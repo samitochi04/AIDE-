@@ -47,9 +47,9 @@ export const TIER_LIMITS = {
     // Procedures
     procedures: 2,
     unlimitedProcedures: false,
-    // Content/tutorials
-    contentsAccess: 5,
-    allContents: false,
+    // Content/tutorials - UNLIMITED for all plans
+    contentsAccess: Infinity,
+    allContents: true,
     // AI assistant
     aiMessagesPerDay: 3,
     // Data export
@@ -64,7 +64,7 @@ export const TIER_LIMITS = {
       '5 sites de logement',
       '4 aides sauvegardées',
       '2 procédures suivies',
-      '5 contenus par jour',
+      'Contenus illimités',
       '3 messages IA par jour',
       'Support communautaire',
     ],
@@ -75,7 +75,7 @@ export const TIER_LIMITS = {
       '5 housing sites',
       '4 saved aides',
       '2 tracked procedures',
-      '5 contents per day',
+      'Unlimited content',
       '3 AI messages per day',
       'Community support',
     ],
@@ -94,8 +94,9 @@ export const TIER_LIMITS = {
     unlimitedSaves: false,
     procedures: 10,
     unlimitedProcedures: false,
-    contentsAccess: 15,
-    allContents: false,
+    // Content/tutorials - UNLIMITED for all plans
+    contentsAccess: Infinity,
+    allContents: true,
     aiMessagesPerDay: 20,
     dataExport: false,
     supportLevel: 'community',
@@ -106,7 +107,7 @@ export const TIER_LIMITS = {
       '15 sites de logement',
       '10 aides sauvegardées',
       '10 procédures suivies',
-      '15 contenus par jour',
+      'Contenus illimités',
       '20 messages IA par jour',
       'Support communautaire',
     ],
@@ -117,7 +118,7 @@ export const TIER_LIMITS = {
       '15 housing sites',
       '10 saved aides',
       '10 tracked procedures',
-      '15 contents per day',
+      'Unlimited content',
       '20 AI messages per day',
       'Community support',
     ],

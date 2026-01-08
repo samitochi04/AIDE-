@@ -231,13 +231,14 @@ class UserRepository extends BaseRepository {
 
     // Apply filters
     if (filters.search) {
-      query = query.or(`email.ilike.%${filters.search}%,first_name.ilike.%${filters.search}%,last_name.ilike.%${filters.search}%`);
+      query = query.or(`email.ilike.%${filters.search}%,full_name.ilike.%${filters.search}%`);
     }
     if (filters.tier) {
       query = query.eq('subscription_tier', filters.tier);
     }
     if (filters.status) {
-      query = query.eq('is_active', filters.status === 'active');
+      // Filter by profile status (student, worker, job_seeker, other)
+      query = query.eq('status', filters.status);
     }
 
     const { data, error, count } = await query

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import DOMPurify from 'dompurify';
-import { Button, Card, Loading } from '../../../components/ui';
+import { Button, Card, Loading, UpgradeModal } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { api, API_ENDPOINTS } from '../../../config/api';
@@ -616,60 +616,14 @@ export function Chat() {
       </div>
 
       {/* Upgrade Modal */}
-      <AnimatePresence>
-        {showUpgradeModal && (
-          <motion.div
-            className={styles.modalOverlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowUpgradeModal(false)}
-          >
-            <motion.div
-              className={styles.modal}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
-            >
-              <button 
-                className={styles.modalClose}
-                onClick={() => setShowUpgradeModal(false)}
-              >
-                <i className="ri-close-line" />
-              </button>
-              <div className={styles.modalIcon}>
-                <i className="ri-vip-crown-fill" />
-              </div>
-              <h3>{t('dashboard.chat.limitReached')}</h3>
-              <p className={styles.modalSubtitle}>
-                {t('dashboard.chat.limitMessage', {
-                  current: upgradeInfo?.current || 0,
-                  limit: upgradeInfo?.limit || 0,
-                })}
-              </p>
-              <p className={styles.modalDescription}>
-                {t('dashboard.chat.upgradeDescription')}
-              </p>
-              <div className={styles.modalActions}>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowUpgradeModal(false)}
-                >
-                  {t('common.close')}
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={() => navigate('/pricing')}
-                >
-                  <i className="ri-vip-crown-fill" />
-                  {t('common.upgrade')}
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        feature="aiMessages"
+        currentUsage={upgradeInfo?.current}
+        limit={upgradeInfo?.limit}
+        currentTier={upgradeInfo?.tier}
+      />
     </div>
   );
 }

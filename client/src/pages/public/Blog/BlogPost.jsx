@@ -7,17 +7,23 @@ import DOMPurify from 'dompurify';
 import { Button, Loading } from '../../../components/ui';
 import { ROUTES } from '../../../config/routes';
 import { apiFetch, API_ENDPOINTS } from '../../../config/api';
+import { useAuth } from '../../../context/AuthContext';
 import styles from './BlogPost.module.css';
 
 export function BlogPost() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const currentLang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [viewTracked, setViewTracked] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -29,14 +35,8 @@ export function BlogPost() {
         
         if (response.data) {
           setContent(response.data);
-          // Track view
-          try {
-            await apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(response.data.id), {
-              method: 'POST'
-            });
-          } catch (e) {
-            console.error('Failed to track view:', e);
-          }
+          setLiked(response.data.user_has_liked || false);
+          setLikeCount(response.data.like_count || 0);
         }
       } catch (err) {
         console.error('Failed to fetch content:', err);
@@ -50,6 +50,42 @@ export function BlogPost() {
       fetchContent();
     }
   }, [slug]);
+
+  // Track view separately to prevent double tracking in StrictMode
+  useEffect(() => {
+    if (content?.id && !viewTracked) {
+      setViewTracked(true);
+      apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(content.id), {
+        method: 'POST'
+      }).catch(e => console.error('Failed to track view:', e));
+    }
+  }, [content?.id, viewTracked]);
+
+  // Handle like/unlike
+  const handleLike = async () => {
+    if (!user) {
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+    
+    if (!content || likeLoading) return;
+    
+    setLikeLoading(true);
+    try {
+      const response = await apiFetch(API_ENDPOINTS.CONTENT.LIKE(content.id), {
+        method: 'POST',
+      });
+      
+      if (response.success) {
+        setLiked(response.data.liked);
+        setLikeCount(response.data.like_count);
+      }
+    } catch (err) {
+      console.error('Failed to like content:', err);
+    } finally {
+      setLikeLoading(false);
+    }
+  };
 
   // Format date
   const formatDate = (dateStr) => {
@@ -174,10 +210,6 @@ export function BlogPost() {
               <i className="ri-calendar-line" />
               {formatDate(content.published_at || content.created_at)}
             </span>
-            <span className={styles.views}>
-              <i className="ri-eye-line" />
-              {content.view_count || 0} {t('blog.views', 'views')}
-            </span>
             <span className={styles.language}>
               {content.language === 'fr' ? '🇫🇷 Français' : '🇬🇧 English'}
             </span>
@@ -188,6 +220,23 @@ export function BlogPost() {
           {content.description && (
             <p className={styles.description}>{content.description}</p>
           )}
+
+          {/* Stats & Actions */}
+          <div className={styles.stats}>
+            <span className={styles.stat}>
+              <i className="ri-eye-line" />
+              {content.view_count || 0} {t('blog.views', 'views')}
+            </span>
+            <button
+              className={`${styles.likeButton} ${liked ? styles.liked : ''}`}
+              onClick={handleLike}
+              disabled={likeLoading}
+              aria-label={liked ? t('blog.unlike', 'Unlike') : t('blog.like', 'Like')}
+            >
+              <i className={liked ? 'ri-heart-fill' : 'ri-heart-line'} />
+              <span>{likeCount}</span>
+            </button>
+          </div>
 
           {content.tags && content.tags.length > 0 && (
             <div className={styles.tags}>

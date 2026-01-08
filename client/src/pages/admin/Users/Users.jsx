@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { api, API_ENDPOINTS } from '../../../config/api'
@@ -12,6 +12,8 @@ export default function AdminUsers() {
   const [error, setError] = useState(null)
   const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0, totalPages: 0 })
   const [filters, setFilters] = useState({ search: '', tier: '', status: '' })
+  const [searchInput, setSearchInput] = useState('')
+  const debounceRef = useRef(null)
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -39,10 +41,31 @@ export default function AdminUsers() {
     fetchUsers()
   }, [fetchUsers])
 
+  // Debounced search handler
   const handleSearch = (e) => {
-    setFilters(prev => ({ ...prev, search: e.target.value }))
-    setPagination(prev => ({ ...prev, page: 1 }))
+    const value = e.target.value
+    setSearchInput(value)
+    
+    // Clear existing timeout
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+    
+    // Set new timeout for debounced search
+    debounceRef.current = setTimeout(() => {
+      setFilters(prev => ({ ...prev, search: value }))
+      setPagination(prev => ({ ...prev, page: 1 }))
+    }, 300)
   }
+
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current)
+      }
+    }
+  }, [])
 
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }))
@@ -65,7 +88,7 @@ export default function AdminUsers() {
           <input
             type="text"
             placeholder={t('admin.users.searchPlaceholder', 'Search users...')}
-            value={filters.search}
+            value={searchInput}
             onChange={handleSearch}
             className={styles.searchInput}
           />
@@ -80,7 +103,7 @@ export default function AdminUsers() {
           <option value="free">Free</option>
           <option value="basic">Basic</option>
           <option value="premium">Premium</option>
-          <option value="enterprise">Enterprise</option>
+          <option value="ultimate">Ultimate</option>
         </select>
 
         <select

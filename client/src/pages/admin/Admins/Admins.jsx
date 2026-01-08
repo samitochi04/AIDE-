@@ -460,55 +460,95 @@ export default function Admins() {
             
             <div className={styles.modalBody}>
               {modalMode === 'view' ? (
-                <div className={styles.detailGrid}>
-                  <div className={styles.detailItem}>
-                    <label>{t('admin.admins.email', 'Email')}</label>
-                    <p>{selectedAdmin?.user?.email || selectedAdmin?.email}</p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <label>{t('admin.admins.name', 'Name')}</label>
-                    <p>{selectedAdmin?.user?.full_name || '-'}</p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <label>{t('admin.admins.role', 'Role')}</label>
-                    <p style={{ 
-                      color: getRoleColor(selectedAdmin?.role),
-                      textTransform: 'capitalize'
-                    }}>
-                      {selectedAdmin?.role?.replace('_', ' ')}
-                    </p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <label>{t('admin.admins.created', 'Created')}</label>
-                    <p>{formatDate(selectedAdmin?.created_at)}</p>
-                  </div>
-                  <div className={styles.detailItem} style={{ gridColumn: '1 / -1' }}>
-                    <label>{t('admin.admins.permissions', 'Permissions')}</label>
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                      {selectedAdmin?.role === 'super_admin' ? (
-                        <span style={{ color: '#8b5cf6' }}>All permissions (Super Admin)</span>
+                <div className={styles.adminDetails}>
+                  {/* Admin Header */}
+                  <div className={styles.adminHeader}>
+                    <div className={styles.adminAvatarLarge}>
+                      {selectedAdmin?.user?.avatar_url ? (
+                        <img src={selectedAdmin.user.avatar_url} alt="" />
                       ) : (
-                        PERMISSIONS.map(p => (
-                          <span
-                            key={p.key}
-                            style={{
-                              padding: '0.25rem 0.75rem',
-                              borderRadius: '0.25rem',
-                              fontSize: '0.75rem',
-                              background: selectedAdmin?.permissions?.[p.key] 
-                                ? 'rgba(34, 197, 94, 0.1)' 
-                                : 'var(--bg-tertiary)',
-                              color: selectedAdmin?.permissions?.[p.key] 
-                                ? '#22c55e' 
-                                : 'var(--text-tertiary)',
-                            }}
-                          >
-                            {selectedAdmin?.permissions?.[p.key] && <i className="ri-check-line" style={{ marginRight: '0.25rem' }} />}
-                            {p.label}
-                          </span>
-                        ))
+                        <i className="ri-shield-user-line" />
                       )}
                     </div>
+                    <div className={styles.adminHeaderInfo}>
+                      <h4>{selectedAdmin?.user?.full_name || t('admin.admins.unnamed', 'Unnamed Admin')}</h4>
+                      <p>{selectedAdmin?.user?.email}</p>
+                      <span 
+                        className={styles.roleBadge}
+                        style={{ 
+                          background: `${getRoleColor(selectedAdmin?.role)}15`,
+                          color: getRoleColor(selectedAdmin?.role)
+                        }}
+                      >
+                        {selectedAdmin?.role?.replace('_', ' ')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Admin Info Section */}
+                  <div className={styles.adminSection}>
+                    <h5>{t('admin.admins.accountInfo', 'Account Information')}</h5>
+                    <div className={styles.adminInfoGrid}>
+                      <div className={styles.adminInfoItem}>
+                        <span className={styles.adminInfoLabel}>
+                          <i className="ri-mail-line" />
+                          {t('admin.admins.email', 'Email')}
+                        </span>
+                        <span className={styles.adminInfoValue}>
+                          {selectedAdmin?.user?.email || '-'}
+                        </span>
+                      </div>
+                      <div className={styles.adminInfoItem}>
+                        <span className={styles.adminInfoLabel}>
+                          <i className="ri-calendar-line" />
+                          {t('admin.admins.created', 'Created')}
+                        </span>
+                        <span className={styles.adminInfoValue}>
+                          {formatDate(selectedAdmin?.created_at)}
+                        </span>
+                      </div>
+                      <div className={styles.adminInfoItem}>
+                        <span className={styles.adminInfoLabel}>
+                          <i className="ri-shield-check-line" />
+                          {t('admin.admins.role', 'Role')}
+                        </span>
+                        <span className={styles.adminInfoValue} style={{ textTransform: 'capitalize' }}>
+                          {selectedAdmin?.role?.replace('_', ' ')}
+                        </span>
+                      </div>
+                      <div className={styles.adminInfoItem}>
+                        <span className={styles.adminInfoLabel}>
+                          <i className="ri-id-card-line" />
+                          {t('admin.admins.adminId', 'Admin ID')}
+                        </span>
+                        <span className={styles.adminInfoValue} style={{ fontSize: '0.75rem', fontFamily: 'monospace' }}>
+                          {selectedAdmin?.id?.slice(0, 8)}...
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Permissions Section */}
+                  <div className={styles.adminSection}>
+                    <h5>{t('admin.admins.permissions', 'Permissions')}</h5>
+                    {selectedAdmin?.role === 'super_admin' ? (
+                      <div className={styles.superAdminBadge}>
+                        <i className="ri-vip-crown-line" />
+                        <span>{t('admin.admins.allPermissions', 'All permissions (Super Admin)')}</span>
+                      </div>
+                    ) : (
+                      <div className={styles.permissionsViewGrid}>
+                        {PERMISSIONS.map(p => (
+                          <div 
+                            key={p.key} 
+                            className={`${styles.permissionViewItem} ${selectedAdmin?.permissions?.[p.key] ? styles.permissionActive : ''}`}
+                          >
+                            <i className={selectedAdmin?.permissions?.[p.key] ? 'ri-checkbox-circle-fill' : 'ri-checkbox-blank-circle-line'} />
+                            <span>{p.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (

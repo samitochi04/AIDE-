@@ -86,6 +86,9 @@ export const API_ENDPOINTS = {
   ANALYTICS: {
     TRACK_EVENT: '/api/v1/analytics/event',
     TRACK_VIEW: '/api/v1/analytics/aide-view',
+    TRACK_VISITOR: '/api/v1/analytics/visitor',
+    TRACK_PAGEVIEW: '/api/v1/analytics/visitor/pageview',
+    CONVERT_VISITOR: '/api/v1/analytics/visitor/convert',
   },
   
   // Contact
@@ -101,6 +104,7 @@ export const API_ENDPOINTS = {
     BY_SLUG: (slug) => `/api/v1/content/slug/${slug}`,
     TRACK_VIEW: (id) => `/api/v1/content/${id}/view`,
     LIKE: (id) => `/api/v1/content/${id}/like`,
+    LIKE_STATUS: (id) => `/api/v1/content/${id}/like-status`,
   },
 
   // Profile
@@ -191,6 +195,10 @@ export const API_ENDPOINTS = {
     // Settings
     SETTINGS: '/api/v1/admin/settings',
     SETTING: (key) => `/api/v1/admin/settings/${key}`,
+
+    // Visitors
+    VISITORS: '/api/v1/admin/visitors',
+    VISITORS_STATS: '/api/v1/admin/visitors/stats',
 
     // System
     LOGS: '/api/v1/admin/logs',

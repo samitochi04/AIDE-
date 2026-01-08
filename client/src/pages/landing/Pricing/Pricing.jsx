@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Button, Card } from '../../../components/ui'
 import { ROUTES } from '../../../config/routes'
-import { SUBSCRIPTION_TIERS } from '../../../config/constants'
 import styles from './Pricing.module.css'
 
 const Pricing = () => {
@@ -12,7 +11,7 @@ const Pricing = () => {
 
   const plans = [
     {
-      id: SUBSCRIPTION_TIERS.FREE,
+      id: 'free',
       name: t('pricing.free.name'),
       price: 0,
       description: t('pricing.free.description'),
@@ -20,13 +19,12 @@ const Pricing = () => {
         t('pricing.free.feature1'),
         t('pricing.free.feature2'),
         t('pricing.free.feature3'),
-        t('pricing.free.feature4'),
       ],
       cta: t('pricing.free.cta'),
       popular: false,
     },
     {
-      id: SUBSCRIPTION_TIERS.PREMIUM,
+      id: 'premium',
       name: t('pricing.premium.name'),
       price: 9.99,
       description: t('pricing.premium.description'),
@@ -34,9 +32,6 @@ const Pricing = () => {
         t('pricing.premium.feature1'),
         t('pricing.premium.feature2'),
         t('pricing.premium.feature3'),
-        t('pricing.premium.feature4'),
-        t('pricing.premium.feature5'),
-        t('pricing.premium.feature6'),
       ],
       cta: t('pricing.premium.cta'),
       popular: true,
@@ -123,7 +118,7 @@ const Pricing = () => {
                     variant={plan.popular ? 'primary' : 'outline'}
                     size="lg"
                     fullWidth
-                    onClick={() => navigate(plan.id === SUBSCRIPTION_TIERS.FREE ? ROUTES.REGISTER : ROUTES.CHECKOUT)}
+                    onClick={() => navigate(ROUTES.PRICING)}
                   >
                     {plan.cta}
                   </Button>

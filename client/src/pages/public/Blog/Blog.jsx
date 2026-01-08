@@ -8,7 +8,7 @@ import { ROUTES, generatePath } from '../../../config/routes';
 import { apiFetch, API_ENDPOINTS } from '../../../config/api';
 import styles from './Blog.module.css';
 
-const CONTENT_TYPES = ['all', 'tutorial', 'article', 'guide', 'video', 'infographic'];
+// Blog only shows articles (for SEO purposes)
 
 export function Blog() {
   const { t, i18n } = useTranslation();
@@ -23,7 +23,6 @@ export function Blog() {
   
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
 
   // Fetch content
   const fetchContent = useCallback(async () => {
@@ -34,12 +33,8 @@ export function Blog() {
       const params = new URLSearchParams({
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
+        type: 'article', // Blog only shows articles
       });
-
-      // Don't filter by language - show all content
-      if (selectedType !== 'all') {
-        params.set('type', selectedType);
-      }
 
       const response = await apiFetch(`${API_ENDPOINTS.CONTENT.LIST}?${params}`);
       
@@ -73,7 +68,7 @@ export function Blog() {
     } finally {
       setLoading(false);
     }
-  }, [pagination.page, pagination.limit, selectedType, searchQuery]);
+  }, [pagination.page, pagination.limit, searchQuery]);
 
   useEffect(() => {
     fetchContent();
@@ -119,17 +114,6 @@ export function Blog() {
   const goToPage = (page) => {
     setPagination(prev => ({ ...prev, page }));
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Track view when clicking on content
-  const handleContentClick = async (content) => {
-    try {
-      await apiFetch(API_ENDPOINTS.CONTENT.TRACK_VIEW(content.id), {
-        method: 'POST',
-      });
-    } catch {
-      // Silent fail for view tracking
-    }
   };
 
   // Generate structured data for SEO
@@ -244,12 +228,6 @@ export function Blog() {
                   <time dateTime={featuredContent.published_at} itemProp="datePublished">
                     {formatDate(featuredContent.published_at)}
                   </time>
-                  {featuredContent.view_count > 0 && (
-                    <>
-                      <span className={styles.dot}>•</span>
-                      <span>{featuredContent.view_count} {t('blog.views', 'views')}</span>
-                    </>
-                  )}
                 </div>
                 <h2 className={styles.featuredTitle} itemProp="headline">{featuredContent.title}</h2>
                 <p className={styles.featuredExcerpt} itemProp="description">{featuredContent.description}</p>
@@ -281,23 +259,6 @@ export function Blog() {
               }}
               icon="ri-search-line"
             />
-          </div>
-          <div className={styles.categories}>
-            {CONTENT_TYPES.map((type) => (
-              <button
-                key={type}
-                className={`${styles.categoryBtn} ${selectedType === type ? styles.active : ''}`}
-                onClick={() => {
-                  setSelectedType(type);
-                  setPagination(prev => ({ ...prev, page: 1 }));
-                }}
-              >
-                {type === 'all' 
-                  ? t('blog.types.all', 'All') 
-                  : getTypeLabel(type)
-                }
-              </button>
-            ))}
           </div>
         </div>
       </section>
@@ -339,7 +300,6 @@ export function Blog() {
                     <Link
                       to={generatePath(ROUTES.BLOG_POST, { slug: content.slug })}
                       className={styles.postCard}
-                      onClick={() => handleContentClick(content)}
                     >
                       <Card className={styles.postCardInner}>
                         <div className={styles.postImage}>

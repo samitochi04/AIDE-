@@ -20,6 +20,10 @@ export default function AdminEmails() {
   const [sending, setSending] = useState(false)
   const [previewLoading, setPreviewLoading] = useState(false)
   
+  // Template editing state
+  const [editingTemplate, setEditingTemplate] = useState(null)
+  const [savingTemplate, setSavingTemplate] = useState(false)
+  
   // Email form
   const [emailForm, setEmailForm] = useState({
     subject: '',
@@ -117,16 +121,92 @@ export default function AdminEmails() {
     }))
   }
 
+  // Convert HTML to readable plain text for editing
+  const htmlToPlainText = (html) => {
+    if (!html) return ''
+    
+    // If it doesn't contain HTML tags, return as is
+    if (!/<[a-z][\s\S]*>/i.test(html)) return html
+    
+    return html
+      // Replace common block elements with line breaks
+      .replace(/<\/p>/gi, '\n\n')
+      .replace(/<\/h[1-6]>/gi, '\n\n')
+      .replace(/<\/div>/gi, '\n')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/li>/gi, '\n')
+      .replace(/<li>/gi, '• ')
+      .replace(/<\/ul>/gi, '\n')
+      .replace(/<\/ol>/gi, '\n')
+      // Remove all remaining HTML tags
+      .replace(/<[^>]+>/g, '')
+      // Decode HTML entities
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      // Clean up whitespace
+      .replace(/\n{3,}/g, '\n\n')
+      .trim()
+  }
+
   // Load template
   const loadTemplate = (template) => {
+    // Convert HTML body to plain text for easy editing
+    const contentHtml = template.content_en || template.body_html || template.content || ''
+    const contentFrHtml = template.content_fr || ''
+    
     setEmailForm(prev => ({
       ...prev,
       subject: template.subject_en || template.subject || '',
       subject_fr: template.subject_fr || '',
-      content: template.content_en || template.content || '',
-      content_fr: template.content_fr || '',
-      template: template.key,
+      content: htmlToPlainText(contentHtml),
+      content_fr: htmlToPlainText(contentFrHtml),
+      template: template.template_key || template.key,
     }))
+    setActiveTab('compose')
+  }
+
+  // Edit template
+  const openTemplateEdit = (template) => {
+    setEditingTemplate({
+      ...template,
+      subject_en: template.subject_en || template.subject || '',
+      subject_fr: template.subject_fr || '',
+      body_html: template.body_html || template.content || '',
+      body_text: template.body_text || '',
+    })
+  }
+
+  // Save template
+  const handleSaveTemplate = async () => {
+    if (!editingTemplate) return
+    
+    try {
+      setSavingTemplate(true)
+      setError(null)
+      
+      const templateKey = editingTemplate.template_key || editingTemplate.key
+      
+      await apiFetch(API_ENDPOINTS.ADMIN.EMAIL_TEMPLATE(templateKey), {
+        method: 'PATCH',
+        body: JSON.stringify({
+          subject: editingTemplate.subject_en,
+          body_html: editingTemplate.body_html,
+          body_text: editingTemplate.body_text,
+        }),
+      })
+      
+      setSuccess(t('admin.emails.templateSaved', 'Template saved successfully!'))
+      setEditingTemplate(null)
+      fetchData()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setSavingTemplate(false)
+    }
   }
 
   // Preview email
@@ -207,12 +287,15 @@ export default function AdminEmails() {
     })
   }
 
-  // Profile types for filter
+  // Profile types for filter - matches database "status" column (user_status enum)
   const profileTypes = [
     { value: '', key: 'all', label: t('admin.emails.allProfiles', 'All Profiles') },
-    { value: 'students', key: 'students', label: t('admin.emails.students', 'Students') },
-    { value: 'workers', key: 'workers', label: t('admin.emails.workers', 'Workers') },
-    { value: 'seniors', key: 'seniors', label: t('admin.emails.seniors', 'Seniors') },
+    { value: 'student', key: 'student', label: t('admin.emails.students', 'Students') },
+    { value: 'worker', key: 'worker', label: t('admin.emails.workers', 'Workers') },
+    { value: 'job_seeker', key: 'job_seeker', label: t('admin.emails.jobSeekers', 'Job Seekers') },
+    { value: 'retiree', key: 'retiree', label: t('admin.emails.retirees', 'Retirees') },
+    { value: 'tourist', key: 'tourist', label: t('admin.emails.tourists', 'Tourists') },
+    { value: 'other', key: 'other', label: t('admin.emails.otherStatus', 'Other') },
   ]
 
   if (loading) {
@@ -357,8 +440,19 @@ export default function AdminEmails() {
                 <textarea
                   value={emailForm.content}
                   onChange={e => setEmailForm({ ...emailForm, content: e.target.value })}
-                  placeholder="Enter email content (HTML supported)"
-                  rows={8}
+                  placeholder={`Enter your email content here...
+
+Use blank lines to create paragraphs.
+Single line breaks will be preserved.
+
+Example:
+Hello {{name}},
+
+We wanted to share some exciting news with you!
+
+Best regards,
+The AIDE+ Team`}
+                  rows={12}
                   className={styles.contentEditor}
                 />
               </div>
@@ -368,17 +462,38 @@ export default function AdminEmails() {
                 <textarea
                   value={emailForm.content_fr}
                   onChange={e => setEmailForm({ ...emailForm, content_fr: e.target.value })}
-                  placeholder="Entrez le contenu (HTML supporté)"
-                  rows={8}
+                  placeholder={`Entrez le contenu de votre email ici...
+
+Utilisez des lignes vides pour créer des paragraphes.
+Les sauts de ligne simples seront conservés.
+
+Exemple:
+Bonjour {{name}},
+
+Nous avons des nouvelles passionnantes à partager !
+
+Cordialement,
+L'équipe AIDE+`}
+                  rows={12}
                   className={styles.contentEditor}
                 />
               </div>
               
               <div className={styles.helpText}>
                 <i className="ri-information-line" />
-                <span>
-                  {t('admin.emails.variables', 'Available variables: {{name}}, {{email}}, {{profile_type}}')}
-                </span>
+                <div>
+                  <p style={{ margin: '0 0 8px' }}>
+                    <strong>{t('admin.emails.variablesTitle', 'Available variables:')}</strong>
+                  </p>
+                  <code style={{ display: 'block', background: 'var(--bg-secondary)', padding: '8px 12px', borderRadius: '6px', fontSize: '13px' }}>
+                    {'{{name}}'} - {t('admin.emails.varName', "User's name")}<br/>
+                    {'{{email}}'} - {t('admin.emails.varEmail', "User's email")}<br/>
+                    {'{{profile_type}}'} - {t('admin.emails.varProfile', "User's profile type")}
+                  </code>
+                  <p style={{ margin: '12px 0 0', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                    💡 {t('admin.emails.formattingTip', 'Use blank lines to create paragraphs. Your content will be wrapped in a professional email template automatically.')}
+                  </p>
+                </div>
               </div>
             </div>
             
@@ -443,7 +558,8 @@ export default function AdminEmails() {
                     onChange={e => updateFilter('nationality', e.target.value)}
                   >
                     <option value="">{t('admin.emails.allNationalities', 'All Nationalities')}</option>
-                    <option value="eu">{t('admin.emails.eu', 'EU Citizens')}</option>
+                    <option value="french">{t('admin.emails.french', 'French Citizens')}</option>
+                    <option value="eu">{t('admin.emails.eu', 'EU/EEA Citizens')}</option>
                     <option value="non-eu">{t('admin.emails.nonEu', 'Non-EU')}</option>
                   </select>
                 </div>
@@ -519,21 +635,39 @@ export default function AdminEmails() {
               </div>
             ) : (
               templates.map(template => (
-                <div key={template.key} className={styles.templateCard}>
+                <div key={template.id || template.key} className={styles.templateCard}>
                   <div className={styles.templateHeader}>
-                    <h4>{template.name}</h4>
-                    <span className={styles.templateKey}>{template.key}</span>
+                    <h4>{template.template_name || template.name}</h4>
+                    <span className={styles.templateKey}>{template.template_key || template.key}</span>
                   </div>
                   <p className={styles.templateDesc}>
-                    {template.description || template.subject_en || template.subject}
+                    {template.description || template.subject || template.subject_en}
                   </p>
+                  <div className={styles.templateMeta}>
+                    <span className={styles.badge}>
+                      <i className="ri-mail-send-line" />
+                      {template.send_count || 0} {t('admin.emails.sent', 'sent')}
+                    </span>
+                    {template.category && (
+                      <span className={`${styles.badge} ${styles.badgeSecondary}`}>
+                        {template.category}
+                      </span>
+                    )}
+                  </div>
                   <div className={styles.templateActions}>
                     <button
                       className={styles.secondaryButton}
                       onClick={() => loadTemplate(template)}
                     >
+                      <i className="ri-mail-line" />
+                      {t('admin.emails.useTemplate', 'Use')}
+                    </button>
+                    <button
+                      className={styles.primaryButton}
+                      onClick={() => openTemplateEdit(template)}
+                    >
                       <i className="ri-edit-line" />
-                      {t('admin.emails.useTemplate', 'Use Template')}
+                      {t('admin.emails.editTemplate', 'Edit')}
                     </button>
                   </div>
                 </div>
@@ -673,6 +807,126 @@ export default function AdminEmails() {
                   <>
                     <i className="ri-send-plane-line" />
                     {t('admin.emails.confirmSendButton', 'Yes, Send Email')}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Template Edit Modal */}
+      {editingTemplate && (
+        <div className={styles.modalOverlay} onClick={() => setEditingTemplate(null)}>
+          <div className={`${styles.modal} ${styles.modalLarge}`} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2>
+                <i className="ri-edit-line" style={{ marginRight: '8px' }} />
+                {t('admin.emails.editTemplate', 'Edit Template')}: {editingTemplate.template_name || editingTemplate.name}
+              </h2>
+              <button className={styles.closeButton} onClick={() => setEditingTemplate(null)}>
+                <i className="ri-close-line" />
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              <div className={styles.templateInfo}>
+                <span className={styles.templateKey}>{editingTemplate.template_key || editingTemplate.key}</span>
+                {editingTemplate.category && (
+                  <span className={`${styles.badge} ${styles.badgeSecondary}`}>{editingTemplate.category}</span>
+                )}
+                {editingTemplate.description && (
+                  <p className={styles.templateDesc}>{editingTemplate.description}</p>
+                )}
+              </div>
+              
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label>{t('admin.emails.subjectEn', 'Subject (English)')}</label>
+                  <input
+                    type="text"
+                    value={editingTemplate.subject_en || ''}
+                    onChange={e => setEditingTemplate({ ...editingTemplate, subject_en: e.target.value })}
+                    placeholder="Email subject in English"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>{t('admin.emails.subjectFr', 'Subject (French)')}</label>
+                  <input
+                    type="text"
+                    value={editingTemplate.subject_fr || ''}
+                    onChange={e => setEditingTemplate({ ...editingTemplate, subject_fr: e.target.value })}
+                    placeholder="Sujet de l'email en français"
+                  />
+                </div>
+              </div>
+              
+              <div className={styles.formGroup}>
+                <label>{t('admin.emails.bodyHtml', 'Email Body (HTML)')}</label>
+                <textarea
+                  value={editingTemplate.body_html || ''}
+                  onChange={e => setEditingTemplate({ ...editingTemplate, body_html: e.target.value })}
+                  placeholder={`Enter the email body content...
+
+Use blank lines to create paragraphs.
+HTML tags are supported for formatting.
+
+Available variables depend on the template type.`}
+                  rows={15}
+                  className={styles.contentEditor}
+                  style={{ fontFamily: 'monospace', fontSize: '13px' }}
+                />
+              </div>
+              
+              <div className={styles.formGroup}>
+                <label>{t('admin.emails.bodyText', 'Plain Text Version')} ({t('admin.emails.optional', 'optional')})</label>
+                <textarea
+                  value={editingTemplate.body_text || ''}
+                  onChange={e => setEditingTemplate({ ...editingTemplate, body_text: e.target.value })}
+                  placeholder="Plain text fallback for email clients that don't support HTML"
+                  rows={6}
+                  className={styles.contentEditor}
+                />
+              </div>
+              
+              {editingTemplate.available_variables && (
+                <div className={styles.helpText}>
+                  <i className="ri-information-line" />
+                  <div>
+                    <strong>{t('admin.emails.availableVars', 'Available variables for this template:')}</strong>
+                    <code style={{ display: 'block', marginTop: '8px', background: 'var(--bg-secondary)', padding: '8px 12px', borderRadius: '6px', fontSize: '12px' }}>
+                      {(() => {
+                        try {
+                          const vars = typeof editingTemplate.available_variables === 'string' 
+                            ? JSON.parse(editingTemplate.available_variables) 
+                            : editingTemplate.available_variables;
+                          return Array.isArray(vars) ? vars.join(', ') : 'None';
+                        } catch {
+                          return editingTemplate.available_variables || 'None';
+                        }
+                      })()}
+                    </code>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className={styles.modalFooter}>
+              <button className={styles.secondaryButton} onClick={() => setEditingTemplate(null)}>
+                {t('admin.cancel', 'Cancel')}
+              </button>
+              <button
+                className={styles.primaryButton}
+                onClick={handleSaveTemplate}
+                disabled={savingTemplate}
+              >
+                {savingTemplate ? (
+                  <>
+                    <i className="ri-loader-4-line ri-spin" />
+                    {t('admin.saving', 'Saving...')}
+                  </>
+                ) : (
+                  <>
+                    <i className="ri-check-line" />
+                    {t('admin.save', 'Save Changes')}
                   </>
                 )}
               </button>

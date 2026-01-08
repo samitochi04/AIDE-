@@ -138,7 +138,7 @@
 
 .optionCard:hover {
   border-color: var(--primary);
-  background: var(--primary-light);
+  background: var(--primary-light, rgba(59, 130, 246, 0.1));
 }
 
 .optionCard:hover i {
@@ -147,15 +147,15 @@
 
 .optionCard.selected {
   border-color: var(--primary);
-  background: var(--primary-light);
+  background: var(--primary);
 }
 
 .optionCard.selected i {
-  color: var(--primary);
+  color: #ffffff;
 }
 
 .optionCard.selected span {
-  color: var(--primary);
+  color: #ffffff;
 }
 
 /* Conditional Field */

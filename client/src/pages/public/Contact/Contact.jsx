@@ -45,8 +45,6 @@ export function Contact() {
       icon: 'ri-mail-line',
       title: t('contact.methods.email.title'),
       description: t('contact.methods.email.description'),
-      value: 'contact@aideplus.eu',
-      action: 'mailto:contact@aideplus.eu',
     },
     {
       icon: 'ri-chat-3-line',
@@ -59,8 +57,6 @@ export function Contact() {
       icon: 'ri-question-line',
       title: t('contact.methods.faq.title'),
       description: t('contact.methods.faq.description'),
-      value: t('contact.methods.faq.value'),
-      action: '/faq',
     },
   ];
 

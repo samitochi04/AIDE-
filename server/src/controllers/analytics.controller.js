@@ -105,3 +105,82 @@ export const trackSessionEnd = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Track anonymous visitor
+ * POST /analytics/visitor
+ */
+export const trackAnonymousVisitor = async (req, res, next) => {
+  try {
+    const {
+      device_fingerprint,
+      device_type,
+      browser,
+      os,
+      source,
+      medium,
+      campaign,
+      referrer,
+      landing_page,
+    } = req.body;
+
+    const result = await analyticsService.trackAnonymousVisitor({
+      deviceFingerprint: device_fingerprint,
+      ip: req.ip || req.headers['x-forwarded-for']?.split(',')[0],
+      userAgent: req.headers['user-agent'],
+      deviceType: device_type,
+      browser,
+      os,
+      source,
+      medium,
+      campaign,
+      referrer,
+      landingPage: landing_page,
+    });
+
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Update anonymous visitor page view
+ * POST /analytics/visitor/pageview
+ */
+export const trackVisitorPageView = async (req, res, next) => {
+  try {
+    const { device_fingerprint, page_url, time_on_page } = req.body;
+
+    const result = await analyticsService.updateVisitorPageView({
+      deviceFingerprint: device_fingerprint,
+      pageUrl: page_url,
+      timeOnPage: time_on_page,
+    });
+
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Convert anonymous visitor to user
+ * Called after signup to link anonymous data to user profile
+ */
+export const convertVisitorToUser = async (req, res, next) => {
+  try {
+    const { device_fingerprint } = req.body;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ success: false, error: 'Authentication required' });
+    }
+
+    const result = await analyticsService.convertVisitorToUser(device_fingerprint, userId);
+
+    res.json(formatResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};

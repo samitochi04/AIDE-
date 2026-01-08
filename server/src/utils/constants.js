@@ -45,9 +45,9 @@ export const TIER_LIMITS = {
     procedures: 2,               // Tracked procedures
     unlimitedProcedures: false,
     
-    // Content (Tutorials, etc.)
-    contentsAccess: 5,           // Number of tutorials/content accessible
-    allContents: false,
+    // Content (Tutorials, etc.) - UNLIMITED for all plans
+    contentsAccess: Infinity,
+    allContents: true,
     
     // AI Assistant
     aiMessagesPerDay: 3,         // AI messages per day
@@ -81,8 +81,9 @@ export const TIER_LIMITS = {
     procedures: 10,
     unlimitedProcedures: false,
     
-    contentsAccess: 15,
-    allContents: false,
+    // Content (Tutorials, etc.) - UNLIMITED for all plans
+    contentsAccess: Infinity,
+    allContents: true,
     
     aiMessagesPerDay: 20,
     
@@ -112,6 +113,7 @@ export const TIER_LIMITS = {
     procedures: Infinity,
     unlimitedProcedures: true,
     
+    // Content (Tutorials, etc.) - UNLIMITED for all plans
     contentsAccess: Infinity,
     allContents: true,
     
@@ -144,6 +146,7 @@ export const TIER_LIMITS = {
     procedures: Infinity,
     unlimitedProcedures: true,
     
+    // Content (Tutorials, etc.) - UNLIMITED for all plans
     contentsAccess: Infinity,
     allContents: true,
     

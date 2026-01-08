@@ -1067,6 +1067,7 @@
       "content": "Contenu",
       "emails": "Emails",
       "analytics": "Analytiques",
+      "visitors": "Visiteurs",
       "admins": "Admins",
       "settings": "Paramètres",
       "sections": {
@@ -1197,6 +1198,186 @@
       "showing": "Affichage de",
       "to": "à",
       "entries": "entrées"
+    }
+  },
+  
+  "privacy": {
+    "seo": {
+      "title": "Politique de confidentialité | AIDE+",
+      "description": "Découvrez comment AIDE+ protège et gère vos données personnelles."
+    },
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "intro": {
+        "title": "Introduction",
+        "content": "AIDE+ (\"nous\", \"notre\" ou \"nos\") s'engage à protéger votre vie privée. Cette Politique de confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre plateforme."
+      },
+      "dataCollected": {
+        "title": "Informations que nous collectons",
+        "intro": "Nous collectons les informations que vous nous fournissez directement :",
+        "item1": "Informations de compte (adresse e-mail, nom)",
+        "item2": "Informations de profil (nationalité, statut de résidence, situation familiale)",
+        "item3": "Données de simulation (revenus, statut de logement, région)",
+        "item4": "Données de communication (messages avec notre assistant IA, demandes de support)"
+      },
+      "dataUse": {
+        "title": "Comment nous utilisons vos informations",
+        "intro": "Nous utilisons les informations collectées pour :",
+        "item1": "Fournir, maintenir et améliorer nos services",
+        "item2": "Personnaliser votre expérience et recommandations",
+        "item3": "Traiter les transactions et envoyer les informations associées",
+        "item4": "Envoyer des notifications techniques, mises à jour et messages de support"
+      },
+      "dataProtection": {
+        "title": "Sécurité des données",
+        "content": "Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès, modification, divulgation ou destruction non autorisés. Vos données sont chiffrées en transit et au repos."
+      },
+      "dataSharing": {
+        "title": "Partage des informations",
+        "content": "Nous ne vendons, n'échangeons ni ne transférons vos informations personnelles à des tiers. Nous pouvons partager des données avec des prestataires de services qui nous aident à exploiter notre plateforme, sous réserve d'obligations strictes de confidentialité."
+      },
+      "userRights": {
+        "title": "Vos droits",
+        "intro": "En vertu du RGPD, vous disposez des droits suivants :",
+        "item1": "Droit d'accès à vos données personnelles",
+        "item2": "Droit de rectification des données inexactes",
+        "item3": "Droit à l'effacement (\"droit à l'oubli\")",
+        "item4": "Droit à la limitation du traitement",
+        "item5": "Droit à la portabilité des données"
+      },
+      "contact": {
+        "title": "Nous contacter",
+        "content": "Si vous avez des questions sur cette Politique de confidentialité ou souhaitez exercer vos droits, veuillez nous contacter à :"
+      }
+    }
+  },
+  
+  "terms": {
+    "seo": {
+      "title": "Conditions d'utilisation | AIDE+",
+      "description": "Lisez les conditions générales d'utilisation de la plateforme AIDE+."
+    },
+    "title": "Conditions d'utilisation",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptation des conditions",
+        "content": "En accédant ou en utilisant AIDE+, vous acceptez d'être lié par ces Conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services."
+      },
+      "services": {
+        "title": "Description des services",
+        "content": "AIDE+ fournit des informations et des outils pour aider les utilisateurs en France à identifier les aides gouvernementales auxquelles ils peuvent être éligibles. Nos services comprennent des simulations d'aides, un assistant IA et des guides de procédures. Notre plateforme est fournie à titre informatif uniquement et ne constitue pas un conseil juridique ou financier."
+      },
+      "accounts": {
+        "title": "Comptes utilisateurs",
+        "intro": "Lors de la création d'un compte, vous acceptez de :",
+        "item1": "Fournir des informations exactes et complètes",
+        "item2": "Maintenir la sécurité de vos identifiants de compte",
+        "item3": "Nous notifier immédiatement de toute utilisation non autorisée"
+      },
+      "subscriptions": {
+        "title": "Abonnements et paiements",
+        "content": "Certaines fonctionnalités nécessitent un abonnement payant. Les frais d'abonnement sont facturés à l'avance sur une base mensuelle. Vous pouvez annuler votre abonnement à tout moment, et l'annulation prendra effet à la fin de la période de facturation en cours."
+      },
+      "prohibitedUse": {
+        "title": "Utilisations interdites",
+        "intro": "Vous acceptez de ne pas :",
+        "item1": "Utiliser nos services à des fins illégales",
+        "item2": "Tenter d'obtenir un accès non autorisé à nos systèmes",
+        "item3": "Interférer avec ou perturber l'intégrité de nos services",
+        "item4": "Partager vos identifiants de compte avec d'autres personnes"
+      },
+      "intellectualProperty": {
+        "title": "Propriété intellectuelle",
+        "content": "Tout le contenu, les fonctionnalités et les fonctions d'AIDE+ nous appartiennent et sont protégés par les lois internationales sur le droit d'auteur, les marques de commerce et autres lois sur la propriété intellectuelle."
+      },
+      "disclaimer": {
+        "title": "Avertissement",
+        "content": "AIDE+ fournit des informations générales sur les aides gouvernementales et les procédures administratives. Nous ne garantissons pas l'exactitude ou l'exhaustivité de ces informations. Vérifiez toujours auprès des sources gouvernementales officielles avant de prendre des décisions basées sur notre contenu."
+      },
+      "liability": {
+        "title": "Limitation de responsabilité",
+        "content": "Dans toute la mesure permise par la loi, AIDE+ ne sera pas responsable des dommages indirects, accessoires, spéciaux, consécutifs ou punitifs découlant de votre utilisation de nos services."
+      },
+      "modifications": {
+        "title": "Modifications",
+        "content": "Nous nous réservons le droit de modifier ces Conditions à tout moment. Nous informerons les utilisateurs de tout changement important par e-mail ou via notre plateforme."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Pour toute question concernant ces Conditions, veuillez nous contacter à :"
+      }
+    }
+  },
+
+  "cookieConsent": {
+    "title": "Nous utilisons des cookies",
+    "description": "Nous utilisons des cookies pour améliorer votre expérience de navigation, fournir du contenu personnalisé et analyser notre trafic. En cliquant sur « Tout accepter », vous consentez à notre utilisation des cookies.",
+    "learnMore": "En savoir plus sur notre politique de cookies",
+    "acceptAll": "Tout accepter",
+    "rejectAll": "Tout refuser",
+    "customize": "Personnaliser",
+    "savePreferences": "Enregistrer les préférences",
+    "categories": {
+      "essential": {
+        "name": "Cookies essentiels",
+        "description": "Nécessaires au bon fonctionnement du site. Ne peuvent pas être désactivés."
+      },
+      "analytics": {
+        "name": "Cookies analytiques",
+        "description": "Nous aident à comprendre comment les visiteurs interagissent avec notre site."
+      },
+      "preferences": {
+        "name": "Cookies de préférences",
+        "description": "Mémorisent vos paramètres et préférences comme la langue et le thème."
+      }
+    }
+  },
+  
+  "cookies": {
+    "seo": {
+      "title": "Politique des cookies | AIDE+",
+      "description": "Découvrez comment AIDE+ utilise les cookies et technologies similaires."
+    },
+    "title": "Politique des cookies",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "whatAreCookies": {
+        "title": "Qu'est-ce qu'un cookie",
+        "content": "Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil lorsque vous visitez notre site web. Ils nous aident à vous offrir une meilleure expérience en mémorisant vos préférences et en comprenant comment vous utilisez notre plateforme."
+      },
+      "howWeUse": {
+        "title": "Comment nous utilisons les cookies",
+        "intro": "Nous utilisons différents types de cookies à diverses fins pour améliorer votre expérience sur AIDE+."
+      },
+      "essential": {
+        "title": "Cookies essentiels",
+        "content": "Ces cookies sont nécessaires au bon fonctionnement du site web et ne peuvent pas être désactivés.",
+        "item1": "Authentification et gestion de session",
+        "item2": "Fonctionnalités de sécurité",
+        "item3": "Répartition de charge"
+      },
+      "analytics": {
+        "title": "Cookies analytiques",
+        "content": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site web :",
+        "item1": "Pages visitées et temps passé",
+        "item2": "Fonctionnalités utilisées et parcours utilisateur"
+      },
+      "preferences": {
+        "title": "Cookies de préférences",
+        "content": "Ces cookies mémorisent vos choix et préférences :",
+        "item1": "Préférence de langue",
+        "item2": "Préférence de thème (mode clair/sombre)"
+      },
+      "manageCookies": {
+        "title": "Gérer les cookies",
+        "content": "Vous pouvez contrôler et gérer les cookies via les paramètres de votre navigateur. Veuillez noter que la désactivation de certains cookies peut affecter la fonctionnalité de notre site web."
+      },
+      "contact": {
+        "title": "Nous contacter",
+        "content": "Si vous avez des questions sur notre utilisation des cookies, veuillez nous contacter à :"
+      }
     }
   }
 }

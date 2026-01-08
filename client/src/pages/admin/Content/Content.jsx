@@ -135,7 +135,7 @@ export default function AdminContent() {
     setSelectedContent({
       title: '',
       description: '',
-      content_type: '',
+      content_type: 'article', // Default to article
       media_url: '',
       thumbnail_url: '',
       duration_seconds: null,
@@ -174,13 +174,20 @@ export default function AdminContent() {
   }
 
   // Generate slug from title
-  const generateSlug = (title) => {
-    return title
+  const generateSlug = (title, addTimestamp = false) => {
+    let slug = title
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '') // Remove accents
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')
+    
+    // Add timestamp suffix to ensure uniqueness for new content
+    if (addTimestamp) {
+      slug = `${slug}-${Date.now().toString(36)}`
+    }
+    
+    return slug
   }
 
   // Get appropriate bucket based on content type
@@ -325,11 +332,16 @@ export default function AdminContent() {
         setSaving(false)
         return
       }
+      if (!selectedContent.content_type) {
+        setError(t('admin.content.errors.typeRequired', 'Content type is required'))
+        setSaving(false)
+        return
+      }
       
       const payload = {
         title: selectedContent.title,
         description: selectedContent.description || null,
-        content_type: selectedContent.content_type,
+        content_type: selectedContent.content_type || 'article',
         media_url: selectedContent.media_url,
         thumbnail_url: selectedContent.thumbnail_url || null,
         duration_seconds: selectedContent.content_type === 'video' ? (selectedContent.duration_seconds || null) : null,
@@ -338,7 +350,10 @@ export default function AdminContent() {
         target_nationalities: selectedContent.target_nationalities || [],
         target_regions: selectedContent.target_regions || null,
         language: selectedContent.language || 'fr',
-        slug: selectedContent.slug || generateSlug(selectedContent.title),
+        // For new content, always generate unique slug; for edit, use existing or generate
+        slug: modalMode === 'create' 
+          ? generateSlug(selectedContent.title, true) // Add timestamp for uniqueness
+          : (selectedContent.slug || generateSlug(selectedContent.title)),
         meta_title: selectedContent.meta_title || null,
         meta_description: selectedContent.meta_description || null,
         is_published: selectedContent.is_published || false,

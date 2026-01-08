@@ -96,6 +96,13 @@ const NAV_ITEMS = [
     permission: ADMIN_PERMISSIONS.VIEW_ANALYTICS,
   },
   {
+    key: 'visitors',
+    labelKey: 'admin.nav.visitors',
+    icon: 'ri-user-search-line',
+    path: ROUTES.ADMIN_VISITORS,
+    permission: ADMIN_PERMISSIONS.VIEW_ANALYTICS,
+  },
+  {
     key: 'admins',
     labelKey: 'admin.nav.admins',
     icon: 'ri-shield-user-line',

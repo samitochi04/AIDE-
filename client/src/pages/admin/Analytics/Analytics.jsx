@@ -219,22 +219,32 @@ const Analytics = () => {
             </div>
             <div className={styles.metricRow}>
               <span className={styles.metricLabel}>
-                <i className="ri-home-heart-line" />
-                {t('admin.analytics.families', 'Families')}
+                <i className="ri-search-line" />
+                {t('admin.analytics.jobSeekers', 'Job Seekers')}
               </span>
-              <span className={styles.metricValue}>{analytics?.usersByProfile?.families || 0}</span>
+              <span className={styles.metricValue}>{analytics?.usersByProfile?.jobSeekers || 0}</span>
               <span className={styles.metricPercent}>
-                {formatPercent(analytics?.usersByProfile?.families, analytics?.users?.total)}
+                {formatPercent(analytics?.usersByProfile?.jobSeekers, analytics?.users?.total)}
               </span>
             </div>
             <div className={styles.metricRow}>
               <span className={styles.metricLabel}>
-                <i className="ri-rocket-line" />
-                {t('admin.analytics.entrepreneurs', 'Entrepreneurs')}
+                <i className="ri-user-heart-line" />
+                {t('admin.analytics.retirees', 'Retirees')}
               </span>
-              <span className={styles.metricValue}>{analytics?.usersByProfile?.entrepreneurs || 0}</span>
+              <span className={styles.metricValue}>{analytics?.usersByProfile?.retirees || 0}</span>
               <span className={styles.metricPercent}>
-                {formatPercent(analytics?.usersByProfile?.entrepreneurs, analytics?.users?.total)}
+                {formatPercent(analytics?.usersByProfile?.retirees, analytics?.users?.total)}
+              </span>
+            </div>
+            <div className={styles.metricRow}>
+              <span className={styles.metricLabel}>
+                <i className="ri-plane-line" />
+                {t('admin.analytics.tourists', 'Tourists')}
+              </span>
+              <span className={styles.metricValue}>{analytics?.usersByProfile?.tourists || 0}</span>
+              <span className={styles.metricPercent}>
+                {formatPercent(analytics?.usersByProfile?.tourists, analytics?.users?.total)}
               </span>
             </div>
             <div className={styles.metricRow}>

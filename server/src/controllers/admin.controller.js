@@ -3,7 +3,7 @@ import { analyticsService } from '../services/analytics.service.js';
 import { affiliateService } from '../services/affiliate.service.js';
 import { schedulerService } from '../services/scheduler.service.js';
 import { emailService } from '../services/email.service.js';
-import { emailTemplateRepository } from '../repositories/index.js';
+import { emailTemplateRepository, userRepository } from '../repositories/index.js';
 import { formatResponse } from '../utils/helpers.js';
 
 // ============================================
@@ -299,8 +299,8 @@ export const updateAdmin = async (req, res, next) => {
 
 export const getAffiliates = async (req, res, next) => {
   try {
-    const { page = 1, limit = 20, status } = req.query;
-    const data = await affiliateService.getAllAffiliates(parseInt(page), parseInt(limit), status);
+    const { page = 1, limit = 20, status, search } = req.query;
+    const data = await affiliateService.getAllAffiliates(parseInt(page), parseInt(limit), { status, search });
     res.json(formatResponse(data));
   } catch (error) {
     next(error);
@@ -383,7 +383,29 @@ export const sendPlatformUpdate = async (req, res, next) => {
 export const getEmailStats = async (req, res, next) => {
   try {
     const { startDate, endDate } = req.query;
-    const stats = await emailService.getEmailStats({ startDate, endDate });
+    
+    // Get email stats from logs
+    const rawStats = await emailService.getEmailStats({ startDate, endDate });
+    
+    // Get subscriber count (users with marketing emails enabled)
+    const { count: subscriberCount } = await userRepository.db
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .or('weekly_digest_enabled.is.null,weekly_digest_enabled.eq.true');
+    
+    // Transform stats to expected format
+    const emailsSent = (rawStats?.sent || 0) + (rawStats?.delivered || 0);
+    const opened = rawStats?.opened || 0;
+    const openRate = emailsSent > 0 ? Math.round((opened / emailsSent) * 100) : 0;
+    
+    const stats = {
+      emailsSent,
+      subscribers: subscriberCount || 0,
+      openRate,
+      // Include raw stats for debugging
+      raw: rawStats,
+    };
+    
     res.json(formatResponse(stats));
   } catch (error) {
     next(error);
@@ -433,13 +455,12 @@ export const updateEmailTemplate = async (req, res, next) => {
 
 export const getContents = async (req, res, next) => {
   try {
-    const { page = 1, limit = 20, contentType, category, isPublished, language, search } = req.query;
+    const { page = 1, limit = 20, type, status, language, search } = req.query;
     const data = await adminService.getContents(parseInt(page), parseInt(limit), {
-      contentType,
-      category,
-      isPublished: isPublished === 'true' ? true : isPublished === 'false' ? false : undefined,
-      language,
-      search,
+      contentType: type || undefined,
+      isPublished: status === 'published' ? true : status === 'draft' ? false : undefined,
+      language: language || undefined,
+      search: search || undefined,
     });
     res.json(formatResponse(data));
   } catch (error) {
@@ -688,6 +709,32 @@ export const bulkUpdateSettings = async (req, res, next) => {
     const settings = req.body;
     const result = await adminService.bulkUpdateSettings(settings, req.admin.id);
     res.json(formatResponse({ success: true, updated: result.length }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// Anonymous Visitors
+// ============================================
+
+export const getVisitorStats = async (req, res, next) => {
+  try {
+    const stats = await analyticsService.getAnonymousVisitorStats();
+    res.json(formatResponse(stats));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRecentVisitors = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const data = await analyticsService.getRecentVisitors({
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+    res.json(formatResponse(data));
   } catch (error) {
     next(error);
   }

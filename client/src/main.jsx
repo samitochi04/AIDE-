@@ -8,3 +8,7 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// Dispatch render event for prerenderer
+// This tells the prerenderer that the page is ready to be captured
+document.dispatchEvent(new Event('render-event'))

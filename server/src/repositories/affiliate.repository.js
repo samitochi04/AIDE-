@@ -70,15 +70,19 @@ class AffiliateRepository extends BaseRepository {
    * Find all affiliates with pagination (admin)
    */
   async findAllPaginated(options = {}) {
-    const { page = 1, limit = 20, status } = options;
+    const { page = 1, limit = 20, status, search } = options;
     const offset = (page - 1) * limit;
 
     let query = this.db
       .from(this.tableName)
-      .select('*, user:user_id(email)', { count: 'exact' });
+      .select('*, user:user_id(email, full_name)', { count: 'exact' });
 
     if (status) {
       query = query.eq('status', status);
+    }
+
+    if (search) {
+      query = query.or(`company_name.ilike.%${search}%,contact_email.ilike.%${search}%,affiliate_code.ilike.%${search}%`);
     }
 
     const { data, error, count } = await query

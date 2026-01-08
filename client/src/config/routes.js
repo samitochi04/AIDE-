@@ -59,6 +59,7 @@ export const ROUTES = {
   ADMIN_EMAILS: '/x-admin/emails',
   ADMIN_EMAIL_TEMPLATES: '/x-admin/emails/templates',
   ADMIN_ANALYTICS: '/x-admin/analytics',
+  ADMIN_VISITORS: '/x-admin/visitors',
   ADMIN_SETTINGS: '/x-admin/settings',
   ADMIN_ADMINS: '/x-admin/admins',
 }
