@@ -59,6 +59,3 @@ Disallow: /api/
 
 # Sitemaps
 Sitemap: https://aideplus.eu/sitemap.xml
-
-# Crawl delay (be nice to server)
-Crawl-delay: 1
