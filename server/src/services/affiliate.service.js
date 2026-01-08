@@ -130,6 +130,9 @@ class AffiliateService {
         paidEarnings: earnings.paid,
       },
       recentReferrals,
+      // Payout settings
+      payoutMethod: affiliate.payout_method,
+      payoutDetails: affiliate.payout_details,
     };
   }
 

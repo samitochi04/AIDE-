@@ -327,7 +327,7 @@ export default function AdminAffiliates() {
                     </div>
                     <div className={styles.detailItem}>
                       <label>Pending Payout</label>
-                      <p>€{(selectedAffiliate.pending_payout || 0).toFixed(2)}</p>
+                      <p>€{(selectedAffiliate.pending_earnings || selectedAffiliate.pending_payout || 0).toFixed(2)}</p>
                     </div>
                     <div className={styles.detailItem}>
                       <label>Status</label>
@@ -336,6 +336,51 @@ export default function AdminAffiliates() {
                       </p>
                     </div>
                   </div>
+                  
+                  {/* Payout Settings Section */}
+                  <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'var(--color-bg-tertiary)', borderRadius: '0.5rem' }}>
+                    <h4 style={{ marginBottom: '1rem', color: 'var(--color-text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <i className="ri-bank-card-line" /> Payout Settings
+                    </h4>
+                    <div className={styles.detailGrid}>
+                      <div className={styles.detailItem}>
+                        <label>Payout Method</label>
+                        <p style={{ textTransform: 'capitalize' }}>
+                          {selectedAffiliate.payout_method === 'bank_transfer' ? 'Bank Transfer' : (selectedAffiliate.payout_method || 'Not set')}
+                        </p>
+                      </div>
+                      {selectedAffiliate.payout_method === 'paypal' && selectedAffiliate.payout_details?.paypalEmail && (
+                        <div className={styles.detailItem}>
+                          <label>PayPal Email</label>
+                          <p>{selectedAffiliate.payout_details.paypalEmail}</p>
+                        </div>
+                      )}
+                      {selectedAffiliate.payout_method === 'bank_transfer' && selectedAffiliate.payout_details && (
+                        <>
+                          <div className={styles.detailItem}>
+                            <label>Account Holder</label>
+                            <p>{selectedAffiliate.payout_details.accountHolder || '-'}</p>
+                          </div>
+                          <div className={styles.detailItem}>
+                            <label>IBAN</label>
+                            <p style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>{selectedAffiliate.payout_details.iban || '-'}</p>
+                          </div>
+                          <div className={styles.detailItem}>
+                            <label>Bank Name</label>
+                            <p>{selectedAffiliate.payout_details.bankName || '-'}</p>
+                          </div>
+                        </>
+                      )}
+                      {!selectedAffiliate.payout_method && (
+                        <div className={styles.detailItem} style={{ gridColumn: '1 / -1' }}>
+                          <p style={{ color: 'var(--color-text-tertiary)', fontStyle: 'italic' }}>
+                            Affiliate has not configured payout settings yet
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
                   {hasPermission('manage_affiliates') && (
                     <div className={styles.modalActions}>
                       <button onClick={() => setModalMode('edit')} className={styles.editBtn}>

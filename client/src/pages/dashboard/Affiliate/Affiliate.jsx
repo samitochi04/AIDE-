@@ -31,8 +31,7 @@ const COMMISSION_RATES = {
 // Payout method options
 const PAYOUT_METHODS = [
   { value: 'paypal', labelKey: 'dashboard.affiliate.payoutMethods.paypal' },
-  { value: 'bank_transfer', labelKey: 'dashboard.affiliate.payoutMethods.bankTransfer' },
-  { value: 'stripe', labelKey: 'dashboard.affiliate.payoutMethods.stripe' }
+  { value: 'bank_transfer', labelKey: 'dashboard.affiliate.payoutMethods.bankTransfer' }
 ];
 
 export function Affiliate() {
@@ -85,6 +84,18 @@ export function Affiliate() {
         setIsAffiliate(true);
         setAffiliateStatus(dashboardRes.data.status);
         setDashboard(dashboardRes.data);
+        
+        // Load payout settings from dashboard data
+        if (dashboardRes.data.payoutMethod || dashboardRes.data.payoutDetails) {
+          const details = dashboardRes.data.payoutDetails || {};
+          setPayoutSettings({
+            payoutMethod: dashboardRes.data.payoutMethod || 'paypal',
+            paypalEmail: details.paypalEmail || '',
+            iban: details.iban || '',
+            bankName: details.bankName || '',
+            accountHolder: details.accountHolder || ''
+          });
+        }
         
         // If approved, get referral link and payouts
         if (dashboardRes.data.status === 'approved') {

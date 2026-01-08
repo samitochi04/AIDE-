@@ -173,19 +173,21 @@ class SubscriptionRepository extends BaseRepository {
 
   /**
    * Get subscriptions by tier grouped
+   * Counts users from profiles.subscription_tier (source of truth)
    */
   async getByTierGrouped() {
+    // Count users by their subscription_tier in profiles table (source of truth)
     const { data, error } = await this.db
-      .from(this.tableName)
-      .select('tier')
-      .eq('status', 'active');
+      .from('profiles')
+      .select('subscription_tier');
 
     if (error) throw error;
 
     const tierBreakdown = { free: 0, basic: 0, premium: 0, ultimate: 0 };
-    data?.forEach(sub => {
-      if (tierBreakdown.hasOwnProperty(sub.tier)) {
-        tierBreakdown[sub.tier]++;
+    data?.forEach(profile => {
+      const tier = profile.subscription_tier || 'free';
+      if (tierBreakdown.hasOwnProperty(tier)) {
+        tierBreakdown[tier]++;
       }
     });
 
