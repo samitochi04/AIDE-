@@ -7,6 +7,7 @@ export { default as Modal } from './Modal'
 export { default as Logo } from './Logo'
 export { default as Badge } from './Badge'
 export { default as CookieConsent } from './CookieConsent'
+export { default as UpgradeModal } from './UpgradeModal'
 export { 
   default as Loading,
   Spinner,

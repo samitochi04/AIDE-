@@ -127,32 +127,9 @@ export const getContentBySlug = async (req, res, next) => {
       });
     }
 
-    // Check content access limit for authenticated users
+    // Track content access for authenticated users (no limit check - all content is free)
     if (userId) {
-      const canAccess = await subscriptionService.canAccessContent(userId);
-      
-      if (!canAccess.allowed) {
-        return res.status(403).json({
-          success: false,
-          error: 'limit_exceeded',
-          allowed: false,
-          current: canAccess.current,
-          limit: canAccess.limit,
-          remaining: 0,
-          tier: canAccess.tier,
-          message: canAccess.message,
-          upgradeUrl: '/pricing',
-          // Still provide content preview
-          preview: {
-            title: content.title,
-            excerpt: content.excerpt,
-            content_type: content.content_type,
-            category: content.category,
-          }
-        });
-      }
-      
-      // Track content access for limit checking
+      // Track content access for analytics (not for limiting)
       await subscriptionService.trackContentAccess(userId, content.id);
       
       // Check if user has liked this content

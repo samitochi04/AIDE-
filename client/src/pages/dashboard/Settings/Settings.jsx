@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Crown } from 'lucide-react';
-import { Button, Card, Input, Modal } from '../../../components/ui';
+import { Button, Card, Input, Modal, UpgradeModal } from '../../../components/ui';
 import { useTheme } from '../../../context/ThemeContext';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useAuth } from '../../../context/AuthContext';
@@ -578,31 +578,13 @@ export function Settings() {
       )}
 
       {/* Upgrade Required Modal */}
-      <Modal
+      <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        title={t('dashboard.settings.data.upgradeRequired')}
-      >
-        <div className={styles.upgradeModal}>
-          <div className={styles.upgradeIcon}>
-            <Crown size={48} />
-          </div>
-          <h3>{t('dashboard.settings.data.upgradeToContinue')}</h3>
-          <p>{upgradeMessage || t('dashboard.settings.data.exportPremiumOnly')}</p>
-          <div className={styles.upgradeActions}>
-            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
-              {t('common.close')}
-            </Button>
-            <Button 
-              variant="primary" 
-              onClick={() => navigate(ROUTES.PRICING)}
-            >
-              <Crown size={16} />
-              {t('common.upgrade')}
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        feature="export"
+        currentTier="premium"
+        recommendedTier="ultimate"
+      />
     </motion.div>
   );
 }

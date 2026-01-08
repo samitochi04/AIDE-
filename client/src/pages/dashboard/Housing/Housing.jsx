@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Crown, Lock, ArrowRight } from 'lucide-react';
-import { Button, Card, Input, Badge, Loading, Modal } from '../../../components/ui';
+import { Button, Card, Input, Badge, Loading, Modal, UpgradeModal } from '../../../components/ui';
 import { useToast } from '../../../context/ToastContext';
 import { api, API_ENDPOINTS } from '../../../config/api';
 import { ROUTES } from '../../../config/routes';
@@ -710,36 +710,14 @@ export function Housing() {
       </Modal>
 
       {/* Upgrade Required Modal */}
-      <Modal
+      <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        title={t('dashboard.housing.saveLimitReached')}
-      >
-        <div className={styles.upgradeModalContent}>
-          <div className={styles.upgradeModalIcon}>
-            <Crown size={48} />
-          </div>
-          <h3>{t('dashboard.housing.upgradeToContinue')}</h3>
-          <p>
-            {upgradeInfo?.message || t('dashboard.housing.saveLimitMessage', { 
-              current: upgradeInfo?.current, 
-              limit: upgradeInfo?.limit 
-            })}
-          </p>
-          <div className={styles.upgradeModalActions}>
-            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
-              {t('common.close')}
-            </Button>
-            <Button 
-              variant="primary" 
-              onClick={() => navigate(ROUTES.PRICING)}
-            >
-              <Crown size={16} />
-              {t('common.upgrade')}
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        feature="housing"
+        currentUsage={upgradeInfo?.current}
+        limit={upgradeInfo?.limit}
+        currentTier={upgradeInfo?.tier}
+      />
     </motion.div>
   );
 }

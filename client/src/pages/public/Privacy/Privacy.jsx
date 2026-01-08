@@ -15,7 +15,7 @@ const Privacy = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.title}>{t('privacy.title')}</h1>
-          <p className={styles.lastUpdated}>{t('privacy.lastUpdated')}: 22/12/2024</p>
+          <p className={styles.lastUpdated}>{t('privacy.lastUpdated')}: 22/12/2025</p>
 
           <section className={styles.section}>
             <h2>{t('privacy.sections.intro.title')}</h2>
@@ -69,7 +69,7 @@ const Privacy = () => {
           <section className={styles.section}>
             <h2>{t('privacy.sections.contact.title')}</h2>
             <p>{t('privacy.sections.contact.content')}</p>
-            <p className={styles.email}>privacy@aideplus.eu</p>
+            <p className={styles.email}></p>
           </section>
         </div>
       </div>

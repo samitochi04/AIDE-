@@ -7,6 +7,7 @@ import { useSimulation } from '../../../context/SimulationContext';
 import { useToast } from '../../../context/ToastContext';
 import { useAuth } from '../../../context/AuthContext';
 import { Button, Card, Input, Select, Logo } from '../../../components/ui';
+import UpgradeModal from '../../../components/ui/UpgradeModal';
 import { ROUTES } from '../../../config/routes';
 import { REGIONS } from '../../../config/constants';
 import { api, API_ENDPOINTS } from '../../../config/api';
@@ -46,6 +47,8 @@ export function Simulation() {
   const [direction, setDirection] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeInfo, setUpgradeInfo] = useState(null);
 
   // Redirect to dashboard for logged-in users, home for visitors
   const handleClose = () => {
@@ -124,7 +127,21 @@ export function Simulation() {
       navigate(ROUTES.SIMULATION_RESULTS);
     } catch (err) {
       console.error('Simulation error:', err);
-      showError(t('common.error') || 'An error occurred. Please try again.');
+      
+      // Check for subscription limit exceeded
+      const errorData = err.data?.data || err.data;
+      if (err.status === 403 && errorData?.error === 'limit_exceeded') {
+        setUpgradeInfo({
+          current: errorData.current,
+          limit: errorData.limit,
+          tier: errorData.tier,
+          feature: 'simulations',
+          message: errorData.message || errorData.messageEn
+        });
+        setShowUpgradeModal(true);
+      } else {
+        showError(t('common.error') || 'An error occurred. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -431,6 +448,16 @@ export function Simulation() {
           {currentStep < STEPS.length - 1 && <i className="ri-arrow-right-line" />}
         </Button>
       </div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        feature="simulations"
+        currentUsage={upgradeInfo?.current}
+        limit={upgradeInfo?.limit}
+        currentTier={upgradeInfo?.tier}
+      />
     </div>
   );
 }

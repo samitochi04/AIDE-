@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Crown } from 'lucide-react';
-import { Button, Card, Badge, Loading, Modal } from '../../../components/ui';
+import { Button, Card, Badge, Loading, Modal, UpgradeModal } from '../../../components/ui';
 import { useToast } from '../../../context/ToastContext';
 import api from '../../../config/api';
 import { API_ENDPOINTS } from '../../../config/api';
@@ -780,36 +780,14 @@ export function Procedures() {
       </Modal>
 
       {/* Upgrade Required Modal */}
-      <Modal
+      <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        title={t('dashboard.procedures.limitReached')}
-      >
-        <div className={styles.upgradeModal}>
-          <div className={styles.upgradeIcon}>
-            <Crown size={48} />
-          </div>
-          <h3>{t('dashboard.procedures.upgradeToContinue')}</h3>
-          <p>
-            {upgradeInfo?.message || t('dashboard.procedures.limitMessage', { 
-              current: upgradeInfo?.current, 
-              limit: upgradeInfo?.limit 
-            })}
-          </p>
-          <div className={styles.upgradeActions}>
-            <Button variant="ghost" onClick={() => setShowUpgradeModal(false)}>
-              {t('common.close')}
-            </Button>
-            <Button 
-              variant="primary" 
-              onClick={() => navigate(ROUTES.PRICING)}
-            >
-              <Crown size={16} />
-              {t('common.upgrade')}
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        feature="procedures"
+        currentUsage={upgradeInfo?.current}
+        limit={upgradeInfo?.limit}
+        currentTier={upgradeInfo?.tier}
+      />
     </motion.div>
   );
 }

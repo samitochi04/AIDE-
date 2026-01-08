@@ -15,7 +15,7 @@ const Cookies = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.title}>{t('cookies.title')}</h1>
-          <p className={styles.lastUpdated}>{t('cookies.lastUpdated')}: 22/12/2024</p>
+          <p className={styles.lastUpdated}>{t('cookies.lastUpdated')}: 22/12/2025</p>
 
           <section className={styles.section}>
             <h2>{t('cookies.sections.whatAreCookies.title')}</h2>
@@ -63,7 +63,7 @@ const Cookies = () => {
           <section className={styles.section}>
             <h2>{t('cookies.sections.contact.title')}</h2>
             <p>{t('cookies.sections.contact.content')}</p>
-            <p className={styles.email}>privacy@aideplus.eu</p>
+            <p className={styles.email}></p>
           </section>
         </div>
       </div>

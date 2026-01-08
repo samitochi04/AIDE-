@@ -15,7 +15,7 @@ const Terms = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.title}>{t('terms.title')}</h1>
-          <p className={styles.lastUpdated}>{t('terms.lastUpdated')}: 22/12/2024</p>
+          <p className={styles.lastUpdated}>{t('terms.lastUpdated')}: 22/12/2025</p>
 
           <section className={styles.section}>
             <h2>{t('terms.sections.acceptance.title')}</h2>
@@ -76,7 +76,7 @@ const Terms = () => {
           <section className={styles.section}>
             <h2>{t('terms.sections.contact.title')}</h2>
             <p>{t('terms.sections.contact.content')}</p>
-            <p className={styles.email}>legal@aideplus.eu</p>
+            <p className={styles.email}></p>
           </section>
         </div>
       </div>

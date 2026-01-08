@@ -15,11 +15,29 @@ class SubscriptionService {
 
   /**
    * Get user's current subscription tier
+   * Checks both stripe_subscriptions table AND profiles.subscription_tier
    */
   async getUserTier(userId) {
     try {
+      // First check for active Stripe subscription
       const subscription = await subscriptionRepository.findActiveByUserId(userId);
-      return subscription?.tier || 'free';
+      if (subscription?.tier) {
+        return subscription.tier;
+      }
+
+      // Fallback: check profiles.subscription_tier column
+      const { data: profile, error } = await this.db
+        .from('profiles')
+        .select('subscription_tier')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        logger.warn('Failed to get profile subscription tier', { userId, error: error.message });
+        return 'free';
+      }
+
+      return profile?.subscription_tier || 'free';
     } catch (error) {
       logger.error('Failed to get user tier', { userId, error: error.message });
       return 'free';

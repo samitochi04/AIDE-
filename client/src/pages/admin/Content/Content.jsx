@@ -174,13 +174,20 @@ export default function AdminContent() {
   }
 
   // Generate slug from title
-  const generateSlug = (title) => {
-    return title
+  const generateSlug = (title, addTimestamp = false) => {
+    let slug = title
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '') // Remove accents
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')
+    
+    // Add timestamp suffix to ensure uniqueness for new content
+    if (addTimestamp) {
+      slug = `${slug}-${Date.now().toString(36)}`
+    }
+    
+    return slug
   }
 
   // Get appropriate bucket based on content type
@@ -343,7 +350,10 @@ export default function AdminContent() {
         target_nationalities: selectedContent.target_nationalities || [],
         target_regions: selectedContent.target_regions || null,
         language: selectedContent.language || 'fr',
-        slug: selectedContent.slug || generateSlug(selectedContent.title),
+        // For new content, always generate unique slug; for edit, use existing or generate
+        slug: modalMode === 'create' 
+          ? generateSlug(selectedContent.title, true) // Add timestamp for uniqueness
+          : (selectedContent.slug || generateSlug(selectedContent.title)),
         meta_title: selectedContent.meta_title || null,
         meta_description: selectedContent.meta_description || null,
         is_published: selectedContent.is_published || false,
