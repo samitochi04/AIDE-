@@ -8,8 +8,6 @@ Allow: /simulation
 Allow: /pricing
 Allow: /blog
 Allow: /contact
-Allow: /login
-Allow: /register
 
 # Disallow private/admin routes
 Disallow: /dashboard/
