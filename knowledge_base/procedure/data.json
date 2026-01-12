@@ -1,0 +1,4298 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-12-09",
+    "description": "Comprehensive procedural guide for foreign students and workers in France",
+    "excludes": "Government financial aides (see main data.json)"
+  },
+  "students": {
+    "erasmus": {
+      "id": "erasmus",
+      "name": "Erasmus+ Exchange Students",
+      "description": "EU exchange program students spending 1-2 semesters in France",
+      "preArrival": {
+        "documents": [
+          {
+            "id": "erasmus-doc-1",
+            "name": "European Health Insurance Card (EHIC)",
+            "description": "Free card providing access to state healthcare during temporary stay in EU countries",
+            "required": true,
+            "howToObtain": "Request from your national health insurance provider before departure",
+            "processingTime": "1-2 weeks",
+            "validity": "Varies by country, typically 1-2 years",
+            "cost": "Free",
+            "url": "https://ec.europa.eu/social/main.jsp?catId=559",
+            "tips": [
+              "Apply at least 1 month before departure",
+              "Take photos of both sides of the card",
+              "EHIC does not cover private healthcare or repatriation"
+            ]
+          },
+          {
+            "id": "erasmus-doc-2",
+            "name": "Learning Agreement",
+            "description": "Official document listing courses to be taken abroad, signed by home and host universities",
+            "required": true,
+            "howToObtain": "Coordinate with Erasmus coordinator at home university",
+            "processingTime": "2-4 weeks for all signatures",
+            "validity": "Duration of exchange",
+            "cost": "Free",
+            "url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/learning-agreement",
+            "tips": [
+              "Ensure ECTS credits will be recognized",
+              "Can be modified within first month of arrival",
+              "Keep digital and physical copies"
+            ]
+          },
+          {
+            "id": "erasmus-doc-3",
+            "name": "Erasmus+ Grant Agreement",
+            "description": "Contract with home university specifying grant amount and conditions",
+            "required": true,
+            "howToObtain": "Sign with home university's international office",
+            "processingTime": "1-2 weeks",
+            "validity": "Duration of mobility period",
+            "cost": "Free",
+            "grantAmounts": {
+              "group1": "350-500€/month (Denmark, Finland, Iceland, Ireland, Liechtenstein, Luxembourg, Norway, Sweden)",
+              "group2": "300-450€/month (Austria, Belgium, Cyprus, France, Germany, Greece, Italy, Malta, Netherlands, Portugal, Spain)",
+              "group3": "250-400€/month (Other EU countries)"
+            },
+            "url": "https://erasmus-plus.ec.europa.eu/",
+            "tips": [
+              "Grant is paid in installments",
+              "Keep all receipts for potential audits",
+              "Additional grants available for students with disabilities"
+            ]
+          },
+          {
+            "id": "erasmus-doc-4",
+            "name": "Valid Passport or National ID Card",
+            "description": "EU citizens can use national ID card; non-EU Erasmus students need valid passport",
+            "required": true,
+            "validity": "Must be valid for entire stay + 3 months",
+            "tips": [
+              "Check expiry date before departure",
+              "Make copies stored separately from original"
+            ]
+          },
+          {
+            "id": "erasmus-doc-5",
+            "name": "Proof of Accommodation",
+            "description": "Confirmation of housing arrangement in France",
+            "required": true,
+            "acceptedDocuments": [
+              "CROUS residence confirmation",
+              "Rental contract",
+              "Host family attestation",
+              "University residence confirmation"
+            ],
+            "tips": [
+              "Needed for various administrative procedures",
+              "Address will be used for official correspondence"
+            ]
+          },
+          {
+            "id": "erasmus-doc-6",
+            "name": "Birth Certificate (with Apostille)",
+            "description": "Official birth certificate, apostilled or legalized depending on home country",
+            "required": false,
+            "requiredFor": "Opening bank accounts, some administrative procedures",
+            "howToObtain": "Request from civil registry in home country, then apostille at competent authority",
+            "tips": [
+              "Hague Convention countries: apostille sufficient",
+              "Non-Hague countries: full legalization required",
+              "Some banks accept without translation"
+            ]
+          }
+        ],
+        "preparation": [
+          {
+            "id": "erasmus-prep-1",
+            "name": "Apply for CROUS Housing",
+            "description": "University residence application through CROUS",
+            "deadline": "May-June for September arrival, November for January arrival",
+            "howTo": [
+              "Create account on trouverunlogement.lescrous.fr",
+              "Submit application with required documents",
+              "Wait for allocation (competitive)"
+            ],
+            "cost": "200-600€/month depending on city and room type",
+            "url": "https://trouverunlogement.lescrous.fr/",
+            "tips": [
+              "Apply early - places are limited",
+              "Île-de-France is most competitive",
+              "Alternative: private housing via Studapart, Lokaviz"
+            ]
+          },
+          {
+            "id": "erasmus-prep-2",
+            "name": "Open a French Bank Account (Online Pre-Application)",
+            "description": "Some banks allow starting the process online before arrival",
+            "options": [
+              {
+                "name": "Boursorama Banque",
+                "requirements": "French address, ID, proof of income/grant",
+                "timeToOpen": "1-2 weeks",
+                "cost": "Free",
+                "url": "https://www.boursorama.com/"
+              },
+              {
+                "name": "N26",
+                "requirements": "EU passport/ID, smartphone",
+                "timeToOpen": "Instant",
+                "cost": "Free (standard account)",
+                "url": "https://n26.com/",
+                "note": "German bank, works throughout EU"
+              }
+            ],
+            "tips": [
+              "Neo-banks easier to open but may lack French RIB initially",
+              "Traditional banks often require appointment in person"
+            ]
+          },
+          {
+            "id": "erasmus-prep-3",
+            "name": "Arrange Travel Insurance",
+            "description": "Supplementary travel insurance recommended in addition to EHIC",
+            "coverage": [
+              "Repatriation",
+              "Personal liability",
+              "Lost luggage",
+              "Trip cancellation"
+            ],
+            "options": [
+              {
+                "name": "Chapka Assurances - Cap Student",
+                "cost": "From 29€/month",
+                "url": "https://www.chapkadirect.fr/"
+              },
+              {
+                "name": "AVI International",
+                "cost": "From 25€/month",
+                "url": "https://www.avi-international.com/"
+              }
+            ],
+            "tips": [
+              "Check if home university provides coverage",
+              "Some credit cards include travel insurance"
+            ]
+          },
+          {
+            "id": "erasmus-prep-4",
+            "name": "Register with Host University",
+            "description": "Complete online pre-registration with French host institution",
+            "howTo": [
+              "Receive nomination from home university",
+              "Wait for host university contact",
+              "Complete online application",
+              "Upload required documents",
+              "Receive acceptance letter"
+            ],
+            "deadline": "Varies by university - typically 2-3 months before semester",
+            "tips": [
+              "Check specific requirements on host university website",
+              "Contact international office if no response within 2 weeks"
+            ]
+          },
+          {
+            "id": "erasmus-prep-5",
+            "name": "Learn Basic French",
+            "description": "Even in English-taught programs, basic French improves daily life significantly",
+            "freeResources": [
+              {
+                "name": "Duolingo",
+                "type": "App",
+                "url": "https://www.duolingo.com/"
+              },
+              {
+                "name": "TV5Monde - Apprendre le français",
+                "type": "Website",
+                "url": "https://apprendre.tv5monde.com/"
+              },
+              {
+                "name": "France Podcast",
+                "type": "Podcast",
+                "url": "https://www.francepodcasts.com/"
+              }
+            ],
+            "tips": [
+              "Focus on practical vocabulary: housing, food, transport",
+              "Many universities offer free French courses for exchange students"
+            ]
+          }
+        ]
+      },
+      "arrival": {
+        "administrative": [
+          {
+            "id": "erasmus-admin-1",
+            "name": "University Enrollment (Inscription Administrative)",
+            "description": "Final registration at host university upon arrival",
+            "when": "First week of arrival, during orientation",
+            "where": "Host university's Scolarité or International Office",
+            "requiredDocuments": [
+              "Passport/National ID",
+              "Acceptance letter",
+              "Learning Agreement",
+              "Passport photos (x2)",
+              "Proof of accommodation",
+              "EHIC copy"
+            ],
+            "result": "Student card (Carte d'étudiant)",
+            "cost": "Usually free for Erasmus (CVEC may be waived)",
+            "tips": [
+              "Student card needed for library, restaurants, discounts",
+              "Check if CVEC (92€ contribution) is waived for Erasmus"
+            ]
+          },
+          {
+            "id": "erasmus-admin-2",
+            "name": "Obtain Certificate of Arrival",
+            "description": "Document proving your arrival date, required for Erasmus grant",
+            "when": "First week of arrival",
+            "where": "Host university International Office",
+            "requiredDocuments": [
+              "Passport/ID",
+              "Student card or acceptance letter"
+            ],
+            "purpose": "Send to home university to trigger grant payment",
+            "tips": [
+              "Get it signed and stamped",
+              "Keep copy for your records",
+              "You'll need another certificate when leaving"
+            ]
+          },
+          {
+            "id": "erasmus-admin-3",
+            "name": "Sécurité Sociale Affiliation",
+            "description": "French social security registration for healthcare coverage",
+            "when": "Within first month of arrival",
+            "where": "Online at etudiant-etranger.ameli.fr",
+            "requiredDocuments": [
+              "Passport/ID",
+              "Birth certificate",
+              "Proof of enrollment",
+              "Proof of accommodation",
+              "RIB (French bank details)"
+            ],
+            "cost": "Free",
+            "url": "https://etudiant-etranger.ameli.fr/",
+            "processingTime": "2-6 weeks for Carte Vitale",
+            "tips": [
+              "EU students: EHIC covers you initially",
+              "French Sécu allows additional reimbursements",
+              "Carte Vitale takes time - use attestation in meantime"
+            ]
+          },
+          {
+            "id": "erasmus-admin-4",
+            "name": "Attend Orientation Week",
+            "description": "Integration events organized by university and ESN",
+            "when": "Week before or first week of classes",
+            "includes": [
+              "Campus tour",
+              "French course information",
+              "Administrative help",
+              "City tour",
+              "Welcome party",
+              "Student buddy program"
+            ],
+            "organizers": [
+              {
+                "name": "ESN France (Erasmus Student Network)",
+                "description": "Student association helping exchange students",
+                "url": "https://esnfrance.org/"
+              },
+              {
+                "name": "University International Office",
+                "description": "Official university support"
+              }
+            ],
+            "tips": [
+              "Best way to meet other international students",
+              "Get ESN card for discounts (10€)",
+              "Don't miss welcome events!"
+            ]
+          }
+        ],
+        "housing": [
+          {
+            "id": "erasmus-housing-1",
+            "name": "CROUS Residences",
+            "description": "Government-subsidized student housing",
+            "types": [
+              {
+                "type": "Chambre traditionnelle",
+                "description": "Single room, shared bathroom/kitchen",
+                "price": "150-250€/month"
+              },
+              {
+                "type": "Chambre rénovée",
+                "description": "Single room with private bathroom",
+                "price": "250-350€/month"
+              },
+              {
+                "type": "Studio",
+                "description": "Self-contained with kitchenette",
+                "price": "350-500€/month"
+              }
+            ],
+            "pros": ["Cheapest option", "Among other students", "Simple lease"],
+            "cons": ["Limited availability", "Basic facilities", "Strict rules"],
+            "url": "https://www.etudiant.gouv.fr/fr/se-loger-1886",
+            "tips": [
+              "Apply early via trouverunlogement.lescrous.fr",
+              "Eligible for CAF housing aid"
+            ]
+          },
+          {
+            "id": "erasmus-housing-2",
+            "name": "Private Student Residences",
+            "description": "Private accommodation specifically for students",
+            "providers": [
+              {
+                "name": "Studéa",
+                "url": "https://www.studea.fr/",
+                "priceRange": "400-800€/month"
+              },
+              {
+                "name": "Les Estudines",
+                "url": "https://www.estudines.com/",
+                "priceRange": "450-900€/month"
+              },
+              {
+                "name": "Nexity Studéa",
+                "url": "https://www.nexity-studea.com/",
+                "priceRange": "400-850€/month"
+              },
+              {
+                "name": "UXCO",
+                "url": "https://www.uxco.fr/",
+                "priceRange": "450-800€/month"
+              }
+            ],
+            "includes": "Usually furnished, utilities, internet",
+            "tips": [
+              "More expensive but higher quality",
+              "Easier rental process for foreigners",
+              "Still eligible for CAF"
+            ]
+          },
+          {
+            "id": "erasmus-housing-3",
+            "name": "Private Rental Platforms",
+            "description": "Find apartments and rooms from private landlords",
+            "platforms": [
+              {
+                "name": "Studapart",
+                "description": "Student-focused, landlords vetted",
+                "url": "https://www.studapart.com/",
+                "languages": ["FR", "EN"]
+              },
+              {
+                "name": "Lokaviz",
+                "description": "CROUS private housing listings",
+                "url": "https://www.lokaviz.fr/",
+                "languages": ["FR"]
+              },
+              {
+                "name": "Leboncoin",
+                "description": "General classifieds, good deals but beware scams",
+                "url": "https://www.leboncoin.fr/",
+                "languages": ["FR"]
+              },
+              {
+                "name": "PAP (Particulier à Particulier)",
+                "description": "Direct from owners, no agency fees",
+                "url": "https://www.pap.fr/",
+                "languages": ["FR"]
+              },
+              {
+                "name": "SeLoger",
+                "description": "Major real estate platform",
+                "url": "https://www.seloger.com/",
+                "languages": ["FR", "EN"]
+              }
+            ],
+            "scamWarning": "NEVER pay before visiting. NEVER wire money abroad. Meet landlord in person.",
+            "tips": [
+              "Use university housing services for verified listings",
+              "Ask for video call tour if arriving from abroad"
+            ]
+          },
+          {
+            "id": "erasmus-housing-4",
+            "name": "Colocation (Flatsharing)",
+            "description": "Sharing an apartment with other students",
+            "platforms": [
+              {
+                "name": "La Carte des Colocs",
+                "url": "https://www.lacartedescolocs.fr/",
+                "description": "Most popular colocation site in France"
+              },
+              {
+                "name": "Appartager",
+                "url": "https://www.appartager.com/",
+                "description": "Roommate matching"
+              },
+              {
+                "name": "Roomlala",
+                "url": "https://www.roomlala.com/",
+                "description": "Rooms and homestays"
+              }
+            ],
+            "averagePrices": {
+              "paris": "500-800€/month",
+              "lyon": "400-600€/month",
+              "otherCities": "300-500€/month"
+            },
+            "pros": ["Social", "Often furnished", "Shared costs"],
+            "tips": [
+              "Great for meeting locals and improving French",
+              "Clarify bills, cleaning, guests rules upfront"
+            ]
+          },
+          {
+            "id": "erasmus-housing-5",
+            "name": "Visale Guarantee",
+            "description": "Free government guarantee replacing traditional guarantor",
+            "eligibility": [
+              "Students under 30",
+              "No French guarantor needed",
+              "EU and international students eligible"
+            ],
+            "howToApply": [
+              "Create account at visale.fr",
+              "Submit documents",
+              "Receive Visale visa within 48h",
+              "Give to landlord"
+            ],
+            "coverage": "Up to 36 months of unpaid rent",
+            "cost": "Free",
+            "url": "https://www.visale.fr/",
+            "tips": [
+              "Apply BEFORE signing lease",
+              "Some landlords don't know Visale - explain it's from Action Logement",
+              "Alternative: GarantMe (paid service)"
+            ]
+          },
+          {
+            "id": "erasmus-housing-6",
+            "name": "CAF Housing Aid Application",
+            "description": "Apply for APL/ALS housing allowance",
+            "eligibility": "All students with legal rental contract",
+            "amount": "50-300€/month depending on rent, location, income",
+            "howToApply": [
+              "Wait until you have signed lease",
+              "Create account at caf.fr",
+              "Submit online application",
+              "Upload: ID, lease, RIB, attestation de loyer"
+            ],
+            "processingTime": "1-2 months",
+            "url": "https://www.caf.fr/",
+            "tips": [
+              "Aid starts from application month, not retroactive",
+              "Apply immediately after moving in",
+              "Works even for Erasmus short stay"
+            ]
+          }
+        ],
+        "health": [
+          {
+            "id": "erasmus-health-1",
+            "name": "Find a General Practitioner (Médecin Traitant)",
+            "description": "Register with a GP for better reimbursements",
+            "howToFind": [
+              "Doctolib app/website - filter by 'accepts new patients'",
+              "University health service (SUMPPS/SSU)",
+              "Ask at pharmacy"
+            ],
+            "url": "https://www.doctolib.fr/",
+            "cost": "25€ standard consultation (70% reimbursed with Carte Vitale)",
+            "tips": [
+              "Can declare médecin traitant later once you have Carte Vitale",
+              "University health service often free for students"
+            ]
+          },
+          {
+            "id": "erasmus-health-2",
+            "name": "Complementary Health Insurance (Mutuelle)",
+            "description": "Optional additional coverage on top of Sécurité Sociale",
+            "whyNeeded": "French Sécu only covers 70% of costs",
+            "options": [
+              {
+                "name": "LMDE",
+                "description": "Student mutual, basic coverage",
+                "cost": "From 9€/month",
+                "url": "https://www.lmde.fr/"
+              },
+              {
+                "name": "HEYME",
+                "description": "Modern student mutual",
+                "cost": "From 9€/month",
+                "url": "https://www.heyme.care/"
+              },
+              {
+                "name": "SMERRA",
+                "description": "Regional student mutual",
+                "cost": "From 10€/month",
+                "url": "https://www.smerra.fr/"
+              }
+            ],
+            "tips": [
+              "Low-income students may qualify for CSS (Complémentaire Santé Solidaire) - free",
+              "Check if home country insurance already provides coverage"
+            ]
+          },
+          {
+            "id": "erasmus-health-3",
+            "name": "University Health Services (SUMPPS/SSU)",
+            "description": "Free health services on campus",
+            "services": [
+              "General consultations",
+              "Mental health support",
+              "Sexual health",
+              "Vaccinations",
+              "Health prevention"
+            ],
+            "cost": "Free",
+            "tips": [
+              "Great first point of contact",
+              "Can help navigate French health system"
+            ]
+          }
+        ]
+      },
+      "banking": {
+        "overview": {
+          "description": "Opening a French bank account is essential for receiving grants, paying rent, and daily expenses",
+          "requirements": [
+            "Valid passport or EU ID",
+            "Proof of address (even temporary)",
+            "Student certificate or enrollment proof",
+            "Sometimes: birth certificate"
+          ]
+        },
+        "traditionalBanks": [
+          {
+            "id": "bank-trad-1",
+            "name": "BNP Paribas",
+            "type": "Traditional",
+            "studentOffer": "Esprit Libre",
+            "monthlyFee": "0€ for students under 25",
+            "cardType": "Visa Classic",
+            "pros": ["Large ATM network", "Good mobile app", "Student discounts"],
+            "cons": ["Appointment required", "Paperwork", "Fees after 25"],
+            "requiredDocuments": ["ID", "Proof of address", "Student certificate", "RIB from home country (optional)"],
+            "url": "https://mabanque.bnpparibas/",
+            "internationalTransfers": "Fees apply",
+            "englishService": true,
+            "tips": [
+              "Go to a branch near universities - staff used to foreign students",
+              "Ask about Esprit Libre Découverte for first year free"
+            ]
+          },
+          {
+            "id": "bank-trad-2",
+            "name": "Société Générale",
+            "type": "Traditional",
+            "studentOffer": "Sobrio",
+            "monthlyFee": "0€ for students under 25",
+            "cardType": "Visa Classic",
+            "pros": ["Student-friendly", "Jazzy app", "International presence"],
+            "cons": ["Branch appointment needed", "Slow account opening"],
+            "requiredDocuments": ["ID", "Proof of address", "Student certificate"],
+            "url": "https://particuliers.societegenerale.fr/",
+            "internationalTransfers": "Fees apply",
+            "englishService": true,
+            "tips": [
+              "Check for Société Générale booth at university welcome fairs",
+              "Sobrio offer includes Apple Pay/Google Pay"
+            ]
+          },
+          {
+            "id": "bank-trad-3",
+            "name": "Crédit Agricole",
+            "type": "Traditional",
+            "studentOffer": "Globe-Trotter",
+            "monthlyFee": "0-2€ depending on region",
+            "cardType": "Visa Classic",
+            "pros": ["Very local presence", "Good for rural areas", "Insurance options"],
+            "cons": ["Varies by regional bank", "More paperwork"],
+            "requiredDocuments": ["ID", "Proof of address", "Student certificate"],
+            "url": "https://www.credit-agricole.fr/",
+            "internationalTransfers": "Fees apply",
+            "englishService": "Limited",
+            "tips": [
+              "Good option if studying outside major cities",
+              "Ask about EKO sub-brand (digital, cheaper)"
+            ]
+          },
+          {
+            "id": "bank-trad-4",
+            "name": "LCL (Le Crédit Lyonnais)",
+            "type": "Traditional",
+            "studentOffer": "Offre Jeunes 18-25",
+            "monthlyFee": "0€ under 25",
+            "cardType": "Visa Classic",
+            "pros": ["Free under 25", "Good in urban areas", "Student insurance options"],
+            "cons": ["Branch required for opening", "Less international"],
+            "requiredDocuments": ["ID", "Proof of address", "Student certificate"],
+            "url": "https://www.lcl.fr/",
+            "englishService": "Limited",
+            "tips": [
+              "Good partner deals with some universities"
+            ]
+          }
+        ],
+        "neoBanks": [
+          {
+            "id": "bank-neo-1",
+            "name": "N26",
+            "type": "Neo-bank (German)",
+            "monthlyFee": "0€ (Standard) / 4.90€ (Smart) / 9.90€ (You)",
+            "cardType": "Mastercard Debit",
+            "pros": [
+              "Open in 8 minutes with app",
+              "No paperwork",
+              "Free withdrawals (3-5/month)",
+              "Free foreign currency payments",
+              "Real-time notifications"
+            ],
+            "cons": [
+              "German IBAN (DE) - some French services may not accept",
+              "No cash deposits",
+              "No checks",
+              "Customer service by chat only"
+            ],
+            "requiredDocuments": ["EU passport/ID", "Smartphone", "Selfie video verification"],
+            "url": "https://n26.com/",
+            "internationalTransfers": "Free SEPA, Wise integration for others",
+            "englishService": true,
+            "availableCountries": "EU + some others",
+            "tips": [
+              "Perfect as secondary account while waiting for French bank",
+              "Some landlords/CAF may not accept German IBAN - check first",
+              "Use Wise for cheaper international transfers"
+            ]
+          },
+          {
+            "id": "bank-neo-2",
+            "name": "Revolut",
+            "type": "Neo-bank (UK/Lithuania)",
+            "monthlyFee": "0€ (Standard) / 2.99€ (Plus) / 7.99€ (Premium)",
+            "cardType": "Visa/Mastercard",
+            "pros": [
+              "Instant account opening",
+              "Multi-currency accounts",
+              "Best exchange rates",
+              "Virtual cards for online shopping",
+              "Crypto & stocks"
+            ],
+            "cons": [
+              "Lithuanian IBAN - CAF usually doesn't accept",
+              "Limited customer support",
+              "No French checks"
+            ],
+            "requiredDocuments": ["Passport/ID", "Smartphone", "Proof of address (for full features)"],
+            "url": "https://www.revolut.com/",
+            "internationalTransfers": "Excellent rates, low fees",
+            "englishService": true,
+            "tips": [
+              "Great for traveling and currency exchange",
+              "Use as spending card, not main French account",
+              "Get physical card shipped to French address"
+            ]
+          },
+          {
+            "id": "bank-neo-3",
+            "name": "Boursorama Banque",
+            "type": "Online Bank (French)",
+            "monthlyFee": "0€ (Welcome) / 0€ (Ultim if used)",
+            "cardType": "Visa Classic/Premier/Ultim",
+            "pros": [
+              "French IBAN (FR)",
+              "Fully accepted for CAF, rent, etc.",
+              "Good mobile app",
+              "Free Visa Premier if eligible"
+            ],
+            "cons": [
+              "Requires French address",
+              "Income conditions for some cards",
+              "Opening takes 1-2 weeks"
+            ],
+            "requiredDocuments": ["ID", "Proof of French address", "Income proof or €300 deposit"],
+            "url": "https://www.boursorama.com/",
+            "internationalTransfers": "SEPA free, others have fees",
+            "englishService": "Limited",
+            "tips": [
+              "Best French online bank - highly recommended",
+              "Welcome offer often includes €80-150 bonus",
+              "Ultim card = free international payments"
+            ]
+          },
+          {
+            "id": "bank-neo-4",
+            "name": "Fortuneo",
+            "type": "Online Bank (French)",
+            "monthlyFee": "0€",
+            "cardType": "Mastercard",
+            "pros": [
+              "French IBAN",
+              "Free Mastercard Gold (conditions)",
+              "Good for savings"
+            ],
+            "cons": [
+              "Income requirements for best cards",
+              "Less student-focused"
+            ],
+            "requiredDocuments": ["ID", "Proof of address", "Income proof"],
+            "url": "https://www.fortuneo.fr/",
+            "tips": [
+              "Alternative to Boursorama",
+              "Check welcome bonuses"
+            ]
+          },
+          {
+            "id": "bank-neo-5",
+            "name": "Hello bank!",
+            "type": "Online Bank (BNP Paribas subsidiary)",
+            "monthlyFee": "0€",
+            "cardType": "Visa Classic/Hello Prime",
+            "pros": [
+              "French IBAN",
+              "Access to BNP ATMs",
+              "Good app"
+            ],
+            "cons": [
+              "€300 minimum deposit to open",
+              "Some services require income proof"
+            ],
+            "requiredDocuments": ["ID", "Proof of address", "€300 initial deposit"],
+            "url": "https://www.hellobank.fr/",
+            "englishService": true,
+            "tips": [
+              "Good middle ground between traditional and neo-bank",
+              "Can use BNP branches if needed"
+            ]
+          }
+        ],
+        "studentSpecificOptions": [
+          {
+            "id": "bank-student-1",
+            "name": "Nickel",
+            "type": "Account available at tobacco shops",
+            "monthlyFee": "20€/year",
+            "cardType": "Mastercard",
+            "pros": [
+              "Open in 5 minutes at any tabac",
+              "No income/address requirements",
+              "French IBAN",
+              "Cash deposits at tobacco shops"
+            ],
+            "cons": [
+              "Basic features only",
+              "Some fees (€0.50/deposit, etc.)",
+              "Limited card"
+            ],
+            "requiredDocuments": ["ID only", "Phone number"],
+            "url": "https://www.nickel.eu/",
+            "tips": [
+              "Perfect emergency option if other banks refuse",
+              "Can open day of arrival",
+              "5,500 tobacco shops in France"
+            ]
+          }
+        ],
+        "moneyTransfers": [
+          {
+            "id": "transfer-1",
+            "name": "Wise (ex-TransferWise)",
+            "description": "Best rates for international transfers",
+            "fees": "0.35-2% depending on currency",
+            "speed": "1-2 days",
+            "features": [
+              "Multi-currency account",
+              "Debit card available",
+              "Real exchange rate",
+              "Business accounts too"
+            ],
+            "url": "https://wise.com/",
+            "tips": [
+              "Much cheaper than bank transfers",
+              "Useful for receiving money from family",
+              "Can link to N26/Revolut"
+            ]
+          },
+          {
+            "id": "transfer-2",
+            "name": "Western Union",
+            "description": "Cash pickup option worldwide",
+            "fees": "Higher than Wise (3-8%)",
+            "speed": "Instant cash pickup",
+            "url": "https://www.westernunion.com/",
+            "tips": [
+              "Good for emergencies when you need cash",
+              "Many pickup points in France"
+            ]
+          }
+        ],
+        "tips": [
+          "Open N26/Revolut immediately upon arrival while waiting for French bank",
+          "Apply for Boursorama once you have proof of address",
+          "Traditional banks good for building relationship (loans later)",
+          "Always keep some cash for emergencies (card machines fail)",
+          "Never give card PIN or online banking codes to anyone",
+          "Set up transaction alerts on all accounts"
+        ],
+        "recommendedStrategy": {
+          "step1": "Before arrival: Open N26 or Revolut with EU ID",
+          "step2": "Week 1: Open Nickel at tabac if urgent French IBAN needed",
+          "step3": "Week 2-3: Apply at traditional bank near university OR Boursorama online",
+          "step4": "Keep neo-bank for daily spending, French bank for official things (CAF, rent)"
+        }
+      },
+      "dailyLife": {
+        "food": {
+          "studentRestaurants": [
+            {
+              "id": "food-ru-1",
+              "name": "CROUS Restaurant Universitaire (RU)",
+              "description": "Subsidized cafeterias on campus",
+              "price": "3.30€ for complete meal (starter + main + dessert)",
+              "eligibility": "All students with valid student card",
+              "hours": "Typically 11:30-14:00 and 18:30-20:00",
+              "payment": "Izly app/card (load with bank card)",
+              "quality": "Varies by location, generally decent",
+              "url": "https://www.etudiant.gouv.fr/fr/se-restaurer-917",
+              "izlyUrl": "https://www.izly.fr/",
+              "tips": [
+                "Download Izly app and create account",
+                "Reload Izly online to avoid queues",
+                "Some RU better than others - ask local students",
+                "Vegetarian options usually available",
+                "Bursary students pay €1"
+              ]
+            },
+            {
+              "id": "food-ru-2",
+              "name": "CROUS Cafétérias",
+              "description": "Lighter meals and snacks on campus",
+              "price": "2-5€",
+              "hours": "Often 8:00-18:00",
+              "menu": "Sandwiches, salads, pastries, coffee",
+              "tips": [
+                "Good for quick lunch between classes",
+                "Also accepts Izly"
+              ]
+            }
+          ],
+          "foodBanks": [
+            {
+              "id": "food-bank-1",
+              "name": "Les Restos du Cœur",
+              "description": "France's largest food charity, founded by Coluche",
+              "eligibility": "Based on income - students often eligible",
+              "whatYouGet": "Weekly food packages, hot meals at some centers",
+              "howToAccess": [
+                "Find nearest center at restosducoeur.org",
+                "Bring ID and income proof (or student certificate)",
+                "Registration interview",
+                "Receive card for weekly collections"
+              ],
+              "period": "Winter campaign: November-March",
+              "url": "https://www.restosducoeur.org/",
+              "tips": [
+                "Don't be ashamed - this is for students too",
+                "Campaign runs November to March mainly",
+                "Some centers have year-round distribution"
+              ]
+            },
+            {
+              "id": "food-bank-2",
+              "name": "Secours Populaire",
+              "description": "Charity providing food and other assistance",
+              "eligibility": "Based on resources",
+              "services": ["Food packages", "Clothing", "Holiday assistance"],
+              "url": "https://www.secourspopulaire.fr/",
+              "tips": [
+                "Also helps with other needs (clothing, etc.)",
+                "Find local committee on website"
+              ]
+            },
+            {
+              "id": "food-bank-3",
+              "name": "Banque Alimentaire",
+              "description": "Network redistributing food to charities",
+              "howItWorks": "Supplies other associations like Restos du Cœur",
+              "directDistribution": "Some local branches do direct distribution",
+              "url": "https://www.banquealimentaire.org/",
+              "tips": [
+                "Check for local distribution points",
+                "Annual national collection in November"
+              ]
+            },
+            {
+              "id": "food-bank-4",
+              "name": "AGORAÉ",
+              "description": "Student-run solidarity grocery stores on campus",
+              "price": "10-20% of normal prices",
+              "eligibility": "Students with low resources (checked by social services)",
+              "locations": "Many universities - check with student union",
+              "url": "https://www.fage.org/innovation-sociale/agorae/",
+              "tips": [
+                "Run by students for students",
+                "Also social link - events, cooking workshops",
+                "Apply through university social services (CROUS)"
+              ]
+            },
+            {
+              "id": "food-bank-5",
+              "name": "Linkee",
+              "description": "Food redistribution from restaurants/stores to students",
+              "price": "Free",
+              "howItWorks": "Sign up for distribution events, collect free food",
+              "locations": "Paris, Lyon, Bordeaux, Lille, Marseille",
+              "url": "https://www.linkee.co/",
+              "tips": [
+                "Check social media for distribution times",
+                "Bring bags, arrive early"
+              ]
+            }
+          ],
+          "antiWasteApps": [
+            {
+              "id": "food-app-1",
+              "name": "Too Good To Go",
+              "description": "Rescue unsold food from restaurants/bakeries at 1/3 price",
+              "savings": "Pay €3-5 for €10-15 worth of food",
+              "howItWorks": [
+                "Download app",
+                "Browse nearby 'surprise bags'",
+                "Pay and reserve",
+                "Pick up at specified time"
+              ],
+              "url": "https://www.toogoodtogo.com/",
+              "platforms": ["iOS", "Android"],
+              "tips": [
+                "Bakeries at closing time = great deals",
+                "Sushi restaurants often have generous portions",
+                "Check app at 17:00 for dinner options"
+              ]
+            },
+            {
+              "id": "food-app-2",
+              "name": "Phenix",
+              "description": "Similar to TooGoodToGo, anti-waste baskets",
+              "savings": "50-70% off retail",
+              "url": "https://www.wearephenix.com/",
+              "tips": [
+                "Sometimes different stores than TooGoodToGo",
+                "Check both apps for best deals"
+              ]
+            },
+            {
+              "id": "food-app-3",
+              "name": "Karma",
+              "description": "Anti-waste app popular in some cities",
+              "url": "https://www.karma.life/",
+              "tips": [
+                "Stronger in certain cities",
+                "Good restaurant selection"
+              ]
+            }
+          ],
+          "groceryShopping": {
+            "discountStores": [
+              {
+                "name": "Lidl",
+                "type": "German discount supermarket",
+                "priceLevel": "€",
+                "tips": ["Weekly specials on Wednesdays", "Fresh bakery section"]
+              },
+              {
+                "name": "Aldi",
+                "type": "German discount supermarket",
+                "priceLevel": "€",
+                "tips": ["Similar to Lidl", "Less widespread in France"]
+              },
+              {
+                "name": "Leader Price",
+                "type": "French discount chain",
+                "priceLevel": "€",
+                "tips": ["Own-brand products very cheap"]
+              },
+              {
+                "name": "Netto",
+                "type": "Discount chain",
+                "priceLevel": "€"
+              }
+            ],
+            "regularSupermarkets": [
+              {
+                "name": "Carrefour",
+                "type": "Hypermarket and smaller formats",
+                "formats": ["Carrefour (large)", "Carrefour Market", "Carrefour City (convenience)"],
+                "priceLevel": "€€",
+                "tips": ["Carrefour City expensive but convenient", "Get loyalty card for discounts"]
+              },
+              {
+                "name": "Leclerc",
+                "type": "Hypermarket",
+                "priceLevel": "€€",
+                "tips": ["Often cheapest for big shops", "Usually outside city center"]
+              },
+              {
+                "name": "Intermarché",
+                "type": "Supermarket",
+                "priceLevel": "€€",
+                "tips": ["Good for meat and local products"]
+              },
+              {
+                "name": "Auchan",
+                "type": "Hypermarket",
+                "priceLevel": "€€"
+              },
+              {
+                "name": "Monoprix",
+                "type": "Urban supermarket",
+                "priceLevel": "€€€",
+                "tips": ["Convenient city locations", "More expensive", "Good quality"]
+              },
+              {
+                "name": "Franprix",
+                "type": "Convenience",
+                "priceLevel": "€€€",
+                "tips": ["Expensive but late hours", "Good for emergencies"]
+              }
+            ],
+            "markets": {
+              "description": "Open-air markets (marchés) - fresh produce, often cheaper at end of day",
+              "tips": [
+                "Go 30 min before closing for best deals",
+                "Bring cash and reusable bags",
+                "Quality fruits/vegetables, meat, cheese",
+                "Search 'marché + [your city]' for schedules"
+              ]
+            },
+            "asianSupermarkets": {
+              "description": "Great for cheap rice, noodles, vegetables",
+              "examples": ["Paris Store", "Tang Frères", "K-Mart (Korean)"],
+              "tips": [
+                "Much cheaper for Asian ingredients",
+                "Often have cheap kitchenware too"
+              ]
+            }
+          },
+          "mealPlanningApps": [
+            {
+              "id": "meal-app-1",
+              "name": "Jow",
+              "description": "Meal planning app that creates shopping list and orders groceries",
+              "features": [
+                "Weekly meal suggestions",
+                "Automatic shopping list",
+                "Order from supermarkets",
+                "Budget-friendly recipes",
+                "Reduce food waste"
+              ],
+              "cost": "Free (delivery fees apply)",
+              "url": "https://jow.fr/",
+              "platforms": ["iOS", "Android", "Web"],
+              "tips": [
+                "Set budget per meal",
+                "Great for learning French cooking",
+                "Connect to Carrefour, Auchan, etc."
+              ]
+            },
+            {
+              "id": "meal-app-2",
+              "name": "Marmiton",
+              "description": "France's biggest recipe site",
+              "features": ["Thousands of recipes", "User ratings", "Shopping lists"],
+              "cost": "Free",
+              "url": "https://www.marmiton.org/",
+              "tips": [
+                "Filter by 'pas cher' (cheap) and 'rapide' (quick)",
+                "Good for learning French cuisine"
+              ]
+            }
+          ]
+        },
+        "transport": {
+          "publicTransport": [
+            {
+              "id": "transport-1",
+              "name": "Navigo Imagine R (Île-de-France)",
+              "description": "Annual student transport pass for Paris region",
+              "price": "350€/year (~29€/month)",
+              "coverage": "All zones, all transport (metro, bus, RER, tram)",
+              "eligibility": "Students under 26 in Île-de-France schools",
+              "howToApply": [
+                "Apply online at imagine-r.com",
+                "Need student certificate and photo",
+                "Card delivered in 3-4 weeks"
+              ],
+              "url": "https://www.imagine-r.com/",
+              "tips": [
+                "50% refunded by employer if working part-time",
+                "Can pay in 9 monthly installments",
+                "Use Navigo Easy while waiting for card"
+              ]
+            },
+            {
+              "id": "transport-2",
+              "name": "City-specific student passes",
+              "description": "Most French cities offer reduced student transport",
+              "examples": [
+                {"city": "Lyon", "pass": "Técély Campus", "discount": "~50%"},
+                {"city": "Marseille", "pass": "RTM étudiant", "discount": "~50%"},
+                {"city": "Bordeaux", "pass": "TBM étudiant", "discount": "~50%"},
+                {"city": "Toulouse", "pass": "Tisséo étudiant", "discount": "~50%"}
+              ],
+              "tips": [
+                "Check local transport authority website",
+                "Usually need student card + photo"
+              ]
+            }
+          ],
+          "trains": [
+            {
+              "id": "train-1",
+              "name": "Carte Avantage Jeune SNCF",
+              "description": "30% off all TGV and Intercités for under 27",
+              "price": "49€/year",
+              "savings": "30% guaranteed on all trains",
+              "eligibility": "12-27 years old",
+              "url": "https://www.sncf-connect.com/",
+              "tips": [
+                "Pays for itself in 2-3 trips",
+                "Book on SNCF Connect app",
+                "Look for 'Ouigo' for cheapest options"
+              ]
+            },
+            {
+              "id": "train-2",
+              "name": "Ouigo",
+              "description": "SNCF's low-cost TGV service",
+              "price": "From 10€",
+              "tips": [
+                "Book early for best prices",
+                "Stations sometimes outside city center",
+                "Luggage limits - check before booking"
+              ],
+              "url": "https://www.ouigo.com/"
+            },
+            {
+              "id": "train-3",
+              "name": "Trainline",
+              "description": "App comparing train prices across Europe",
+              "url": "https://www.trainline.fr/",
+              "tips": [
+                "Good for comparing prices",
+                "Sometimes finds deals SNCF doesn't show"
+              ]
+            }
+          ],
+          "ridesharing": [
+            {
+              "id": "rideshare-1",
+              "name": "BlaBlaCar",
+              "description": "Long-distance carpooling - share rides with drivers",
+              "savings": "Often 50% cheaper than train",
+              "url": "https://www.blablacar.fr/",
+              "tips": [
+                "Check driver ratings",
+                "Book in advance for popular routes",
+                "Message driver to confirm",
+                "Great for weekend trips"
+              ]
+            }
+          ],
+          "cycling": [
+            {
+              "id": "bike-1",
+              "name": "City bike-sharing schemes",
+              "examples": [
+                {"city": "Paris", "name": "Vélib'", "url": "https://www.velib-metropole.fr/"},
+                {"city": "Lyon", "name": "Vélo'v", "url": "https://www.velov.grandlyon.com/"},
+                {"city": "Bordeaux", "name": "VCub", "url": "https://www.vcub.fr/"}
+              ],
+              "studentDiscount": "Most offer student/youth rates",
+              "tips": [
+                "Annual subscription often cheapest",
+                "Check e-bike availability",
+                "First 30 min often free"
+              ]
+            },
+            {
+              "id": "bike-2",
+              "name": "Buy a used bike",
+              "where": ["Leboncoin", "Facebook Marketplace", "Troc Vélo", "University groups"],
+              "budget": "50-150€ for decent used bike",
+              "tips": [
+                "Check brakes and tires",
+                "Get good lock (budget €30+)",
+                "Register with Bicycode against theft"
+              ]
+            }
+          ]
+        },
+        "communication": {
+          "mobilePlans": [
+            {
+              "id": "mobile-1",
+              "name": "Free Mobile",
+              "plans": [
+                {"name": "Forfait Free", "price": "19.99€/month", "data": "300GB 5G", "calls": "Unlimited"},
+                {"name": "Forfait 2€", "price": "2€/month", "data": "50MB", "calls": "2h"}
+              ],
+              "pros": ["Cheapest unlimited plan", "No commitment", "EU roaming included"],
+              "cons": ["Network coverage not best everywhere", "Customer service basic"],
+              "url": "https://mobile.free.fr/",
+              "tips": [
+                "€19.99 plan is best value in France",
+                "Pick up SIM at Free kiosks (bornes)",
+                "€2 plan good if mainly using WiFi"
+              ]
+            },
+            {
+              "id": "mobile-2",
+              "name": "RED by SFR",
+              "plans": [
+                {"name": "RED 130Go", "price": "9.99€/month", "data": "130GB 5G", "calls": "Unlimited"}
+              ],
+              "pros": ["Good balance price/data", "SFR network (good coverage)", "No commitment"],
+              "url": "https://www.red-by-sfr.fr/",
+              "tips": [
+                "Watch for promotional offers",
+                "Often has special deals for first year"
+              ]
+            },
+            {
+              "id": "mobile-3",
+              "name": "B&You (Bouygues)",
+              "plans": [
+                {"name": "B&You 130Go", "price": "9.99€/month", "data": "130GB 5G", "calls": "Unlimited"}
+              ],
+              "pros": ["Good network coverage", "No commitment"],
+              "url": "https://www.bouyguestelecom.fr/forfaits-mobiles/b-and-you",
+              "tips": [
+                "Similar to RED, compare current offers"
+              ]
+            },
+            {
+              "id": "mobile-4",
+              "name": "Sosh (Orange)",
+              "plans": [
+                {"name": "Forfait 140Go", "price": "14.99€/month", "data": "140GB 5G", "calls": "Unlimited"}
+              ],
+              "pros": ["Orange network (best coverage)", "Premium quality"],
+              "cons": ["Slightly more expensive"],
+              "url": "https://www.sosh.fr/",
+              "tips": [
+                "Worth it if you travel to rural areas often",
+                "Best network coverage in France"
+              ]
+            }
+          ],
+          "internet": {
+            "description": "Home internet typically included in student housing",
+            "ifNeeded": [
+              {"provider": "Free (Freebox)", "price": "From 29.99€/month", "url": "https://www.free.fr/freebox/"},
+              {"provider": "RED Box", "price": "From 23.99€/month", "url": "https://www.red-by-sfr.fr/box-internet/"},
+              {"provider": "Sosh Box", "price": "From 25.99€/month", "url": "https://www.sosh.fr/"}
+            ],
+            "tips": [
+              "Check if included in rent",
+              "No-commitment offers best for students",
+              "Fiber (fibre) much faster than ADSL"
+            ]
+          }
+        }
+      },
+      "discountsAndApps": {
+        "studentDiscountPlatforms": [
+          {
+            "id": "discount-1",
+            "name": "UNiDAYS",
+            "description": "Free student discount platform with major brands",
+            "discounts": "10-25% at most stores",
+            "howToJoin": [
+              "Sign up with university email (.edu or .fr)",
+              "Verify student status",
+              "Browse deals on app/website"
+            ],
+            "popularBrands": [
+              {"brand": "Apple", "discount": "10% on Mac, iPad"},
+              {"brand": "Samsung", "discount": "10-20%"},
+              {"brand": "ASOS", "discount": "10%"},
+              {"brand": "Nike", "discount": "10%"},
+              {"brand": "Adidas", "discount": "15%"},
+              {"brand": "Spotify", "discount": "50% (Premium Student)"},
+              {"brand": "Microsoft", "discount": "10%"},
+              {"brand": "HP", "discount": "Up to 30%"}
+            ],
+            "cost": "Free",
+            "url": "https://www.myunidays.com/",
+            "platforms": ["iOS", "Android", "Web"],
+            "tips": [
+              "Always check before buying electronics",
+              "Stack with sales for maximum savings",
+              "Some deals are in-store too"
+            ]
+          },
+          {
+            "id": "discount-2",
+            "name": "Student Beans",
+            "description": "Student discount platform with different brands than UNiDAYS",
+            "discounts": "10-50% depending on brand",
+            "howToJoin": [
+              "Sign up with email",
+              "Verify with student ID or university email",
+              "Access exclusive codes"
+            ],
+            "popularBrands": [
+              {"brand": "Deliveroo", "discount": "Free delivery codes"},
+              {"brand": "Uber Eats", "discount": "Various offers"},
+              {"brand": "Foot Locker", "discount": "10%"},
+              {"brand": "Boohoo", "discount": "20%"},
+              {"brand": "Pretty Little Thing", "discount": "20%"},
+              {"brand": "The North Face", "discount": "10%"}
+            ],
+            "cost": "Free",
+            "url": "https://www.studentbeans.com/",
+            "platforms": ["iOS", "Android", "Web"],
+            "tips": [
+              "Different brands than UNiDAYS - use both",
+              "Good for food delivery discounts"
+            ]
+          },
+          {
+            "id": "discount-3",
+            "name": "ISIC Card (International Student Identity Card)",
+            "description": "Internationally recognized student ID card",
+            "discounts": "150,000+ discounts worldwide",
+            "validity": "16 months",
+            "cost": "15€",
+            "howToGet": [
+              "Apply online at isic.fr",
+              "Upload student certificate and photo",
+              "Receive physical card or digital version"
+            ],
+            "benefits": [
+              "Recognized in 130+ countries",
+              "Museums and attractions discounts",
+              "Transport discounts",
+              "Official student proof"
+            ],
+            "url": "https://www.isic.fr/",
+            "tips": [
+              "Useful for travel outside France",
+              "Some places don't accept French student card"
+            ]
+          },
+          {
+            "id": "discount-4",
+            "name": "ESN Card (Erasmus Student Network)",
+            "description": "Card for exchange students with local discounts",
+            "cost": "10€ (one-time)",
+            "validity": "Duration of exchange",
+            "benefits": [
+              "Local restaurant/bar discounts",
+              "ESN event discounts",
+              "Partner discounts (Flixbus, Ryanair, etc.)",
+              "ESN trips discounts"
+            ],
+            "howToGet": "Join local ESN section at university",
+            "url": "https://esnfrance.org/",
+            "tips": [
+              "Essential for Erasmus students",
+              "Get it during orientation week",
+              "Flixbus discount alone worth it"
+            ]
+          }
+        ],
+        "entertainmentSubscriptions": [
+          {
+            "id": "sub-1",
+            "name": "Spotify Premium Student",
+            "price": "5.99€/month (vs 10.99€ normal)",
+            "includes": ["Spotify Premium", "Hulu (US only)", "Showtime (US only)"],
+            "verification": "SheerID student verification",
+            "url": "https://www.spotify.com/fr/student/",
+            "tips": [
+              "Need to reverify every 12 months",
+              "Can verify with French student card"
+            ]
+          },
+          {
+            "id": "sub-2",
+            "name": "Apple Music Student",
+            "price": "5.99€/month (vs 10.99€)",
+            "includes": ["Apple Music", "Apple TV+ free"],
+            "verification": "UNiDAYS verification",
+            "url": "https://www.apple.com/fr/shop/browse/campaigns/education_pricing",
+            "tips": [
+              "Includes Apple TV+ for free",
+              "48 months maximum at student price"
+            ]
+          },
+          {
+            "id": "sub-3",
+            "name": "Amazon Prime Student",
+            "price": "2.99€/month (vs 6.99€)",
+            "benefits": [
+              "Free delivery",
+              "Prime Video",
+              "Prime Music",
+              "Prime Reading"
+            ],
+            "trial": "6 months free trial",
+            "url": "https://www.amazon.fr/prime-student",
+            "tips": [
+              "6-month free trial - sign up immediately",
+              "Use .edu or student certificate to verify"
+            ]
+          },
+          {
+            "id": "sub-4",
+            "name": "YouTube Premium Student",
+            "price": "6.99€/month (vs 12.99€)",
+            "benefits": ["No ads", "Background play", "YouTube Music Premium", "Downloads"],
+            "verification": "SheerID",
+            "url": "https://www.youtube.com/premium/student",
+            "tips": [
+              "Includes YouTube Music",
+              "Great for studying without ads"
+            ]
+          },
+          {
+            "id": "sub-5",
+            "name": "Canal+ Student",
+            "price": "From 15€/month (vs 25€+)",
+            "includes": ["Canal+ channels", "Series", "Sports option available"],
+            "url": "https://www.canalplus.com/",
+            "tips": [
+              "Good for French content and sports",
+              "Student offers change frequently"
+            ]
+          }
+        ],
+        "softwareAndTools": [
+          {
+            "id": "soft-1",
+            "name": "Microsoft Office 365 Education",
+            "price": "Free",
+            "includes": ["Word", "Excel", "PowerPoint", "Teams", "OneDrive 1TB"],
+            "howToGet": "Sign up with university email",
+            "url": "https://www.microsoft.com/fr-fr/education/products/office",
+            "tips": [
+              "Most French universities provide this",
+              "Check your university IT portal first"
+            ]
+          },
+          {
+            "id": "soft-2",
+            "name": "GitHub Student Developer Pack",
+            "price": "Free",
+            "includes": [
+              "GitHub Pro",
+              "Free domain names",
+              "Cloud credits (AWS, Azure, DigitalOcean)",
+              "JetBrains IDEs",
+              "Canva Pro",
+              "100+ tools"
+            ],
+            "howToGet": "Apply with student email or student ID",
+            "url": "https://education.github.com/pack",
+            "tips": [
+              "Incredible value for CS/tech students",
+              "Apply even if not in tech - Canva useful for all"
+            ]
+          },
+          {
+            "id": "soft-3",
+            "name": "JetBrains Student License",
+            "price": "Free",
+            "includes": ["IntelliJ IDEA", "PyCharm", "WebStorm", "All JetBrains IDEs"],
+            "howToGet": "Apply with university email",
+            "url": "https://www.jetbrains.com/student/",
+            "tips": [
+              "Renew every year while student",
+              "Professional tools for free"
+            ]
+          },
+          {
+            "id": "soft-4",
+            "name": "Notion Education",
+            "price": "Free (Plus plan)",
+            "includes": ["Unlimited blocks", "Unlimited file uploads", "30-day history"],
+            "howToGet": "Sign up with .edu email or apply",
+            "url": "https://www.notion.so/students",
+            "tips": [
+              "Great for notes and organization",
+              "Can use personal email if .edu doesn't work"
+            ]
+          },
+          {
+            "id": "soft-5",
+            "name": "Figma Education",
+            "price": "Free",
+            "includes": ["Figma Professional", "FigJam", "Unlimited projects"],
+            "howToGet": "Apply with student email",
+            "url": "https://www.figma.com/education/",
+            "tips": [
+              "Essential for design students",
+              "Useful for all students for presentations"
+            ]
+          },
+          {
+            "id": "soft-6",
+            "name": "Canva Pro Student",
+            "price": "Free (normally 12€/month)",
+            "includes": ["Premium templates", "Brand kit", "Background remover", "100GB storage"],
+            "howToGet": "Apply through GitHub Student Pack or Canva directly",
+            "url": "https://www.canva.com/education/",
+            "tips": [
+              "Easiest way: through GitHub Student Pack",
+              "Great for presentations and social media"
+            ]
+          },
+          {
+            "id": "soft-7",
+            "name": "Adobe Creative Cloud Student",
+            "price": "19.99€/month (vs 60€+)",
+            "includes": ["Photoshop", "Illustrator", "Premiere Pro", "All Adobe apps"],
+            "verification": "Student email or document",
+            "url": "https://www.adobe.com/fr/creativecloud/buy/students.html",
+            "tips": [
+              "First year usually has additional discount",
+              "Check if university has site license (may be free)"
+            ]
+          }
+        ],
+        "usefulApps": [
+          {
+            "id": "app-1",
+            "name": "Jow",
+            "category": "Meal planning",
+            "description": "Plan meals, create shopping list, order groceries",
+            "cost": "Free",
+            "url": "https://jow.fr/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Budget meals, reduce waste, learn cooking"
+          },
+          {
+            "id": "app-2",
+            "name": "Too Good To Go",
+            "category": "Food savings",
+            "description": "Rescue unsold food at 1/3 price",
+            "cost": "Free app, pay for bags",
+            "url": "https://www.toogoodtogo.com/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Save money on food, reduce waste"
+          },
+          {
+            "id": "app-3",
+            "name": "Doctolib",
+            "category": "Healthcare",
+            "description": "Book doctor appointments online",
+            "cost": "Free",
+            "url": "https://www.doctolib.fr/",
+            "platforms": ["iOS", "Android", "Web"],
+            "whyUseful": "Easy appointment booking, reminders, video consultations"
+          },
+          {
+            "id": "app-4",
+            "name": "Izly",
+            "category": "Student payment",
+            "description": "Payment app for CROUS restaurants and services",
+            "cost": "Free",
+            "url": "https://www.izly.fr/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Required for CROUS restaurant payments"
+          },
+          {
+            "id": "app-5",
+            "name": "Citymapper",
+            "category": "Transport",
+            "description": "Best public transport app for major cities",
+            "cost": "Free",
+            "url": "https://citymapper.com/",
+            "platforms": ["iOS", "Android"],
+            "cities": ["Paris", "Lyon", "Others"],
+            "whyUseful": "Real-time transport info, best routes"
+          },
+          {
+            "id": "app-6",
+            "name": "Île-de-France Mobilités / Local transport apps",
+            "category": "Transport",
+            "description": "Official transport apps for regions",
+            "examples": [
+              {"region": "Paris", "app": "Île-de-France Mobilités"},
+              {"region": "Lyon", "app": "TCL"},
+              {"region": "Marseille", "app": "RTM"}
+            ],
+            "cost": "Free",
+            "whyUseful": "Buy tickets, check schedules"
+          },
+          {
+            "id": "app-7",
+            "name": "Leboncoin",
+            "category": "Buy/Sell",
+            "description": "France's biggest classifieds - buy everything secondhand",
+            "cost": "Free",
+            "url": "https://www.leboncoin.fr/",
+            "platforms": ["iOS", "Android", "Web"],
+            "whyUseful": "Cheap furniture, electronics, bikes, everything"
+          },
+          {
+            "id": "app-8",
+            "name": "Vinted",
+            "category": "Fashion",
+            "description": "Buy/sell secondhand clothes",
+            "cost": "Free",
+            "url": "https://www.vinted.fr/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Cheap clothes, sustainable fashion"
+          },
+          {
+            "id": "app-9",
+            "name": "Geev",
+            "category": "Free stuff",
+            "description": "Give and receive free items from neighbors",
+            "cost": "Free",
+            "url": "https://www.geev.com/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Free furniture, objects, even food"
+          },
+          {
+            "id": "app-10",
+            "name": "Splitwise",
+            "category": "Finance",
+            "description": "Split expenses with roommates/friends",
+            "cost": "Free (Pro: 2.99€/month)",
+            "url": "https://www.splitwise.com/",
+            "platforms": ["iOS", "Android", "Web"],
+            "whyUseful": "Essential for shared housing and group trips"
+          },
+          {
+            "id": "app-11",
+            "name": "Tricount",
+            "category": "Finance",
+            "description": "European alternative to Splitwise",
+            "cost": "Free",
+            "url": "https://www.tricount.com/",
+            "platforms": ["iOS", "Android", "Web"],
+            "whyUseful": "Popular in France for splitting bills"
+          },
+          {
+            "id": "app-12",
+            "name": "Lydia",
+            "category": "Payment",
+            "description": "French Venmo - send money to friends instantly",
+            "cost": "Free",
+            "url": "https://www.lydia-app.com/",
+            "platforms": ["iOS", "Android"],
+            "whyUseful": "Everyone in France uses it to split bills"
+          }
+        ],
+        "shoppingTips": [
+          "Always check UNiDAYS + StudentBeans before online purchases",
+          "Use Honey browser extension to find coupon codes",
+          "Black Friday (late November) has real discounts in France",
+          "French Days (May & September) - French version of Prime Day",
+          "Soldes (sales) - January and June/July only, legally regulated",
+          "Vente-privee.com for flash sales on brands",
+          "Compare prices with Idealo or Google Shopping"
+        ]
+      },
+      "socialIntegration": {
+        "meetingApps": [
+          {
+            "id": "social-app-1",
+            "name": "Meetup",
+            "description": "Find groups and events based on interests",
+            "eventTypes": [
+              "Language exchanges",
+              "Hiking groups",
+              "Tech meetups",
+              "Expat gatherings",
+              "Sports groups",
+              "Cultural events"
+            ],
+            "cost": "Free to join groups, some events have fees",
+            "url": "https://www.meetup.com/",
+            "platforms": ["iOS", "Android", "Web"],
+            "tips": [
+              "Search for 'English speaking' or 'internationals' groups",
+              "Language exchange meetups great for making friends",
+              "RSVPs often required - sign up early"
+            ]
+          },
+          {
+            "id": "social-app-2",
+            "name": "Bumble BFF",
+            "description": "Friend-matching app (separate from dating)",
+            "howItWorks": "Swipe to match with potential friends, then chat",
+            "cost": "Free",
+            "url": "https://bumble.com/bff",
+            "platforms": ["iOS", "Android"],
+            "tips": [
+              "Switch to BFF mode in Bumble app",
+              "Popular among international students",
+              "Can filter by interests"
+            ]
+          },
+          {
+            "id": "social-app-3",
+            "name": "InterNations",
+            "description": "Global expat community with events",
+            "features": [
+              "Expat events and meetups",
+              "Forums for advice",
+              "City guides"
+            ],
+            "cost": "Free (basic) / Premium subscription for full access",
+            "url": "https://www.internations.org/",
+            "tips": [
+              "Good for meeting other internationals",
+              "Events in major French cities",
+              "Slightly older/professional crowd"
+            ]
+          },
+          {
+            "id": "social-app-4",
+            "name": "Couchsurfing Hangouts",
+            "description": "Meet travelers and locals for activities",
+            "features": ["Hangout requests", "Events", "Host meetups"],
+            "cost": "Verification fee (~15€) or free trial",
+            "url": "https://www.couchsurfing.com/",
+            "tips": [
+              "Not just for accommodation",
+              "Hangouts feature for meeting people",
+              "Very international community"
+            ]
+          },
+          {
+            "id": "social-app-5",
+            "name": "Facebook Groups",
+            "description": "City-specific international student groups",
+            "exampleGroups": [
+              "Expats in Paris",
+              "International Students in Lyon",
+              "Erasmus [City] [Year]",
+              "[University name] International Students"
+            ],
+            "cost": "Free",
+            "tips": [
+              "Search '[your city] international students'",
+              "Active for events, selling items, advice",
+              "Erasmus groups especially active"
+            ]
+          }
+        ],
+        "languageExchange": [
+          {
+            "id": "lang-1",
+            "name": "Tandem",
+            "description": "Language exchange app - chat and video with native speakers",
+            "howItWorks": "Match with French speakers wanting to learn your language",
+            "cost": "Free (Pro: 6.99€/month)",
+            "url": "https://www.tandem.net/",
+            "platforms": ["iOS", "Android"],
+            "tips": [
+              "Set clear goals with partners",
+              "Split time 50/50 between languages",
+              "Video calls more effective than text"
+            ]
+          },
+          {
+            "id": "lang-2",
+            "name": "HelloTalk",
+            "description": "Language learning social network",
+            "features": ["Chat", "Voice messages", "Translation", "Corrections"],
+            "cost": "Free (VIP: 5.99€/month)",
+            "url": "https://www.hellotalk.com/",
+            "platforms": ["iOS", "Android"],
+            "tips": [
+              "Correction feature helps learning",
+              "Moments feed like Instagram for practice"
+            ]
+          },
+          {
+            "id": "lang-3",
+            "name": "Conversation Exchange",
+            "description": "Website to find language partners for in-person meetings",
+            "howItWorks": "Search for partners in your city, arrange to meet",
+            "cost": "Free",
+            "url": "https://www.conversationexchange.com/",
+            "tips": [
+              "Meet in public places",
+              "Many French people want to practice English",
+              "Cafés popular for exchanges"
+            ]
+          },
+          {
+            "id": "lang-4",
+            "name": "Franglish Events",
+            "description": "Organized language exchange events in bars",
+            "howItWorks": "Speed-dating style language exchange, 7 min French/7 min English",
+            "cost": "~10€ entry (includes drink)",
+            "cities": ["Paris", "Lyon", "Bordeaux", "Marseille", "Others"],
+            "url": "https://franglish.eu/",
+            "tips": [
+              "Fun social atmosphere",
+              "Great for meeting French people",
+              "Book in advance - sells out"
+            ]
+          }
+        ],
+        "studentAssociations": [
+          {
+            "id": "assoc-1",
+            "name": "ESN (Erasmus Student Network)",
+            "description": "Europe's biggest student organization for exchanges",
+            "services": [
+              "Welcome events",
+              "Trips and excursions",
+              "Parties",
+              "Buddy programs",
+              "Help with administrative issues"
+            ],
+            "howToJoin": "Sign up at welcome fair or local ESN office",
+            "cost": "ESN card: ~10€",
+            "url": "https://esnfrance.org/",
+            "tips": [
+              "Must-join for Erasmus students",
+              "Events every week",
+              "Best way to meet other internationals"
+            ]
+          },
+          {
+            "id": "assoc-2",
+            "name": "BDE/BDS (Bureau des Étudiants/Sports)",
+            "description": "Your university's student union",
+            "services": [
+              "Integration week",
+              "Parties and galas",
+              "Sports events",
+              "Discounts at partners"
+            ],
+            "howToJoin": "Usually automatic with enrollment, or sign up",
+            "tips": [
+              "Good for meeting French students",
+              "Weekend integration (WEI) in September",
+              "Each faculty usually has its own BDE"
+            ]
+          },
+          {
+            "id": "assoc-3",
+            "name": "AEGEE (European Students' Forum)",
+            "description": "Pan-European student organization",
+            "activities": ["European events", "Summer universities", "Cultural exchanges"],
+            "url": "https://www.aegee.org/",
+            "tips": [
+              "Good for European networking",
+              "Summer universities are popular"
+            ]
+          },
+          {
+            "id": "assoc-4",
+            "name": "Cultural Associations",
+            "description": "Country-specific student groups at universities",
+            "examples": [
+              "Chinese Students Association",
+              "Latin American Students",
+              "African Students Union",
+              "German-French Society"
+            ],
+            "tips": [
+              "Find through university list of associations",
+              "Great for cultural events and food!",
+              "Facebook groups often most active"
+            ]
+          }
+        ],
+        "sportsAndActivities": [
+          {
+            "id": "sport-1",
+            "name": "SUAPS/SIUAPS (University Sports Service)",
+            "description": "Cheap sports activities for students",
+            "activities": [
+              "Gym access",
+              "Team sports",
+              "Swimming",
+              "Climbing",
+              "Dance",
+              "Martial arts"
+            ],
+            "cost": "10-50€/year",
+            "howToJoin": "Register at beginning of semester at SUAPS office",
+            "tips": [
+              "Incredibly cheap compared to private gyms",
+              "Activities fill up fast - register early",
+              "Great way to meet French students"
+            ]
+          },
+          {
+            "id": "sport-2",
+            "name": "Basic-Fit",
+            "description": "Budget gym chain",
+            "cost": "From 19.99€/month",
+            "url": "https://www.basic-fit.com/",
+            "tips": [
+              "24/7 access",
+              "Many locations",
+              "No student discount but already cheap"
+            ]
+          },
+          {
+            "id": "sport-3",
+            "name": "Decathlon Activities",
+            "description": "Sports events organized by Decathlon stores",
+            "cost": "Usually free or low cost",
+            "url": "https://activites.decathlon.fr/",
+            "tips": [
+              "Free try-out sessions",
+              "Running clubs, yoga, etc.",
+              "Download Decathlon app"
+            ]
+          }
+        ],
+        "culturalIntegration": [
+          {
+            "id": "culture-1",
+            "name": "Free Museum Days",
+            "description": "Many museums free for under-26 EU residents or first Sunday of month",
+            "examples": [
+              {"name": "Louvre", "free": "First Saturday evening 6-9PM free for all, free for under-26 EU residents always"},
+              {"name": "Musée d'Orsay", "free": "Free for under-26 EU residents"},
+              {"name": "Centre Pompidou", "free": "Free for under-26 EU residents"},
+              {"name": "Most national museums", "free": "First Sunday of month"}
+            ],
+            "tips": [
+              "Bring student card + ID always",
+              "EU under-26 = free at most national museums",
+              "Some museums free for all students regardless of nationality"
+            ]
+          },
+          {
+            "id": "culture-2",
+            "name": "UGC/Gaumont Student Cards",
+            "description": "Cinema subscription for students",
+            "options": [
+              {"name": "UGC Illimité Jeune", "price": "17.90€/month", "benefit": "Unlimited movies"},
+              {"name": "Gaumont Pathé Le Pass", "price": "17.90€/month", "benefit": "Unlimited movies"}
+            ],
+            "tips": [
+              "Worth it if you go 2+ times per month",
+              "Includes blockbusters and art films",
+              "Some independent cinemas have student prices (~5-6€)"
+            ]
+          },
+          {
+            "id": "culture-3",
+            "name": "Pass Culture",
+            "description": "Government culture credit for 15-20 year olds",
+            "amount": "300€ credit at 18, decreasing amounts 15-17 and 19-20",
+            "usableFor": ["Books", "Cinema", "Concerts", "Museums", "Music lessons", "Instruments"],
+            "url": "https://pass.culture.fr/",
+            "eligibility": "Residents of France aged 15-20",
+            "tips": [
+              "If you're 18-20, check if you qualify",
+              "Valid for residents (not just citizens)"
+            ]
+          }
+        ],
+        "tips": [
+          "Say yes to everything in the first month - easier to make friends early",
+          "Join your university's international students WhatsApp/Telegram group",
+          "Attend orientation week events even if you're shy",
+          "Join a sports team - shared activities build friendships faster",
+          "Learn basic French phrases - locals appreciate the effort",
+          "Host dinners with food from your country - everyone loves free food",
+          "Follow local Instagram accounts for events: @_sortir, city-specific pages"
+        ]
+      }
+    },
+    "eu": {
+      "id": "eu-student",
+      "name": "EU/EEA Student (Full Degree)",
+      "description": "European Union or EEA citizens pursuing a full degree in France (not exchange)",
+      "note": "Many sections reference Erasmus profile - EU students have same access to banking, daily life, apps, and social resources",
+      "preArrival": {
+        "overview": {
+          "description": "EU citizens have freedom of movement - no visa required, simplified procedures",
+          "keyAdvantage": "Same rights as French students for enrollment, healthcare, and employment",
+          "countries": [
+            "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark",
+            "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy",
+            "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal",
+            "Romania", "Slovakia", "Slovenia", "Spain", "Sweden",
+            "EEA: Iceland, Liechtenstein, Norway",
+            "Special status: Switzerland"
+          ]
+        },
+        "documents": [
+          {
+            "id": "eu-doc-1",
+            "name": "Valid Passport or National ID Card",
+            "description": "EU citizens can enter and stay in France with just national ID card",
+            "required": true,
+            "validity": "Must be valid for duration of stay",
+            "tips": [
+              "National ID card sufficient - no passport needed",
+              "Make copies and store separately",
+              "Some countries' ID cards not accepted everywhere - bring passport if possible"
+            ]
+          },
+          {
+            "id": "eu-doc-2",
+            "name": "European Health Insurance Card (EHIC)",
+            "description": "Covers healthcare during studies, transition to French system",
+            "required": true,
+            "howToObtain": "Request from national health insurance in home country",
+            "validity": "Varies by country",
+            "cost": "Free",
+            "url": "https://ec.europa.eu/social/main.jsp?catId=559",
+            "tips": [
+              "Covers emergency and necessary care",
+              "Will transition to French Sécurité Sociale once enrolled",
+              "Keep EHIC as backup even after getting Carte Vitale"
+            ]
+          },
+          {
+            "id": "eu-doc-3",
+            "name": "High School Diploma / Baccalaureate",
+            "description": "Secondary education certificate for university admission",
+            "required": true,
+            "recognition": "EU diplomas generally recognized, may need official translation",
+            "translation": "Sworn translation (traduction assermentée) if not in French",
+            "tips": [
+              "Check specific university requirements",
+              "ENIC-NARIC can provide equivalency attestation if needed",
+              "Keep original and certified copies"
+            ],
+            "url": "https://www.france-education-international.fr/enic-naric"
+          },
+          {
+            "id": "eu-doc-4",
+            "name": "Previous University Transcripts (if applicable)",
+            "description": "For Master's or transfer students",
+            "required": "If applying for Master's or transferring",
+            "format": "Official transcripts with ECTS credits if possible",
+            "tips": [
+              "Get multiple official copies before leaving",
+              "Sworn translation may be required"
+            ]
+          },
+          {
+            "id": "eu-doc-5",
+            "name": "Proof of Financial Resources",
+            "description": "Evidence you can support yourself during studies",
+            "required": "Often required for housing applications",
+            "amount": "~615€/month minimum recommended",
+            "acceptedDocuments": [
+              "Bank statements",
+              "Scholarship letter",
+              "Parent guarantee letter with their bank statements",
+              "Student loan confirmation"
+            ],
+            "tips": [
+              "Not legally required for EU citizens to enter",
+              "But needed for housing guarantees and some universities"
+            ]
+          },
+          {
+            "id": "eu-doc-6",
+            "name": "Birth Certificate",
+            "description": "May be required for various administrative procedures",
+            "required": "Often required",
+            "format": "Recent extract (less than 3-6 months for some procedures)",
+            "apostille": "EU countries: usually not needed due to EU regulation 2016/1191",
+            "tips": [
+              "Request several recent copies before departure",
+              "Multilingual EU form may be available from your country"
+            ]
+          },
+          {
+            "id": "eu-doc-7",
+            "name": "Language Certificates",
+            "description": "Proof of French or English proficiency",
+            "required": "Depends on program",
+            "frenchPrograms": [
+              {"test": "TCF", "level": "B2-C1 typically", "url": "https://www.france-education-international.fr/tcf"},
+              {"test": "DELF/DALF", "level": "B2 for Bachelor's, C1 for Master's", "url": "https://www.france-education-international.fr/delf-dalf"},
+              {"test": "TEF", "level": "Varies", "url": "https://www.lefrancaisdesaffaires.fr/tests-diplomes/tef/"}
+            ],
+            "englishPrograms": [
+              {"test": "IELTS", "level": "6.0-7.0 typically"},
+              {"test": "TOEFL", "level": "80-100 typically"},
+              {"test": "Cambridge", "level": "B2-C1"}
+            ],
+            "tips": [
+              "Some universities accept high school English/French grades",
+              "Check specific program requirements"
+            ]
+          }
+        ],
+        "applicationProcess": [
+          {
+            "id": "eu-apply-1",
+            "name": "Parcoursup (First Year Bachelor's)",
+            "description": "National platform for first-year university applications",
+            "who": "EU students applying for L1 (first year of Bachelor's)",
+            "timeline": {
+              "january": "Platform opens, create account",
+              "march": "Deadline for wishes (vœux)",
+              "april-may": "Complete and confirm applications",
+              "june-july": "Receive responses, accept offer",
+              "september": "Start classes"
+            },
+            "url": "https://www.parcoursup.fr/",
+            "tips": [
+              "Can add up to 10 wishes",
+              "Motivation letter (projet de formation motivé) required for each",
+              "EU students use Parcoursup like French students"
+            ]
+          },
+          {
+            "id": "eu-apply-2",
+            "name": "Mon Master (Master's Applications)",
+            "description": "National platform for Master's program applications",
+            "who": "Students applying for Master 1 programs",
+            "timeline": {
+              "february-march": "Platform opens",
+              "march-april": "Submit applications",
+              "june": "Receive responses"
+            },
+            "url": "https://www.monmaster.gouv.fr/",
+            "tips": [
+              "Newer platform, replaced individual university applications",
+              "Some programs still accept direct applications"
+            ]
+          },
+          {
+            "id": "eu-apply-3",
+            "name": "Direct University Applications",
+            "description": "Some programs accept direct applications",
+            "applies": [
+              "Some Master's programs",
+              "Private schools (Grandes Écoles)",
+              "Specialized programs",
+              "Doctoral studies"
+            ],
+            "tips": [
+              "Check university website for specific procedures",
+              "Deadlines vary widely",
+              "Contact international office for guidance"
+            ]
+          },
+          {
+            "id": "eu-apply-4",
+            "name": "Grandes Écoles Applications",
+            "description": "Elite schools with separate admission processes",
+            "types": [
+              {
+                "type": "Business Schools (HEC, ESSEC, ESCP...)",
+                "admission": "Competitive exams or direct admission",
+                "url": "https://www.concours-bce.com/"
+              },
+              {
+                "type": "Engineering Schools",
+                "admission": "Classes préparatoires + concours or direct admission",
+                "url": "https://www.scei-concours.fr/"
+              },
+              {
+                "type": "Sciences Po",
+                "admission": "Specific application process",
+                "url": "https://www.sciencespo.fr/"
+              }
+            ],
+            "tips": [
+              "Very competitive",
+              "Many offer international tracks in English",
+              "Higher tuition but better job prospects"
+            ]
+          }
+        ],
+        "preparation": [
+          {
+            "id": "eu-prep-1",
+            "name": "Apply for CROUS Housing Early",
+            "description": "Dossier Social Étudiant (DSE) for housing and scholarships",
+            "deadline": "January-May for September entry",
+            "howTo": [
+              "Create account on messervices.etudiant.gouv.fr",
+              "Submit DSE application",
+              "Apply for housing via trouverunlogement.lescrous.fr"
+            ],
+            "url": "https://www.messervices.etudiant.gouv.fr/",
+            "tips": [
+              "EU students can apply for CROUS housing",
+              "Scholarship eligibility limited for non-residents",
+              "Apply even if unsure - can decline later"
+            ]
+          },
+          {
+            "id": "eu-prep-2",
+            "name": "Check Scholarship Eligibility",
+            "description": "Various scholarships available for EU students",
+            "options": [
+              {
+                "name": "Bourse sur critères sociaux",
+                "eligibility": "EU students whose family has resided in France 2+ years AND parent works in France",
+                "url": "https://www.etudiant.gouv.fr/"
+              },
+              {
+                "name": "Home country scholarships",
+                "description": "Many EU countries offer grants for studying abroad"
+              },
+              {
+                "name": "University merit scholarships",
+                "description": "Check with specific institutions"
+              },
+              {
+                "name": "Eiffel Excellence Scholarship",
+                "eligibility": "Non-French students, Master's and PhD",
+                "url": "https://www.campusfrance.org/fr/eiffel"
+              }
+            ],
+            "tips": [
+              "Research home country options before departure",
+              "Some regional councils offer scholarships"
+            ]
+          },
+          {
+            "id": "eu-prep-3",
+            "name": "Arrange Temporary Accommodation",
+            "description": "Have housing for first weeks while searching",
+            "options": [
+              {"type": "Youth Hostels", "duration": "Few days", "cost": "25-50€/night"},
+              {"type": "Airbnb", "duration": "1-4 weeks", "cost": "Varies"},
+              {"type": "University temporary housing", "duration": "Check availability"}
+            ],
+            "tips": [
+              "Don't sign long-term lease from abroad without seeing the place",
+              "Budget for 2-4 weeks temporary accommodation",
+              "Easier to find housing once in France"
+            ]
+          }
+        ]
+      },
+      "arrival": {
+        "administrative": [
+          {
+            "id": "eu-admin-1",
+            "name": "University Enrollment (Inscription Administrative)",
+            "description": "Complete enrollment at your university",
+            "when": "Dates specified in acceptance letter (usually July-September)",
+            "where": "University Scolarité or online",
+            "requiredDocuments": [
+              "ID or passport",
+              "Admission letter/Parcoursup confirmation",
+              "High school diploma + translations",
+              "Previous transcripts if applicable",
+              "Passport photos",
+              "Proof of accommodation"
+            ],
+            "cost": {
+              "cvec": "103€ (Contribution Vie Étudiante et de Campus)",
+              "tuition": {
+                "public_licence": "170€/year",
+                "public_master": "243€/year",
+                "public_doctorate": "380€/year",
+                "private": "5,000-20,000€+/year"
+              }
+            },
+            "cvecUrl": "https://cvec.etudiant.gouv.fr/",
+            "tips": [
+              "Pay CVEC online BEFORE enrollment",
+              "EU students pay same tuition as French students at public universities",
+              "Keep all receipts and certificates"
+            ]
+          },
+          {
+            "id": "eu-admin-2",
+            "name": "Sécurité Sociale Registration",
+            "description": "Enroll in French health insurance system",
+            "when": "After university enrollment",
+            "where": "Online at etudiant-etranger.ameli.fr",
+            "requiredDocuments": [
+              "ID/Passport",
+              "Student certificate",
+              "Birth certificate",
+              "Proof of address",
+              "RIB (French bank account)"
+            ],
+            "cost": "Free",
+            "url": "https://etudiant-etranger.ameli.fr/",
+            "processingTime": "2-8 weeks for Carte Vitale",
+            "tips": [
+              "Use EHIC while waiting for Carte Vitale",
+              "Download Ameli app once registered",
+              "Attestation available online before physical card"
+            ]
+          },
+          {
+            "id": "eu-admin-3",
+            "name": "CAF Registration (Housing Aid)",
+            "description": "Apply for APL/ALS housing benefits",
+            "when": "After signing rental contract",
+            "where": "Online at caf.fr",
+            "requiredDocuments": [
+              "ID",
+              "Rental contract (bail)",
+              "Attestation de loyer (from landlord)",
+              "RIB",
+              "Student certificate"
+            ],
+            "amount": "50-300€/month depending on rent and location",
+            "processingTime": "1-2 months",
+            "url": "https://www.caf.fr/",
+            "tips": [
+              "Apply ASAP - not retroactive",
+              "Landlord must complete attestation de loyer",
+              "Even for CROUS or private residences"
+            ]
+          },
+          {
+            "id": "eu-admin-4",
+            "name": "Declaration of Residence (Optional)",
+            "description": "EU citizens staying over 3 months can register at mairie",
+            "required": false,
+            "when": "After 3 months in France",
+            "benefits": "Provides official proof of residence for some procedures",
+            "howTo": "Contact local mairie (town hall)",
+            "tips": [
+              "Not mandatory but can be helpful",
+              "Different from census (recensement)"
+            ]
+          }
+        ],
+        "housing": {
+          "description": "Same options as Erasmus students - see Erasmus section for detailed platforms",
+          "summary": [
+            "CROUS residences (150-500€/month)",
+            "Private student residences (400-900€/month)",
+            "Private rentals (Leboncoin, SeLoger, Studapart)",
+            "Colocation (La Carte des Colocs, Appartager)",
+            "Visale guarantee (free government guarantor)"
+          ],
+          "additionalTips": [
+            "As full degree student, easier to get 3-year lease",
+            "Build dossier: student proof, bank statements, Visale",
+            "Start searching 2-3 months before arrival",
+            "First semester housing most competitive"
+          ]
+        },
+        "health": {
+          "description": "Same as Erasmus - French Sécurité Sociale + optional mutuelle",
+          "keyPoints": [
+            "EHIC covers initial period",
+            "Register at etudiant-etranger.ameli.fr",
+            "Carte Vitale = 70% reimbursement",
+            "Mutuelle (optional) covers remaining 30%",
+            "University health service (SUMPPS) free"
+          ],
+          "mutuelles": [
+            {"name": "HEYME", "price": "From 9€/month", "url": "https://www.heyme.care/"},
+            {"name": "LMDE", "price": "From 9€/month", "url": "https://www.lmde.fr/"},
+            {"name": "SMERRA", "price": "From 10€/month", "url": "https://www.smerra.fr/"}
+          ]
+        }
+      },
+      "workRights": {
+        "description": "EU students have same work rights as French citizens",
+        "maxHours": "No limit (but studies come first)",
+        "authorization": "None needed - same rights as French",
+        "taxStatus": "Same as French workers",
+        "socialSecurity": "Contributions give access to French benefits",
+        "findingWork": [
+          {
+            "name": "Indeed France",
+            "url": "https://www.indeed.fr/",
+            "type": "General job board"
+          },
+          {
+            "name": "Jobteaser",
+            "url": "https://www.jobteaser.com/",
+            "type": "Student/graduate jobs"
+          },
+          {
+            "name": "Student Pop",
+            "url": "https://studentpop.fr/",
+            "type": "Student missions"
+          },
+          {
+            "name": "StaffMe",
+            "url": "https://www.staffme.fr/",
+            "type": "Flexible student jobs"
+          },
+          {
+            "name": "University job boards",
+            "type": "Check your university website"
+          }
+        ],
+        "tips": [
+          "No work permit needed - major EU advantage",
+          "Can work full-time during summer",
+          "Keep payslips for future apartment applications",
+          "Declare income to taxes (may be exempt under threshold)"
+        ]
+      },
+      "specificAdvantages": {
+        "description": "Key advantages EU students have over non-EU",
+        "list": [
+          "No visa required - arrive with ID card",
+          "Same tuition as French students (~170€/year Licence)",
+          "Unrestricted work rights",
+          "Easy travel home and within Schengen",
+          "EHIC healthcare coverage",
+          "Eligible for French Sécurité Sociale",
+          "Can stay indefinitely after graduation",
+          "Family can join easily"
+        ]
+      },
+      "referenceSections": {
+        "description": "The following sections are identical to Erasmus students - refer to erasmus profile:",
+        "sections": [
+          "banking (same options, same procedure)",
+          "dailyLife (food, transport, communication)",
+          "discountsAndApps (all platforms available)",
+          "socialIntegration (same resources)"
+        ]
+      }
+    },
+    "nonEu": {
+      "id": "non-eu-student",
+      "name": "Non-EU International Student",
+      "description": "Students from countries outside EU/EEA requiring visa to study in France",
+      "note": "Most complex procedure - requires visa, OFII validation, and regular renewals",
+      "preArrival": {
+        "overview": {
+          "description": "Non-EU students must obtain a student visa before arrival and follow specific procedures",
+          "keySteps": [
+            "1. Get accepted by French institution",
+            "2. Register on Campus France (CEF countries) or apply directly",
+            "3. Apply for VLS-TS student visa",
+            "4. Validate visa with OFII upon arrival",
+            "5. Renew residence permit annually"
+          ],
+          "processingTime": "3-6 months total, start early!"
+        },
+        "campusFrance": {
+          "id": "campus-france",
+          "name": "Campus France - Études en France",
+          "description": "Mandatory platform for students from CEF procedure countries",
+          "cefCountries": [
+            "Algeria", "Argentina", "Benin", "Brazil", "Burkina Faso", "Burundi",
+            "Cameroon", "Chile", "China", "Colombia", "Comoros", "Congo",
+            "Ivory Coast", "Djibouti", "Egypt", "Gabon", "Guinea", "Haiti",
+            "India", "Indonesia", "Iran", "Japan", "Kuwait", "Lebanon",
+            "Madagascar", "Mali", "Mauritania", "Mauritius", "Mexico", "Morocco",
+            "Niger", "Nigeria", "Peru", "DR Congo", "Russia", "Saudi Arabia",
+            "Senegal", "Singapore", "South Korea", "Taiwan", "Togo", "Tunisia",
+            "Turkey", "United States", "Vietnam"
+          ],
+          "procedure": [
+            "Create account on pastel.diplomatie.gouv.fr",
+            "Fill out application form",
+            "Upload required documents",
+            "Pay Campus France fees (varies by country)",
+            "Attend interview at Campus France office",
+            "Receive favorable opinion",
+            "Proceed to visa application"
+          ],
+          "fees": "50-200€ depending on country",
+          "url": "https://www.campusfrance.org/",
+          "pastelUrl": "https://pastel.diplomatie.gouv.fr/",
+          "tips": [
+            "Start 6+ months before intended start date",
+            "Prepare motivation letter carefully",
+            "Interview assesses French level and study project",
+            "Favorable Campus France opinion needed for visa"
+          ]
+        },
+        "nonCefProcedure": {
+          "description": "Students from non-CEF countries apply directly to universities",
+          "steps": [
+            "Apply directly to French universities or via Parcoursup (some countries)",
+            "Receive acceptance letter",
+            "Apply for visa at French consulate",
+            "No Campus France interview required"
+          ],
+          "tips": [
+            "Check if your country has specific agreements",
+            "Some universities have their own application platforms"
+          ]
+        },
+        "documents": [
+          {
+            "id": "non-eu-doc-1",
+            "name": "Valid Passport",
+            "description": "Must be valid for at least 3 months beyond intended stay",
+            "required": true,
+            "tips": [
+              "Renew passport if expiring within 18 months",
+              "Need blank pages for visa",
+              "Make copies of all pages"
+            ]
+          },
+          {
+            "id": "non-eu-doc-2",
+            "name": "Acceptance Letter from French Institution",
+            "description": "Official admission letter from university or school",
+            "required": true,
+            "format": "Must specify program, duration, and start date",
+            "tips": [
+              "Some consulates require original, not scan",
+              "Should be on official letterhead"
+            ]
+          },
+          {
+            "id": "non-eu-doc-3",
+            "name": "Proof of Financial Resources",
+            "description": "Evidence you can support yourself during studies",
+            "required": true,
+            "minimumAmount": "615€/month (approx. 7,380€/year)",
+            "acceptedDocuments": [
+              {
+                "type": "Bank statements",
+                "details": "3-6 months showing sufficient funds"
+              },
+              {
+                "type": "Scholarship letter",
+                "details": "Official letter stating amount and duration"
+              },
+              {
+                "type": "Sponsor/Guarantor attestation",
+                "details": "Attestation de prise en charge + sponsor's bank statements"
+              },
+              {
+                "type": "Government grant",
+                "details": "Official documentation"
+              },
+              {
+                "type": "Blocked bank account",
+                "details": "Some countries require this"
+              }
+            ],
+            "tips": [
+              "Amount required is minimum - more is better for visa",
+              "Sponsorship letter must be notarized in some countries",
+              "Keep documents recent (within 3 months)"
+            ]
+          },
+          {
+            "id": "non-eu-doc-4",
+            "name": "Proof of Accommodation",
+            "description": "Evidence of where you'll live in France",
+            "required": true,
+            "acceptedDocuments": [
+              "CROUS housing confirmation",
+              "Private rental contract",
+              "Attestation d'hébergement (host attestation) + host's ID + proof of address",
+              "Hotel reservation (for initial weeks)"
+            ],
+            "tips": [
+              "Attestation d'hébergement if staying with someone",
+              "Include host's proof of address and ID copy"
+            ]
+          },
+          {
+            "id": "non-eu-doc-5",
+            "name": "High School Diploma / Previous Degrees",
+            "description": "Educational certificates for admission",
+            "required": true,
+            "format": "Original + certified translation if not in French/English",
+            "apostille": "Required for Hague Convention countries",
+            "legalization": "Required for non-Hague countries via embassy chain",
+            "tips": [
+              "Get apostille/legalization BEFORE leaving home country",
+              "Certified translations by sworn translator (traducteur assermenté)"
+            ]
+          },
+          {
+            "id": "non-eu-doc-6",
+            "name": "Birth Certificate",
+            "description": "Often required for administrative procedures",
+            "required": true,
+            "format": "Recent (less than 3-6 months old)",
+            "apostille": "Required",
+            "tips": [
+              "Get multiple certified copies",
+              "Sworn translation required"
+            ]
+          },
+          {
+            "id": "non-eu-doc-7",
+            "name": "Language Proficiency Certificate",
+            "description": "Proof of French or English level depending on program",
+            "required": "Usually required",
+            "frenchPrograms": [
+              {
+                "test": "TCF (Test de Connaissance du Français)",
+                "level": "B2 for Bachelor's, C1 for Master's typically",
+                "validity": "2 years",
+                "url": "https://www.france-education-international.fr/tcf"
+              },
+              {
+                "test": "DELF/DALF",
+                "level": "DELF B2 or DALF C1",
+                "validity": "Lifetime",
+                "url": "https://www.france-education-international.fr/delf-dalf"
+              },
+              {
+                "test": "TEF",
+                "level": "Varies",
+                "url": "https://www.lefrancaisdesaffaires.fr/tests-diplomes/tef/"
+              }
+            ],
+            "englishPrograms": [
+              {"test": "IELTS", "level": "6.0-7.0 typically", "validity": "2 years"},
+              {"test": "TOEFL iBT", "level": "80-100 typically", "validity": "2 years"},
+              {"test": "Cambridge (FCE/CAE)", "level": "B2-C1", "validity": "Lifetime"},
+              {"test": "Duolingo English Test", "level": "Accepted by some institutions"}
+            ],
+            "tips": [
+              "Register months in advance - tests fill up",
+              "Some universities have their own tests",
+              "Check specific program requirements"
+            ]
+          },
+          {
+            "id": "non-eu-doc-8",
+            "name": "Passport Photos",
+            "description": "ICAO compliant photos for visa and documents",
+            "quantity": "4-6 photos recommended",
+            "specifications": "35x45mm, white background, recent (< 6 months)",
+            "tips": [
+              "Get photos taken at professional studio",
+              "Bring extras to France for other documents"
+            ]
+          },
+          {
+            "id": "non-eu-doc-9",
+            "name": "Travel Insurance",
+            "description": "Some consulates require insurance for visa application",
+            "coverage": "Minimum 30,000€ medical coverage including repatriation",
+            "tips": [
+              "Check specific consulate requirements",
+              "Can get French insurance after arrival"
+            ]
+          },
+          {
+            "id": "non-eu-doc-10",
+            "name": "Campus France Attestation",
+            "description": "For CEF countries - proof of favorable opinion",
+            "required": "Only for CEF procedure countries",
+            "howToObtain": "Issued after successful Campus France interview"
+          }
+        ],
+        "visaApplication": {
+          "id": "vls-ts",
+          "name": "VLS-TS (Visa Long Séjour valant Titre de Séjour)",
+          "description": "Long-stay visa that acts as residence permit for first year",
+          "validity": "4-12 months (aligned with academic year)",
+          "type": "Student visa (Étudiant)",
+          "where": "French consulate/embassy in home country",
+          "applicationSteps": [
+            "Complete online form on France-Visas",
+            "Book appointment at consulate/visa center",
+            "Gather all documents (originals + copies)",
+            "Attend appointment with biometrics",
+            "Pay visa fee",
+            "Wait for processing (typically 2-4 weeks)",
+            "Collect passport with visa"
+          ],
+          "cost": "99€ (student visa fee) + service fees if using visa center",
+          "processingTime": "2-4 weeks (can be longer in peak season)",
+          "url": "https://france-visas.gouv.fr/",
+          "requiredDocuments": [
+            "Completed visa application form",
+            "Valid passport",
+            "Passport photos (2-3)",
+            "Acceptance letter from institution",
+            "Proof of financial resources",
+            "Proof of accommodation",
+            "Educational certificates",
+            "Language test results",
+            "Travel insurance (if required)",
+            "Campus France attestation (if CEF country)"
+          ],
+          "tips": [
+            "Book visa appointment as soon as you have acceptance",
+            "June-August is peak season - apply early",
+            "Original documents often required, not just copies",
+            "Dress professionally for interview",
+            "Be prepared to explain study project in French/English"
+          ],
+          "importantNote": "VLS-TS must be validated online within 3 months of arrival!"
+        }
+      },
+      "arrival": {
+        "administrative": [
+          {
+            "id": "non-eu-admin-1",
+            "name": "VLS-TS Visa Validation (CRITICAL)",
+            "description": "Online validation of your visa - MANDATORY within 3 months of arrival",
+            "deadline": "Within 3 months of entering France",
+            "consequence": "Failure to validate = illegal stay, cannot renew, cannot travel",
+            "where": "Online at administration-etrangers-en-france.interieur.gouv.fr",
+            "steps": [
+              "Go to administration-etrangers-en-france.interieur.gouv.fr",
+              "Create account",
+              "Enter visa information",
+              "Enter arrival date in France",
+              "Enter French address",
+              "Pay fee online (225€)",
+              "Receive confirmation email"
+            ],
+            "cost": "225€ (timbre fiscal - tax stamp)",
+            "url": "https://administration-etrangers-en-france.interieur.gouv.fr/",
+            "paymentUrl": "https://timbres.impots.gouv.fr/",
+            "requiredInfo": [
+              "Visa number",
+              "Passport number",
+              "Date of entry to France",
+              "French address"
+            ],
+            "tips": [
+              "DO THIS IMMEDIATELY after arrival",
+              "Keep confirmation email - it's your proof of valid stay",
+              "225€ can be paid by credit card online",
+              "If website doesn't work, try different browser",
+              "Screenshot every step"
+            ]
+          },
+          {
+            "id": "non-eu-admin-2",
+            "name": "University Enrollment",
+            "description": "Complete inscription at your institution",
+            "when": "Dates specified in acceptance letter",
+            "requiredDocuments": [
+              "Passport with valid visa",
+              "Acceptance letter",
+              "Educational certificates + translations",
+              "Passport photos",
+              "CVEC payment proof"
+            ],
+            "cost": {
+              "cvec": "103€",
+              "tuition_public": {
+                "licence": "2,770€/year (non-EU rate)",
+                "master": "3,770€/year (non-EU rate)",
+                "doctorate": "380€/year (same as EU)"
+              },
+              "tuition_exemptions": [
+                "Some universities charge EU rates for all",
+                "Scholarships may cover differential",
+                "Check with your university"
+              ]
+            },
+            "cvecUrl": "https://cvec.etudiant.gouv.fr/",
+            "tips": [
+              "Non-EU tuition higher since 2019 at some universities",
+              "Many universities opted out - check with yours",
+              "Excellence scholarships available"
+            ]
+          },
+          {
+            "id": "non-eu-admin-3",
+            "name": "Sécurité Sociale Registration",
+            "description": "Enroll in French health insurance",
+            "when": "After university enrollment",
+            "where": "Online at etudiant-etranger.ameli.fr",
+            "requiredDocuments": [
+              "Passport",
+              "Visa (VLS-TS)",
+              "VLS-TS validation confirmation",
+              "Student certificate",
+              "Birth certificate + translation",
+              "Proof of address",
+              "RIB (French bank details)"
+            ],
+            "cost": "Free",
+            "url": "https://etudiant-etranger.ameli.fr/",
+            "processingTime": "2-8 weeks for Carte Vitale",
+            "tips": [
+              "Get private insurance while waiting",
+              "Attestation available online before physical card",
+              "Download Ameli app"
+            ]
+          },
+          {
+            "id": "non-eu-admin-4",
+            "name": "Open French Bank Account",
+            "description": "Essential for rent, CAF, and daily life",
+            "when": "First 1-2 weeks",
+            "recommendations": {
+              "easiestForNonEU": [
+                {
+                  "name": "Nickel",
+                  "why": "Open in 5 min at tabac with just passport",
+                  "french_iban": true
+                },
+                {
+                  "name": "BNP Paribas",
+                  "why": "Used to international students, English service",
+                  "french_iban": true
+                },
+                {
+                  "name": "Société Générale",
+                  "why": "Student-friendly branches near universities",
+                  "french_iban": true
+                }
+              ],
+              "avoid_initially": [
+                "Boursorama (needs French address proof)",
+                "N26/Revolut (foreign IBAN - CAF doesn't accept)"
+              ]
+            },
+            "requiredDocuments": [
+              "Passport with visa",
+              "Proof of address (even temporary attestation)",
+              "Student certificate or enrollment proof"
+            ],
+            "tips": [
+              "Nickel at tabac = fastest solution",
+              "Traditional bank = better for long-term (loans, etc.)",
+              "Get RIB immediately for CAF application"
+            ]
+          },
+          {
+            "id": "non-eu-admin-5",
+            "name": "CAF Registration (Housing Aid)",
+            "description": "Apply for housing allowance",
+            "when": "After signing lease and opening bank account",
+            "where": "Online at caf.fr",
+            "eligibility": "Non-EU students ARE eligible",
+            "requiredDocuments": [
+              "Passport",
+              "Visa + validation proof",
+              "Rental contract (bail)",
+              "Attestation de loyer (landlord completes)",
+              "RIB (French bank account)",
+              "Student certificate"
+            ],
+            "amount": "50-300€/month",
+            "processingTime": "1-2 months",
+            "url": "https://www.caf.fr/",
+            "tips": [
+              "Apply ASAP - benefits start from application month",
+              "Need FRENCH bank account (not N26/Revolut)",
+              "Landlord must sign attestation de loyer"
+            ]
+          }
+        ],
+        "housing": {
+          "description": "Same options as other students but may face more challenges",
+          "challenges": [
+            "Landlords may be hesitant without French guarantor",
+            "Visale works for non-EU students - use it!",
+            "Some agencies ask for excessive documents"
+          ],
+          "solutions": [
+            {
+              "name": "Visale (Government Guarantee)",
+              "description": "Free guarantor service - works for non-EU students",
+              "eligibility": "Students under 30, including non-EU",
+              "url": "https://www.visale.fr/",
+              "tips": "Apply BEFORE signing lease"
+            },
+            {
+              "name": "GarantMe",
+              "description": "Paid guarantor service",
+              "cost": "3.5% of annual rent",
+              "url": "https://garantme.fr/",
+              "tips": "Alternative if Visale doesn't work"
+            },
+            {
+              "name": "CROUS residences",
+              "description": "No guarantor needed, student-focused",
+              "tips": "Apply early through DSE"
+            },
+            {
+              "name": "Private student residences",
+              "description": "Studéa, Estudines, etc. - easier process for foreigners",
+              "tips": "More expensive but less paperwork"
+            }
+          ],
+          "scamWarning": {
+            "alert": "International students are often targeted by rental scams!",
+            "redFlags": [
+              "Asked to pay before visiting",
+              "Price too good to be true",
+              "Landlord abroad, can't meet",
+              "Asked to wire money internationally",
+              "Urgent pressure to decide"
+            ],
+            "safetyTips": [
+              "NEVER pay before visiting in person",
+              "Use official platforms (Studapart, Lokaviz)",
+              "Ask university housing service for help",
+              "Meet landlord in person",
+              "Sign proper contract (bail)"
+            ]
+          }
+        },
+        "health": {
+          "initialCoverage": {
+            "description": "Get private insurance for first weeks while waiting for Sécurité Sociale",
+            "options": [
+              {
+                "name": "SMERRA International",
+                "price": "From 20€/month",
+                "url": "https://www.smerra.fr/"
+              },
+              {
+                "name": "HEYME World",
+                "price": "From 20€/month",
+                "url": "https://www.heyme.care/"
+              },
+              {
+                "name": "Chapka Cap Student",
+                "price": "From 29€/month",
+                "url": "https://www.chapkadirect.fr/"
+              }
+            ]
+          },
+          "permanentCoverage": {
+            "description": "French Sécurité Sociale once registered",
+            "coverage": "70% of standard costs",
+            "complementary": "Mutuelle recommended for remaining 30%"
+          }
+        }
+      },
+      "workRights": {
+        "description": "Non-EU students can work with restrictions",
+        "authorization": "Included in VLS-TS visa (no separate permit needed)",
+        "maxHours": "964 hours per year (approximately 20 hours/week)",
+        "calculation": "964 hours = 60% of annual legal working time",
+        "restrictions": [
+          "Cannot exceed 964 hours/year",
+          "Must maintain student status",
+          "Primary purpose must be studies"
+        ],
+        "allowedActivities": [
+          "Part-time employment",
+          "Internships (conventions de stage)",
+          "Summer jobs (counts toward 964h)",
+          "Student jobs on campus"
+        ],
+        "employerRequirements": {
+          "description": "Employer must verify your work authorization",
+          "process": "Declaration to Préfecture (employer's responsibility)",
+          "timeline": "Employer must declare at least 2 working days before start"
+        },
+        "findingWork": [
+          {
+            "name": "Indeed France",
+            "url": "https://www.indeed.fr/",
+            "type": "General job board - filter by 'temps partiel'"
+          },
+          {
+            "name": "Jobteaser",
+            "url": "https://www.jobteaser.com/",
+            "type": "Student/graduate focused"
+          },
+          {
+            "name": "StudentPop",
+            "url": "https://studentpop.fr/",
+            "type": "Flexible student missions"
+          },
+          {
+            "name": "StaffMe",
+            "url": "https://www.staffme.fr/",
+            "type": "Hourly student jobs"
+          },
+          {
+            "name": "University job board",
+            "type": "Check your university's career center"
+          },
+          {
+            "name": "McDonald's, Starbucks, etc.",
+            "type": "Part-time friendly, hire students"
+          }
+        ],
+        "popularStudentJobs": [
+          "Baby-sitting / Pet-sitting",
+          "Restaurant/cafe work",
+          "Retail sales",
+          "Private tutoring",
+          "English teaching (conversation)",
+          "Campus jobs (library, admin)",
+          "Event staffing",
+          "Food delivery (Deliveroo, UberEats)"
+        ],
+        "tips": [
+          "Keep track of your hours carefully",
+          "Keep payslips - needed for titre de séjour renewal",
+          "Declare income to taxes (even if exempt)",
+          "French minimum wage (SMIC): ~11.65€/hour gross"
+        ]
+      },
+      "residencePermitRenewal": {
+        "description": "Annual process to extend your stay beyond first year",
+        "when": "2-4 months BEFORE visa/permit expires",
+        "firstRenewal": {
+          "description": "After VLS-TS expires, need Carte de Séjour Temporaire",
+          "duration": "1 year (renewable)",
+          "type": "Carte de séjour temporaire mention 'étudiant'"
+        },
+        "where": "Online at administration-etrangers-en-france.interieur.gouv.fr",
+        "requiredDocuments": [
+          "Current passport",
+          "Current visa/titre de séjour",
+          "Proof of address (less than 3 months old)",
+          "Student certificate for coming year",
+          "Previous year's academic results (relevé de notes)",
+          "Proof of financial resources",
+          "3 passport photos",
+          "Proof of French address",
+          "Payment proof (225€ timbre fiscal)"
+        ],
+        "cost": "225€ (tax stamp)",
+        "process": [
+          "Create account / login to ANEF platform",
+          "Fill application online",
+          "Upload all documents",
+          "Receive récépissé (temporary authorization)",
+          "Wait for RDV at Préfecture (if required)",
+          "Receive new carte de séjour"
+        ],
+        "processingTime": "1-4 months (varies by Préfecture)",
+        "url": "https://administration-etrangers-en-france.interieur.gouv.fr/",
+        "récépissé": {
+          "description": "Temporary document allowing you to stay while renewal is processed",
+          "validity": "3-6 months",
+          "workRights": "Usually maintains work authorization"
+        },
+        "tips": [
+          "Start EARLY - 3-4 months before expiry",
+          "Keep academic results - progression required",
+          "If changing university, inform Préfecture",
+          "Récépissé allows you to stay legally during processing",
+          "Can travel with récépissé + expired titre (check current rules)"
+        ],
+        "multiYearPermit": {
+          "name": "Carte de séjour pluriannuelle étudiant",
+          "description": "Multi-year permit for duration of studies",
+          "eligibility": [
+            "Master's students",
+            "PhD students",
+            "Students showing good academic progress"
+          ],
+          "validity": "Up to 4 years",
+          "advantages": [
+            "Less frequent renewals",
+            "More stability",
+            "Easier travel"
+          ],
+          "tips": [
+            "Ask about pluriannuelle at first renewal",
+            "Requires proof of enrollment for full duration"
+          ]
+        }
+      },
+      "afterGraduation": {
+        "description": "Options for staying in France after completing studies",
+        "options": [
+          {
+            "id": "aps",
+            "name": "APS (Autorisation Provisoire de Séjour)",
+            "description": "Job search visa after graduation",
+            "eligibility": "Master's degree or equivalent",
+            "duration": "12 months (non-renewable)",
+            "workRights": "Full-time work allowed",
+            "purpose": "Find job matching your qualifications",
+            "howToApply": "Apply at Préfecture before titre expires",
+            "requiredDocuments": [
+              "Diploma or attestation of success",
+              "Proof of address",
+              "Passport",
+              "Current titre de séjour"
+            ],
+            "tips": [
+              "Apply 2 months before graduation",
+              "Can work any job during APS",
+              "Must find qualified job to convert to work permit"
+            ]
+          },
+          {
+            "id": "passeport-talent",
+            "name": "Passeport Talent",
+            "description": "Work permit for qualified jobs",
+            "eligibility": [
+              "Job offer with salary 1.5x+ SMIC for Master's holders",
+              "Or innovative project (entrepreneur)",
+              "Or researcher position"
+            ],
+            "duration": "Up to 4 years",
+            "advantages": [
+              "Multi-year validity",
+              "Family can join easily",
+              "Path to permanent residence"
+            ],
+            "salary_requirement": "Approximately 2,028€/month gross minimum (1.5x SMIC)"
+          },
+          {
+            "id": "salarie",
+            "name": "Carte de séjour 'Salarié'",
+            "description": "Regular work permit",
+            "eligibility": "Job offer, employer sponsors",
+            "process": "Employer must get work authorization",
+            "duration": "1 year (renewable)"
+          },
+          {
+            "id": "entrepreneur",
+            "name": "Entrepreneur/Profession libérale",
+            "description": "Start your own business in France",
+            "requirements": [
+              "Viable business plan",
+              "Sufficient funds",
+              "Economic contribution"
+            ]
+          }
+        ],
+        "tips": [
+          "Start job search 6 months before graduation",
+          "Network through LinkedIn, school career services",
+          "APS gives you 12 months to find work - use wisely",
+          "Large companies more experienced with sponsorship",
+          "Tech sector very open to international talent"
+        ]
+      },
+      "commonChallenges": {
+        "description": "Challenges specific to non-EU students and solutions",
+        "challenges": [
+          {
+            "problem": "Long Préfecture wait times",
+            "solutions": [
+              "Apply online when possible",
+              "Start renewals 3-4 months early",
+              "Récépissé keeps you legal while waiting"
+            ]
+          },
+          {
+            "problem": "Housing discrimination",
+            "solutions": [
+              "Use Visale (government guarantee)",
+              "Stay in student residences",
+              "Build strong dossier",
+              "Know your rights - discrimination is illegal"
+            ]
+          },
+          {
+            "problem": "Banking difficulties",
+            "solutions": [
+              "Nickel account at tabac - no questions asked",
+              "Go to branches near universities",
+              "Bring all possible documents"
+            ]
+          },
+          {
+            "problem": "Limited work hours",
+            "solutions": [
+              "Track hours carefully",
+              "High-paying tutoring/skilled work",
+              "Summer work (still counts to 964h)",
+              "Apply for scholarships"
+            ]
+          },
+          {
+            "problem": "Travel restrictions",
+            "solutions": [
+              "VLS-TS allows Schengen travel",
+              "Keep visa validation proof when traveling",
+              "Check re-entry requirements before leaving"
+            ]
+          }
+        ]
+      },
+      "importantContacts": {
+        "description": "Key contacts for non-EU students",
+        "contacts": [
+          {
+            "name": "Campus France",
+            "purpose": "Pre-arrival information, application help",
+            "url": "https://www.campusfrance.org/",
+            "phone": "Check local Campus France office"
+          },
+          {
+            "name": "French Embassy/Consulate",
+            "purpose": "Visa applications",
+            "url": "https://www.diplomatie.gouv.fr/",
+            "note": "Find your local consulate on website"
+          },
+          {
+            "name": "Préfecture",
+            "purpose": "Residence permit renewals",
+            "url": "Check prefecture for your department",
+            "note": "Many services now online via ANEF"
+          },
+          {
+            "name": "University International Office",
+            "purpose": "Enrollment, housing, admin help",
+            "note": "Your first point of contact for many issues"
+          },
+          {
+            "name": "OFII",
+            "purpose": "Integration services (French courses, etc.)",
+            "url": "https://www.ofii.fr/"
+          },
+          {
+            "name": "Défenseur des Droits",
+            "purpose": "If you face discrimination",
+            "url": "https://www.defenseurdesdroits.fr/",
+            "phone": "3928"
+          }
+        ]
+      },
+      "referenceSections": {
+        "description": "The following sections are identical to Erasmus/EU students - refer to those profiles:",
+        "sections": [
+          "dailyLife (food, transport, communication) - see Erasmus",
+          "discountsAndApps (all platforms available) - see Erasmus",
+          "socialIntegration (same resources) - see Erasmus"
+        ],
+        "bankingNote": "Banking covered in arrival section above with non-EU specific advice"
+      }
+    }
+  },
+  "workers": {
+    "eu": {
+      "id": "eu-worker",
+      "name": "EU/EEA Worker",
+      "description": "European Union or EEA citizens coming to work in France",
+      "keyAdvantage": "Same rights as French workers - no work permit needed",
+      "preArrival": {
+        "overview": {
+          "description": "EU citizens have freedom of movement for work - minimal formalities",
+          "rights": [
+            "Work without permit",
+            "Same employment rights as French",
+            "Access to social security",
+            "Can bring family",
+            "Can stay indefinitely"
+          ],
+          "countries": [
+            "All EU countries (27)",
+            "EEA: Iceland, Liechtenstein, Norway",
+            "Special status: Switzerland"
+          ]
+        },
+        "documents": [
+          {
+            "id": "eu-work-doc-1",
+            "name": "Valid Passport or National ID Card",
+            "description": "EU citizens can enter and work with national ID",
+            "required": true,
+            "tips": [
+              "National ID sufficient for most purposes",
+              "Passport useful for opening bank accounts",
+              "Make copies stored separately"
+            ]
+          },
+          {
+            "id": "eu-work-doc-2",
+            "name": "European Health Insurance Card (EHIC)",
+            "description": "Covers healthcare during initial period before French registration",
+            "required": true,
+            "validity": "Until you register with French Sécurité Sociale",
+            "url": "https://ec.europa.eu/social/main.jsp?catId=559"
+          },
+          {
+            "id": "eu-work-doc-3",
+            "name": "Employment Contract or Job Offer",
+            "description": "Proof of employment in France",
+            "required": "Recommended for housing/banking",
+            "types": [
+              "CDI (Contrat à Durée Indéterminée) - permanent contract",
+              "CDD (Contrat à Durée Déterminée) - fixed-term contract",
+              "Promesse d'embauche - job offer letter"
+            ],
+            "tips": [
+              "CDI most valuable for housing applications",
+              "Even job offer letter helps with housing search"
+            ]
+          },
+          {
+            "id": "eu-work-doc-4",
+            "name": "Educational Certificates/Diplomas",
+            "description": "Proof of qualifications for regulated professions",
+            "required": "For regulated professions",
+            "regulatedProfessions": [
+              "Healthcare (doctors, nurses, pharmacists)",
+              "Legal (lawyers, notaries)",
+              "Architecture",
+              "Teaching",
+              "Accountants"
+            ],
+            "recognition": {
+              "description": "EU qualifications generally recognized, some need validation",
+              "url": "https://www.france-education-international.fr/enic-naric",
+              "tips": "Apply for recognition BEFORE arrival if in regulated profession"
+            }
+          },
+          {
+            "id": "eu-work-doc-5",
+            "name": "Birth Certificate",
+            "description": "Needed for various administrative procedures",
+            "format": "Recent extract, multilingual EU form if available",
+            "tips": [
+              "EU regulation 2016/1191 simplifies cross-border use",
+              "Multilingual forms available from home country"
+            ]
+          },
+          {
+            "id": "eu-work-doc-6",
+            "name": "Driving License",
+            "description": "EU licenses valid in France",
+            "validity": "Valid without exchange for EU licenses",
+            "exchange": "Optional exchange for French license",
+            "tips": [
+              "Can drive with EU license indefinitely",
+              "Exchange may be needed if license expires"
+            ]
+          }
+        ],
+        "preparation": [
+          {
+            "id": "eu-work-prep-1",
+            "name": "Job Search Before Arrival",
+            "description": "Find employment before moving for smoother transition",
+            "platforms": [
+              {
+                "name": "Indeed France",
+                "url": "https://www.indeed.fr/",
+                "type": "General job board"
+              },
+              {
+                "name": "LinkedIn",
+                "url": "https://www.linkedin.com/",
+                "type": "Professional networking, many French offers"
+              },
+              {
+                "name": "Welcome to the Jungle",
+                "url": "https://www.welcometothejungle.com/",
+                "type": "Tech and startups"
+              },
+              {
+                "name": "APEC",
+                "url": "https://www.apec.fr/",
+                "type": "Executive/cadre positions"
+              },
+              {
+                "name": "Pôle Emploi",
+                "url": "https://www.pole-emploi.fr/",
+                "type": "Public employment service"
+              },
+              {
+                "name": "EURES",
+                "url": "https://eures.ec.europa.eu/",
+                "type": "EU job mobility portal"
+              },
+              {
+                "name": "Glassdoor France",
+                "url": "https://www.glassdoor.fr/",
+                "type": "Jobs with company reviews"
+              }
+            ],
+            "tips": [
+              "Many companies recruit internationally",
+              "LinkedIn very active in France",
+              "Tech sector often English-friendly",
+              "EURES specifically for EU job mobility"
+            ]
+          },
+          {
+            "id": "eu-work-prep-2",
+            "name": "Understand French Employment Contracts",
+            "description": "Know your rights before signing",
+            "contractTypes": [
+              {
+                "type": "CDI (Contrat à Durée Indéterminée)",
+                "description": "Permanent contract - gold standard",
+                "benefits": "Job security, easier housing, loans",
+                "notice": "1-3 months typically"
+              },
+              {
+                "type": "CDD (Contrat à Durée Déterminée)",
+                "description": "Fixed-term contract",
+                "maxDuration": "18 months (24 in some cases)",
+                "benefits": "10% end-of-contract bonus (prime de précarité)",
+                "renewal": "Can be renewed once"
+              },
+              {
+                "type": "Interim (Intérim)",
+                "description": "Temporary agency work",
+                "benefits": "Flexibility, 10% bonus",
+                "agencies": ["Adecco", "Manpower", "Randstad"]
+              },
+              {
+                "type": "Freelance (Auto-entrepreneur)",
+                "description": "Self-employed status",
+                "registration": "Free at autoentrepreneur.urssaf.fr",
+                "url": "https://www.autoentrepreneur.urssaf.fr/"
+              }
+            ],
+            "keyTerms": {
+              "SMIC": "Minimum wage (~1,766€/month gross in 2024)",
+              "35h": "Standard work week (35 hours)",
+              "RTT": "Extra days off if working >35h",
+              "CP": "Congés Payés - 5 weeks paid vacation",
+              "13ème mois": "13th month bonus (common)",
+              "Mutuelle": "Employer must provide health insurance",
+              "Tickets restaurant": "Meal vouchers (common benefit)"
+            }
+          },
+          {
+            "id": "eu-work-prep-3",
+            "name": "Arrange Initial Accommodation",
+            "description": "Housing for first weeks while searching",
+            "options": [
+              "Airbnb (1-4 weeks)",
+              "Apart'hotels",
+              "Temporary furnished rentals"
+            ],
+            "tips": [
+              "Don't sign long-term lease without seeing",
+              "Budget €1,000-2,000 for initial housing costs",
+              "CDI makes permanent housing much easier"
+            ]
+          },
+          {
+            "id": "eu-work-prep-4",
+            "name": "Research Cost of Living",
+            "description": "Understand salary expectations vs expenses",
+            "averageSalaries": {
+              "entry_level": "25,000-35,000€/year gross",
+              "mid_level": "35,000-50,000€/year gross",
+              "senior": "50,000-80,000€/year gross",
+              "executive": "80,000€+/year gross"
+            },
+            "costOfLiving": {
+              "paris": {
+                "rent_studio": "900-1,500€/month",
+                "rent_1bed": "1,200-2,000€/month",
+                "transport": "86€/month (Navigo)",
+                "groceries": "300-500€/month"
+              },
+              "major_cities": {
+                "rent_studio": "500-900€/month",
+                "rent_1bed": "700-1,200€/month",
+                "transport": "40-70€/month",
+                "groceries": "250-400€/month"
+              }
+            },
+            "tips": [
+              "French salaries seem lower but include benefits",
+              "35h week is real (unlike some countries)",
+              "5 weeks vacation standard",
+              "Healthcare nearly free"
+            ]
+          }
+        ]
+      },
+      "arrival": {
+        "administrative": [
+          {
+            "id": "eu-work-admin-1",
+            "name": "Register with Sécurité Sociale (CPAM)",
+            "description": "Enroll in French health insurance system",
+            "when": "Within 3 months of starting work",
+            "where": "Online at ameli.fr or local CPAM",
+            "howTo": [
+              "Your employer will register you initially",
+              "Create personal account at ameli.fr",
+              "Submit additional documents if requested",
+              "Receive Carte Vitale (health card)"
+            ],
+            "requiredDocuments": [
+              "ID/Passport",
+              "Birth certificate (with translation if needed)",
+              "Proof of address",
+              "Employment contract or pay slips",
+              "RIB (bank details)"
+            ],
+            "cost": "Free (funded by social contributions)",
+            "url": "https://www.ameli.fr/",
+            "tips": [
+              "Employer handles initial registration",
+              "Create ameli.fr account for online services",
+              "Carte Vitale takes 2-4 weeks",
+              "Use attestation while waiting for card"
+            ]
+          },
+          {
+            "id": "eu-work-admin-2",
+            "name": "Get Your Numéro de Sécurité Sociale",
+            "description": "Your unique French social security number",
+            "when": "Assigned after CPAM registration",
+            "format": "15 digits (1 85 12 75 108 123 45)",
+            "temporary": "Temporary number while waiting for permanent",
+            "uses": [
+              "Healthcare reimbursements",
+              "Pension contributions",
+              "Unemployment benefits",
+              "All administrative procedures"
+            ],
+            "tips": [
+              "Employer needs this for payroll",
+              "Temporary number works for most things",
+              "Permanent number can take 1-3 months"
+            ]
+          },
+          {
+            "id": "eu-work-admin-3",
+            "name": "Open French Bank Account",
+            "description": "Essential for salary, rent, utilities",
+            "when": "First 1-2 weeks",
+            "options": {
+              "withContract": [
+                {
+                  "name": "BNP Paribas",
+                  "why": "International-friendly, English service",
+                  "url": "https://mabanque.bnpparibas/"
+                },
+                {
+                  "name": "Société Générale",
+                  "why": "Good mobile app, many branches",
+                  "url": "https://www.societegenerale.fr/"
+                },
+                {
+                  "name": "Boursorama",
+                  "why": "Free, excellent online bank",
+                  "url": "https://www.boursorama.com/"
+                }
+              ],
+              "withoutContract": [
+                {
+                  "name": "Nickel",
+                  "why": "Open in 5 min at tabac, just ID needed",
+                  "url": "https://www.nickel.eu/"
+                },
+                {
+                  "name": "N26",
+                  "why": "Instant opening, EU passport",
+                  "url": "https://n26.com/",
+                  "note": "German IBAN - some French services may not accept"
+                }
+              ]
+            },
+            "requiredDocuments": [
+              "ID/Passport",
+              "Proof of address (even temporary)",
+              "Employment contract (helpful but not always required)"
+            ],
+            "tips": [
+              "CDI contract makes everything easier",
+              "Nickel is backup if others refuse",
+              "French IBAN important for salary/rent"
+            ]
+          },
+          {
+            "id": "eu-work-admin-4",
+            "name": "Declaration of Residence (Optional)",
+            "description": "EU citizens can register at mairie after 3 months",
+            "required": false,
+            "when": "After 3 months residence",
+            "benefits": [
+              "Official proof of residence",
+              "May help with some procedures",
+              "Voting registration"
+            ],
+            "where": "Mairie (town hall)",
+            "tips": [
+              "Not mandatory but can be useful",
+              "Different from census (recensement)"
+            ]
+          },
+          {
+            "id": "eu-work-admin-5",
+            "name": "Tax Registration",
+            "description": "Register for French taxes",
+            "when": "First tax return due following year",
+            "where": "Online at impots.gouv.fr",
+            "firstYear": "May need to visit Service des Impôts if no prior French tax history",
+            "taxReturn": "Annual declaration in April-May for previous year",
+            "url": "https://www.impots.gouv.fr/",
+            "tips": [
+              "France has PAYE (prélèvement à la source) since 2019",
+              "Tax deducted from salary monthly",
+              "Still must file annual return",
+              "First year may involve manual registration"
+            ]
+          }
+        ],
+        "housing": {
+          "overview": {
+            "description": "Finding housing as a worker",
+            "advantage": "CDI contract makes you attractive tenant"
+          },
+          "requirements": {
+            "typicalDossier": [
+              "ID/Passport",
+              "Employment contract",
+              "3 last pay slips (when available)",
+              "Last tax notice (from previous country OK initially)",
+              "Proof of current address",
+              "RIB"
+            ],
+            "incomeRule": "Rent should be ≤33% of net income"
+          },
+          "platforms": [
+            {
+              "name": "SeLoger",
+              "url": "https://www.seloger.com/",
+              "type": "Major real estate portal"
+            },
+            {
+              "name": "Leboncoin",
+              "url": "https://www.leboncoin.fr/",
+              "type": "Classifieds - direct from owners"
+            },
+            {
+              "name": "PAP",
+              "url": "https://www.pap.fr/",
+              "type": "No agency fees"
+            },
+            {
+              "name": "Bien'ici",
+              "url": "https://www.bienici.com/",
+              "type": "Aggregator"
+            },
+            {
+              "name": "Logic-Immo",
+              "url": "https://www.logic-immo.com/",
+              "type": "Real estate portal"
+            }
+          ],
+          "guarantor": {
+            "description": "French landlords often require guarantor (garant)",
+            "solutions": [
+              {
+                "name": "Visale",
+                "eligibility": "Workers under 30, or any age in first 6 months of new job",
+                "cost": "Free",
+                "url": "https://www.visale.fr/"
+              },
+              {
+                "name": "GarantMe",
+                "eligibility": "Anyone",
+                "cost": "3.5% of annual rent",
+                "url": "https://garantme.fr/"
+              },
+              {
+                "name": "Employer guarantee",
+                "description": "Some employers provide guarantee letter"
+              }
+            ]
+          },
+          "tips": [
+            "CDI is key - worth accepting lower salary for CDI vs high CDD",
+            "Start searching once you have contract",
+            "Be ready to move fast - good places go quick",
+            "Agency fees usually 1 month rent",
+            "Deposit (dépôt de garantie) = 1-2 months rent"
+          ]
+        },
+        "health": {
+          "description": "Healthcare coverage for EU workers",
+          "coverage": {
+            "employer": "Employer MUST provide mutuelle (complementary insurance)",
+            "costSplit": "Employer pays 50%+ of mutuelle",
+            "coverage": "Sécu (70%) + Mutuelle (30%) = nearly 100%"
+          },
+          "registration": {
+            "process": "Employer registers you with CPAM",
+            "timeline": "Carte Vitale in 2-4 weeks",
+            "interim": "Use EHIC or attestation while waiting"
+          },
+          "tips": [
+            "Mandatory mutuelle = great benefit",
+            "Family can be covered too",
+            "Compare mutuelle options when offered choice"
+          ]
+        }
+      },
+      "employment": {
+        "rights": {
+          "description": "EU workers have same rights as French employees",
+          "keyRights": [
+            "Minimum wage (SMIC): ~1,766€/month gross",
+            "35-hour work week standard",
+            "5 weeks paid vacation (25 days)",
+            "Overtime pay (25-50% premium)",
+            "Protection against unfair dismissal",
+            "Parental leave rights",
+            "Training rights (CPF)",
+            "Union membership"
+          ]
+        },
+        "socialBenefits": {
+          "description": "Benefits from French social security system",
+          "contributions": "About 23% of gross salary (employer pays more)",
+          "benefits": [
+            {
+              "name": "Healthcare",
+              "description": "70% of costs covered (100% with mutuelle)",
+              "access": "Immediate after registration"
+            },
+            {
+              "name": "Unemployment (Chômage)",
+              "description": "If laid off, receive ARE (allocation)",
+              "eligibility": "6 months work in last 24 months",
+              "amount": "57-75% of previous salary",
+              "duration": "Up to 24 months"
+            },
+            {
+              "name": "Retirement (Retraite)",
+              "description": "Pension contributions",
+              "access": "Contributions count toward pension"
+            },
+            {
+              "name": "Family benefits",
+              "description": "Allocations familiales for families",
+              "access": "Based on residence and children"
+            },
+            {
+              "name": "Housing aid",
+              "description": "APL/ALS from CAF",
+              "eligibility": "Based on income and rent"
+            }
+          ]
+        },
+        "trainingRights": {
+          "name": "CPF (Compte Personnel de Formation)",
+          "description": "Personal training account",
+          "credits": "500€/year credited (up to 5,000€)",
+          "uses": ["Language courses", "Professional certifications", "Skills training"],
+          "url": "https://www.moncompteformation.gouv.fr/",
+          "tips": [
+            "Great for French language courses",
+            "Check balance on moncompteformation.gouv.fr",
+            "Credits follow you between jobs"
+          ]
+        }
+      },
+      "familyReunification": {
+        "description": "Bringing family to France as EU worker",
+        "rights": {
+          "spouse": "EU spouse has same rights, can work",
+          "nonEuSpouse": "Entitled to 'carte de séjour de membre de la famille d'un citoyen de l'Union'",
+          "children": "Can attend school, eligible for benefits"
+        },
+        "procedures": {
+          "euFamily": "No formalities needed",
+          "nonEuFamily": "Apply at Préfecture for residence card"
+        },
+        "tips": [
+          "EU family members have automatic rights",
+          "Non-EU family gets 5-year residence card",
+          "Children can attend public school free"
+        ]
+      },
+      "dailyLife": {
+        "description": "Daily life resources same as students - see Erasmus section",
+        "reference": "See Erasmus profile for:",
+        "sections": [
+          "Food (restaurants, supermarkets, apps)",
+          "Transport (metro, trains, BlaBlaCar)",
+          "Communication (mobile plans, internet)",
+          "Apps & discounts (Lydia, Leboncoin, etc.)",
+          "Social integration (Meetup, InterNations)"
+        ],
+        "workerSpecific": [
+          {
+            "name": "Tickets Restaurant",
+            "description": "Meal vouchers from employer",
+            "value": "Typically 8-12€/day",
+            "usage": "Restaurants, supermarkets, food delivery",
+            "apps": ["Edenred", "Swile", "Sodexo"],
+            "tips": [
+              "Check if employer offers them",
+              "Tax-advantaged benefit",
+              "Most restaurants accept"
+            ]
+          },
+          {
+            "name": "Transport Subsidy",
+            "description": "Employer must reimburse 50% of transport pass",
+            "coverage": "50% of Navigo or equivalent",
+            "tips": "Automatic - just submit receipts"
+          },
+          {
+            "name": "Comité d'Entreprise (CE/CSE)",
+            "description": "Works council benefits at large companies",
+            "benefits": [
+              "Discounts on cinema, shows",
+              "Vacation subsidies",
+              "Gift vouchers",
+              "Sports activities"
+            ],
+            "eligibility": "Companies with 50+ employees"
+          }
+        ]
+      }
+    },
+    "nonEu": {
+      "id": "non-eu-worker",
+      "name": "Non-EU Worker",
+      "description": "Workers from outside EU/EEA requiring work authorization",
+      "keyNote": "More complex than EU - requires visa and work permit",
+      "preArrival": {
+        "overview": {
+          "description": "Non-EU workers need visa AND work authorization",
+          "paths": [
+            "Employer-sponsored work visa",
+            "Passeport Talent (skilled workers)",
+            "Intra-company transfer",
+            "Seasonal worker visa",
+            "Working Holiday Visa (some countries)"
+          ],
+          "timeline": "Start 3-6 months before intended start date"
+        },
+        "visaTypes": [
+          {
+            "id": "visa-salarie",
+            "name": "Visa 'Salarié' (Employee Visa)",
+            "description": "Standard work visa for employed positions",
+            "eligibility": [
+              "Job offer from French employer",
+              "Employer obtains work authorization",
+              "Position cannot be filled locally (labor market test)"
+            ],
+            "process": [
+              "Employer applies for work authorization at DREETS",
+              "Once approved, you apply for visa at consulate",
+              "Visa issued for contract duration"
+            ],
+            "duration": "1 year (renewable)",
+            "workRestriction": "Tied to specific employer initially",
+            "tips": [
+              "Employer drives the process",
+              "Labor market test can be waived for shortage occupations",
+              "Can change employer after 1 year with new authorization"
+            ]
+          },
+          {
+            "id": "visa-passeport-talent",
+            "name": "Passeport Talent",
+            "description": "Fast-track visa for skilled workers, entrepreneurs, investors",
+            "categories": [
+              {
+                "name": "Qualified Employee",
+                "requirements": [
+                  "Master's degree or equivalent",
+                  "Job with salary ≥ 1.5x SMIC (~2,649€/month gross)",
+                  "Employment contract"
+                ]
+              },
+              {
+                "name": "Highly Qualified Employee (EU Blue Card)",
+                "requirements": [
+                  "Higher education (3+ years)",
+                  "Job with salary ≥ 1.5x average salary (~53,000€/year)",
+                  "Employment contract 1+ year"
+                ]
+              },
+              {
+                "name": "Researcher",
+                "requirements": [
+                  "Master's or PhD",
+                  "Hosting agreement from research institution"
+                ]
+              },
+              {
+                "name": "Company Creator",
+                "requirements": [
+                  "Innovative project",
+                  "Sufficient funds"
+                ]
+              },
+              {
+                "name": "Investor",
+                "requirements": [
+                  "Direct investment ≥300,000€ in French company"
+                ]
+              },
+              {
+                "name": "ICT (Intra-Company Transfer)",
+                "requirements": [
+                  "Transfer within multinational company",
+                  "Manager/specialist/trainee"
+                ]
+              }
+            ],
+            "advantages": [
+              "4-year validity",
+              "No labor market test",
+              "Family can join easily",
+              "Path to permanent residence"
+            ],
+            "url": "https://www.service-public.fr/particuliers/vosdroits/F35495",
+            "tips": [
+              "Best option for skilled workers",
+              "Salary threshold key requirement",
+              "Employer doesn't need pre-authorization"
+            ]
+          },
+          {
+            "id": "visa-whv",
+            "name": "Working Holiday Visa (PVT/WHV)",
+            "description": "For young people from partner countries",
+            "eligibleCountries": [
+              "Argentina", "Australia", "Brazil", "Canada", "Chile",
+              "Colombia", "Ecuador", "Hong Kong", "Japan", "Mexico",
+              "New Zealand", "Peru", "Russia", "South Korea", "Taiwan", "Uruguay"
+            ],
+            "requirements": [
+              "Age 18-30 (35 for some countries)",
+              "First-time applicant",
+              "Proof of funds (~2,500€)",
+              "Return ticket or funds for one"
+            ],
+            "duration": "12 months (non-renewable except Canada/Australia)",
+            "workRights": "Unrestricted - any job",
+            "url": "https://france-visas.gouv.fr/",
+            "tips": [
+              "Great first step to French work experience",
+              "Can lead to employer sponsorship",
+              "Apply at French consulate in home country"
+            ]
+          },
+          {
+            "id": "visa-seasonal",
+            "name": "Visa Saisonnier (Seasonal Worker)",
+            "description": "For temporary seasonal work",
+            "sectors": ["Agriculture", "Tourism", "Food processing"],
+            "duration": "Up to 6 months per year",
+            "tips": "Employer applies for authorization"
+          }
+        ],
+        "documents": [
+          {
+            "id": "non-eu-work-doc-1",
+            "name": "Valid Passport",
+            "validity": "3+ months beyond intended stay",
+            "required": true
+          },
+          {
+            "id": "non-eu-work-doc-2",
+            "name": "Employment Contract",
+            "required": true,
+            "details": "Signed contract specifying position, salary, duration"
+          },
+          {
+            "id": "non-eu-work-doc-3",
+            "name": "Work Authorization (for Salarié visa)",
+            "description": "Issued by DREETS to employer",
+            "required": "For standard Salarié visa"
+          },
+          {
+            "id": "non-eu-work-doc-4",
+            "name": "Diplomas/Qualifications",
+            "required": "For Passeport Talent, regulated professions",
+            "format": "Certified copies + translations"
+          },
+          {
+            "id": "non-eu-work-doc-5",
+            "name": "Proof of Accommodation",
+            "required": true,
+            "options": ["Rental contract", "Hotel reservation", "Host attestation"]
+          },
+          {
+            "id": "non-eu-work-doc-6",
+            "name": "Proof of Financial Resources",
+            "required": "Some visa types",
+            "amount": "SMIC equivalent for duration"
+          }
+        ],
+        "applicationProcess": {
+          "standardVisa": [
+            "1. Employer applies for work authorization (DREETS) - 2-3 months",
+            "2. Authorization granted to employer",
+            "3. You apply for visa at French consulate",
+            "4. Attend appointment with biometrics",
+            "5. Receive visa (2-4 weeks)",
+            "6. Travel to France",
+            "7. Validate visa with OFII"
+          ],
+          "passeportTalent": [
+            "1. Employer provides contract meeting salary requirements",
+            "2. You apply directly for visa at consulate (no pre-authorization)",
+            "3. Attend appointment",
+            "4. Receive visa",
+            "5. Validate with OFII upon arrival"
+          ],
+          "visaFee": "99€ (long-stay visa)",
+          "tips": [
+            "Start early - process takes 2-6 months",
+            "Passeport Talent is faster (no labor market test)",
+            "Keep copies of everything"
+          ]
+        }
+      },
+      "arrival": {
+        "administrative": [
+          {
+            "id": "non-eu-work-admin-1",
+            "name": "OFII Visa Validation",
+            "description": "Mandatory validation of VLS-TS visa",
+            "deadline": "Within 3 months of arrival",
+            "where": "Online at administration-etrangers-en-france.interieur.gouv.fr",
+            "cost": "225€ (tax stamp)",
+            "consequence": "Failure = illegal stay, cannot renew",
+            "url": "https://administration-etrangers-en-france.interieur.gouv.fr/",
+            "steps": [
+              "Create account on platform",
+              "Enter visa details and arrival date",
+              "Enter French address",
+              "Pay fee (225€)",
+              "Receive confirmation"
+            ],
+            "tips": [
+              "Do this IMMEDIATELY upon arrival",
+              "Keep confirmation - it's your proof of legal stay"
+            ]
+          },
+          {
+            "id": "non-eu-work-admin-2",
+            "name": "Register with CPAM",
+            "description": "Enroll in French health insurance",
+            "when": "After starting work",
+            "where": "Online at ameli.fr or CPAM office",
+            "process": [
+              "Employer initiates registration",
+              "Provide: passport, visa, birth certificate, proof of address, RIB",
+              "Receive numéro de sécurité sociale",
+              "Receive Carte Vitale (2-4 weeks)"
+            ],
+            "url": "https://www.ameli.fr/",
+            "tips": [
+              "Employer handles initial declaration",
+              "Create ameli.fr account",
+              "Mutuelle mandatory from employer"
+            ]
+          },
+          {
+            "id": "non-eu-work-admin-3",
+            "name": "Open Bank Account",
+            "description": "Essential for salary payment",
+            "when": "First week",
+            "challenges": "Some banks hesitant without CDI",
+            "solutions": [
+              {
+                "name": "Nickel",
+                "why": "No questions - just passport",
+                "french_iban": true
+              },
+              {
+                "name": "BNP Paribas",
+                "why": "International experience",
+                "french_iban": true
+              }
+            ],
+            "requiredDocuments": [
+              "Passport with valid visa",
+              "Proof of address",
+              "Employment contract"
+            ],
+            "tips": [
+              "Employment contract helps significantly",
+              "Nickel as backup - open anywhere at tabac",
+              "French IBAN essential for salary"
+            ]
+          },
+          {
+            "id": "non-eu-work-admin-4",
+            "name": "Tax Registration",
+            "description": "Register for French income tax",
+            "when": "Tax season following arrival",
+            "where": "impots.gouv.fr or Service des Impôts",
+            "process": [
+              "France has PAYE - tax deducted from salary",
+              "Still must file annual return",
+              "First year: visit tax office to get account"
+            ],
+            "url": "https://www.impots.gouv.fr/",
+            "tips": [
+              "Keep pay slips - show tax already withheld",
+              "Tax treaty may affect first year",
+              "Wealth from abroad may have reporting requirements"
+            ]
+          }
+        ],
+        "housing": {
+          "description": "Finding housing as non-EU worker",
+          "challenges": [
+            "Landlords may prefer French/EU tenants",
+            "CDD (fixed-term) contract less favorable",
+            "No French guarantor"
+          ],
+          "solutions": [
+            {
+              "name": "Visale",
+              "eligibility": "Any worker in first 6 months of job (regardless of nationality)",
+              "cost": "Free",
+              "url": "https://www.visale.fr/"
+            },
+            {
+              "name": "GarantMe",
+              "eligibility": "Anyone",
+              "cost": "3.5% of annual rent",
+              "url": "https://garantme.fr/"
+            },
+            {
+              "name": "Employer assistance",
+              "description": "Some employers help with housing/guarantees"
+            }
+          ],
+          "tips": [
+            "CDI is golden ticket for housing",
+            "Visale works for workers in new job",
+            "Consider furnished rentals initially (easier process)"
+          ]
+        },
+        "health": {
+          "coverage": {
+            "description": "Full French healthcare once registered",
+            "secu": "Employer registers you with CPAM",
+            "mutuelle": "Employer must provide complementary insurance"
+          },
+          "initial": {
+            "description": "First weeks before registration complete",
+            "options": [
+              "Travel insurance from home country",
+              "Private insurance (APRIL, Allianz, etc.)"
+            ]
+          },
+          "tips": [
+            "Mutuelle mandatory for employees",
+            "Employer pays 50%+ of mutuelle",
+            "Family can be covered"
+          ]
+        }
+      },
+      "workRights": {
+        "description": "Work rights depend on visa type",
+        "byVisaType": [
+          {
+            "visa": "Salarié",
+            "restriction": "Tied to specific employer initially",
+            "change": "Can change employer after 1 year with new authorization",
+            "hours": "Full-time as per contract"
+          },
+          {
+            "visa": "Passeport Talent",
+            "restriction": "Must maintain qualifying conditions (salary)",
+            "change": "Can change employer - must inform Préfecture",
+            "hours": "Full-time"
+          },
+          {
+            "visa": "WHV",
+            "restriction": "None during validity",
+            "hours": "Any"
+          }
+        ],
+        "socialBenefits": {
+          "description": "Same benefits as French workers once registered",
+          "includes": [
+            "Healthcare",
+            "Unemployment (after qualifying period)",
+            "Family benefits",
+            "Housing aid (CAF)",
+            "Retirement contributions"
+          ]
+        }
+      },
+      "residencePermitRenewal": {
+        "when": "2-4 months before visa/permit expires",
+        "where": "Online at ANEF platform or Préfecture",
+        "documents": [
+          "Current passport",
+          "Current visa/titre de séjour",
+          "Employment contract (or proof of continued employment)",
+          "Recent pay slips (3 months)",
+          "Proof of address",
+          "Tax notice (if available)",
+          "Photos"
+        ],
+        "cost": "225€",
+        "url": "https://administration-etrangers-en-france.interieur.gouv.fr/",
+        "tips": [
+          "Start early - 3-4 months before expiry",
+          "Keep proof of continued employment",
+          "Récépissé allows continued work while waiting"
+        ],
+        "multiYear": {
+          "name": "Carte de séjour pluriannuelle",
+          "eligibility": "After first renewal with stable situation",
+          "duration": "Up to 4 years",
+          "advantages": "Less frequent renewals"
+        }
+      },
+      "permanentResidence": {
+        "description": "Path to long-term residence in France",
+        "options": [
+          {
+            "name": "Carte de résident",
+            "eligibility": "5 years legal residence + integration",
+            "duration": "10 years (renewable)",
+            "requirements": [
+              "5 years continuous legal residence",
+              "Stable employment/resources",
+              "French language (A2 level)",
+              "Integration into French society"
+            ]
+          },
+          {
+            "name": "Carte de résident longue durée-UE",
+            "eligibility": "Same as above",
+            "advantage": "Mobility within EU"
+          }
+        ],
+        "tips": [
+          "Keep all documents proving residence",
+          "French courses help (use CPF credits)",
+          "5 years = starting point for permanent residence"
+        ]
+      },
+      "familyReunification": {
+        "description": "Bringing family to France",
+        "eligibility": [
+          "18+ months legal residence",
+          "Stable income (SMIC+)",
+          "Adequate housing"
+        ],
+        "familyMembers": ["Spouse", "Minor children"],
+        "process": [
+          "Apply at OFII",
+          "Housing inspection",
+          "Income verification",
+          "Family applies for visa at consulate",
+          "Family receives residence card on arrival"
+        ],
+        "tips": [
+          "Passeport Talent: family can join immediately",
+          "Standard visa: wait 18 months",
+          "Keep proof of income and housing"
+        ]
+      },
+      "referenceSections": {
+        "description": "Daily life resources same as other profiles",
+        "see": [
+          "Erasmus: dailyLife (food, transport, communication)",
+          "Erasmus: Apps and discounts",
+          "EU Worker: Employment rights and benefits"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIDE+ Banners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      padding: 40px;
+      min-height: 100vh;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .section .size {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .banner-wrapper {
+      background: #2a2a4a;
+      padding: 20px;
+      border-radius: 16px;
+      overflow-x: auto;
+    }
+
+    /* ============================================
+       COLOR PALETTE
+       ============================================ */
+    :root {
+      --primary: #0A6CFF;
+      --primary-dark: #0044AA;
+      --primary-light: #E6F0FF;
+      --accent: #FF375F;
+      --accent-dark: #CC2847;
+    }
+
+    /* ============================================
+       LOGO STYLES
+       ============================================ */
+    .logo-text {
+      display: flex;
+      align-items: baseline;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .aide {
+      color: #0A6CFF;
+    }
+
+    .aide-white {
+      color: white;
+    }
+
+    .plus {
+      color: #FF375F;
+      font-weight: 800;
+    }
+
+    .tagline {
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    /* ============================================
+       LINKEDIN BANNER - 1584 x 396
+       ============================================ */
+    .linkedin-banner {
+      width: 1584px;
+      height: 396px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .linkedin-banner .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .linkedin-banner .logo-text {
+      font-size: 120px;
+    }
+
+    .linkedin-banner .tagline {
+      font-size: 28px;
+      color: #555;
+      margin-top: 12px;
+    }
+
+    .linkedin-banner .features {
+      display: flex;
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .linkedin-banner .feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .linkedin-banner .feature-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+
+    /* Decorative elements */
+    .linkedin-banner .decoration {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+
+    .linkedin-banner .decoration-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: -100px;
+      left: -50px;
+    }
+
+    .linkedin-banner .decoration-2 {
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      bottom: -80px;
+      right: 100px;
+    }
+
+    .linkedin-banner .decoration-3 {
+      width: 150px;
+      height: 150px;
+      background: var(--primary);
+      top: 50px;
+      right: -30px;
+    }
+
+    /* ============================================
+       TIKTOK BANNER - 1920 x 1080
+       ============================================ */
+    .tiktok-banner {
+      width: 1920px;
+      height: 1080px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tiktok-banner .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .tiktok-banner .logo-text {
+      font-size: 200px;
+    }
+
+    .tiktok-banner .tagline {
+      font-size: 48px;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    .tiktok-banner .subtitle-text {
+      font-size: 32px;
+      color: #888;
+      margin-top: 40px;
+      max-width: 1000px;
+      line-height: 1.5;
+    }
+
+    .tiktok-banner .decoration {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.08;
+    }
+
+    .tiktok-banner .decoration-1 {
+      width: 600px;
+      height: 600px;
+      background: var(--primary);
+      top: -200px;
+      left: -100px;
+    }
+
+    .tiktok-banner .decoration-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      bottom: -150px;
+      right: 200px;
+    }
+
+    .tiktok-banner .decoration-3 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: 100px;
+      right: -50px;
+    }
+
+    .tiktok-banner .decoration-4 {
+      width: 250px;
+      height: 250px;
+      background: var(--accent);
+      bottom: 100px;
+      left: 150px;
+    }
+
+    /* ============================================
+       DESKTOP WALLPAPER - 1920 x 1080
+       ============================================ */
+    .wallpaper {
+      width: 1920px;
+      height: 1080px;
+      background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0a1a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wallpaper .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .wallpaper .logo-text {
+      font-size: 180px;
+    }
+
+    .wallpaper .tagline {
+      font-size: 36px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 16px;
+    }
+
+    /* Animated gradient orbs */
+    .wallpaper .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+
+    .wallpaper .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: rgba(10, 108, 255, 0.3);
+      top: -100px;
+      left: -100px;
+    }
+
+    .wallpaper .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 55, 95, 0.25);
+      bottom: -100px;
+      right: -50px;
+    }
+
+    .wallpaper .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: rgba(10, 108, 255, 0.2);
+      bottom: 200px;
+      left: 300px;
+    }
+
+    .wallpaper .orb-4 {
+      width: 350px;
+      height: 350px;
+      background: rgba(138, 43, 226, 0.15);
+      top: 150px;
+      right: 200px;
+    }
+
+    /* Grid pattern overlay */
+    .wallpaper .grid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 1;
+    }
+
+    /* ============================================
+       WALLPAPER VARIANT 2 - Minimal
+       ============================================ */
+    .wallpaper-minimal {
+      width: 1920px;
+      height: 1080px;
+      background: #0f0f1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wallpaper-minimal .content {
+      z-index: 2;
+    }
+
+    .wallpaper-minimal .logo-text {
+      font-size: 160px;
+    }
+
+    .wallpaper-minimal .glow {
+      position: absolute;
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(10, 108, 255, 0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ============================================
+       WALLPAPER VARIANT 3 - Light
+       ============================================ */
+    .wallpaper-light {
+      width: 1920px;
+      height: 1080px;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wallpaper-light .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .wallpaper-light .logo-text {
+      font-size: 180px;
+    }
+
+    .wallpaper-light .tagline {
+      font-size: 36px;
+      color: #64748b;
+      margin-top: 16px;
+    }
+
+    .wallpaper-light .decoration {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+
+    .wallpaper-light .decoration-1 {
+      width: 800px;
+      height: 800px;
+      background: var(--primary);
+      top: -300px;
+      right: -200px;
+    }
+
+    .wallpaper-light .decoration-2 {
+      width: 600px;
+      height: 600px;
+      background: var(--accent);
+      bottom: -200px;
+      left: -100px;
+    }
+
+    /* Instructions */
+    .instructions {
+      background: rgba(10, 108, 255, 0.1);
+      border-left: 4px solid #0A6CFF;
+      padding: 20px;
+      margin: 40px auto;
+      max-width: 900px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .instructions h3 {
+      color: #0A6CFF;
+      margin-bottom: 10px;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+      color: #ccc;
+    }
+
+    .instructions li {
+      margin-bottom: 8px;
+    }
+
+    .instructions code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .tip {
+      background: rgba(255, 55, 95, 0.1);
+      border-left: 4px solid #FF375F;
+      padding: 15px 20px;
+      margin: 20px auto;
+      max-width: 900px;
+      border-radius: 0 8px 8px 0;
+      color: #ccc;
+    }
+
+    .tip strong {
+      color: #FF375F;
+    }
+  </style>
+</head>
+<body>
+  <h1>AIDE+ Banners & Wallpapers</h1>
+  <p class="subtitle">Social media banners and desktop wallpapers</p>
+
+  <div class="instructions">
+    <h3>📸 How to capture high-quality screenshots:</h3>
+    <ol>
+      <li>Open this page in <strong>Chrome</strong> or <strong>Edge</strong></li>
+      <li>Press <code>F12</code> to open DevTools</li>
+      <li>Click on the element you want to capture (the banner itself)</li>
+      <li>Press <code>Ctrl + Shift + P</code> and type <code>screenshot</code></li>
+      <li>Select <strong>"Capture node screenshot"</strong></li>
+      <li>The image will download at the exact pixel dimensions!</li>
+    </ol>
+  </div>
+
+  <div class="tip">
+    <strong>💡 Pro Tip:</strong> For best quality, make sure your browser zoom is at 100% (Ctrl + 0) before taking screenshots.
+  </div>
+
+  <!-- LinkedIn Banner -->
+  <div class="section">
+    <h2>LinkedIn Banner</h2>
+    <p class="size">1584 × 396px (recommended by LinkedIn)</p>
+    <div class="banner-wrapper">
+      <div class="linkedin-banner" id="linkedin-banner">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        <div class="decoration decoration-3"></div>
+        <div class="content">
+          <span class="logo-text">
+            <span class="aide">AIDE</span><span class="plus">+</span>
+          </span>
+          <span class="tagline">Votre assistant administratif intelligent</span>
+          <div class="features">
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              Démarches simplifiées
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              Aides financières
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              Logement
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              IA personnalisée
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TikTok Banner -->
+  <div class="section">
+    <h2>TikTok Banner / Header</h2>
+    <p class="size">1920 × 1080px</p>
+    <div class="banner-wrapper">
+      <div class="tiktok-banner" id="tiktok-banner">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        <div class="decoration decoration-3"></div>
+        <div class="decoration decoration-4"></div>
+        <div class="content">
+          <span class="logo-text">
+            <span class="aide">AIDE</span><span class="plus">+</span>
+          </span>
+          <span class="tagline">Votre assistant administratif intelligent</span>
+          <p class="subtitle-text">
+            Simplifiez vos démarches administratives en France.<br>
+            Trouvez les aides, le logement et les procédures adaptées à votre situation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Wallpaper - Dark -->
+  <div class="section">
+    <h2>Desktop Wallpaper - Dark Gradient</h2>
+    <p class="size">1920 × 1080px (Full HD - 15" laptop)</p>
+    <div class="banner-wrapper">
+      <div class="wallpaper" id="wallpaper-dark">
+        <div class="grid-overlay"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="content">
+          <span class="logo-text">
+            <span class="aide-white">AIDE</span><span class="plus">+</span>
+          </span>
+          <span class="tagline">Votre assistant administratif</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Wallpaper - Minimal -->
+  <div class="section">
+    <h2>Desktop Wallpaper - Minimal Dark</h2>
+    <p class="size">1920 × 1080px</p>
+    <div class="banner-wrapper">
+      <div class="wallpaper-minimal" id="wallpaper-minimal">
+        <div class="glow"></div>
+        <div class="content">
+          <span class="logo-text">
+            <span class="aide-white">AIDE</span><span class="plus">+</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Wallpaper - Light -->
+  <div class="section">
+    <h2>Desktop Wallpaper - Light</h2>
+    <p class="size">1920 × 1080px</p>
+    <div class="banner-wrapper">
+      <div class="wallpaper-light" id="wallpaper-light">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        <div class="content">
+          <span class="logo-text">
+            <span class="aide">AIDE</span><span class="plus">+</span>
+          </span>
+          <span class="tagline">Votre assistant administratif</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

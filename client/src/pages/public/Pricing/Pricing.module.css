@@ -1,0 +1,529 @@
+.container {
+  min-height: 100vh;
+  padding-bottom: var(--spacing-16);
+}
+
+/* Hero Section */
+.hero {
+  padding: var(--spacing-16) var(--spacing-4);
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-light) 0%,
+    var(--color-background) 100%
+  );
+}
+
+.heroContent {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-3);
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--spacing-4);
+}
+
+.title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-4);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-8);
+}
+
+.billingToggle {
+  display: inline-flex;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-1);
+  gap: var(--spacing-1);
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleBtn.active {
+  background: var(--color-background);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.saveBadge {
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+  background: var(--color-success-light);
+  color: var(--color-success);
+  border-radius: var(--radius-full);
+}
+
+/* Plans Section */
+.plansSection {
+  padding: var(--spacing-8) var(--spacing-4);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+  align-items: stretch;
+  padding-top: var(--spacing-4);
+}
+
+@media (max-width: 1200px) {
+  .plansGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .plansGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.planWrapper {
+  height: 100%;
+}
+
+.planCard {
+  padding: var(--spacing-6);
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: visible;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.planCard.popular {
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+  margin-top: var(--spacing-4);
+}
+
+.popularBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--spacing-1) var(--spacing-4);
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.planHeader {
+  margin-bottom: var(--spacing-4);
+  text-align: center;
+}
+
+.planIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-3);
+}
+
+.planName {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-1);
+}
+
+.planTagline {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.planDescription {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.planPrice {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--spacing-1);
+  margin-bottom: var(--spacing-1);
+}
+
+.currency {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.amount {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.period {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.yearlyNote {
+  font-size: var(--font-size-xs);
+  color: var(--color-success);
+  text-align: center;
+  margin: 0 0 var(--spacing-4);
+  font-weight: 500;
+}
+
+/* Features Container */
+.featuresContainer {
+  flex: 1;
+  margin-bottom: var(--spacing-4);
+}
+
+.featureCategory {
+  margin-bottom: var(--spacing-3);
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--spacing-2);
+}
+
+.categoryName {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+}
+
+.feature.highlight {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.feature.disabled {
+  color: var(--color-text-tertiary);
+}
+
+.feature i {
+  font-size: var(--font-size-base);
+  color: var(--color-success);
+}
+
+.feature.disabled i {
+  color: var(--color-text-tertiary);
+}
+
+.planCta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Trust Section */
+.trustSection {
+  padding: var(--spacing-8) var(--spacing-4);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.trustBadges {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.trustBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Comparison Section */
+.comparisonSection {
+  padding: var(--spacing-16) var(--spacing-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0 0 var(--spacing-8);
+}
+
+.comparisonTableWrapper {
+  overflow-x: auto;
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.comparisonTable th,
+.comparisonTable td {
+  padding: var(--spacing-3) var(--spacing-4);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.comparisonTable th {
+  background: var(--color-surface-elevated);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.comparisonTable th:first-child,
+.comparisonTable td:first-child {
+  text-align: left;
+}
+
+.comparisonTable td {
+  color: var(--color-text-secondary);
+}
+
+.comparisonTable tbody tr:hover {
+  background: var(--color-surface-elevated);
+}
+
+.popularColumn {
+  background: var(--color-primary-light) !important;
+}
+
+.priceRow {
+  font-weight: 600;
+}
+
+.priceRow td {
+  color: var(--color-text);
+}
+
+.tableHeader,
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  gap: var(--spacing-4);
+}
+
+.tableHeader {
+  background: var(--color-surface-elevated);
+  padding: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tableRow {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border-light);
+  font-size: var(--font-size-sm);
+}
+
+.featureCol {
+  color: var(--color-text);
+}
+
+.planCol {
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.planCol i {
+  font-size: var(--font-size-lg);
+}
+
+.planCol i.ri-check-line {
+  color: var(--color-success);
+}
+
+.planCol i.ri-close-line {
+  color: var(--color-text-tertiary);
+}
+
+/* FAQ Section */
+.faqSection {
+  padding: var(--spacing-16) var(--spacing-4);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.faqItem {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.faqQuestion {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-5);
+  background: none;
+  border: none;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.faqQuestion i {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+}
+
+.faqAnswer {
+  padding: 0 var(--spacing-5) var(--spacing-4);
+}
+
+.faqAnswer p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: var(--spacing-8) var(--spacing-4);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ctaCard {
+  padding: var(--spacing-12);
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+}
+
+.ctaTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 var(--spacing-3);
+}
+
+.ctaDescription {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 var(--spacing-6);
+}
+
+.ctaCard button {
+  background: white;
+  color: var(--color-primary);
+}
+
+.ctaCard button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .amount {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .comparisonTable th,
+  .comparisonTable td {
+    padding: var(--spacing-2);
+    font-size: var(--font-size-xs);
+  }
+  
+  .trustBadges {
+    gap: var(--spacing-4);
+  }
+  
+  .trustBadge {
+    font-size: var(--font-size-xs);
+  }
+}

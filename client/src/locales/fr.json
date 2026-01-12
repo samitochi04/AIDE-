@@ -1,0 +1,1384 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "back": "Retour",
+    "submit": "Envoyer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "viewAll": "Voir tout",
+    "learnMore": "En savoir plus",
+    "getStarted": "Commencer",
+    "seeMore": "Voir plus",
+    "showLess": "Voir moins",
+    "or": "ou",
+    "and": "et",
+    "yes": "Oui",
+    "no": "Non",
+    "upgrade": "Passer Premium",
+    "logout": "Se déconnecter",
+    "upload": "Télécharger",
+    "all": "Tous"
+  },
+  
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  
+  "nav": {
+    "home": "Accueil",
+    "aides": "Aides",
+    "features": "Fonctionnalités",
+    "housing": "Logement",
+    "procedures": "Démarches",
+    "chat": "Assistant IA",
+    "blog": "Blog",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "premium": "Premium",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "logout": "Se déconnecter",
+    "dashboard": "Tableau de bord"
+  },
+  
+  "accessibility": {
+    "switchLanguage": "Changer de langue",
+    "toggleTheme": "Changer le thème"
+  },
+  
+  "auth": {
+    "login": {
+      "title": "Content de vous revoir",
+      "subtitle": "Connectez-vous pour accéder à votre tableau de bord"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Commencez à découvrir vos aides dès aujourd'hui"
+    },
+    "email": "Adresse email",
+    "emailPlaceholder": "vous@exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Jean Dupont",
+    "passwordHint": "Au moins 8 caractères",
+    "forgotPassword": "Mot de passe oublié ?",
+    "loginBtn": "Se connecter",
+    "registerBtn": "Créer un compte",
+    "continueWithGoogle": "Continuer avec Google",
+    "magicLink": "Lien magique",
+    "sendMagicLink": "Envoyer le lien magique",
+    "noAccount": "Pas encore de compte ?",
+    "registerLink": "S'inscrire",
+    "hasAccount": "Déjà un compte ?",
+    "loginLink": "Se connecter",
+    "termsNotice": "En continuant, vous acceptez nos",
+    "checkEmail": "Vérifiez votre email",
+    "magicLinkSent": "Nous avons envoyé un lien magique à {{email}}. Cliquez sur le lien pour vous connecter.",
+    "verifyEmail": "Vérifiez votre email",
+    "verificationSent": "Nous avons envoyé un email de vérification à {{email}}. Veuillez vérifier votre email pour continuer.",
+    "goToLogin": "Aller à la connexion",
+    "signOut": "Se déconnecter",
+    "verifying": "Vérification...",
+    "pleaseWait": "Veuillez patienter pendant que nous vérifions vos identifiants",
+    "verified": "Vérifié !",
+    "redirecting": "Redirection vers votre tableau de bord...",
+    "backToLogin": "Retour à la connexion",
+    "errors": {
+      "invalidCredentials": "Email ou mot de passe invalide",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer un email valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "nameRequired": "Le nom complet est requis",
+      "registrationFailed": "L'inscription a échoué. Veuillez réessayer.",
+      "magicLinkFailed": "Échec de l'envoi du lien magique. Veuillez réessayer.",
+      "googleFailed": "Échec de la connexion Google. Veuillez réessayer.",
+      "callbackTimeout": "La vérification a expiré. Veuillez réessayer.",
+      "callbackFailed": "La vérification a échoué. Veuillez vous reconnecter.",
+      "verificationFailed": "Échec de la vérification"
+    }
+  },
+  
+  "seo": {
+    "home": {
+      "title": "AIDE+ | Découvrez toutes les aides auxquelles vous avez droit en France",
+      "description": "AIDE+ vous guide dans vos démarches administratives en France. Simulation gratuite, assistant IA personnalisé et guides étape par étape.",
+      "keywords": "aides France, CAF, APL, RSA, démarches administratives, étrangers France, simulation aides"
+    },
+    "simulation": {
+      "title": "Simulation gratuite des aides | AIDE+",
+      "description": "Découvrez en 5 minutes toutes les aides financières auxquelles vous avez droit en France. Simulation 100% gratuite et personnalisée."
+    },
+    "pricing": {
+      "title": "Tarifs et Abonnements | AIDE+",
+      "description": "Découvrez nos offres d'abonnement AIDE+. Accédez à toutes les aides, assistant IA illimité et guides personnalisés."
+    },
+    "blog": {
+      "title": "Blog et Guides | AIDE+",
+      "description": "Conseils, tutoriels et guides pour vous aider dans vos démarches administratives en France."
+    },
+    "contact": {
+      "title": "Contactez-nous | AIDE+",
+      "description": "Une question ? Contactez l'équipe AIDE+ pour obtenir de l'aide sur vos démarches administratives."
+    }
+  },
+  
+  "landing": {
+    "hero": {
+      "badge": "Pour les étrangers en France",
+      "title": "Découvrez toutes les aides",
+      "titleHighlight": "auxquelles vous avez droit",
+      "subtitle": "AIDE+ vous accompagne dans vos démarches administratives en France avec une simulation personnalisée et un assistant IA disponible 24/7.",
+      "cta": "Commencer la simulation",
+      "secondaryCta": "Voir les tarifs",
+      "stats": {
+        "aides": "Aides disponibles",
+        "users": "Utilisateurs",
+        "satisfaction": "Satisfaction"
+      }
+    },
+    "features": {
+      "label": "Fonctionnalités",
+      "title": "Tout ce dont vous avez besoin",
+      "subtitle": "Une plateforme complète pour vous accompagner dans toutes vos démarches administratives en France.",
+      "discover": {
+        "title": "Découvrez vos aides",
+        "description": "Simulation personnalisée pour identifier toutes les aides financières auxquelles vous êtes éligible."
+      },
+      "ai": {
+        "title": "Assistant IA 24/7",
+        "description": "Posez vos questions et obtenez des réponses personnalisées à tout moment grâce à notre assistant intelligent."
+      },
+      "procedures": {
+        "title": "Guides pas à pas",
+        "description": "Des guides détaillés pour chaque démarche administrative, de la demande de titre de séjour à la CAF."
+      },
+      "housing": {
+        "title": "Aide au logement",
+        "description": "Trouvez un logement et découvrez les aides au logement comme l'APL auxquelles vous avez droit."
+      },
+      "bilingual": {
+        "title": "Français & Anglais",
+        "description": "Toute la plateforme est disponible en français et en anglais pour vous accompagner au mieux."
+      },
+      "secure": {
+        "title": "Données sécurisées",
+        "description": "Vos données sont chiffrées et protégées. Nous ne les partageons jamais avec des tiers."
+      }
+    },
+    "simulation": {
+      "label": "Simulation gratuite",
+      "title": "Découvrez vos aides en 5 minutes",
+      "description": "Notre simulation analyse votre situation et identifie automatiquement toutes les aides financières auxquelles vous êtes éligible.",
+      "benefit1": "Simulation 100% gratuite",
+      "benefit2": "Résultats personnalisés",
+      "benefit3": "Aucune inscription requise",
+      "cardTitle": "Commencez maintenant",
+      "cardDescription": "Sélectionnez votre région pour commencer la simulation gratuite.",
+      "regionLabel": "Votre région",
+      "regionPlaceholder": "Sélectionnez une région",
+      "startButton": "Démarrer la simulation",
+      "note": "Vos données sont anonymes et sécurisées"
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Questions fréquentes",
+      "subtitle": "Trouvez les réponses aux questions les plus courantes sur AIDE+.",
+      "q1": "AIDE+ est-il gratuit ?",
+      "a1": "La simulation de base est entièrement gratuite. Pour accéder à l'assistant IA illimité et aux fonctionnalités avancées, découvrez nos offres Premium.",
+      "q2": "Mes données sont-elles sécurisées ?",
+      "a2": "Absolument. Toutes vos données sont chiffrées et stockées de manière sécurisée. Nous ne partageons jamais vos informations avec des tiers.",
+      "q3": "Comment fonctionne la simulation ?",
+      "a3": "Répondez à quelques questions sur votre situation (âge, statut, revenus...) et notre algorithme calcule automatiquement les aides auxquelles vous êtes éligible.",
+      "q4": "Puis-je utiliser AIDE+ si je ne parle pas français ?",
+      "a4": "Oui ! AIDE+ est disponible en français et en anglais. Vous pouvez changer la langue à tout moment.",
+      "q5": "Comment contacter le support ?",
+      "a5": "Vous pouvez nous contacter via la page Contact ou directement par email. Les utilisateurs Premium bénéficient d'un support prioritaire.",
+      "q6": "Puis-je annuler mon abonnement à tout moment ?",
+      "a6": "Oui, vous pouvez annuler votre abonnement Premium à tout moment. Vous conserverez l'accès jusqu'à la fin de votre période de facturation."
+    }
+  },
+  
+  "pricing": {
+    "label": "Tarifs",
+    "title": "Choisissez votre plan",
+    "subtitle": "Commencez gratuitement et passez à Premium quand vous le souhaitez.",
+    "popular": "Plus populaire",
+    "month": "mois",
+    "free": {
+      "name": "Gratuit",
+      "description": "Pour découvrir AIDE+",
+      "feature1": "Simulation de base",
+      "feature2": "3 messages IA par jour",
+      "feature3": "Accès aux guides",
+      "feature4": "Support communautaire",
+      "cta": "Commencer gratuitement"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "Pour un accompagnement complet",
+      "feature1": "Simulation complète",
+      "feature2": "Assistant IA illimité",
+      "feature3": "Tous les guides détaillés",
+      "feature4": "Alertes personnalisées",
+      "feature5": "Support prioritaire",
+      "feature6": "Export des données",
+      "cta": "Passer à Premium"
+    }
+  },
+  
+  "footer": {
+    "description": "AIDE+ vous accompagne dans vos démarches administratives en France.",
+    "product": "Produit",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "simulation": "Simulation",
+    "aides": "Aides",
+    "procedures": "Démarches",
+    "housing": "Logement",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "allRightsReserved": "Tous droits réservés.",
+    "madeWith": "Fait avec",
+    "inFrance": "en France"
+  },
+  
+  "dashboard": {
+    "search": "Rechercher...",
+    "searchPlaceholder": "Rechercher des pages, fonctionnalités...",
+    "noSearchResults": "Aucun résultat trouvé",
+    "notifications": "Notifications",
+    "noNotifications": "Aucune notification",
+    "markAllRead": "Tout marquer comme lu",
+    "user": "Utilisateur",
+    "sidebar": {
+      "main": "Principal",
+      "account": "Compte",
+      "overview": "Aperçu",
+      "aides": "Mes Aides",
+      "housing": "Logement",
+      "procedures": "Démarches",
+      "tutorials": "Tutoriels",
+      "chat": "Assistant IA",
+      "simulation": "Simulation",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "affiliate": "Parrainage",
+      "upgrade": "Passer Premium",
+      "upgradeText": "Accès à toutes les fonctionnalités"
+    },
+    "affiliate": {
+      "title": "Programme de Parrainage",
+      "subtitle": "Partagez AIDE+ et gagnez des commissions sur chaque abonnement",
+      "dashboardSubtitle": "Suivez vos parrainages, vos gains et gérez vos paiements",
+      "joinProgram": "Rejoignez Notre Programme de Parrainage",
+      "programDescription": "Gagnez de l'argent en partageant AIDE+ avec vos amis, votre famille et votre réseau. Recevez une commission fixe pour chaque personne qui s'abonne avec votre lien de parrainage.",
+      "commissionRates": "Taux de Commission",
+      "perReferral": "par parrainage",
+      "benefit1": "Gagnez de l'argent réel pour chaque abonnement",
+      "benefit2": "Obtenez votre lien de parrainage unique",
+      "benefit3": "Suivez vos performances en temps réel",
+      "benefit4": "Paiements automatiques faciles",
+      "registerTitle": "Candidature au Programme d'Affiliation",
+      "companyName": "Nom de l'entreprise/blog (optionnel)",
+      "companyNamePlaceholder": "Nom de votre entreprise ou blog",
+      "website": "URL du site web (optionnel)",
+      "websitePlaceholder": "https://votresite.com",
+      "contactEmail": "Email de contact",
+      "contactEmailPlaceholder": "votre@email.com",
+      "description": "Comment allez-vous promouvoir AIDE+ ? (optionnel)",
+      "descriptionPlaceholder": "Parlez-nous de votre audience et comment vous comptez partager AIDE+...",
+      "registerBtn": "Postuler Maintenant",
+      "registerSuccess": "Votre candidature a été soumise ! Nous l'examinerons prochainement.",
+      "registerError": "Échec de la soumission. Veuillez réessayer.",
+      "pendingTitle": "Candidature en Attente",
+      "pendingText": "Votre candidature est en cours d'examen. Nous vous notifierons dès qu'elle sera approuvée.",
+      "rejectedTitle": "Candidature Non Approuvée",
+      "rejectedText": "Malheureusement, votre candidature n'a pas été approuvée. Veuillez contacter le support pour plus d'informations.",
+      "yourReferralLink": "Votre Lien de Parrainage",
+      "linkDescription": "Partagez ce lien avec votre audience. Quand quelqu'un s'inscrit et s'abonne, vous gagnez une commission !",
+      "copyLink": "Copier le Lien",
+      "linkCopied": "Lien copié dans le presse-papiers !",
+      "codeCopied": "Code copié dans le presse-papiers !",
+      "copyError": "Échec de la copie. Veuillez réessayer.",
+      "yourCode": "Votre Code :",
+      "totalClicks": "Clics Totaux",
+      "totalReferrals": "Inscriptions Totales",
+      "conversions": "Abonnements",
+      "conversionRate": "Taux de Conversion",
+      "earnings": "Vos Gains",
+      "totalEarnings": "Total Gagné",
+      "pendingEarnings": "En Attente",
+      "paidEarnings": "Versé",
+      "autoPayoutNote": "Le paiement automatique est déclenché après {{count}} abonnements réussis de vos parrainages.",
+      "minimumPayout": "Montant minimum de retrait : {{amount}}€",
+      "requestPayout": "Demander un Retrait",
+      "payoutRequested": "Demande de retrait soumise avec succès !",
+      "payoutError": "Échec de la demande de retrait. Veuillez réessayer.",
+      "payoutSettings": "Paramètres de Paiement",
+      "payoutMethod": "Méthode de Paiement",
+      "payoutMethods": {
+        "paypal": "PayPal",
+        "bankTransfer": "Virement Bancaire (SEPA)",
+        "stripe": "Stripe"
+      },
+      "paypalEmail": "Email PayPal",
+      "paypalEmailPlaceholder": "votre@paypal.com",
+      "accountHolder": "Nom du Titulaire du Compte",
+      "accountHolderPlaceholder": "Jean Dupont",
+      "iban": "IBAN",
+      "ibanPlaceholder": "FR76 1234 5678 9012 3456 7890 123",
+      "bankName": "Nom de la Banque",
+      "bankNamePlaceholder": "Nom de votre banque",
+      "settingsSaved": "Paramètres enregistrés avec succès !",
+      "settingsError": "Échec de l'enregistrement des paramètres. Veuillez réessayer.",
+      "payoutHistory": "Historique des Paiements",
+      "payoutStatus": {
+        "requested": "Demandé",
+        "processing": "En cours",
+        "completed": "Terminé",
+        "failed": "Échoué"
+      },
+      "howItWorks": "Comment Ça Marche",
+      "step1Title": "Partagez Votre Lien",
+      "step1Text": "Partagez votre lien de parrainage unique avec vos amis, votre famille ou votre audience.",
+      "step2Title": "Ils S'inscrivent",
+      "step2Text": "Quand quelqu'un clique sur votre lien et crée un compte, il est enregistré comme votre filleul.",
+      "step3Title": "Ils S'abonnent",
+      "step3Text": "Quand votre filleul s'abonne à un forfait payant, vous gagnez une commission.",
+      "step4Title": "Recevez Votre Paiement",
+      "step4Text": "Une fois le seuil minimum atteint, demandez un retrait vers votre méthode préférée.",
+      "subscriptionTier": "Niveau d'Abonnement",
+      "yourCommission": "Votre Commission"
+    },
+    "overview": {
+      "title": "Tableau de bord",
+      "welcome": "Bienvenue, {{name}} !",
+      "subtitle": "Voici un aperçu de vos aides et tâches.",
+      "newSimulation": "Nouvelle Simulation",
+      "eligibleAides": "Aides Éligibles",
+      "potentialSavings": "Économies Potentielles",
+      "completedProcedures": "Démarches Complétées",
+      "savedHousing": "Logements Enregistrés",
+      "recentAides": "Aides Récentes",
+      "upcomingTasks": "Tâches à Venir",
+      "quickActions": "Actions Rapides",
+      "askAI": "Demander à l'IA",
+      "findHousing": "Trouver un Logement",
+      "startProcedure": "Démarrer une Démarche",
+      "updateProfile": "Mettre à Jour le Profil",
+      "noAidesYet": "Aucune aide découverte",
+      "runFirstSimulation": "Lancer votre première simulation",
+      "noProceduresYet": "Aucune démarche en cours",
+      "exploreProcedures": "Explorer les démarches"
+    },
+    "tutorials": {
+      "title": "Tutoriels & Ressources",
+      "subtitle": "Regardez des tutoriels et apprenez à tirer le meilleur parti d'AIDE+",
+      "searchPlaceholder": "Rechercher des tutoriels...",
+      "noContent": "Aucun contenu trouvé",
+      "noContentDesc": "Essayez d'ajuster vos filtres ou revenez plus tard.",
+      "views": "vues",
+      "types": {
+        "all": "Tous",
+        "video": "Vidéo",
+        "guide": "Guide",
+        "article": "Article",
+        "infographic": "Infographie"
+      }
+    },
+    "status": {
+      "eligible": "Éligible",
+      "pending": "En attente",
+      "ineligible": "Non éligible"
+    },
+    "aides": {
+      "title": "Mes Aides",
+      "subtitle": "Consultez et gérez toutes les aides auxquelles vous êtes éligible",
+      "runNewSimulation": "Nouvelle Simulation",
+      "searchPlaceholder": "Rechercher des aides...",
+      "lastSimulation": "Dernière simulation",
+      "noSimulation": "Aucune simulation",
+      "noSimulationDesc": "Faites une simulation pour découvrir les aides auxquelles vous êtes éligible.",
+      "runFirstSimulation": "Lancer une simulation",
+      "viewEligible": "Éligibles",
+      "viewSaved": "Enregistrées",
+      "noSavedAides": "Aucune aide enregistrée",
+      "browseEligible": "Voir les aides éligibles",
+      "learnMore": "En savoir plus",
+      "updateStatus": "Mettre à jour le statut",
+      "dates": "Dates",
+      "savedOn": "Enregistrée le",
+      "appliedOn": "Demande faite le",
+      "stats": {
+        "total": "Total des Aides",
+        "eligible": "Éligibles",
+        "potential": "Potentiel Mensuel",
+        "saved": "Enregistrées",
+        "applied": "Demandes faites"
+      },
+      "filters": {
+        "allStatuses": "Tous les statuts",
+        "eligible": "Éligible",
+        "pending": "En attente",
+        "notEligible": "Non éligible"
+      },
+      "sort": {
+        "byAmount": "Par montant",
+        "byName": "Par nom",
+        "byStatus": "Par statut"
+      },
+      "categories": {
+        "all": "Toutes",
+        "housing": "Logement",
+        "family": "Famille",
+        "employment": "Emploi",
+        "social": "Social",
+        "health": "Santé",
+        "education": "Éducation",
+        "transport": "Transport"
+      },
+      "status": {
+        "eligible": "Éligible",
+        "not-eligible": "Non Éligible",
+        "pending": "En attente",
+        "applied": "Demande faite"
+      },
+      "savedStatus": {
+        "saved": "Enregistrée",
+        "applied": "Demande faite",
+        "received": "Reçue",
+        "rejected": "Refusée"
+      },
+      "requirements": "Conditions requises",
+      "processingTime": "Délai de traitement",
+      "showMore": "Voir plus",
+      "showLess": "Voir moins",
+      "save": "Enregistrer",
+      "unsave": "Retirer des favoris",
+      "startApplication": "Faire la demande",
+      "free": "Gratuit",
+      "noResults": "Aucune aide ne correspond à vos filtres",
+      "clearFilters": "Effacer les filtres"
+    },
+    "housing": {
+      "title": "Logement",
+      "subtitle": "Trouvez un logement et découvrez toutes les plateformes disponibles en France",
+      "currentSituation": "Situation Actuelle",
+      "renter": "Locataire",
+      "owner": "Propriétaire",
+      "monthlyRent": "Loyer Mensuel",
+      "region": "Région",
+      "surface": "Surface",
+      "leaseContract": "Contrat de bail",
+      "monthlyAides": "Aides au Logement Mensuelles",
+      "effectiveRent": "Loyer Effectif",
+      "yourAides": "Vos Aides au Logement",
+      "addAide": "Ajouter une Aide",
+      "nextPayment": "Prochain versement",
+      "estimatedDecision": "Décision estimée",
+      "rentCalculator": "Calculateur de Loyer",
+      "calculatorDescription": "Voyez combien vous paierez réellement après les aides",
+      "yourRent": "Votre Loyer",
+      "grossRent": "Loyer Brut",
+      "housingAides": "Aides au Logement",
+      "youPay": "Vous Payez",
+      "helpfulResources": "Ressources Utiles",
+      "needHelp": "Besoin d'aide ?",
+      "needHelpDescription": "Posez des questions à notre assistant IA sur les aides au logement et la recherche d'un logement en France.",
+      "askAssistant": "Demander à l'Assistant IA",
+      "platformsAvailable": "Plateformes Disponibles",
+      "savedPlatforms": "Plateformes Sauvegardées",
+      "guarantorServices": "Services de Garantie",
+      "guarantorDescription": "Obtenez un garant pour votre dossier de location sans garant personnel.",
+      "searchPlatforms": "Rechercher des plateformes...",
+      "noPlatformsFound": "Aucune plateforme trouvée",
+      "visitSite": "Visiter le site",
+      "noFees": "Sans frais",
+      "noAgencyFees": "Sans frais d'agence",
+      "mobileApp": "Application Mobile",
+      "platformSaved": "Plateforme ajoutée aux favoris",
+      "platformUnsaved": "Plateforme retirée des favoris",
+      "save": "Sauvegarder",
+      "unsave": "Retirer",
+      "tipsTitle": "Conseils & Astuces",
+      "forForeigners": "Pour les Étrangers",
+      "features": "Fonctionnalités",
+      "pros": "Avantages",
+      "cons": "Inconvénients",
+      "tips": "Conseils",
+      "eligibility": "Éligibilité",
+      "moreAvailable": "{{count}} autres plateformes disponibles",
+      "moreGuarantors": "{{count}} autres garants disponibles",
+      "upgradeToUnlock": "Passez à un abonnement supérieur pour débloquer toutes les plateformes",
+      "saveLimitReached": "Limite de sauvegardes atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "saveLimitMessage": "Vous avez sauvegardé {{current}} sur {{limit}} plateformes autorisées avec votre abonnement."
+    },
+    "procedures": {
+      "title": "Mes Démarches",
+      "subtitle": "Suivez et gérez vos demandes d'aides",
+      "startNew": "Nouvelle Démarche",
+      "startFirst": "Créer ma première démarche",
+      "noProcedures": "Vous n'avez pas encore de démarches",
+      "stats": {
+        "total": "Total",
+        "inProgress": "En Cours",
+        "pending": "En Attente",
+        "completed": "Terminées"
+      },
+      "filters": {
+        "all": "Toutes",
+        "inprogress": "En Cours",
+        "pending": "En Attente",
+        "notstarted": "Non Commencées",
+        "completed": "Terminées"
+      },
+      "status": {
+        "notStarted": "Non Commencée",
+        "inProgress": "En Cours",
+        "pending": "En Attente",
+        "completed": "Terminée",
+        "rejected": "Refusée",
+        "unknown": "Inconnu"
+      },
+      "types": {
+        "aide_application": "Demande d'aide",
+        "document_request": "Demande de document",
+        "account_creation": "Création de compte",
+        "renewal": "Renouvellement",
+        "appeal": "Recours",
+        "other": "Autre"
+      },
+      "deadline": "Date limite",
+      "created": "Créé le",
+      "expectedDecision": "Décision prévue",
+      "step": "Étape",
+      "stepsOverview": "Aperçu des Étapes",
+      "notes": "Notes",
+      "changeStatus": "Changer le statut",
+      "markCompleted": "Marquer comme terminée",
+      "markPending": "Marquer en attente",
+      "markRejected": "Marquer comme refusée",
+      "requiredDocuments": "Documents Requis",
+      "showMore": "Voir les détails",
+      "showLess": "Masquer les détails",
+      "continue": "Continuer",
+      "start": "Commencer",
+      "trackStatus": "Suivre le Statut",
+      "viewDetails": "Voir les Détails",
+      "noResults": "Aucune démarche ne correspond à vos filtres",
+      "newProcedure": "Nouvelle Démarche",
+      "create": "Créer",
+      "form": {
+        "name": "Nom de la démarche",
+        "namePlaceholder": "Ex: Demande APL, Renouvellement CSS...",
+        "type": "Type de démarche",
+        "relatedAide": "Aide associée (optionnel)",
+        "noAide": "Aucune aide associée",
+        "provider": "Organisme",
+        "providerPlaceholder": "Ex: CAF, CPAM, Pôle Emploi...",
+        "deadline": "Date limite (optionnel)",
+        "notes": "Notes",
+        "notesPlaceholder": "Notes ou informations supplémentaires..."
+      },
+      "deleteConfirm": {
+        "title": "Supprimer la démarche",
+        "message": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible."
+      },
+      "errorFetching": "Erreur lors du chargement des démarches",
+      "errorCreating": "Erreur lors de la création de la démarche",
+      "errorUpdating": "Erreur lors de la mise à jour",
+      "errorDeleting": "Erreur lors de la suppression",
+      "created": "Démarche créée avec succès",
+      "statusUpdated": "Statut mis à jour",
+      "stepUpdated": "Étape mise à jour",
+      "deleted": "Démarche supprimée",
+      "nameRequired": "Le nom de la démarche est requis",
+      "limitReached": "Limite de démarches atteinte",
+      "upgradeToContinue": "Passez à un forfait supérieur",
+      "limitMessage": "Vous avez créé {{current}} sur {{limit}} démarches autorisées avec votre abonnement."
+    },
+    "chat": {
+      "title": "Assistant IA",
+      "pageTitle": "Assistant IA",
+      "history": "Historique",
+      "newChat": "Nouvelle Discussion",
+      "online": "En ligne",
+      "placeholder": "Posez-moi une question sur les aides en France...",
+      "disclaimer": "L'IA peut faire des erreurs. Vérifiez les informations importantes.",
+      "suggestionsLabel": "Essayez de demander :",
+      "welcomeMessage": "Bonjour ! Je suis AIDE+, votre assistant personnel pour naviguer dans les systèmes administratifs français. Je peux vous aider avec :\n\n• **Les aides gouvernementales** - CAF, APL, RSA, Prime d'activité, etc.\n• **Les démarches administratives** - Visas, titres de séjour, CPAM, etc.\n• **L'aide au logement** - Trouver un logement, garants, droits des locataires\n\nComment puis-je vous aider aujourd'hui ?",
+      "loadError": "Échec du chargement de la conversation",
+      "deleted": "Conversation supprimée",
+      "deleteError": "Échec de la suppression de la conversation",
+      "sendError": "Échec de l'envoi du message",
+      "errorResponse": "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
+      "noHistory": "Aucune conversation",
+      "untitled": "Nouvelle conversation",
+      "messages": "messages",
+      "loadingMessages": "Chargement des messages...",
+      "sources": "Sources",
+      "limitReached": "Limite quotidienne de messages atteinte",
+      "limitMessage": "Vous avez envoyé {{current}} sur {{limit}} messages IA autorisés aujourd'hui avec votre plan.",
+      "upgradeDescription": "Passez à un forfait supérieur pour plus de messages IA quotidiens et débloquer les fonctionnalités premium.",
+      "suggestions": {
+        "housing": "À quelles aides au logement suis-je éligible ?",
+        "eligibility": "Vérifier mon éligibilité aux aides de la CAF",
+        "documents": "Quels documents faut-il pour l'APL ?",
+        "timeline": "Combien de temps prend une demande d'APL ?"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Gérez vos informations personnelles",
+      "noName": "Ajoutez votre nom",
+      "uploadPhoto": "Télécharger une Photo",
+      "removePhoto": "Supprimer la Photo",
+      "saved": "Profil enregistré avec succès",
+      "saveError": "Échec de l'enregistrement du profil",
+      "avatarUploaded": "Photo téléchargée avec succès",
+      "avatarUploadError": "Échec du téléchargement de la photo",
+      "avatarDeleted": "Photo supprimée avec succès",
+      "avatarDeleteError": "Échec de la suppression de la photo",
+      "invalidFileType": "Veuillez télécharger une image valide (JPEG, PNG, GIF ou WebP)",
+      "fileTooLarge": "La taille du fichier doit être inférieure à 5 Mo",
+      "stats": {
+        "aidesFound": "Aides Trouvées",
+        "procedures": "Démarches",
+        "savings": "Économies Potentielles"
+      },
+      "subscription": {
+        "title": "Abonnement",
+        "upgradeText": "Passez à Premium pour un assistant IA illimité et un support prioritaire.",
+        "upgrade": "Passer à Premium",
+        "activeText": "Merci pour votre abonnement ! Vous avez accès à toutes les fonctionnalités premium."
+      },
+      "subscriptionTiers": {
+        "free": "Gratuit",
+        "basic": "Basic",
+        "plus": "Plus",
+        "premium": "Premium",
+        "enterprise": "Enterprise"
+      },
+      "personalInfo": "Informations Personnelles",
+      "addressInfo": "Adresse",
+      "preferences": "Préférences",
+      "statusOptions": {
+        "student": "Étudiant",
+        "employed": "Employé",
+        "unemployed": "Sans emploi",
+        "retired": "Retraité",
+        "other": "Autre"
+      },
+      "nationalityOptions": {
+        "french": "Français",
+        "eu": "Citoyen UE",
+        "nonEu": "Hors UE",
+        "other": "Autre"
+      },
+      "fields": {
+        "fullName": "Nom Complet",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "birthDate": "Date de Naissance",
+        "status": "Statut",
+        "nationality": "Nationalité",
+        "countryOfOrigin": "Pays d'Origine",
+        "region": "Région",
+        "department": "Département",
+        "city": "Ville",
+        "postalCode": "Code Postal",
+        "language": "Langue"
+      },
+      "placeholders": {
+        "fullName": "Entrez votre nom complet",
+        "phone": "+33 6 12 34 56 78",
+        "countryOfOrigin": "Entrez le pays",
+        "selectRegion": "Sélectionnez une région",
+        "department": "ex: Paris",
+        "city": "Ville",
+        "postalCode": "75001"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez vos préférences et votre compte",
+      "appearance": {
+        "title": "Apparence",
+        "theme": "Thème",
+        "themeDesc": "Choisissez votre thème de couleur préféré",
+        "language": "Langue",
+        "languageDesc": "Sélectionnez votre langue préférée"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "email": "Notifications par e-mail",
+        "emailDesc": "Recevoir des mises à jour par e-mail",
+        "newAides": "Alertes nouvelles aides",
+        "newAidesDesc": "Être notifié quand de nouvelles aides correspondent à votre profil",
+        "deadlines": "Rappels de dates limites",
+        "deadlinesDesc": "Rappels pour les dates limites de demandes",
+        "marketing": "Mises à jour du produit",
+        "marketingDesc": "Actualités et annonces de fonctionnalités",
+        "updated": "Préférences de notification mises à jour"
+      },
+      "privacy": {
+        "title": "Confidentialité & Sécurité",
+        "analytics": "Analyses d'utilisation",
+        "analyticsDesc": "Aidez-nous à améliorer AIDE+ avec des données d'utilisation anonymes",
+        "changePassword": "Changer le Mot de Passe"
+      },
+      "password": {
+        "title": "Changer le Mot de Passe",
+        "current": "Mot de passe actuel",
+        "new": "Nouveau mot de passe",
+        "confirm": "Confirmer le nouveau mot de passe",
+        "submit": "Mettre à jour le mot de passe",
+        "success": "Mot de passe changé avec succès",
+        "error": "Échec du changement de mot de passe",
+        "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+        "mismatch": "Les mots de passe ne correspondent pas"
+      },
+      "data": {
+        "title": "Données & Compte",
+        "export": "Exporter vos données",
+        "exportDesc": "Téléchargez toutes vos données au format JSON",
+        "exportDescPdf": "Demandez un export PDF de toutes vos données. Vous le recevrez par e-mail. (1 demande par jour)",
+        "download": "Télécharger",
+        "requestExport": "Demander l'export",
+        "exportRequested": "Export demandé ! Vous recevrez vos données par e-mail sous peu.",
+        "exportRateLimit": "Vous ne pouvez demander qu'un export par jour. Veuillez réessayer demain.",
+        "exportPremiumOnly": "L'export de données est uniquement disponible avec le plan Ultimate.",
+        "upgradeRequired": "Fonctionnalité Premium",
+        "upgradeToContinue": "Passez au niveau supérieur",
+        "signOut": "Déconnexion",
+        "signOutDesc": "Se déconnecter de votre compte sur cet appareil",
+        "dangerZone": "Zone Dangereuse",
+        "dangerDesc": "Supprimez définitivement votre compte et toutes les données associées. Cette action est irréversible.",
+        "deleteAccount": "Supprimer le Compte"
+      },
+      "deleteModal": {
+        "title": "Supprimer le Compte ?",
+        "description": "Cela supprimera définitivement votre compte et toutes vos données. Cette action est irréversible.",
+        "typeConfirm": "Tapez DELETE pour confirmer :",
+        "typeDelete": "Veuillez taper DELETE pour confirmer",
+        "confirm": "Oui, Supprimer Mon Compte",
+        "success": "Votre compte a été supprimé"
+      }
+    }
+  },
+  
+  "simulation": {
+    "title": "Simulation des Aides",
+    "step": "Étape {{current}} sur {{total}}",
+    "calculating": "Calcul de vos aides en cours...",
+    "seeResults": "Voir mes résultats",
+    "errors": {
+      "required": "Ce champ est obligatoire"
+    },
+    "steps": {
+      "personal": {
+        "title": "Informations Personnelles",
+        "description": "Parlez-nous un peu de vous"
+      },
+      "residence": {
+        "title": "Statut de Résidence",
+        "description": "Votre situation de résidence en France"
+      },
+      "family": {
+        "title": "Situation Familiale",
+        "description": "La composition de votre foyer"
+      },
+      "income": {
+        "title": "Revenus",
+        "description": "Votre situation financière"
+      },
+      "housing": {
+        "title": "Logement",
+        "description": "Votre situation de logement"
+      }
+    },
+    "fields": {
+      "age": "Âge",
+      "agePlaceholder": "Votre âge",
+      "nationality": "Nationalité",
+      "nationalityPlaceholder": "Sélectionnez votre nationalité",
+      "region": "Région",
+      "regionPlaceholder": "Sélectionnez votre région",
+      "residenceStatus": "Statut de résidence",
+      "residenceStatusPlaceholder": "Sélectionnez votre statut",
+      "yearsInFrance": "Années en France",
+      "yearsInFrancePlaceholder": "Nombre d'années",
+      "childrenCount": "Nombre d'enfants",
+      "childrenCountPlaceholder": "Combien d'enfants ?",
+      "monthlyIncome": "Revenus mensuels",
+      "monthlyIncomePlaceholder": "Revenus mensuels nets",
+      "employmentStatus": "Statut d'emploi",
+      "employmentStatusPlaceholder": "Sélectionnez votre statut",
+      "rent": "Loyer mensuel",
+      "rentPlaceholder": "Votre loyer mensuel"
+    },
+    "options": {
+      "eu": "Citoyen UE",
+      "nonEu": "Citoyen hors UE",
+      "french": "Citoyen français",
+      "student": "Étudiant",
+      "worker": "Travailleur",
+      "refugee": "Réfugié",
+      "familyVisa": "Visa familial",
+      "other": "Autre",
+      "hasChildren": "J'ai des enfants",
+      "noChildren": "Pas d'enfants",
+      "employed": "Employé",
+      "unemployed": "Sans emploi",
+      "selfEmployed": "Indépendant",
+      "retired": "Retraité",
+      "renter": "Locataire",
+      "owner": "Propriétaire",
+      "hosted": "Hébergé (famille/amis)",
+      "homeless": "Sans domicile fixe"
+    },
+    "results": {
+      "title": "Vos Résultats",
+      "youCouldReceive": "Vous pourriez recevoir",
+      "annually": "{{amount}} par an",
+      "eligibleFor": "Vous êtes éligible à {{count}} aides",
+      "eligibleAides": "Aides Éligibles",
+      "learnMore": "En savoir plus",
+      "startProcedure": "Démarrer la démarche",
+      "createAccountToSee": "Créez un compte pour voir les détails",
+      "saveResults": "Sauvegarder mes résultats",
+      "ctaTitle": "Sauvegardez vos résultats",
+      "ctaDescription": "Créez un compte gratuit pour sauvegarder les résultats de votre simulation et suivre vos aides.",
+      "createFreeAccount": "Créer un compte gratuit",
+      "goToDashboard": "Aller au tableau de bord",
+      "dashboardDescription": "Suivez vos aides et démarrez vos démarches depuis votre tableau de bord.",
+      "newSimulation": "Faire une nouvelle simulation",
+      "moreAidesAvailable": "{{count}} autres aides disponibles",
+      "upgradeToSeeAll": "Passez à un abonnement supérieur pour voir toutes les aides auxquelles vous êtes éligible"
+    }
+  },
+  
+  "pricingPage": {
+    "seo": {
+      "title": "Tarifs",
+      "description": "Choisissez le plan qui vous convient. Commencez gratuitement et passez à Premium pour un accès complet."
+    },
+    "badge": "Tarification simple",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "save": "-17%",
+    "billedYearly": "Facturé {{amount}}€ par an",
+    "comparison": {
+      "title": "Comparer les plans",
+      "feature": "Fonctionnalité",
+      "simulation": "Simulation des aides",
+      "basic": "Basique",
+      "complete": "Complète",
+      "aiMessages": "Messages IA",
+      "unlimited": "Illimité",
+      "guides": "Guides pas-à-pas",
+      "alerts": "Alertes personnalisées",
+      "support": "Support",
+      "community": "Communauté",
+      "priority": "Prioritaire",
+      "export": "Export des données"
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": "Puis-je annuler mon abonnement à tout moment ?",
+      "a1": "Oui, vous pouvez annuler votre abonnement Premium à tout moment. Vous conserverez l'accès jusqu'à la fin de votre période de facturation.",
+      "q2": "Mon paiement est-il sécurisé ?",
+      "a2": "Absolument. Nous utilisons Stripe pour le traitement des paiements, ce qui garantit le plus haut niveau de sécurité pour vos transactions.",
+      "q3": "Puis-je passer du mensuel à l'annuel ?",
+      "a3": "Oui, vous pouvez changer de période de facturation à tout moment. Le changement prendra effet au début de votre prochain cycle.",
+      "q4": "Qu'advient-il de mes données si j'annule ?",
+      "a4": "Vos données vous appartiennent. Si vous annulez, vous pouvez exporter toutes vos données avant la fin de votre abonnement."
+    },
+    "cta": {
+      "title": "Prêt à commencer ?",
+      "description": "Démarrez votre simulation gratuite maintenant et découvrez toutes les aides auxquelles vous avez droit.",
+      "button": "Commencer la simulation gratuite"
+    }
+  },
+  
+  "contact": {
+    "seo": {
+      "title": "Nous contacter",
+      "description": "Contactez l'équipe AIDE+. Nous sommes là pour répondre à vos questions sur les aides en France."
+    },
+    "badge": "Nous contacter",
+    "title": "Contactez-nous",
+    "subtitle": "Une question ou besoin d'aide ? Nous sommes là pour vous.",
+    "methods": {
+      "email": {
+        "title": "Par email",
+        "description": "Envoyez-nous un email, nous répondons sous 24h."
+      },
+      "chat": {
+        "title": "Assistant IA",
+        "description": "Obtenez des réponses instantanées de notre assistant IA.",
+        "value": "Disponible 24/7"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Trouvez des réponses aux questions courantes.",
+        "value": "Consulter la FAQ"
+      }
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "description": "Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.",
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "Email",
+      "emailPlaceholder": "vous@exemple.com",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Comment pouvons-nous vous aider ?",
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre question ou problème...",
+      "submit": "Envoyer le message"
+    },
+    "info": {
+      "response": {
+        "title": "Temps de réponse",
+        "value": "Sous 24 heures"
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "value": "Vos données sont protégées"
+      },
+      "languages": {
+        "title": "Langues",
+        "value": "Français et Anglais"
+      }
+    },
+    "success": {
+      "title": "Message envoyé !",
+      "message": "Merci de nous avoir contactés. Nous vous répondrons sous 24 heures.",
+      "sendAnother": "Envoyer un autre message"
+    },
+    "error": "Échec de l'envoi du message. Veuillez réessayer."
+  },
+  
+  "blog": {
+    "seo": {
+      "title": "Blog",
+      "description": "Guides, actualités et conseils sur les aides et démarches administratives en France."
+    },
+    "badge": "Ressources",
+    "title": "Blog AIDE+",
+    "subtitle": "Guides, actualités et conseils pour naviguer dans les aides en France.",
+    "locale": "fr-FR",
+    "featured": "À la une",
+    "readTime": "{{minutes}} min de lecture",
+    "readMore": "Lire la suite",
+    "searchPlaceholder": "Rechercher des articles...",
+    "categories": {
+      "all": "Tous",
+      "guides": "Guides",
+      "news": "Actualités",
+      "tutorials": "Tutoriels"
+    },
+    "noResults": {
+      "title": "Aucun article trouvé",
+      "description": "Essayez d'ajuster votre recherche ou vos filtres.",
+      "reset": "Réinitialiser les filtres"
+    },
+    "newsletter": {
+      "title": "Restez informé",
+      "description": "Abonnez-vous à notre newsletter pour recevoir les derniers guides et actualités.",
+      "placeholder": "Entrez votre email",
+      "subscribe": "S'abonner"
+    },
+    "posts": {
+      "apl": {
+        "title": "Guide complet APL 2024 : Éligibilité et demande",
+        "excerpt": "Tout ce que vous devez savoir sur l'aide au logement (APL) : critères d'éligibilité, comment faire une demande et conseils pour maximiser vos aides."
+      },
+      "caf": {
+        "title": "Nouveautés CAF 2024 : Ce qui change pour les bénéficiaires",
+        "excerpt": "Découvrez les derniers changements des prestations CAF et comment ils peuvent affecter votre situation."
+      },
+      "prime": {
+        "title": "Prime d'activité : Conditions et calcul",
+        "excerpt": "Un guide complet sur la Prime d'activité : qui est éligible, comment elle est calculée et comment en faire la demande."
+      },
+      "rsa": {
+        "title": "Demande de RSA : Guide étape par étape",
+        "excerpt": "Suivez notre guide détaillé pour faire une demande de RSA (Revenu de Solidarité Active) et comprendre vos droits."
+      },
+      "student": {
+        "title": "Aides au logement étudiant : Guide complet",
+        "excerpt": "Tout ce que les étudiants doivent savoir sur les aides au logement : APL, ALS et comment maximiser vos aides."
+      },
+      "aspa": {
+        "title": "ASPA : Les allocations minimum vieillesse expliquées",
+        "excerpt": "Comprendre l'Allocation de Solidarité aux Personnes Âgées et comment en faire la demande si vous êtes éligible."
+      }
+    }
+  },
+
+  "admin": {
+    "login": {
+      "title": "Connexion Admin",
+      "subtitle": "Connectez-vous pour accéder au tableau de bord",
+      "email": "Email Admin",
+      "emailPlaceholder": "admin@exemple.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "signIn": "Se connecter",
+      "signingIn": "Connexion...",
+      "error": "Identifiants invalides ou permissions insuffisantes"
+    },
+    "layout": {
+      "admin": "Admin",
+      "adminPanel": "Panneau Admin",
+      "signOut": "Déconnexion"
+    },
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "users": "Utilisateurs",
+      "affiliates": "Affiliés",
+      "govAides": "Aides Gov",
+      "procedures": "Démarches",
+      "renting": "Location",
+      "blog": "Blog & Tutoriels",
+      "content": "Contenu",
+      "emails": "Emails",
+      "analytics": "Analytiques",
+      "visitors": "Visiteurs",
+      "admins": "Admins",
+      "settings": "Paramètres",
+      "sections": {
+        "users": "Gestion Utilisateurs",
+        "content": "Gestion Contenu",
+        "communication": "Communication",
+        "system": "Système"
+      }
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "subtitle": "Vue d'ensemble du panneau admin",
+      "totalUsers": "Total Utilisateurs",
+      "activeSubscriptions": "Abonnements Actifs",
+      "monthlyRevenue": "Revenu Mensuel",
+      "newSignups": "Nouvelles Inscriptions",
+      "recentSignups": "Inscriptions Récentes",
+      "quickActions": "Actions Rapides",
+      "noRecentSignups": "Aucune inscription récente",
+      "viewAllUsers": "Voir Tous les Utilisateurs",
+      "sendBulkEmail": "Envoyer Email Groupé",
+      "manageContent": "Gérer le Contenu",
+      "viewAnalytics": "Voir les Analytiques"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "subtitle": "Gérer les comptes et abonnements",
+      "addUser": "Ajouter Utilisateur",
+      "searchPlaceholder": "Rechercher par nom ou email...",
+      "allStatus": "Tous les Statuts",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "suspended": "Suspendu",
+      "allSubscriptions": "Tous les Abonnements",
+      "free": "Gratuit",
+      "premium": "Premium",
+      "premiumPlus": "Premium+",
+      "user": "Utilisateur",
+      "joined": "Inscrit le",
+      "subscription": "Abonnement",
+      "status": "Statut",
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "noUsers": "Aucun utilisateur trouvé",
+      "userDetails": "Détails Utilisateur",
+      "editUser": "Modifier Utilisateur",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+      "deleteWarning": "Cette action est irréversible.",
+      "email": "Email",
+      "fullName": "Nom Complet",
+      "createdAt": "Créé le",
+      "lastLogin": "Dernière Connexion",
+      "nationality": "Nationalité",
+      "residenceStatus": "Statut de Résidence",
+      "professionalStatus": "Statut Professionnel",
+      "emailPreferences": "Préférences Email",
+      "marketing": "Marketing",
+      "updates": "Mises à jour",
+      "newsletter": "Newsletter",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
+    },
+    "affiliates": {
+      "title": "Affiliés",
+      "subtitle": "Gérer les comptes affiliés et commissions",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des affiliés avec suivi des commissions, codes de parrainage et gestion des paiements."
+    },
+    "govAides": {
+      "title": "Aides Gouvernementales",
+      "subtitle": "Gérer les programmes d'aide gouvernementale",
+      "comingSoon": "Bientôt Disponible",
+      "description": "CRUD complet pour les programmes d'aide avec critères d'éligibilité et procédures de demande."
+    },
+    "procedures": {
+      "title": "Démarches",
+      "subtitle": "Gérer les démarches administratives",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des démarches avec guides étape par étape, documents requis et contacts des organismes."
+    },
+    "renting": {
+      "title": "Location",
+      "subtitle": "Gérer les guides et ressources de location",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Guides d'aide à la location, conseils de recherche de logement et informations sur les droits des locataires."
+    },
+    "content": {
+      "title": "Contenu",
+      "subtitle": "Gérer les articles et tutoriels",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Système de gestion de contenu pour articles de blog, optimisation SEO et tutoriels multimédia."
+    },
+    "emails": {
+      "title": "Campagnes Email",
+      "subtitle": "Envoyer des emails groupés",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des campagnes email avec segmentation utilisateurs, modèles et suivi de livraison."
+    },
+    "analytics": {
+      "title": "Analytiques",
+      "subtitle": "Voir les métriques de l'application",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Tableau de bord analytique détaillé avec graphiques, métriques utilisateurs, données d'abonnement et tendances."
+    },
+    "admins": {
+      "title": "Admins",
+      "subtitle": "Gérer les comptes admin et permissions",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Gestion des utilisateurs admin, attribution des rôles et configuration des permissions."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Configurer les paramètres du panneau admin",
+      "comingSoon": "Bientôt Disponible",
+      "description": "Configuration du panneau admin, paramètres système et gestion des préférences."
+    },
+    "common": {
+      "loading": "Chargement...",
+      "error": "Une erreur s'est produite",
+      "retry": "Réessayer",
+      "noData": "Aucune donnée disponible",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "page": "Page",
+      "of": "sur",
+      "showing": "Affichage de",
+      "to": "à",
+      "entries": "entrées"
+    }
+  },
+  
+  "privacy": {
+    "seo": {
+      "title": "Politique de confidentialité | AIDE+",
+      "description": "Découvrez comment AIDE+ protège et gère vos données personnelles."
+    },
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "intro": {
+        "title": "Introduction",
+        "content": "AIDE+ (\"nous\", \"notre\" ou \"nos\") s'engage à protéger votre vie privée. Cette Politique de confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous utilisez notre plateforme."
+      },
+      "dataCollected": {
+        "title": "Informations que nous collectons",
+        "intro": "Nous collectons les informations que vous nous fournissez directement :",
+        "item1": "Informations de compte (adresse e-mail, nom)",
+        "item2": "Informations de profil (nationalité, statut de résidence, situation familiale)",
+        "item3": "Données de simulation (revenus, statut de logement, région)",
+        "item4": "Données de communication (messages avec notre assistant IA, demandes de support)"
+      },
+      "dataUse": {
+        "title": "Comment nous utilisons vos informations",
+        "intro": "Nous utilisons les informations collectées pour :",
+        "item1": "Fournir, maintenir et améliorer nos services",
+        "item2": "Personnaliser votre expérience et recommandations",
+        "item3": "Traiter les transactions et envoyer les informations associées",
+        "item4": "Envoyer des notifications techniques, mises à jour et messages de support"
+      },
+      "dataProtection": {
+        "title": "Sécurité des données",
+        "content": "Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès, modification, divulgation ou destruction non autorisés. Vos données sont chiffrées en transit et au repos."
+      },
+      "dataSharing": {
+        "title": "Partage des informations",
+        "content": "Nous ne vendons, n'échangeons ni ne transférons vos informations personnelles à des tiers. Nous pouvons partager des données avec des prestataires de services qui nous aident à exploiter notre plateforme, sous réserve d'obligations strictes de confidentialité."
+      },
+      "userRights": {
+        "title": "Vos droits",
+        "intro": "En vertu du RGPD, vous disposez des droits suivants :",
+        "item1": "Droit d'accès à vos données personnelles",
+        "item2": "Droit de rectification des données inexactes",
+        "item3": "Droit à l'effacement (\"droit à l'oubli\")",
+        "item4": "Droit à la limitation du traitement",
+        "item5": "Droit à la portabilité des données"
+      },
+      "contact": {
+        "title": "Nous contacter",
+        "content": "Si vous avez des questions sur cette Politique de confidentialité ou souhaitez exercer vos droits, veuillez nous contacter à :"
+      }
+    }
+  },
+  
+  "terms": {
+    "seo": {
+      "title": "Conditions d'utilisation | AIDE+",
+      "description": "Lisez les conditions générales d'utilisation de la plateforme AIDE+."
+    },
+    "title": "Conditions d'utilisation",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptation des conditions",
+        "content": "En accédant ou en utilisant AIDE+, vous acceptez d'être lié par ces Conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services."
+      },
+      "services": {
+        "title": "Description des services",
+        "content": "AIDE+ fournit des informations et des outils pour aider les utilisateurs en France à identifier les aides gouvernementales auxquelles ils peuvent être éligibles. Nos services comprennent des simulations d'aides, un assistant IA et des guides de procédures. Notre plateforme est fournie à titre informatif uniquement et ne constitue pas un conseil juridique ou financier."
+      },
+      "accounts": {
+        "title": "Comptes utilisateurs",
+        "intro": "Lors de la création d'un compte, vous acceptez de :",
+        "item1": "Fournir des informations exactes et complètes",
+        "item2": "Maintenir la sécurité de vos identifiants de compte",
+        "item3": "Nous notifier immédiatement de toute utilisation non autorisée"
+      },
+      "subscriptions": {
+        "title": "Abonnements et paiements",
+        "content": "Certaines fonctionnalités nécessitent un abonnement payant. Les frais d'abonnement sont facturés à l'avance sur une base mensuelle. Vous pouvez annuler votre abonnement à tout moment, et l'annulation prendra effet à la fin de la période de facturation en cours."
+      },
+      "prohibitedUse": {
+        "title": "Utilisations interdites",
+        "intro": "Vous acceptez de ne pas :",
+        "item1": "Utiliser nos services à des fins illégales",
+        "item2": "Tenter d'obtenir un accès non autorisé à nos systèmes",
+        "item3": "Interférer avec ou perturber l'intégrité de nos services",
+        "item4": "Partager vos identifiants de compte avec d'autres personnes"
+      },
+      "intellectualProperty": {
+        "title": "Propriété intellectuelle",
+        "content": "Tout le contenu, les fonctionnalités et les fonctions d'AIDE+ nous appartiennent et sont protégés par les lois internationales sur le droit d'auteur, les marques de commerce et autres lois sur la propriété intellectuelle."
+      },
+      "disclaimer": {
+        "title": "Avertissement",
+        "content": "AIDE+ fournit des informations générales sur les aides gouvernementales et les procédures administratives. Nous ne garantissons pas l'exactitude ou l'exhaustivité de ces informations. Vérifiez toujours auprès des sources gouvernementales officielles avant de prendre des décisions basées sur notre contenu."
+      },
+      "liability": {
+        "title": "Limitation de responsabilité",
+        "content": "Dans toute la mesure permise par la loi, AIDE+ ne sera pas responsable des dommages indirects, accessoires, spéciaux, consécutifs ou punitifs découlant de votre utilisation de nos services."
+      },
+      "modifications": {
+        "title": "Modifications",
+        "content": "Nous nous réservons le droit de modifier ces Conditions à tout moment. Nous informerons les utilisateurs de tout changement important par e-mail ou via notre plateforme."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Pour toute question concernant ces Conditions, veuillez nous contacter à :"
+      }
+    }
+  },
+
+  "cookieConsent": {
+    "title": "Nous utilisons des cookies",
+    "description": "Nous utilisons des cookies pour améliorer votre expérience de navigation, fournir du contenu personnalisé et analyser notre trafic. En cliquant sur « Tout accepter », vous consentez à notre utilisation des cookies.",
+    "learnMore": "En savoir plus sur notre politique de cookies",
+    "acceptAll": "Tout accepter",
+    "rejectAll": "Tout refuser",
+    "customize": "Personnaliser",
+    "savePreferences": "Enregistrer les préférences",
+    "categories": {
+      "essential": {
+        "name": "Cookies essentiels",
+        "description": "Nécessaires au bon fonctionnement du site. Ne peuvent pas être désactivés."
+      },
+      "analytics": {
+        "name": "Cookies analytiques",
+        "description": "Nous aident à comprendre comment les visiteurs interagissent avec notre site."
+      },
+      "preferences": {
+        "name": "Cookies de préférences",
+        "description": "Mémorisent vos paramètres et préférences comme la langue et le thème."
+      }
+    }
+  },
+  
+  "cookies": {
+    "seo": {
+      "title": "Politique des cookies | AIDE+",
+      "description": "Découvrez comment AIDE+ utilise les cookies et technologies similaires."
+    },
+    "title": "Politique des cookies",
+    "lastUpdated": "Dernière mise à jour",
+    "sections": {
+      "whatAreCookies": {
+        "title": "Qu'est-ce qu'un cookie",
+        "content": "Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil lorsque vous visitez notre site web. Ils nous aident à vous offrir une meilleure expérience en mémorisant vos préférences et en comprenant comment vous utilisez notre plateforme."
+      },
+      "howWeUse": {
+        "title": "Comment nous utilisons les cookies",
+        "intro": "Nous utilisons différents types de cookies à diverses fins pour améliorer votre expérience sur AIDE+."
+      },
+      "essential": {
+        "title": "Cookies essentiels",
+        "content": "Ces cookies sont nécessaires au bon fonctionnement du site web et ne peuvent pas être désactivés.",
+        "item1": "Authentification et gestion de session",
+        "item2": "Fonctionnalités de sécurité",
+        "item3": "Répartition de charge"
+      },
+      "analytics": {
+        "title": "Cookies analytiques",
+        "content": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site web :",
+        "item1": "Pages visitées et temps passé",
+        "item2": "Fonctionnalités utilisées et parcours utilisateur"
+      },
+      "preferences": {
+        "title": "Cookies de préférences",
+        "content": "Ces cookies mémorisent vos choix et préférences :",
+        "item1": "Préférence de langue",
+        "item2": "Préférence de thème (mode clair/sombre)"
+      },
+      "manageCookies": {
+        "title": "Gérer les cookies",
+        "content": "Vous pouvez contrôler et gérer les cookies via les paramètres de votre navigateur. Veuillez noter que la désactivation de certains cookies peut affecter la fonctionnalité de notre site web."
+      },
+      "contact": {
+        "title": "Nous contacter",
+        "content": "Si vous avez des questions sur notre utilisation des cookies, veuillez nous contacter à :"
+      }
+    }
+  }
+}
+

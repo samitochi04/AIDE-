@@ -1,0 +1,221 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--border-primary);
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(var(--surface-primary-rgb), 0.9);
+}
+
+.container {
+  max-width: var(--container-xl);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-6);
+}
+
+.logo {
+  flex-shrink: 0;
+}
+
+/* Desktop Navigation */
+.desktopNav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-colors);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+}
+
+.navLink.active {
+  color: var(--color-primary);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.iconButton:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.langFlag {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Mobile Menu Button */
+.mobileMenuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.mobileMenuButton:hover {
+  background: var(--surface-secondary);
+}
+
+/* Mobile Overlay */
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 150;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 320px;
+  background: var(--surface-primary);
+  z-index: 200;
+  padding: var(--spacing-5);
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.mobileMenuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--spacing-5);
+  border-bottom: 1px solid var(--border-primary);
+  margin-bottom: var(--spacing-5);
+}
+
+.mobileMenuActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.mobileNavLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.mobileNavLink {
+  display: block;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-colors);
+}
+
+.mobileNavLink:hover {
+  background: var(--surface-secondary);
+}
+
+.mobileNavLink.active {
+  color: var(--color-primary);
+  background: var(--color-primary-alpha);
+}
+
+.mobileAuthButtons {
+  margin-top: auto;
+  padding-top: var(--spacing-5);
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: flex;
+  }
+  
+  .mobileOverlay,
+  .mobileMenu {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--spacing-4);
+  }
+}
