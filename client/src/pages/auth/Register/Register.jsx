@@ -1,50 +1,52 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
-import { useAuth } from '../../../context/AuthContext';
-import { Button, Input, Card, Logo } from '../../../components/ui';
-import { ROUTES } from '../../../config/routes';
-import styles from './Register.module.css';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import { useAuth } from "../../../context/AuthContext";
+import { useHcaptcha } from "../../../features/user/useHcaptcha";
+import { Button, Input, Card, Logo, HCaptcha } from "../../../components/ui";
+import { ROUTES } from "../../../config/routes";
+import styles from "./Register.module.css";
 
 export function Register() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { signUp, signInWithOAuth } = useAuth();
-  
+  const { getToken: getHcaptchaToken } = useHcaptcha();
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     const newErrors = {};
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = t('auth.errors.nameRequired');
+      newErrors.fullName = t("auth.errors.nameRequired");
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = t('auth.errors.emailRequired');
+      newErrors.email = t("auth.errors.emailRequired");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t('auth.errors.emailInvalid');
+      newErrors.email = t("auth.errors.emailInvalid");
     }
 
     if (!formData.password) {
-      newErrors.password = t('auth.errors.passwordRequired');
+      newErrors.password = t("auth.errors.passwordRequired");
     } else if (formData.password.length < 8) {
-      newErrors.password = t('auth.errors.passwordTooShort');
+      newErrors.password = t("auth.errors.passwordTooShort");
     }
 
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = t('auth.errors.passwordMismatch');
+      newErrors.confirmPassword = t("auth.errors.passwordMismatch");
     }
 
     setErrors(newErrors);
@@ -53,41 +55,45 @@ export function Register() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    
+    setError("");
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
 
     try {
-      const { error: authError } = await signUp(formData.email, formData.password, { 
-        full_name: formData.fullName 
-      });
+      const { error: authError } = await signUp(
+        formData.email,
+        formData.password,
+        {
+          full_name: formData.fullName,
+        }
+      );
       if (authError) throw authError;
       setSuccess(true);
     } catch (err) {
-      setError(err.message || t('auth.errors.registrationFailed'));
+      setError(err.message || t("auth.errors.registrationFailed"));
     } finally {
       setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
-    setError('');
+    setError("");
     try {
-      const { error: authError } = await signInWithOAuth('google');
+      const { error: authError } = await signInWithOAuth("google");
       if (authError) throw authError;
     } catch (err) {
-      setError(err.message || t('auth.errors.googleFailed'));
+      setError(err.message || t("auth.errors.googleFailed"));
     }
   };
 
@@ -95,9 +101,9 @@ export function Register() {
     return (
       <div className={styles.container}>
         <Helmet>
-          <title>{t('auth.verifyEmail')} | AIDE+</title>
+          <title>{t("auth.verifyEmail")} | AIDE+</title>
         </Helmet>
-        
+
         <motion.div
           className={styles.wrapper}
           initial={{ opacity: 0, y: 20 }}
@@ -108,15 +114,12 @@ export function Register() {
               <div className={styles.successIcon}>
                 <i className="ri-mail-check-line" />
               </div>
-              <h1 className={styles.title}>{t('auth.verifyEmail')}</h1>
+              <h1 className={styles.title}>{t("auth.verifyEmail")}</h1>
               <p className={styles.description}>
-                {t('auth.verificationSent', { email: formData.email })}
+                {t("auth.verificationSent", { email: formData.email })}
               </p>
-              <Button
-                variant="primary"
-                onClick={() => navigate(ROUTES.LOGIN)}
-              >
-                {t('auth.goToLogin')}
+              <Button variant="primary" onClick={() => navigate(ROUTES.LOGIN)}>
+                {t("auth.goToLogin")}
               </Button>
             </div>
           </Card>
@@ -128,7 +131,7 @@ export function Register() {
   return (
     <div className={styles.container}>
       <Helmet>
-        <title>{t('auth.register.title')} | AIDE+</title>
+        <title>{t("auth.register.title")} | AIDE+</title>
       </Helmet>
 
       <motion.div
@@ -143,8 +146,8 @@ export function Register() {
         <Card className={styles.card}>
           <Card.Body>
             <div className={styles.cardHeader}>
-              <h1 className={styles.title}>{t('auth.register.title')}</h1>
-              <p className={styles.subtitle}>{t('auth.register.subtitle')}</p>
+              <h1 className={styles.title}>{t("auth.register.title")}</h1>
+              <p className={styles.subtitle}>{t("auth.register.subtitle")}</p>
             </div>
 
             {error && (
@@ -178,8 +181,8 @@ export function Register() {
                 <Input
                   type="text"
                   name="fullName"
-                  label={t('auth.fullName')}
-                  placeholder={t('auth.fullNamePlaceholder')}
+                  label={t("auth.fullName")}
+                  placeholder={t("auth.fullNamePlaceholder")}
                   value={formData.fullName}
                   onChange={handleChange}
                   icon="ri-user-line"
@@ -192,8 +195,8 @@ export function Register() {
                 <Input
                   type="email"
                   name="email"
-                  label={t('auth.email')}
-                  placeholder={t('auth.emailPlaceholder')}
+                  label={t("auth.email")}
+                  placeholder={t("auth.emailPlaceholder")}
                   value={formData.email}
                   onChange={handleChange}
                   icon="ri-mail-line"
@@ -206,12 +209,12 @@ export function Register() {
                 <Input
                   type="password"
                   name="password"
-                  label={t('auth.password')}
-                  placeholder={t('auth.passwordPlaceholder')}
+                  label={t("auth.password")}
+                  placeholder={t("auth.passwordPlaceholder")}
                   value={formData.password}
                   onChange={handleChange}
                   icon="ri-lock-line"
-                  hint={t('auth.passwordHint')}
+                  hint={t("auth.passwordHint")}
                   error={errors.password}
                   required
                 />
@@ -221,14 +224,18 @@ export function Register() {
                 <Input
                   type="password"
                   name="confirmPassword"
-                  label={t('auth.confirmPassword')}
-                  placeholder={t('auth.confirmPasswordPlaceholder')}
+                  label={t("auth.confirmPassword")}
+                  placeholder={t("auth.confirmPasswordPlaceholder")}
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   icon="ri-lock-line"
                   error={errors.confirmPassword}
                   required
                 />
+              </div>
+              {/* hCaptcha Widget */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <HCaptcha containerId="register-hcaptcha-container" />
               </div>
 
               <Button
@@ -237,22 +244,21 @@ export function Register() {
                 fullWidth
                 loading={loading}
               >
-                {t('auth.registerBtn')}
+                {t("auth.registerBtn")}
               </Button>
             </form>
 
             <p className={styles.footer}>
-              {t('auth.hasAccount')}{' '}
-              <Link to={ROUTES.LOGIN}>{t('auth.loginLink')}</Link>
+              {t("auth.hasAccount")}{" "}
+              <Link to={ROUTES.LOGIN}>{t("auth.loginLink")}</Link>
             </p>
           </Card.Body>
         </Card>
 
         <p className={styles.terms}>
-          {t('auth.termsNotice')}{' '}
-          <Link to={ROUTES.TERMS}>{t('footer.terms')}</Link>{' '}
-          {t('common.and')}{' '}
-          <Link to={ROUTES.PRIVACY}>{t('footer.privacy')}</Link>
+          {t("auth.termsNotice")}{" "}
+          <Link to={ROUTES.TERMS}>{t("footer.terms")}</Link> {t("common.and")}{" "}
+          <Link to={ROUTES.PRIVACY}>{t("footer.privacy")}</Link>
         </p>
       </motion.div>
     </div>
