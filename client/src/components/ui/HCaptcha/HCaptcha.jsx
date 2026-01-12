@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useHcaptcha from "../../features/user/useHcaptcha.js";
+import useHcaptcha from "../../../features/user/useHcaptcha.js";
 
 /**
  * HCaptcha Component
