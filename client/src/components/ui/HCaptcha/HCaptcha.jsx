@@ -1,50 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useHcaptcha from "../../../features/user/useHcaptcha.js";
 
 /**
  * HCaptcha Component
- * Renders hCaptcha widget
+ * Renders hCaptcha widget with explicit rendering
  */
 export const HCaptcha = ({
   containerId = "hcaptcha-container",
   onLoad = null,
   className = "",
 }) => {
-  const { isEnabled, loadHcaptchaScript } = useHcaptcha();
+  const { isEnabled, renderCaptcha } = useHcaptcha();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (!isEnabled) return;
+    if (!isEnabled) {
+      setIsReady(true);
+      return;
+    }
 
     const initCaptcha = async () => {
       try {
-        await loadHcaptchaScript();
-
-        if (window.hcaptcha && !window.hcaptchaRendered) {
-          const container = document.getElementById(containerId);
-          if (container) {
-            window.hcaptcha.render(containerId, {
-              sitekey: import.meta.env.VITE_HCAPTCHA_SITE_KEY,
-              theme: "light",
-            });
-            window.hcaptchaRendered = true;
-            onLoad?.();
-          }
-        }
+        await renderCaptcha(containerId);
+        setIsReady(true);
+        onLoad?.();
       } catch (error) {
-        console.error("Failed to load hCaptcha:", error);
+        console.error("Failed to render hCaptcha:", error);
+        setIsReady(true);
       }
     };
 
-    initCaptcha();
+    // Small delay to ensure container is mounted
+    const timer = setTimeout(() => {
+      initCaptcha();
+    }, 100);
 
-    return () => {
-      // Cleanup is handled separately if needed
-    };
-  }, [isEnabled, loadHcaptchaScript, containerId, onLoad]);
+    return () => clearTimeout(timer);
+  }, [isEnabled, renderCaptcha, containerId, onLoad]);
 
   if (!isEnabled) return null;
 
-  return <div id={containerId} className={className}></div>;
+  return (
+    <div
+      id={containerId}
+      className={className}
+      data-testid="hcaptcha-widget"
+    ></div>
+  );
 };
 
 export default HCaptcha;

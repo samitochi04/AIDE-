@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -14,6 +14,7 @@ export function Register() {
   const navigate = useNavigate();
   const { signUp, signInWithOAuth } = useAuth();
   const { getToken: getHcaptchaToken } = useHcaptcha();
+  const captchaReadyRef = useRef(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -25,6 +26,10 @@ export function Register() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({});
+
+  const handleCaptchaLoad = () => {
+    captchaReadyRef.current = true;
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -233,9 +238,12 @@ export function Register() {
                   required
                 />
               </div>
-              {/* hCaptcha Widget */}
+              {/* hCaptcha Widget - renders explicitly when ready */}
               <div style={{ marginBottom: "1.5rem" }}>
-                <HCaptcha containerId="register-hcaptcha-container" />
+                <HCaptcha
+                  containerId="register-hcaptcha-container"
+                  onLoad={handleCaptchaLoad}
+                />
               </div>
 
               <Button
