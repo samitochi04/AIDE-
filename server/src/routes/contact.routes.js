@@ -1,6 +1,11 @@
-import { Router } from 'express';
-import * as contactController from '../controllers/contact.controller.js';
-import { validateBody, schemas, authLimiter } from '../middlewares/index.js';
+import { Router } from "express";
+import * as contactController from "../controllers/contact.controller.js";
+import {
+  validateBody,
+  schemas,
+  authLimiter,
+  verifyHcaptcha,
+} from "../middlewares/index.js";
 
 const router = Router();
 
@@ -10,8 +15,9 @@ const router = Router();
  * @access  Public
  */
 router.post(
-  '/',
+  "/",
   authLimiter,
+  verifyHcaptcha,
   validateBody(schemas.contactForm),
   contactController.submitContact
 );
@@ -22,8 +28,9 @@ router.post(
  * @access  Public
  */
 router.post(
-  '/feedback',
+  "/feedback",
   authLimiter,
+  verifyHcaptcha,
   contactController.submitFeedback
 );
 

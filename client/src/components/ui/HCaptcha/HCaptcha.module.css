@@ -1,0 +1,10 @@
+/* HCaptcha Container Styles */
+.hcaptcha-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.hcaptcha-wrapper iframe {
+  border-radius: 4px;
+}
