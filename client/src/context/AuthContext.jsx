@@ -117,18 +117,27 @@ export function AuthProvider({ children }) {
   }, [fetchProfile, loading]);
 
   // Sign in with magic link
-  const signInWithMagicLink = async (email) => {
+  const signInWithMagicLink = async (
+    email,
+    containerId = "hcaptcha-container"
+  ) => {
     setLoading(true);
     try {
-      // Get hCaptcha token if available
-      const captchaToken = await getHcaptchaToken();
+      // Get hCaptcha token if available - pass container ID
+      const captchaToken = await getHcaptchaToken(containerId);
+
+      const options = {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      };
+
+      // Only include captchaToken if it exists
+      if (captchaToken) {
+        options.captchaToken = captchaToken;
+      }
 
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-          captchaToken,
-        },
+        options,
       });
       setLoading(false);
       return { error };
@@ -139,18 +148,27 @@ export function AuthProvider({ children }) {
   };
 
   // Sign in with password
-  const signInWithPassword = async (email, password) => {
+  const signInWithPassword = async (
+    email,
+    password,
+    containerId = "hcaptcha-container"
+  ) => {
     setLoading(true);
     try {
-      // Get hCaptcha token if available
-      const captchaToken = await getHcaptchaToken();
+      // Get hCaptcha token if available - pass container ID
+      const captchaToken = await getHcaptchaToken(containerId);
+
+      const options = {};
+
+      // Only include captchaToken if it exists
+      if (captchaToken) {
+        options.captchaToken = captchaToken;
+      }
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          captchaToken,
-        },
+        options,
       });
       setLoading(false);
       return { data, error };
@@ -161,20 +179,31 @@ export function AuthProvider({ children }) {
   };
 
   // Sign up with password
-  const signUp = async (email, password, metadata = {}) => {
+  const signUp = async (
+    email,
+    password,
+    metadata = {},
+    containerId = "hcaptcha-container"
+  ) => {
     setLoading(true);
     try {
-      // Get hCaptcha token if available
-      const captchaToken = await getHcaptchaToken();
+      // Get hCaptcha token if available - pass container ID
+      const captchaToken = await getHcaptchaToken(containerId);
+
+      const options = {
+        data: metadata,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      };
+
+      // Only include captchaToken if it exists
+      if (captchaToken) {
+        options.captchaToken = captchaToken;
+      }
 
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: metadata,
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-          captchaToken,
-        },
+        options,
       });
       setLoading(false);
       return { data, error };

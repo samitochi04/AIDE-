@@ -81,7 +81,8 @@ export function Register() {
         formData.password,
         {
           full_name: formData.fullName,
-        }
+        },
+        "register-hcaptcha-container"
       );
       if (authError) throw authError;
       setSuccess(true);

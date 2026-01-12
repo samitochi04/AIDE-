@@ -37,7 +37,11 @@ export function Login() {
     setLoading(true);
 
     try {
-      const { error: authError } = await signInWithPassword(email, password);
+      const { error: authError } = await signInWithPassword(
+        email,
+        password,
+        "login-hcaptcha-container"
+      );
       if (authError) throw authError;
       navigate(from, { replace: true });
     } catch (err) {
@@ -53,7 +57,10 @@ export function Login() {
     setLoading(true);
 
     try {
-      const { error: authError } = await signInWithMagicLink(email);
+      const { error: authError } = await signInWithMagicLink(
+        email,
+        "login-hcaptcha-container"
+      );
       if (authError) throw authError;
       setMagicLinkSent(true);
     } catch (err) {
