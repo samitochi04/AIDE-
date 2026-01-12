@@ -1,7 +1,12 @@
-import { Router } from 'express';
-import Joi from 'joi';
-import * as authController from '../controllers/auth.controller.js';
-import { validateBody, schemas, authLimiter } from '../middlewares/index.js';
+import { Router } from "express";
+import Joi from "joi";
+import * as authController from "../controllers/auth.controller.js";
+import {
+  validateBody,
+  schemas,
+  authLimiter,
+  verifyHcaptcha,
+} from "../middlewares/index.js";
 
 const router = Router();
 
@@ -11,9 +16,12 @@ const router = Router();
  * @access  Public
  */
 router.post(
-  '/send-magic-link',
+  "/send-magic-link",
   authLimiter,
-  validateBody(Joi.object({ email: schemas.email.required() })),
+  verifyHcaptcha,
+  validateBody(
+    Joi.object({ email: schemas.email.required(), hcaptchaToken: Joi.string() })
+  ),
   authController.sendMagicLink
 );
 
@@ -23,12 +31,14 @@ router.post(
  * @access  Public
  */
 router.post(
-  '/send-welcome-email',
+  "/send-welcome-email",
   authLimiter,
+  verifyHcaptcha,
   validateBody(
     Joi.object({
       email: schemas.email.required(),
       name: Joi.string().max(100),
+      hcaptchaToken: Joi.string(),
     })
   ),
   authController.sendWelcomeEmail
@@ -40,9 +50,12 @@ router.post(
  * @access  Public
  */
 router.post(
-  '/send-password-reset',
+  "/send-password-reset",
   authLimiter,
-  validateBody(Joi.object({ email: schemas.email.required() })),
+  verifyHcaptcha,
+  validateBody(
+    Joi.object({ email: schemas.email.required(), hcaptchaToken: Joi.string() })
+  ),
   authController.sendPasswordReset
 );
 
@@ -52,9 +65,12 @@ router.post(
  * @access  Public
  */
 router.post(
-  '/resend-verification',
+  "/resend-verification",
   authLimiter,
-  validateBody(Joi.object({ email: schemas.email.required() })),
+  verifyHcaptcha,
+  validateBody(
+    Joi.object({ email: schemas.email.required(), hcaptchaToken: Joi.string() })
+  ),
   authController.resendVerification
 );
 
