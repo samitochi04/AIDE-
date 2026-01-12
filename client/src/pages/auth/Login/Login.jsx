@@ -1,31 +1,34 @@
-import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
-import { useAuth } from '../../../context/AuthContext';
-import { Button, Input, Card, Logo } from '../../../components/ui';
-import { ROUTES } from '../../../config/routes';
-import styles from './Login.module.css';
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import { useAuth } from "../../../context/AuthContext";
+import { useHcaptcha } from "../../../features/user/useHcaptcha";
+import { Button, Input, Card, Logo, HCaptcha } from "../../../components/ui";
+import { ROUTES } from "../../../config/routes";
+import styles from "./Login.module.css";
 
 export function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { signInWithPassword, signInWithOAuth, signInWithMagicLink } = useAuth();
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { signInWithPassword, signInWithOAuth, signInWithMagicLink } =
+    useAuth();
+  const { getToken: getHcaptchaToken } = useHcaptcha();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showMagicLink, setShowMagicLink] = useState(false);
 
   const from = location.state?.from?.pathname || ROUTES.DASHBOARD;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
@@ -33,7 +36,7 @@ export function Login() {
       if (authError) throw authError;
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err.message || t('auth.errors.invalidCredentials'));
+      setError(err.message || t("auth.errors.invalidCredentials"));
     } finally {
       setLoading(false);
     }
@@ -41,7 +44,7 @@ export function Login() {
 
   const handleMagicLink = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
@@ -49,19 +52,19 @@ export function Login() {
       if (authError) throw authError;
       setMagicLinkSent(true);
     } catch (err) {
-      setError(err.message || t('auth.errors.magicLinkFailed'));
+      setError(err.message || t("auth.errors.magicLinkFailed"));
     } finally {
       setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
-    setError('');
+    setError("");
     try {
-      const { error: authError } = await signInWithOAuth('google');
+      const { error: authError } = await signInWithOAuth("google");
       if (authError) throw authError;
     } catch (err) {
-      setError(err.message || t('auth.errors.googleFailed'));
+      setError(err.message || t("auth.errors.googleFailed"));
     }
   };
 
@@ -69,9 +72,9 @@ export function Login() {
     return (
       <div className={styles.container}>
         <Helmet>
-          <title>{t('auth.checkEmail')} | AIDE+</title>
+          <title>{t("auth.checkEmail")} | AIDE+</title>
         </Helmet>
-        
+
         <motion.div
           className={styles.wrapper}
           initial={{ opacity: 0, y: 20 }}
@@ -82,15 +85,12 @@ export function Login() {
               <div className={styles.successIcon}>
                 <i className="ri-mail-check-line" />
               </div>
-              <h1 className={styles.title}>{t('auth.checkEmail')}</h1>
+              <h1 className={styles.title}>{t("auth.checkEmail")}</h1>
               <p className={styles.description}>
-                {t('auth.magicLinkSent', { email })}
+                {t("auth.magicLinkSent", { email })}
               </p>
-              <Button
-                variant="outline"
-                onClick={() => setMagicLinkSent(false)}
-              >
-                {t('common.back')}
+              <Button variant="outline" onClick={() => setMagicLinkSent(false)}>
+                {t("common.back")}
               </Button>
             </div>
           </Card>
@@ -102,7 +102,7 @@ export function Login() {
   return (
     <div className={styles.container}>
       <Helmet>
-        <title>{t('auth.login.title')} | AIDE+</title>
+        <title>{t("auth.login.title")} | AIDE+</title>
       </Helmet>
 
       <motion.div
@@ -117,8 +117,8 @@ export function Login() {
         <Card className={styles.card}>
           <Card.Body>
             <div className={styles.cardHeader}>
-              <h1 className={styles.title}>{t('auth.login.title')}</h1>
-              <p className={styles.subtitle}>{t('auth.login.subtitle')}</p>
+              <h1 className={styles.title}>{t("auth.login.title")}</h1>
+              <p className={styles.subtitle}>{t("auth.login.subtitle")}</p>
             </div>
 
             {error && (
@@ -150,16 +150,20 @@ export function Login() {
             {/* Toggle Magic Link / Password */}
             <div className={styles.tabs}>
               <button
-                className={`${styles.tab} ${!showMagicLink ? styles.active : ''}`}
+                className={`${styles.tab} ${
+                  !showMagicLink ? styles.active : ""
+                }`}
                 onClick={() => setShowMagicLink(false)}
               >
-                {t('auth.password')}
+                {t("auth.password")}
               </button>
               <button
-                className={`${styles.tab} ${showMagicLink ? styles.active : ''}`}
+                className={`${styles.tab} ${
+                  showMagicLink ? styles.active : ""
+                }`}
                 onClick={() => setShowMagicLink(true)}
               >
-                {t('auth.magicLink')}
+                {t("auth.magicLink")}
               </button>
             </div>
 
@@ -167,8 +171,8 @@ export function Login() {
               <div className={styles.formGroup}>
                 <Input
                   type="email"
-                  label={t('auth.email')}
-                  placeholder={t('auth.emailPlaceholder')}
+                  label={t("auth.email")}
+                  placeholder={t("auth.emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   icon="ri-mail-line"
@@ -180,8 +184,8 @@ export function Login() {
                 <div className={styles.formGroup}>
                   <Input
                     type="password"
-                    label={t('auth.password')}
-                    placeholder={t('auth.passwordPlaceholder')}
+                    label={t("auth.password")}
+                    placeholder={t("auth.passwordPlaceholder")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     icon="ri-lock-line"
@@ -189,11 +193,16 @@ export function Login() {
                   />
                   <div className={styles.forgotPassword}>
                     <Link to={ROUTES.FORGOT_PASSWORD}>
-                      {t('auth.forgotPassword')}
+                      {t("auth.forgotPassword")}
                     </Link>
                   </div>
                 </div>
               )}
+
+              {/* hCaptcha Widget */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <HCaptcha containerId="login-hcaptcha-container" />
+              </div>
 
               <Button
                 type="submit"
@@ -201,22 +210,21 @@ export function Login() {
                 fullWidth
                 loading={loading}
               >
-                {showMagicLink ? t('auth.sendMagicLink') : t('auth.loginBtn')}
+                {showMagicLink ? t("auth.sendMagicLink") : t("auth.loginBtn")}
               </Button>
             </form>
 
             <p className={styles.footer}>
-              {t('auth.noAccount')}{' '}
-              <Link to={ROUTES.REGISTER}>{t('auth.registerLink')}</Link>
+              {t("auth.noAccount")}{" "}
+              <Link to={ROUTES.REGISTER}>{t("auth.registerLink")}</Link>
             </p>
           </Card.Body>
         </Card>
 
         <p className={styles.terms}>
-          {t('auth.termsNotice')}{' '}
-          <Link to={ROUTES.TERMS}>{t('footer.terms')}</Link>{' '}
-          {t('common.and')}{' '}
-          <Link to={ROUTES.PRIVACY}>{t('footer.privacy')}</Link>
+          {t("auth.termsNotice")}{" "}
+          <Link to={ROUTES.TERMS}>{t("footer.terms")}</Link> {t("common.and")}{" "}
+          <Link to={ROUTES.PRIVACY}>{t("footer.privacy")}</Link>
         </p>
       </motion.div>
     </div>
