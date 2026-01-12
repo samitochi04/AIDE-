@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -16,6 +16,7 @@ export function Login() {
   const { signInWithPassword, signInWithOAuth, signInWithMagicLink } =
     useAuth();
   const { getToken: getHcaptchaToken } = useHcaptcha();
+  const captchaReadyRef = useRef(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,10 @@ export function Login() {
   const [showMagicLink, setShowMagicLink] = useState(false);
 
   const from = location.state?.from?.pathname || ROUTES.DASHBOARD;
+
+  const handleCaptchaLoad = () => {
+    captchaReadyRef.current = true;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -199,9 +204,12 @@ export function Login() {
                 </div>
               )}
 
-              {/* hCaptcha Widget */}
+              {/* hCaptcha Widget - renders explicitly when ready */}
               <div style={{ marginBottom: "1.5rem" }}>
-                <HCaptcha containerId="login-hcaptcha-container" />
+                <HCaptcha
+                  containerId="login-hcaptcha-container"
+                  onLoad={handleCaptchaLoad}
+                />
               </div>
 
               <Button
