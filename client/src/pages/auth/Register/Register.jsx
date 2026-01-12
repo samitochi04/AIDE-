@@ -154,8 +154,8 @@ export function Register() {
               </div>
             )}
 
-            {/* Social Login */}
-            <button
+            {/* Social Login - Commented out until Google Cloud Platform OAuth is configured */}
+            {/* <button
               type="button"
               className={styles.socialBtn}
               onClick={handleGoogleLogin}
@@ -171,7 +171,7 @@ export function Register() {
 
             <div className={styles.divider}>
               <span>{t('common.or')}</span>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit}>
               <div className={styles.formGroup}>

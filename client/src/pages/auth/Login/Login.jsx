@@ -128,8 +128,8 @@ export function Login() {
               </div>
             )}
 
-            {/* Social Login */}
-            <button
+            {/* Social Login - Commented out until Google Cloud Platform OAuth is configured */}
+            {/* <button
               type="button"
               className={styles.socialBtn}
               onClick={handleGoogleLogin}
@@ -145,7 +145,7 @@ export function Login() {
 
             <div className={styles.divider}>
               <span>{t('common.or')}</span>
-            </div>
+            </div> */}
 
             {/* Toggle Magic Link / Password */}
             <div className={styles.tabs}>
